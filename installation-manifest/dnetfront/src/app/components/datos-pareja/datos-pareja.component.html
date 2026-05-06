@@ -1,0 +1,780 @@
+<form #parejaForm="ngForm" class="container-fluid  ml-2 pt-3 h-75">
+    <div class="title d-flex justify-content-between mb-3">
+        <h4>Datos de la Pareja</h4> <i class="fas fa-question-circle mr-3 help"></i>
+        <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+    </div>
+    <h6 style="color: rgb(116, 116, 116); ">(Persona con la que se tiene vida en común tal como el cónyuge,
+        concubina/concubinario, sociedad de convivencia o cualquier otra similar a las anteriores)
+    </h6>
+    <div id="scrollDaPa" class="altoScroll" (mousewheel)="_wheel($event);">
+        <div class="row d-flex w-100 align-items-center">
+            <label [hidden]="!help" (click)="abriInfo('pareja')"> <span
+                    class="d-flex align-items-center ml-3 mr-2 mt-2">No
+                    tengo pareja <i class="fas fa-info-circle"></i></span> </label>
+            <label [hidden]="help" for="pareja"> <span
+                    class="d-flex align-items-center ml-3 mr-2 mt-2">Ninguno</span></label>
+            <input class="fa-3x" [(ngModel)]="this.datosDePareja.ninguno" (change)="pareja()" id="pareja" name="pareja"
+                type="checkbox">
+        </div>
+        <div id="content-pareja" *ngIf="!this.datosDePareja.ninguno === true">
+            <div class="row">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="nombre">Nombre(s) <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="nombre" required>Nombre(s)</label>
+                    <input type="text" name="nombre" id="datParNom" #nombre="ngModel" maxlength="35"
+                        oninput="CustomUpperCase(this);" required [(ngModel)]="datoPareja.datosPersonales.nombre">
+                    <div class="invalid-tooltip" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Primer apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="" required>Primer apellido</label>
+                    <input type="text" name="primerApellido" id="datParPriApe" maxlength="35" #primerApellido="ngModel"
+                        oninput="CustomUpperCase(this);" required
+                        [(ngModel)]="datoPareja.datosPersonales.primerApellido">
+                    <div class="invalid-tooltip"
+                        *ngIf="primerApellido.invalid && (primerApellido.dirty || primerApellido.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Segundo apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Segundo apellido</label>
+                    <input type="text" name="segundoApellido" id="datParSegApe" maxlength="35"
+                        [(ngModel)]="datoPareja.datosPersonales.segundoApellido" #segundoApellido="ngModel"
+                        oninput="CustomUpperCase(this);">
+
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Fecha de nacimiento <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fecha de nacimiento</label>
+                    <input fechaValid="{{fecha}}" type="date" required name="fechaNacimiento" id="datParFecNac"
+                        maxlength="20" [max]="cata.fechaReferenciaMax"
+                        [(ngModel)]="datoPareja.datosPersonales.fechaNacimiento" #fechaNacimiento="ngModel">
+
+                    <div class="invalid-tooltip" *ngIf="fechaNacimiento.invalid && fechaNacimiento.touched">
+                        Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                            [attr.data-td]="tipoDeclaracion" onclick="abrirModalInfo('modalMsgFechasEncargo',this)"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC</label>
+                    <input type="text" name="rfc" maxlength="13" id="datParRfc" rfcValid
+                        [(ngModel)]="datoPareja.datosPersonales.rfc" oninput="CustomUpperCase(this);" #rfc="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfc.invalid && rfc.touched">
+                        El RFC debe contener el formato correcto...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Relación con declarante <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Relación con declarante</label>
+                    <select name="relacionConDeclarante" id="datParRelConDec" required
+                        [(ngModel)]="datoPareja.relacionConDeclarante" #relacionConDeclarante="ngModel">
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let rc of this.cata.enums?.ENUM_RELACION_CON_DECLARANTE" [value]="rc.id">
+                            {{rc.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="relacionConDeclarante.invalid && (relacionConDeclarante.dirty || relacionConDeclarante.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">¿Es ciudadano extranjero? <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="" required>¿Es ciudadano extranjero?</label>
+                    <select name="esExtranjero" required id="datParCiuExt"
+                        [(ngModel)]="datoPareja.ciudadanoExtranjero.esExtranjero" #esExtranjero="ngModel">
+                        <option value="null" disabled>Seleccione...</option>
+                        <option [ngValue]="true">SI</option>
+                        <option [ngValue]="false">NO</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="esExtranjero.invalid && (esExtranjero.dirty || esExtranjero.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+
+                <div *ngIf="datoPareja.ciudadanoExtranjero.esExtranjero == false"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">CURP<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="" required>CURP</label>
+                    <input type="text" name="curp" id="datParCur" maxlength="18" oninput="CustomUpperCase(this);"
+                        curpValid required [(ngModel)]="datoPareja.ciudadanoExtranjero.curp" #curp="ngModel">
+                    <div class="invalid-tooltip" *ngIf="curp.invalid && curp.touched">
+                        <div *ngIf="curp.errors.CurpValid && curp.touched">
+                            La CURP debe contener el formato correcto...
+                        </div>
+                        <div *ngIf="curp.errors.required">
+                            Campo requerido....
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for="">¿Es dependiente económico? <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="" required>¿Es dependiente económico?</label>
+                    <select name="esDependienteEconomico" id="datParDepEco" required
+                        [(ngModel)]="datoPareja.esDependienteEconomico" #esDependienteEconomico="ngModel">
+                        <option value="null" disabled>Seleccione...</option>
+                        <option [ngValue]="true">SI</option>
+                        <option [ngValue]="false">NO</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="esDependienteEconomico.invalid && (esDependienteEconomico.dirty || esDependienteEconomico.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">¿Habita en el domicilio del declarante? <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="" required>¿Habita en el domicilio del declarante?</label>
+
+                    <select name="habitaDomicilioDeclarante" id="datParHabDomDec" required
+                        [(ngModel)]="datoPareja.habitaDomicilioDeclarante" #habitaDomicilioDeclarante="ngModel">
+                        <option value="null" disabled>Seleccione...</option>
+                        <option [ngValue]="true">SI</option>
+                        <option [ngValue]="false">NO</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="habitaDomicilioDeclarante.invalid && (habitaDomicilioDeclarante.dirty || habitaDomicilioDeclarante.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <!-- <div *ngIf="habitaDomicilioDeclarante.value === false" class="flecha-otro">
+                    <i class="fas fa-arrow-right"></i>
+                </div> -->
+
+            </div>
+            <div class="row mt-3" *ngIf="habitaDomicilioDeclarante.value === false">
+
+                <div class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for="">Lugar donde reside <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Lugar donde reside</label>
+                    <select name="lugarDondeReside" id="datParLugRes" required
+                        [(ngModel)]="datoPareja.domicilioDependienteEconomico.lugarDondeReside"
+                        #lugarDondeReside="ngModel">
+                        <option value="null" disabled>Seleccione...</option>
+                        <option value="MEXICO">MÉXICO</option>
+                        <option value="EXTRANJERO">EXTRANJERO</option>
+                        <option value="SE_DESCONOCE">SE DESCONOCE</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="lugarDondeReside.invalid && (lugarDondeReside.dirty || lugarDondeReside.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+
+                </div>
+
+                <button style="width: 280px!important"
+                    *ngIf="datoPareja.habitaDomicilioDeclarante == false && datoPareja.domicilioDependienteEconomico.lugarDondeReside === 'MEXICO'"
+                    type="button" class="btn btn-light mt-3" (click)="abrirModalLugar('mexico')"><i
+                        class="fas fa-map-marked-alt"></i> Agregar domicilio en México
+                </button>
+                <button
+                    *ngIf="datoPareja.habitaDomicilioDeclarante === false && datoPareja.domicilioDependienteEconomico.lugarDondeReside == 'EXTRANJERO'"
+                    style="width: 280px!important" type="button" class="btn btn-light mt-3"
+                    (click)="abrirModalLugar('extranjero')"><i class="fas fa-map-marked-alt"></i> Agregar domicilio en
+                    extranjero
+                </button>
+            </div>
+            <div class="row mt-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <div class="custom-control custom-checkbox">
+                        <label [hidden]="!help" (click)="abriInfo('pareja')"> <span
+                                class="d-flex align-items-center ml-3 mr-2 mt-2">No tiene actividad laboral <i
+                                    class="fas fa-info-circle"></i></span> </label>
+                        <label [hidden]="help" for="pareja"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">No
+                                tiene actividad laboral</span></label>
+                        <input class="fa-3x" name="ningunoActividad" id="datParNoTieActLab"
+                            [(ngModel)]="datoPareja.ninguno" #ningunoActividad=ngModel type="checkbox">
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <button *ngIf="datoPareja.ninguno !== true" style="width: 280px!important" type="button"
+                        class="btn btn-light mt-3" (click)="abrirModalLugar('actividad')"><i
+                            class="fas fa-map-marked-alt"></i>
+                        Agregar
+                        actividad laboral
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- modal México -->
+
+            <div class="content-info">
+                <div>
+                    <p><i (click)="cerrarInfo()" class="close-modal-obs fas fa-times-circle"></i></p>
+                    <h3>{{label}}</h3>
+                    <i class="fas fa-info-circle icon-info"></i>
+                    <p class="info">{{info}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 ml-1">
+            <button (click)="abrirObservaciones()" type="button" class="observaciones"><i class="far fa-envelope"></i>
+                Aclaraciones / Observaciones </button>
+            <button (click)="guardaLocal()"
+                [disabled]="!parejaForm.valid || !parejaMexicoForm.valid || !parejaExtranjeroForm.valid || !actividadLaboral.valid"
+                class="btn btn-success ml-3">Aceptar</button>
+            <!--{{!parejaForm.valid}} {{!parejaMexicoForm.valid}}
+             {{!parejaExtranjeroForm.valid}} {{!actividadLaboral.valid}}
+            <br> !parejaForm.valid || !parejaMexicoForm.valid || !parejaExtranjeroForm.valid || !actividadLaboral.valid
+            <br> {{datoPareja.habitaDomicilioDeclarante}} {{datoPareja.domicilioDependienteEconomico.lugarDondeReside}}
+            <br>habitaDomicilioDeclarante y lugarDondeReside -->
+        </div>
+
+        <div id="obs-pareja" class="content-observaciones">
+            <div>
+                <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+                <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)"
+                    id="aclaracionesObservaciones" cols="80" rows="15" maxlength="2000" [(ngModel)]="this.aclara"
+                    #aclaracion="ngModel"></textarea>
+                <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<!-- {{!parejaForm.valid || !parejaMexicoForm.valid || !parejaExtranjeroForm.valid || !actividadLaboral.valid}} {{parejaForm.valid}} {{parejaMexicoForm.valid}} {{parejaExtranjeroForm.valid}} {{actividadLaboral.valid}} -->
+
+<!-- <div id="modal-lugar-mexico" class="modal-lugar"> -->
+<div id="modal-lugar-mexico" class="modal-lugar">
+    <form #parejaMexicoForm="ngForm">
+        <div class="modal-content modal-custom">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Domicilio de la pareja / <span style="color:rgb(74, 88, 126)">En México</span>
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarModalLugar('mexico')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body content"
+                *ngIf="datoPareja.habitaDomicilioDeclarante == false && datoPareja.domicilioDependienteEconomico.lugarDondeReside == 'MEXICO'">
+                <div class="row mt-5">
+                    <div class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Calle</label>
+                        <input type="text" name="calleMexico" id="datParCal" maxlength="300" required
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.calle"
+                            #calleMexico="ngModel" oninput="CustomUpperCase(this);">
+                        <div class="invalid-tooltip"
+                            *ngIf="calleMexico.invalid && (calleMexico.dirty || calleMexico.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número exterior</label>
+                        <input type="text" name="numExtMex" id="datParNumExt" maxlength="50" required
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.numeroExterior"
+                            #numExtMex="ngModel" oninput="CustomUpperCase(this);">
+                        <div class="invalid-tooltip"
+                            *ngIf="numExtMex.invalid && (numExtMex.dirty || numExtMex.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número interior</label>
+                        <input type="text" name="numIntMex" id="datParNumInt" maxlength="50"
+                            oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.numeroInterior"
+                            #numIntMex="ngModel">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Colonia/Localidad <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Colonia/Localidad</label>
+                        <input type="text" name="colMex" id="datParColLoc" maxlength="100"
+                            oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.coloniaLocalidad"
+                            #colMex="ngModel">
+                        <div class="invalid-tooltip" *ngIf="colMex.invalid && (colMex.dirty || colMex.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-5">
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Entidad federativa <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Entidad federativa</label>
+                        <select type="text" name="entiFedMex" id="datParEntFed" [compareWith]="cata.compareFn" required
+                            appSelectValidator
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.entidadFederativa"
+                            #entiFedMex="ngModel" (change)="filterMunicipios(entiFedMex.value.id)">
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let data of cata.catalogos?.CAT_ENTIDAD_FEDERATIVA" [ngValue]="data">
+                                {{data.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip"
+                            *ngIf="entiFedMex.invalid && (entiFedMex.dirty || entiFedMex.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Municipio/alcaldía <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Municipio/alcaldía</label>
+                        <select type="text" name="muns" id="datParMunAlc" required appSelectValidator
+                            [compareWith]="cata.compareFn"
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.municipioAlcaldia"
+                            #muns="ngModel" ng-required>
+                            <!-- <option [ngValue]="{id: null, valor: null, fk: null}" disabled>SELECCIONE...</option> -->
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let data of this?.filterMuns" [ngValue]="data">
+                                {{data.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip" *ngIf="muns.invalid && (muns.dirty || muns.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Código postal</label>
+                        <input type="text" name="cpMex" id="datParCp" maxlength="5" minlength="5"
+                            onkeydown="return solonumero(event);" oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.codigoPostal"
+                            #cpMex="ngModel">
+                        <div class="invalid-tooltip" *ngIf="cpMex.invalid && (cpMex.dirty || cpMex.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button> -->
+                    <button type="button" class="btn btn-success" [disabled]="!parejaMexicoForm.form.valid"
+                        (click)="guardarModalLugar('mexico')">Aceptar</button>
+                    <button type="button" class="btn btn-dark" (click)="cerrarModalLugar('mexico')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- modal extranjero -->
+<div id="modal-lugar-extranjero" class="modal-lugar">
+    <form #parejaExtranjeroForm="ngForm">
+        <div class="modal-content modal-custom">
+            <!-- <div class="row mt-2 d-flex justify-content-between">
+                <h5 class="ml-3">Domicilio de la pareja / <span style="color:rgb(74, 88, 126)">En México</span>
+                </h5>
+                <i (click)="cerrarModalLugar('mexico')" class="close-modal-obs fas fa-times-circle "></i>
+            </div> -->
+            <div class="modal-header">
+                <h4 class="modal-title">Domicilio de la pareja / <span style="color:rgb(74, 88, 126)">En el
+                        extranjero</span></h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarModalLugar('extranjero')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"
+                *ngIf="datoPareja.habitaDomicilioDeclarante == false && datoPareja.domicilioDependienteEconomico.lugarDondeReside == 'EXTRANJERO'">
+                <div class="row mt-5">
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Calle</label>
+                        <input type="text" name="calleExtra" id="datParExtCal" maxlength="300"
+                            oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.calle"
+                            #calleExtra="ngModel">
+                        <div class="invalid-tooltip"
+                            *ngIf="calleExtra.invalid && (calleExtra.dirty || calleExtra.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número exterior</label>
+                        <input type="text" name="numExExtra" id="datParExtNumExt" maxlength="50"
+                            oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.numeroExterior"
+                            #numExExtra="ngModel">
+                        <div class="invalid-tooltip"
+                            *ngIf="numExExtra.invalid && (numExExtra.dirty || numExExtra.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número interior</label>
+                        <input type="text" name="numInExtra" id="datParExtNumInt" maxlength="50"
+                            oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.numeroInterior"
+                            #numInExtra="ngModel">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Ciudad/localidad <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Ciudad/localidad</label>
+                        <input type="text" name="ciudadExtra" id="datParExtCiuLoc" maxlength="100"
+                            oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.ciudadLocalidad"
+                            #ciudadExtra="ngModel">
+                        <div class="invalid-tooltip"
+                            *ngIf="ciudadExtra.invalid && (ciudadExtra.dirty || ciudadExtra.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-5">
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Estado/provincia <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Estado/provincia</label>
+                        <input type="text" name="edoProv" id="datParExtEstPro" maxlength="100"
+                            oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.estadoProvincia"
+                            #edoProv="ngModel">
+                        <div class="invalid-tooltip" *ngIf="edoProv.invalid && (edoProv.dirty || edoProv.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">País <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">País</label>
+                        <select name="pais" required id="datParExtPai" appSelectValidator [compareWith]="cata.compareFn"
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.pais"
+                            #pais="ngModel">
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let pais of this.cata.catalogos?.CAT_PAIS" [ngValue]="pais">
+                                {{pais.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip" *ngIf="pais.invalid && (pais.dirty || pais.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Código postal</label>
+                        <input type="text" name="cpExtranjero" id="datParExtCp" required maxlength="10" minlength="1"
+                            oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.codigoPostal"
+                            #cpExtranjero="ngModel">
+                        <div class="invalid-tooltip"
+                            *ngIf="cpExtranjero.invalid && (cpExtranjero.dirty || cpExtranjero.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button> -->
+                    <button type="button" class="btn btn-success" [disabled]="!parejaExtranjeroForm.form.valid"
+                        (click)="guardarModalLugar('extranjero')">Aceptar</button>
+                    <button type="button" class="btn btn-dark" (click)="cerrarModalLugar('extranjero')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="modal-lugar-actividad" class="modal-lugar">
+    <form #actividadLaboral="ngForm">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h4 class="modal-title">Actividad laboral de la pareja</h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarModalLugar('actividad')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="datoPareja.ninguno !== true && !this.datosDePareja.ninguno === true ">
+                <div class="row">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Actividad laboral <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Actividad laboral</label>
+                        <select name="actividadLaboralLab" id="datParActLab" [compareWith]="cata.compareFn"
+                            #actividadLaboralLab="ngModel" (change)=limpiaDatosActividad()
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.ambitoSector" required appSelectValidator>
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let al of this.cata.catalogos?.CAT_AMBITO_SECTOR" [ngValue]="al">
+                                {{al.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip"
+                            *ngIf="actividadLaboralLab.invalid && (actividadLaboralLab.dirty || actividadLaboralLab.touched)">
+                            Por favor seleccione una opción...
+                        </div>
+                    </div>
+                    <div class="flecha-otro">
+                        <i *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                            class="fas fa-arrow-right"></i>
+                    </div>
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Especifique actividad <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Especifique actividad</label>
+                        <input type="text" name="especificActividad" id="datParEspAct" #especificActividad="ngModel"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.ambitoSectorOtro"
+                            oninput="CustomUpperCase(this);" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="especificActividad.invalid && (especificActividad.dirty || especificActividad.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '1'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Nivel/orden de gobierno <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nivel/orden de gobierno</label>
+                        <select name="nivelGobierno" #nivelGobierno="ngModel" id="datParNivGob"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPublico.nivelOrdenGobierno" required>
+                            <option value="null" disabled>SELECCIONE...</option>
+                            <option *ngFor="let orden of this.cata.enums?.ENUM_NIVEL_ORDEN_GOBIERNO" [value]="orden.id">
+                                {{orden.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip"
+                            *ngIf="nivelGobierno.invalid && (nivelGobierno.dirty || nivelGobierno.touched)">
+                            Por favor seleccione una opción...
+                        </div>
+                    </div>
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '1'"
+                        class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Ámbito público <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Ámbito público</label>
+                        <select name="ambitoPublico" #ambitoPublico="ngModel" id="datParAmbPub"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPublico.ambitoPublico" required>
+                            <option value="null" disabled>SELECCIONE...</option>
+                            <option *ngFor="let apubli of this.cata.enums?.ENUM_AMBITO_PODER" [value]="apubli.id">
+                                {{apubli.valor}}
+                            </option>
+
+                        </select>
+                        <div class="invalid-tooltip"
+                            *ngIf="ambitoPublico.invalid && (ambitoPublico.dirty || ambitoPublico.touched)">
+                            Por favor seleccione una opción...
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-5">
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '1'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Nombre del ente público <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nombre del ente público</label>
+                        <input type="text" name="nombreEnte" id="datParNomPub" maxlength="100" #nombreEnte="ngModel"
+                            oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPublico.nombreEntePublico" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="nombreEnte.invalid && (nombreEnte.dirty || nombreEnte.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '2' || datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Nombre de la Empresa, Sociedad o Asociación <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nombre de la Empresa, Sociedad o Asociación</label>
+                        <input type="text" name="nombreEmpresaSociedadAsociacion" id="datParNomEmp" maxlength="100"
+                            #nombreEmpresaSociedadAsociacion="ngModel" oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion"
+                            required>
+                        <div class="invalid-tooltip"
+                            *ngIf="nombreEmpresaSociedadAsociacion.invalid && (nombreEmpresaSociedadAsociacion.dirty || nombreEmpresaSociedadAsociacion.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '1'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Empleo,cargo o comisión <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Empleo,cargo o comisión</label>
+                        <input type="text" name="empleoCargoComision" id="datParEmpCarCom" maxlength="100"
+                            #empleoCargoComision="ngModel" oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPublico.empleoCargoComision" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="empleoCargoComision.invalid && (empleoCargoComision.dirty || empleoCargoComision.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '2' || datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">RFC <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">RFC </label>
+                        <input type="text" name="RFC" maxlength="12" id="datParActRfc" rfcMoralValid #RFC="ngModel"
+                            oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPrivadoOtro.rfc">
+                        <div class="invalid-tooltip" *ngIf="RFC.invalid && RFC.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+                    </div>
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '2' || datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Proveedor contratista de gobierno <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Proveedor contratista de gobierno </label>
+                        <select name="esProveedor" required id="datParProConGob"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPrivadoOtro.proveedorContratistaGobierno"
+                            #esProveedor="ngModel">
+                            <option value="null" disabled>SELECCIONE...</option>
+                            <option [ngValue]="true">SI</option>
+                            <option [ngValue]="false">NO</option>
+                        </select>
+                        <div class="invalid-tooltip"
+                            *ngIf="esProveedor.invalid && (esProveedor.dirty || esProveedor.touched)">
+                            Por favor seleccione una opción...
+                        </div>
+                    </div>
+
+
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Salario mensual neto <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Salario mensual neto</label>
+                        <input type="text" name="salarioNeto" id="datParSalMenNet" #salarioNeto="ngModel"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.salarioMensualNeto"
+                            oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="salarioNeto.invalid && (salarioNeto.dirty || salarioNeto.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '1'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Área de adscripción <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Área de adscripción</label>
+                        <input type="text" name="areaAdscripcion" id="datParAreAds" maxlength="100"
+                            #areaAdscripcion="ngModel" oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPublico.areaAdscripcion" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="areaAdscripcion.invalid && (areaAdscripcion.dirty || areaAdscripcion.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '2' || datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Área <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Área </label>
+                        <input type="text" name="areaAdscripcion" id="datParAre" maxlength="100"
+                            #areaAdscripcion="ngModel" oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPrivadoOtro.area" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="areaAdscripcion.invalid && (areaAdscripcion.dirty || areaAdscripcion.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '1'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Especifique función principal <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Especifique función principal</label>
+                        <input type="text" name="funcionPrincipal" id="datParEspFucPri" #funcionPrincipal="ngModel"
+                            maxlength="100" oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPublico.funcionPrincipal" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="funcionPrincipal.invalid && (funcionPrincipal.dirty || funcionPrincipal.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '2' || datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Empleo o cargo <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Empleo o cargo</label>
+                        <input type="text" name="empleoCargo" id="datParActEmpCar" #empleoCargo="ngModel"
+                            maxlength="100" oninput="CustomUpperCase(this);"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPrivadoOtro.empleoCargo" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="empleoCargo.invalid && (empleoCargo.dirty || empleoCargo.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+
+                    <div *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '2' || datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Sector <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Sector </label>
+                        <select name="funcionPrincipal" id="datParSec" #funcionPrincipal="ngModel"
+                            [compareWith]="cata.compareFn" (change)="limpiaSectorPrivadoOtro()"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPrivadoOtro.sector" required
+                            appSelectValidator>
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let sp of this.cata.catalogos?.CAT_SECTOR_PRIVADO" [ngValue]="sp">
+                                {{sp.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip"
+                            *ngIf="funcionPrincipal.invalid && (funcionPrincipal.dirty || funcionPrincipal.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="flecha-otro">
+                        <i *ngIf="datoParejaTmp.actividadLaboral.ambitoSector.id == '9999'"
+                            class="fas fa-arrow-right"></i>
+                    </div>
+                    <div *ngIf="datoParejaTmp.actividadLaboral.sectorPrivadoOtro.sector.id == '9999'"
+                        class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Especifique sector <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Especifique sector</label>
+                        <input type="text" name="especificSector" id="datParEspSec" #especificSector="ngModel"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.sectorPrivadoOtro.sectorOtro"
+                            oninput="CustomUpperCase(this);" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="especificSector.invalid && (especificSector.dirty || especificSector.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Fecha de ingreso al empleo <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Fecha de ingreso al empleo</label>
+                        <input fechaValid="{{fecha}}" type="date" name="fechaIngreso" id="datParFecIngEmp"
+                            #fechaIngreso="ngModel" maxlength="20" [max]="cata.fechaReferenciaMax"
+                            [(ngModel)]="datoParejaTmp.actividadLaboral.fechaIngreso" required>
+                        <div class="invalid-tooltip" *ngIf="fechaIngreso.invalid && fechaIngreso.touched">
+                            Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                                [attr.data-td]="tipoDeclaracion"
+                                onclick="abrirModalInfo('modalMsgFechasEncargo',this)"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" [disabled]="!actividadLaboral.form.valid"
+                        (click)="guardarModalLugar('actividad')">Aceptar</button>
+                    <button type="button" class="btn btn-dark" (click)="cerrarModalLugar('actividad')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

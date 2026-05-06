@@ -1,0 +1,18 @@
+.img-declaranet {
+    /* background-image: url('../../../assets/img/sprites.png'); */
+    background: url('../../../assets/img/FUNCION_HOTIZONTAL_FB.png') center;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-size: 100%;
+    min-height: 70px;
+    width: inherit;
+    min-width: 250px;
+}
+
+.card-header-declaranet {
+    min-width: 270px;
+}
+
+.alert-link {
+    cursor: pointer;
+}

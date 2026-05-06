@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-06-04T19:08:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="experienciaLaboral" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="996ba9cb-b55a-4245-8d9a-add50be2c3d9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="actividadLaboral.ambitoSector.valor" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPublico.nivelOrdenGobierno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="actividadLaboral.sectorPublico.ambitoPublico" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPublico.nombreEntePublico" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPrivadoOtro.rfc" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPublico.areaAdscripcion" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPrivadoOtro.area" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPublico.empleoCargoComision" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPrivadoOtro.empleoCargo" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPublico.funcionPrincipal" class="java.lang.String"/>
+	<field name="actividadLaboral.sectorPrivadoOtro.sector.valor" class="java.lang.String"/>
+	<field name="actividadLaboral.fechaIngreso" class="java.lang.String"/>
+	<field name="actividadLaboral.fechaEgreso" class="java.lang.String"/>
+	<field name="actividadLaboral.ubicacion" class="java.lang.String"/>
+	<field name="actividadLaboral.ambitoSectorOtro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="actividadLaboral.sectorPrivadoOtro.sectorOtro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="actividadLaboral.sectorPublico." class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="145" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="13" width="170" height="10" uuid="e18571e5-b553-4170-a207-7705169aa77b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ÁMBITO / SECTOR EN EL QUE LABORASTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="23" width="170" height="10" isRemoveLineWhenBlank="true" uuid="996a02a4-604b-41cb-a052-264a8353bc0d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPublico.nivelOrdenGobierno} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIVEL / ORDEN DE GOBIERNO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="100" height="10" isRemoveLineWhenBlank="true" uuid="b7ec9ad9-f676-495d-bd63-ad1e1c732081">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPublico.ambitoPublico} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ÁMBITO PÚBLICO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="43" width="240" height="20" isRemoveLineWhenBlank="true" uuid="43b4ec14-7b78-4c92-b528-240ca3a672da">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DEL ENTE PÚBLICO / NOMBRE DE LA EMPRESA,
+SOCIEDAD O ASOCIACIÓN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="63" width="100" height="10" uuid="575f6221-7722-428a-ab83-7f41ea56e46b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPrivadoOtro.rfc} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RFC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="73" width="161" height="10" uuid="524c7fce-69b8-4510-9c17-b58117847f11">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ÁREA DE ADSCRIPCIÓN / ÁREA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="83" width="180" height="10" uuid="dfbd3b5c-6841-4efb-aa34-363ad80010a2">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPLEO, CARGO O COMISIÓN / PUESTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="93" width="170" height="10" isRemoveLineWhenBlank="true" uuid="32ff1e59-9515-4da8-9e16-e27b8f203247">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPublico.funcionPrincipal} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESPECIFIQUE FUNCIÓN PRINCIPAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="103" width="166" height="10" isRemoveLineWhenBlank="true" uuid="515d75f7-acfb-4cd7-a6f1-03ca2d4acc9e">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPrivadoOtro.sector.valor} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECTOR AL QUE PERTENECE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="113" width="100" height="10" uuid="22db7816-6f2d-4024-9250-06b670a3e6cd">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE INGRESO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="123" width="100" height="10" uuid="b3d311b0-7c11-452d-bc95-46fabbf35fa9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE EGRESO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="133" width="100" height="10" uuid="03897733-34ba-4f76-a801-46995d951ca7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LUGAR DONDE SE UBICA:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="13" width="160" height="10" uuid="87d35b15-fdae-4d24-892c-2a9cb5249311">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.ambitoSector.valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="802" height="10" uuid="f423d8d2-8f1f-4753-934a-7f170f64f4c3">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPLEO, CARGO O COMISIÓN / PUESTO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="23" width="562" height="10" uuid="f73a3dc6-6d92-4478-b757-58a82a943428">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPublico.nivelOrdenGobierno} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{actividadLaboral.sectorPublico.nivelOrdenGobierno}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="33" width="562" height="10" isRemoveLineWhenBlank="true" uuid="4b281e8b-900a-4265-a6c6-57966ac8d1ea">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPublico.ambitoPublico} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{actividadLaboral.sectorPublico.ambitoPublico}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="43" width="562" height="20" isRemoveLineWhenBlank="true" uuid="aac00209-81d2-491c-8bbe-30931bc9c7f8">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.sectorPublico.nombreEntePublico} != null ? $F{actividadLaboral.sectorPublico.nombreEntePublico} : $F{actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="63" width="562" height="10" isRemoveLineWhenBlank="true" uuid="23296e1c-f3b3-44e6-bd5d-89cc34647dba">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPrivadoOtro.rfc} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.sectorPrivadoOtro.rfc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="73" width="562" height="10" uuid="77b15795-29d1-4051-aa55-be964683e61c">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.sectorPublico.areaAdscripcion} != null ? $F{actividadLaboral.sectorPublico.areaAdscripcion} : $F{actividadLaboral.sectorPrivadoOtro.area}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="83" width="562" height="10" uuid="81618161-7460-428e-9de6-cf04ac6cf687">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.sectorPublico.empleoCargoComision} != null ? $F{actividadLaboral.sectorPublico.empleoCargoComision} : $F{actividadLaboral.sectorPrivadoOtro.empleoCargo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="93" width="562" height="10" isRemoveLineWhenBlank="true" uuid="1fdbb641-5849-452d-8c02-1b54f6e9b9ee">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.sectorPublico.funcionPrincipal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="103" width="160" height="10" isRemoveLineWhenBlank="true" uuid="bf9eddcf-baa0-41d6-9827-ab7ac0e98841">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPrivadoOtro.sector.valor} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.sectorPrivadoOtro.sector.valor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="113" width="562" height="10" uuid="cb025b7f-aec9-4d89-a175-a1dc466fd71c">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.fechaIngreso}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="123" width="562" height="10" uuid="0c58a9c4-b2fb-4000-b64a-7daca51462f3">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.fechaEgreso}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="133" width="562" height="10" uuid="bdc88770-bbd3-4183-8cc9-3cb9bed8b632">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{actividadLaboral.ubicacion}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="13" width="402" height="10" uuid="5f223ccf-f532-4b57-a0e3-7b0c7b1b4525">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.ambitoSectorOtro} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.ambitoSectorOtro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="400" y="103" width="402" height="10" isRemoveLineWhenBlank="true" uuid="da9d5b7b-302f-46f2-9ef6-8e3289da9fd7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{actividadLaboral.sectorPrivadoOtro.sectorOtro} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividadLaboral.sectorPrivadoOtro.sectorOtro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

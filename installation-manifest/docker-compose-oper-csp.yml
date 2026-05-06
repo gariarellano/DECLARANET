@@ -1,0 +1,76 @@
+## docker-compose-oper.yml para realizar el lebantamiento del proyecto de operaciones y administración
+## del proyecto declaranet, ejecutando el comando $ docker-compose -f docker-compose-oper.yml up -d
+## dentro de la carpeta donde se encuentra este archivo.
+version: "3.8"
+services:
+###############################################################
+##COMIENZA SECCIÓN PARA LEBANTAR OPER-BACK##
+###############################################################
+  operback:
+    image: operback
+    build: 
+      context: ./oper/OperBack/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - AMBIENTE=STAGING
+      - SECRET=${OPER_SECRET_KEY}
+      - DOMINIO_KONG=kong-api-gateway:8000
+      - TOKEN_APPI=${KEY_API}
+      - IP_DOMINIO_FRONT=${DOMINIO_IDENTIDAD}
+      - ID_CLIENTE=2
+      - URL_DECLARACION=http://servicioimpresion:5000/api/consulta-declaracion
+      - URL_DECLA_DOMICILIOS=http://consultadeclaracion:5000/api/consulta-declaracion-direccion/
+      - URL_ACUSE=http://servicioimpresion:5000/api/consulta-acuse/
+      #Para generado de bitacora de consultas.
+      - db_name
+      - host
+      - password
+      - port
+      - username
+  
+  operfront:
+    image: operfront
+    build: 
+      context: ./oper/operfront/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - operback
+    
+    ports:
+      - 5002:5000
+
+#######################################################################
+##COMIENZA SECCIÓN PARA LEBANTAR CONSULTA-PUBLICA servidores publicos##
+#######################################################################
+  consultapublica:
+    image: consultapublica
+    build: 
+      context: ./csp/consultapublica/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - CURP_GRUPO4=[] ##DELEGADOSESTATALES dentro del los [debe ir el idUsuario de la tabla recepcionweb]
+      - CURP_GRUPO3=[] ##TITULARES APF dentro del los [debe ir el idUsuario de la tabla recepcionweb]
+      - CURP_GRUPO2=[] ##SUBSECRETARIOS dentro del los [debe ir el idUsuario de la tabla recepcionweb]
+      - CURP_GRUPO1=[] ##GABINETE dentro del los [debe ir el idUsuario de la tabla recepcionweb]
+      - ENTES_RECEPTORES=http://entereceptordecla:5000/api/consultar-todos/entes/
+      - CONSULTA_DECLARACION=http://servicioimpresion:5000/api/consulta-publica/
+      - db_name
+      - host
+      - password
+      - port
+      - username
+      
+  servidorespublicosfront:
+    image: servidorespublicosfront
+    build: 
+      context: ./csp/servidorespublicosfront/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - consultapublica
+    ports:
+      - 5003:5000
+  

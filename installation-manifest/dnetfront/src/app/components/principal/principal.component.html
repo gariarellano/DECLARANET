@@ -1,0 +1,882 @@
+<header>
+    <div class="col-sm-4">
+        <!--i class="fas fa-bars abrirMenu"></!i>
+        <span class="abrirMenu">Abrir</span-->
+    </div>
+    <div class="col-sm-4 text-center mt-1 pr-0 d-block py-1">
+        <!-- <span class="DeclaraNet" translate="no">Declara</span>
+        <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+        <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+    </div>
+    <!--div class="cuenta-content"><i class="fas fa-user-circle cuenta"></i><span class="cuenta">{{usuario.nombre}}</span>
+    </div-->
+
+</header>
+<div class="info-bar">
+    <div class="row">
+        <div class="col-sm-4 text-small">
+            {{tipoDeclaracion}} - {{fechaEncargo}}
+        </div>
+        <div class="col-sm-4 text-center">
+            <span class="DeclaraNet"
+                [ngClass]="{DnetRojo: institucionReceptora.collName === 100}">{{institucionReceptora.ente.nombre}}</span>
+        </div>
+        <div class="col-sm-4 text-center" style="cursor: pointer;">
+            <i class="fas fa-user-circle cuenta"></i>
+            <span class="cuenta">{{usuario.nombre}}</span>
+        </div>
+    </div>
+</div>
+<div class="menu-cuenta menu-cuenta2 fix-menu-princ">
+    <li (click)="home();"><i class="fas fa-home"></i> Salir de declaración</li>
+    <li (click)="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</li>
+</div>
+
+
+<div id="content-cargando">
+    <div class="spinner-border text-success" role="status">
+    </div>
+    <span>Guardando...</span>
+</div>
+
+
+<a id="goForwardBtn" (click)="goForward()" class="d-none"></a>
+<a id="goBackBtn" (click)="goBack()" class="d-none"></a>
+
+<div id="content-btnSave">
+
+    <!-- <button *ngIf="this.declaracionLoaded.firmada === true;" id="" (click)="open(19)" class="btn btn-info">Firmar <i -->
+    <button *ngIf="!this.errorCarga && this.declaracionLoaded.declaracion.datosGenerales.verificar === true;" id=""
+        (click)="previsualizar()" class="btn btn-info mr-2" style="min-width: 140px;">Vista previa <br /> <i
+            class="fas fa-eye"></i></button>
+    <!-- <button *ngIf="!this.errorCarga && this.datosGenerales.verificar === true;" id="guardaDatos" (click)="guardaDeclaracion();" class="btn btn-success mr-2">Guardar <br /> <i class="fas fa-save"></i></button> -->
+    <!-- <span class="d-inline-block" tabindex="0" data-toggle="tooltip" [attr.title]="revisaTooltip()" data-placement="top"> -->
+    <!-- <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip"> -->
+    <button *ngIf="!this.errorCarga" id="guardaDatos" (click)="guardaDeclaracion();" class="btn btn-success mr-2 test"
+        [disabled]="!flagGuardar || flagGuardando" data-toggle="tooltip" data-placement="top"
+        [attr.title]="revisaTooltip()">
+        {{flagGuardando? 'Guardando' : 'Guardar'}} <br /> <i class="fas fa-save"></i></button>
+    <!-- </span> -->
+    <button *ngIf="!this.errorCarga && this.declaracionLoaded.firmada === true;" data-target="#modalFirmar"
+        id="modalFirma" data-toggle="modal" class="btn btn-primary mr-2">Firmar <br /> <i
+            class="fas fa-highlighter"></i></button>
+
+</div>
+
+
+
+<div class="modal fade" id="modalFirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proceso de firmado y envío de la declaración</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> Antes de su envío, se recomienda ampliamente revise su declaración mediante la opción de <strong>
+                        VISTA PRELIMINAR</strong>, ya que una vez enviada,<strong> NO podrá hacer correcciones o
+                        enviarla de nueva cuenta.</strong></p>
+                <p> Para EL FIRMADO Y ENVÍO de su declaración, debe contar con su e.firma, la cual se tramita
+                    previamente ante el Servicio de Administración Tributaria (SAT), o mediante su Clave Única de
+                    Registro de Población (CURP) y contraseña con que ingresa
+                    al sistema DeclaraNet.</p>
+            </div>
+            <div class="modal-footer text-center container-fluid">
+
+                <button type="button" (click)="firmar()" data-dismiss="modal" class="btn btn-primary col-md-4">
+                    <i class="fas fa-highlighter"></i> Continuar con la firma</button>
+                <button type="button" class="btn btn-danger col-md-2" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancelar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="contenedor">
+
+    <div class="menu">
+        <ul>
+            <li><span id="section1">I Declaración Patrimonial</span>
+
+                <ul>
+                    <li class="itemnav item1"><i class="fas fa-circle"></i>1.1 Datos Generales</li>
+                    <li class="itemnav item2"><i class="fas fa-circle"></i>1.2 Domicilio </li>
+                    <li class="itemnav item3"><i class="fas fa-circle"></i>1.3 Datos curriculares</li>
+                    <li class="itemnav item4"><i class="fas fa-circle"></i>1.4 Datos del empleo</li>
+                    <li class="itemnav item5"><i class="fas fa-circle"></i>1.5 Experiencia laboral</li>
+                    <li class="itemnav item6"><i class="fas fa-circle"></i>1.6 Datos de la pareja
+                    </li>
+                    <!-- <li class="itemnav item7"><i class="fas fa-circle"></i>1.7 Actividad laboral de la pareja
+                    </li> -->
+                    <li class="itemnav item7"><i class="fas fa-circle"></i>1.7 Datos del dependiente</li>
+                    <li class="itemnav item8"><i class="fas fa-circle"></i>1.8 Ingresos netos</li>
+                    <li class="itemnav item9" *ngIf="this.encabezado?.tipoDeclaracion !== 'MODIFICACION'"><i
+                            class="fas fa-circle"></i>1.9 Actividad anual año inmediato anterior</li>
+
+                    <ng-container *ngIf="this.encabezado?.tipoFormato === 'COMPLETO'">
+                        <li class="itemnav item10"><i class="fas fa-circle"></i>1.10 Bienes inmuebles</li>
+                        <li class="itemnav item11"><i class="fas fa-circle"></i>1.11 Vehiculos
+                        </li>
+                        <li class="itemnav item12"><i class="fas fa-circle"></i>1.12 Bienes muebles</li>
+                        <li class="itemnav item13"><i class="fas fa-circle"></i>1.13 Inversiones y otro tipo de valores
+                        </li>
+                        <li class="itemnav item14"><i class="fas fa-circle"></i>1.14 Adeudos/pasivos</li>
+                        <li class="itemnav item15"><i class="fas fa-circle"></i>1.15 Préstamo bien inmueble
+
+                    </ng-container>
+
+                </ul>
+
+            </li>
+            <ng-container *ngIf="this.encabezado?.tipoFormato === 'COMPLETO'">
+                <li><span id="section2">II Declaración Intereses</span>
+
+                    <ul>
+                        <li class="itemnav item16"><i class="fas fa-circle"></i>2.1 Participación en empresas
+                        </li>
+                        <li class="itemnav item17"><i class="fas fa-circle"></i>2.2 Participa en la toma de desiciones
+                            de alguna de estas instituciónes</li>
+                        <li class="itemnav item18"><i class="fas fa-circle"></i>2.3 Apoyos o beneficios públicos
+                        </li>
+                        <li class="itemnav item19"><i class="fas fa-circle"></i>2.4 Representación</li>
+                        <li class="itemnav item20"><i class="fas fa-circle"></i>2.5 Clientes principales</li>
+                        <li class="itemnav item21"><i class="fas fa-circle"></i>2.6 Beneficios privados</li>
+                        <li class="itemnav item22"><i class="fas fa-circle"></i>2.7 Fideicomisos</li>
+                    </ul>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+    <div class="opacidad"></div>
+    <div class="menu-nav">
+        <ul>
+            <li id="item1" class="itemnav item1 " (click)="goToAnchor(0)">
+                <i id="iconCheck1" class="far fa-times-circle foco-rojo"></i>
+                <!-- <i id="iconCheck1" class="far fa-times-circle foco-rojo"></i> -->
+                <div class="iconsvg icon1"></div><span>Datos generales </span>
+            </li>
+            <li id="item2" class="itemnav item2" (click)="goToAnchor(1)">
+                <i class="far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon2"></div><span>Domicilio declarante</span>
+            </li>
+            <li id="item3" class="itemnav item3" (click)="goToAnchor(2)">
+                <i class="far far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon3"></div><span>Datos curriculares del declarante</span>
+            </li>
+            <li id="item4" class="itemnav item4" (click)="goToAnchor(3)">
+                <i id="iconCheck4" class="far far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon4"></div><span>Datos del empleo</span>
+            </li>
+            <li id="item5" class="itemnav item5" (click)="goToAnchor(4)">
+                <i id="iconCheck5" class="far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon5 "></div><span>Experiencia laboral</span>
+            </li>
+            <li id="item6" class="itemnav item6" *ngIf="tipoFormato != 'SIMPLIFICADO'" (click)="goToAnchor(5)">
+                <i class="far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon6"></div><span>Datos de la pareja</span>
+            </li>
+            <!-- <li class="itemnav item7" data-toggle="tooltip" data-placement="left" title="Actividad laboral de la pareja"><i class="itemnav item7 fas fa-user-tie" style="font-weight:600;"></i><i class="itemnav item4 fas fa-male"></i></li> -->
+            <li id="item7" *ngIf="tipoFormato != 'SIMPLIFICADO'" class="itemnav item7" (click)="goToAnchor(6)">
+                <i class="far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon7"></div><span>Datos dependiente económico</span>
+            </li>
+
+            <li id="item8" class="itemnav item8" (click)="goToAnchor(7)">
+                <i class="far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon8"></div><span>Ingresos netos</span>
+            </li>
+            <li id="item9" class="itemnav item9" (click)="goToAnchor(8)"
+                [hidden]="this.encabezado?.tipoDeclaracion === 'MODIFICACION'">
+                <i class="far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon9"></div><span>Actividad anual anterior</span>
+            </li>
+            <ng-container *ngIf="this.encabezado?.tipoFormato === 'COMPLETO'">
+                <li id="item10" class="itemnav item10" (click)="goToAnchor(9)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon10"></div><span>Bienes inmuebles</span>
+                </li>
+                <li id="item11" class="itemnav item11" (click)="goToAnchor(10)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon11"></div><span>Vehículos</span>
+                </li>
+                <li id="item12" class="itemnav item12" (click)="goToAnchor(11)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon12"></div><span>Bienes muebles</span>
+                </li>
+                <li id="item13" class="itemnav item13" (click)="goToAnchor(12)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon13"></div><span>Inversiones</span>
+                </li>
+                <li id="item14" class="itemnav item14" (click)="goToAnchor(13)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon14"></div><span>Adeudos/pasivos</span>
+                </li>
+                <li id="item15" class="itemnav item15" (click)="goToAnchor(14)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon15"></div><span>Préstamos o comodato por terceros</span>
+                </li>
+                <!-- <li class="itemnav item16" data-toggle="tooltip" data-placement="left" title="Presamo o comodatos / vehículos"><i class="itemnav item16 fas fa-user-shield"></i></li> -->
+                <li id="item16" class="itemnav item16" (click)="goToAnchor(15)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon16"></div><span>Participación de empresas</span>
+                </li>
+                <li id="item17" class="itemnav item17" (click)="goToAnchor(16)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon17"></div><span>¿Participa en toma de decisiones?</span>
+                </li>
+                <li id="item18" class="itemnav item18" (click)="goToAnchor(17)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon18"></div><span>Apoyos o beneficios</span>
+                </li>
+                <li id="item19" class="itemnav item19" (click)="goToAnchor(18)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon19"></div><span>Representación</span>
+                </li>
+                <li id="item20" class="itemnav item20" (click)="goToAnchor(19)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon20"></div><span>Clientes principales</span>
+                </li>
+                <li id="item21" class="itemnav item21" (click)="goToAnchor(20)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon21"></div><span>Beneficios privados</span>
+                </li>
+                <li id="item22" class="itemnav item22" (click)="goToAnchor(21)">
+                    <i class="far fa-times-circle foco-rojo"></i>
+                    <div class="iconsvg icon22"></div><span>Fideicomisos</span>
+
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+
+    <div class="main onepage-wrapper">
+        <section id="datosGenerales" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <app-datos-generales (aceptar)="procesaAceptar($event,'generales')"></app-datos-generales>
+        </section>
+        <section id="domicilio" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <app-domicilio (aceptar)="procesaAceptar($event,'domicilio')"></app-domicilio>
+        </section>
+        <section id="datosCurriculares" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <div class="title d-flex justify-content-between">
+                <h4 class=" m-4 mt-3">Datos curriculares del declarante</h4>
+                <!-- <i class="fas fa-question-circle mr-3 help m-4 mt-3"></i> -->
+            </div>
+            <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Escolaridad</h6>
+            <!-- <i (click)="open(1)" data-toggle="modal" class="fas fa-plus-circle btn-add ml-4"></i> -->
+            <button id="agregarDaCu" class="agregar ml-4" (click)="open(1)">
+                <div class='icon'>
+                    <i class="fas fa-plus-circle btn-add"></i>
+                </div>
+                <div class='text'>
+                    <span>Agregar</span>
+                </div>
+            </button>
+            <app-datos-curriculares (modificar)="open(1,$event)" (eliminar)="delete(1,$event)"
+                (acla)="aclaraciones(1,$event)"></app-datos-curriculares>
+        </section>
+        <section id="datosEmpleo" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <div class="title d-flex justify-content-between">
+                <h4 class=" m-4 mt-3 ">Datos del empleo, cargo o comisión {{globals.textSubTitleEmpleo}}</h4>
+                <!--AQUI VA VARIABLE-->
+                <!-- <i class="fas fa-question-circle mr-3 help m-4 mt-3 "></i> -->
+
+            </div>
+            <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Empleo, cargo o comisión / puesto</h6>
+
+            <!-- <i (click)="open(2) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 "></i> -->
+            <button id="agregarDaEm" class="agregar ml-4" (click)="open(2)">
+                <div class='icon'>
+                    <i class="fas fa-plus-circle btn-add"></i>
+                </div>
+                <div class='text'>
+                    <span>Agregar</span>
+                </div>
+            </button>
+
+            <app-datos-empleo (modificar)="open(2,$event)" (eliminar)="delete(2,$event)"
+                (acla)="aclaraciones(2,$event)"></app-datos-empleo>
+        </section>
+        <section id="expLaboral" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <div class="title d-flex justify-content-between ">
+                <h4 class=" ml-4 mt-3 ">Experiencia laboral <span>(Últimos
+                        cinco empleos)</span></h4>
+                <!-- <i class="fas fa-question-circle mr-3 help m-l mt-3 "></i> -->
+            </div>
+            <h6 style="color: rgb(116, 116, 116);" class="ml-4">Empleo, cargo o comisión / puesto</h6>
+            <!-- <i id="abrirExperiencia" (click)="open(3)" data-toggle="modal" class="fas fa-plus-circle btn-add ml-4" *ngIf="this.experienciaLab.ninguno !== true"></i> -->
+            <button id="agregarExpLab" class="agregar ml-4" (click)="open(3)"
+                *ngIf="this.experienciaLab.ninguno !== true">
+                <div class='icon'>
+                    <i class="fas fa-plus-circle btn-add"></i>
+                </div>
+                <div class='text'>
+                    <span>Agregar</span>
+                </div>
+            </button>
+            <app-experiencia-laboral (modificar)="open(3,$event)" (eliminar)="delete(3,$event)"
+                (acla)="aclaraciones(3,$event)" (ninguno)="checarN('experiencia')"></app-experiencia-laboral>
+        </section>
+        <section *ngIf="tipoFormato != 'SIMPLIFICADO'" id="datosPareja" (swipeup)="swipeEvent(1)"
+            (swipedown)="swipeEvent(0)" class="page custom-padding onepage-wrapper">
+            <app-datos-pareja (aceptar)="procesaAceptar($event, 'pareja') "></app-datos-pareja>
+        </section>
+        <!-- <section class="page ">
+            <app-actividad-laboral-pareja (aceptar)="procesaAceptar($event, 'laboral') "></app-actividad-laboral-pareja>
+        </section> -->
+        <section *ngIf="tipoFormato != 'SIMPLIFICADO'" id="datosDependienteEconom" (swipeup)="swipeEvent(1)"
+            (swipedown)="swipeEvent(0)" class="page custom-padding onepage-wrapper">
+            <div class="title d-flex justify-content-between mb-3 ">
+                <h4 class=" m-4 mt-3 ">Datos dependiente económico</h4>
+                <!-- <i class="fas fa-question-circle mr-3 help m-4 mt-3 "></i> -->
+            </div>
+            <!-- <i id="abrirDependiente" (click)="open(4)" data-toggle="modal" class="fas fa-plus-circle btn-add ml-4" *ngIf="this.datosDependiente.ninguno !== true"></i> -->
+            <button id="agregarDaDep" class="agregar ml-4" (click)="open(4)"
+                *ngIf="this.datosDependiente.ninguno !== true">
+                <div class='icon'>
+                    <i class="fas fa-plus-circle btn-add"></i>
+                </div>
+                <div class='text'>
+                    <span>Agregar</span>
+                </div>
+            </button>
+            <app-datos-dependiente (modificar)="open(4,$event)" (eliminar)="delete(4,$event)"
+                (acla)="aclaraciones(4,$event)" (ninguno)="checarN('dependiente')"></app-datos-dependiente>
+        </section>
+        <section id="ingresosNetos" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <app-ingresos-netos (aceptar)="procesaAceptar($event, 'ingresos')"
+                (calculaEnajenacion)="calculaEnajenacion();"></app-ingresos-netos>
+        </section>
+
+        <section id="actAnual" *ngIf="tDeclaracion != 'MODIFICACION'" (swipeup)="swipeEvent(1)"
+            (swipedown)="swipeEvent(0)" class="page custom-padding onepage-wrapper">
+            <app-actividad-anual-anterior (aceptar)="procesaAceptar($event, 'ingresosAnt')">
+            </app-actividad-anual-anterior>
+        </section>
+
+        <ng-container *ngIf="encabezado.tipoFormato === 'COMPLETO'">
+            <section id="sectionBienesInmuebles" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="inmuebles ">Bienes inmuebles {{globals.textoTitulos}}</h4>
+                    <!--AQUI VA VARIABLE-->
+                    <!-- <i class="fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de bienes declarados a nombre de
+                    la pareja, dependientes económicos y/o terceros o que sea en copropiedad con el declarante no serán
+                    públicos.
+                </h6>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Bienes del declarante, pareja y / o dependientes
+                    económicos.
+                </h6>
+
+                <!-- <i id="abrirInmueble" (click)="open(5)" data-toggle="modal" class="fas fa-plus-circle btn-add ml-4" *ngIf="this.bienesInmuebles.ninguno !== true"></i> -->
+                <button id="agregarBiInm" class="agregar ml-4" (click)="open(5)"
+                    *ngIf="this.bienesInmuebles.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-bienes-inmuebles (modificar)="open(5,$event)" (eliminar)="delete(5,$event)"
+                    (acla)="aclaraciones(5,$event)" (ninguno)="checarN('inmuebles')"></app-bienes-inmuebles>
+            </section>
+            <section id="vehiculos" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="vehiculos ">Vehículos {{globals.textoTitulos}}</h4>
+                    <!--AQUI VA VARIABLE-->
+                    <!-- <i class="fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de vehículos declarados a nombre
+                    de la pareja, dependientes económicos y o terceros o que sea en copropiedad con el declarante no
+                    serán públicos.
+                </h6>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Vehículos del declarante, pareja y / o
+                    dependientes económicos.
+                </h6>
+                <!-- <i id="abrirVehiculo" (click)="open(6)" data-toggle="modal" class="fas fa-plus-circle btn-add ml-4" *ngIf="this.vehiculos.ninguno !== true"></i> -->
+                <button id="agregarVehi" class="agregar ml-4" (click)="open(6)" *ngIf="this.vehiculos.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-vehiculos (modificar)="open(6,$event)" (eliminar)="delete(6,$event)"
+                    (acla)="aclaraciones(6,$event)" (ninguno)="checarN('vehiculos')"></app-vehiculos>
+            </section>
+            <section id="binesMuebles" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="bienesMuebles ">Bienes muebles {{globals.textoTitulos}}</h4>
+                    <!--AQUi VA VARIABLE-->
+                    <!-- <i class="fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de bienes declarados a nombre de
+                    la pareja, dependientes económicos y o terceros o que sea en copropiedad con el declarante no serán
+                    públicos.
+                </h6>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Bienes del declarante, pareja y / o dependientes
+                    económicos.
+                </h6>
+                <!-- <i id="abrirMueble" (click)="open(7)" data-toggle="modal" class="fas fa-plus-circle btn-add ml-4" *ngIf="this.bienesMuebles.ninguno !== true"></i> -->
+                <button id="agregarBiMue" class="agregar ml-4" (click)="open(7)"
+                    *ngIf="this.bienesMuebles.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-bienes-muebles (modificar)="open(7,$event)" (eliminar)="delete(7,$event)"
+                    (acla)="aclaraciones(7,$event)" (ninguno)="checarN('muebles')"></app-bienes-muebles>
+            </section>
+            <section id="inversiones" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="inversiones ">Inversiones, cuentas bancarias y otro tipo de valores /
+                        activos {{globals.textoTitulos}}</h4>
+                    <!--AQUI VA VARIABLE-->
+                    <!-- <i class="fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de las inversiones, cuentas
+                    bancarias y otro tipo de valores / activos a nombre de la pareja, dependientes económicos y o
+                    terceros o que sea en copropiedad con el declarante no serán públicos.</h6>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Inversiones, cuentas bancarias y otro tipo de
+                    valores del declarante, pareja y / o dependientes económicos.</h6>
+                <!-- <i id="abrirInversion" (click)="open(8) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.inversiones.ninguno !== true"></i> -->
+                <button id="agregarInv" class="agregar ml-4" (click)="open(8)"
+                    *ngIf="this.inversiones.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-inversiones (modificar)="open(8,$event)" (eliminar)="delete(8,$event)"
+                    (acla)="aclaraciones(8,$event)" (ninguno)="checarN('inversiones')"></app-inversiones>
+            </section>
+            <section id="adeudos" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="adeudos ">Adeudos / Pasivos {{globals.textoTitulos}}</h4>
+                    <!--AQUI VA VARIABLE-->
+                    <!-- <i class="fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de los adeudos / pasivos a nombre
+                    de la pareja, dependientes económicos y o terceros o que sea en copropiedad con el declarante no
+                    serán públicos.
+                </h6>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Adeudos del declarante, pareja y / o dependientes
+                    económicos.
+                </h6>
+                <!--AQUI VA VARIABLE (Saldo insoluto)-->
+                <!-- <i id="abrirAdeudo" (click)="open(9) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.adeudos.ninguno !== true"></i> -->
+                <button id="agregarAde" class="agregar ml-4" (click)="open(9)" *ngIf="this.adeudos.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-adeudos (modificar)="open(9,$event)" (eliminar)="delete(9,$event)" (acla)="aclaraciones(9,$event)"
+                    (ninguno)="checarN('adeudos')">
+                </app-adeudos>
+            </section>
+            <section id="prestamoInmueble" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between">
+                    <h4 class=" m-4 mt-3 " id="prestamoInmueble ">Pŕestamo o comodato por terceros
+                        {{globals.textoTitulos}}
+                    </h4>
+                    <!--AQUI VA VARIABLE-->
+                    <!-- <i class="fas fa-question-circle mr-3 help m-4 mt-3 "></i> -->
+                </div>
+                <!-- <i id="abrirPrestaInmueble" (click)="open(10) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 "></i> -->
+                <p class="ml-4">Indicar si existe algún bien prestado por un tercero que el declarante use</p>
+                <div id="botonesComodatos" *ngIf="this.prestamoComodatos.ninguno !== true">
+                    <button id="abrirPrestaInmueble" class="btn btn-success ml-4 mb-4" (click)="open(10) "
+                        data-toggle="modal ">Agregar Inmueble <i class="fas fa-home"></i></button>
+                    <button id="abrirPrestaVehiculo" class="btn btn-success ml-4 mb-4" (click)="open(11) "
+                        data-toggle="modal ">Agregar Vehículo <i class="fas fa-car-side"></i></button>
+                </div>
+
+                <app-prestamo-bien-inmueble (modificarI)="open(10,$event)" (modificarV)="open(11,$event)"
+                    (eliminar)="delete(10,$event)" (acla)="aclaraciones(10,$event)" (ninguno)="checarN('bienInmueble')">
+                </app-prestamo-bien-inmueble>
+            </section>
+            <!-- <section class="page ">
+            <div class="title d-flex justify-content-between mb-3 ">
+                <h4 class=" m-4 mt-3 " id="prestamoVehiculo ">Pŕestamo o comodato por terceros/Vehículos</h4>
+                <i class="fas fa-question-circle mr-3 help m-4 mt-3 "></i>
+            </div>
+            <i (click)="open(11) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 "></i>
+            <app-prestamo-bien-vehiculo></app-prestamo-bien-vehiculo>
+        </section> -->
+            <section id="participaEmpresa" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="participaEmpresas ">Participación en empresas, sociedades o asociaciones
+                        (Hasta los 2 últimos años)
+                    </h4>
+                    <!-- <i class="fas fa-question-circle mr-3 help m-4 mt-3 "></i> -->
+                </div>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de la Participación en empresas
+                    sociedades o asociaciones de la pareja o dependientes económicos no serán públicos</h6>
+                <!-- <i id="abrirParticipaEmpresa" (click)="open(12) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.participaEmpresasDatos.ninguno !== true"></i> -->
+                <button id="agregarParEmp" class="agregar ml-4" (click)="open(12)"
+                    *ngIf="this.participaEmpresasDatos.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-participacion-empresas (modificar)="open(12,$event)" (eliminar)="delete(12,$event)"
+                    (acla)="aclaraciones(12,$event)" (ninguno)="checarN('participaEmpresa')">
+                </app-participacion-empresas>
+            </section>
+            <section id="tomaDecisiones" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="participaDesiciones ">¿Participa en la toma de decisiones de alguna de
+                        estas instituciones? (Hasta los 2 últimos años)
+                    </h4>
+                    <!-- <i class="fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de la participación en alguna de
+                    estas instituciones de la pareja o dependientes económicos no serán públicos.</h6>
+                <!-- <i id="abrirParticipaDesicion" (click)="open(13) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.participaDecisionesDatos.ninguno !== true"></i> -->
+                <button id="agregarParEmp" class="agregar ml-4" (click)="open(13)"
+                    *ngIf="this.participaDecisionesDatos.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-participa-toma-decisiones (modificar)="open(13,$event)" (eliminar)="delete(13,$event)"
+                    (acla)="aclaraciones(13,$event)" (ninguno)="checarN('participaTomaDecisiones')">
+                </app-participa-toma-decisiones>
+            </section>
+            <section id="beneficios" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between mb-3 ">
+                    <h4 class=" ml-4 mt-3 " id="apoyos ">Apoyos o beneficios públicos (Hasta los 2 últimos años)
+                    </h4>
+                    <!-- <i class="fas fa-question-circle mr-3 help m-4 mt-3 "></i> -->
+                </div>
+                <!-- <i id="abrirApoyos" (click)="open(14) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.apoyosoBeneficiosDatos.ninguno !== true"></i> -->
+                <button id="agregarApo" class="agregar ml-4" (click)="open(14)"
+                    *ngIf="this.apoyosoBeneficiosDatos.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-apoyos-beneficios (modificar)="open(14,$event)" (eliminar)="delete(14,$event)"
+                    (acla)="aclaraciones(14,$event)" (ninguno)="checarN('apoyosBen')"></app-apoyos-beneficios>
+            </section>
+            <section id="representacion" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="representacion ">Representación (Hasta los 2 últimos años)
+                    </h4>
+                    <!-- <i class="fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de representación de la pareja o
+                    dependientes económicos no serán públicos.</h6>
+                <!-- <i id="abrirRepre" (click)="open(15) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.representacionDatos.ninguno !== true"></i> -->
+                <button id="agregarRepre" class="agregar ml-4" (click)="open(15)"
+                    *ngIf="this.representacionDatos.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-representacion (modificar)="open(15,$event)" (eliminar)="delete(15,$event)"
+                    (acla)="aclaraciones(15,$event)" (ninguno)="checarN('representacion')"></app-representacion>
+            </section>
+            <section id="clientesPrincipales" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class=" title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id=" clientes ">Clientes principales (Hasta los 2 últimos años)
+                    </h4>
+                    <!-- <i class=" fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+                <h6 style=" color: rgb(116, 116, 116); " class=" ml-4 ">Todos los datos de clientes principales de la
+                    pareja o dependientes económicos no serán públicos.</h6>
+                <h6 style=" color: rgb(116, 116, 116); " class=" ml-4 ">Se manifestará el beneficio o ganancia directa
+                    del declarante si supera mensualmente 250 unidades de medida y actualización (UMA).</h6>
+                <!-- <i id=" abrirClientesPrin" (click)="open(16) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.clientesDatos.realizaActividadLucrativa === true"></i> -->
+                <button id="agregarCliPrin" class="agregar ml-4" (click)="open(16)"
+                    *ngIf="this.clientesDatos.realizaActividadLucrativa === true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-clientes-principales (modificar)="open(16,$event)" (eliminar)="delete(16,$event)"
+                    (acla)="aclaraciones(16,$event)" (realizaActividadLucrativa)="checar('clientesPrinc')">
+                </app-clientes-principales>
+            </section>
+            <section id="beneficiosPrivados" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" m-4 mt-3 " id="beneficios ">Beneficios privados (Hasta los 2 últimos años)
+                    </h4>
+                    <!-- <i class="fas fa-question-circle mr-3 help m-4 mt-3 "></i> -->
+                </div>
+                <!-- <i id="abrirBeneficios" (click)="open(17) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.beneficiosPrivadosDatos.ninguno !== true"></i> -->
+                <button id="agregarBen" class="agregar ml-4" (click)="open(17)"
+                    *ngIf="this.beneficiosPrivadosDatos.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-beneficios-privados (modificar)="open(17,$event)" (eliminar)="delete(17,$event)"
+                    (acla)="aclaraciones(17,$event)" (ninguno)="checarN('beneficios')"></app-beneficios-privados>
+            </section>
+            <section id="fideicomisos" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+                class="page custom-padding onepage-wrapper">
+                <div class="title d-flex justify-content-between ">
+                    <h4 class=" ml-4 mt-3 " id="fideicomisos ">Fideicomisos (Hasta los 2 últimos años)
+                    </h4>
+                    <!-- <i class="fas fa-question-circle mr-3 help ml-4 mt-3 "></i> -->
+                </div>
+                <h6 style="color: rgb(116, 116, 116); " class="ml-4 ">Todos los datos de participación en fideicomisos
+                    de la pareja o dependientes económicos no serán públicos.</h6>
+                <!-- <i id="abrirFideicomisos" (click)="open(18) " data-toggle="modal " class="fas fa-plus-circle btn-add ml-4 " *ngIf="this.fideicomisosDatos.ninguno !== true"></i> -->
+                <button id="agregarFid" class="agregar ml-4" (click)="open(18)"
+                    *ngIf="this.fideicomisosDatos.ninguno !== true">
+                    <div class='icon'>
+                        <i class="fas fa-plus-circle btn-add"></i>
+                    </div>
+                    <div class='text'>
+                        <span>Agregar</span>
+                    </div>
+                </button>
+                <app-fideicomisos (modificar)="open(18,$event)" (refresh)="renderView()" (eliminar)="delete(18,$event)"
+                    (acla)="aclaraciones(18,$event)" (ninguno)="checarN('fideicomisos')"></app-fideicomisos>
+            </section>
+        </ng-container>
+    </div>
+</div>
+
+<button type="button" #modalGuardarButton id="modalGuardarButton" class="btn btn-primary" data-toggle="modal"
+    data-target="#modalGuardar" style="display: none;">
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="modalGuardar" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+                <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalGuardarClose">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div *ngIf="!this.guardarDeclaracionError; else errorDeclara">
+                    <span class="alerticonModal"><img src="assets/image/sucess.png" alt="checkmark" />
+                        <h2>Declaración guardada exitosamente</h2>
+                        <span *ngIf="mensajeCambioFormate">{{mensajeCambioFormate}}</span>
+                    </span>
+                </div>
+                <ng-template #errorDeclara>
+                    <span class="alerticonModal"><img src="assets/image/error.png" alt="checkmark" />
+                        <p class="text-black">{{this.guardarDeclaracionError}}</p>
+                        <div *ngIf="this.guardarDeclaracionErrorArr">
+                            <p *ngFor="let error of guardarDeclaracionErrorArr">{{error.error}}</p>
+                        </div>
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" #modalErrorCarga id="modalErrorCargaButton" class="btn btn-primary" data-toggle="modal"
+    data-target="#modalErrorCarga" style="display: none;">
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="modalErrorCarga" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="alerticonModal"><img src="assets/image/error.png" alt="checkmark" />
+                    <p class="text-black">Error en la carga inicial, salga a la declaración e intente de nuevo</p>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" #modalErrorDG id="modalErrorDGButton" class="btn btn-primary" data-toggle="modal"
+    data-target="#modalErrorDG" style="display: none;">
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="modalErrorDG" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="alerticonModal"><img src="assets/image/info.png" alt="checkmark" width="50px;" />
+                    <h5>
+                        <p class="text-black mt-2">Para realizar el guardado de la información, es necesario que primero
+                            registres los Datos Generales.
+                        </p>
+                    </h5>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" #modalAvisoPrivacidad id="modalAvisoPrivacidadButton" class="btn btn-primary" data-toggle="modal"
+    data-target="#modalAvisoPrivacidad" style="display: none;">
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="modalAvisoPrivacidad" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="alerticonModal"><img src="assets/image/privacidad.png" alt="checkmark" width="50px;" />
+                    <h5>
+                        <p class="text-black mt-2">Aviso de privacidad que algo dirá
+                        </p>
+                    </h5>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalMsgFechasEncargo" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false" style="z-index: 2050;">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="alerticonModal">
+                    <!--<img src="assets/image/info.png" alt="checkmark" width="50px;" />-->
+                    <i class="fas fa-info-circle mb-2" style="font-size: 40px;"></i>
+                    <h5 id="mensajeModal">
+                        <p class="text-black mt-2" *ngIf="tDeclaracion === 'INICIO' || tDeclaracion === 'CONCLUSION'">
+                            La fecha seleccionada debe ser anterior o igual ala fecha del encargo (<span
+                                style="color:rgb(187, 27, 27);">{{dayFechaEnc}}</span>)
+                        </p>
+                        <p class="text-black mt-2" *ngIf="tDeclaracion === 'MODIFICACION'">
+                            La fecha seleccionada tiene que ser menor o igual a la
+                            fecha del último día del año inmediato anterior (<span
+                                style="color:rgb(187, 27, 27);">{{fechaEnc.getDate()+1}}-{{fechaEnc.getMonth()+1}}-{{fechaEnc.getFullYear()}}</span>)
+                        </p>
+
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalMsgFechas" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false" style="z-index: 2050;">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="alerticonModal">
+                    <!--<img src="assets/image/info.png" alt="checkmark" width="50px;" />-->
+                    <i class="fas fa-info-circle mb-2" style="font-size: 40px;"></i>
+                    <h5 id="mensajeModal">
+                        <p class="text-black mt-2" *ngIf="tDeclaracion === 'INICIO' || tDeclaracion === 'CONCLUSION'">
+                            Para las declaraciones de Inicio y Conclusión la fecha de egreso tiene que ser menor o igual
+                            a la fecha del encargo (<span style="color:rgb(187, 27, 27);">{{dayFechaEnc}}</span>)
+                        </p>
+                        <p class="text-black mt-2" *ngIf="tDeclaracion === 'MODIFICACION'">
+                            Para la declaración de Modificación la fecha de egreso tiene que ser menor o igual a la
+                            fecha del último día del año inmediato anterior (<span
+                                style="color:rgb(187, 27, 27);">{{fechaEnc.getDate()+1}}-{{fechaEnc.getMonth()+1}}-{{fechaEnc.getFullYear()}}</span>)
+                        </p>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

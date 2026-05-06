@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Mar 27 11:20:52 CST 2020
+@default-SFP-REPO-http\://sfp-wfds8\:8083/repository/.lastUpdated=1585329644655
+http\://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/.lastUpdated=1585329652946
+http\://sfp-wfds8\:8083/repository/.error=Could not transfer artifact com.lowagie\:itext\:jar\:2.1.7.js7 from/to SFP-REPO (http\://sfp-wfds8\:8083/repository)\: Transfer failed for http\://sfp-wfds8\:8083/repository/com/lowagie/itext/2.1.7.js7/itext-2.1.7.js7.jar
+https\://repo.maven.apache.org/maven2/.lastUpdated=1585329652286
+https\://repo.maven.apache.org/maven2/.error=

@@ -1,0 +1,39 @@
+<div class="container-fluid  ml-2 pt-3 h-75">
+    <div class="table-responsive h-50">
+        <table class="table table-striped" aria-describedby="tabla vehiculo" summary="tabla vehiculo">
+            <thead>
+                <tr>
+                    <th scope="col">Sector</th>
+                    <th scope="col">Nivel</th>
+                    <th scope="col">Ámbito Público</th>
+                    <th scope="col">Nombre Ente</th>
+                    <th scope="col">RFC</th>
+                    <th scope="col">Área</th>
+                    <th scope="col">Puesto</th>
+                    <th scope="col">Función </th>
+                    <th scope="col">Sector</th>
+                    <th scope="col">Fecha Ingreso</th>
+                    <th scope="col">Fecha Egreso</th>
+                    <th scope="col">Lugar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr></tr> -->
+            </tbody>
+        </table>
+
+    </div>
+    <div class="row mt-5">
+        <button (click)="abrirObservaciones()" type="button" class="observaciones"><i
+        class="far fa-envelope"></i> Aclaraciones / Observaciones </button>
+    </div>
+
+    <div id="obs-prestamo-vehiculo" class="content-observaciones">
+        <div>
+            <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+            <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+            <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)" id="aclaracionesObservaciones" cols="80" rows="15" maxlength="2000" [(ngModel)]="this.aclara" #aclaracion="ngModel"></textarea>
+            <button (click)="cerrarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+        </div>
+    </div>
+</div>

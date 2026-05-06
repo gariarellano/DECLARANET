@@ -1,0 +1,12 @@
+/.settings/
+/target/
+/.classpath
+/.project
+/src/main/generated/*
+/.idea
+*.iml
+.vertx
+/.vertx
+/.vertx/*
+/nb-configuration.xml
+nb-configuration.xml

@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-01-20T19:34:41 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="domicilio" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Error" uuid="b5756683-75ef-497e-87e3-d36c1e337cac">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="domicilioMexico.calle" class="java.lang.String"/>
+	<field name="domicilioMexico.numeroExterior" class="java.lang.String"/>
+	<field name="domicilioMexico.numeroInterior" class="java.lang.String"/>
+	<field name="domicilioMexico.coloniaLocalidad" class="java.lang.String"/>
+	<field name="domicilioMexico.municipioAlcaldia.valor" class="java.lang.String"/>
+	<field name="domicilioMexico.entidadFederativa.valor" class="java.lang.String"/>
+	<field name="domicilioMexico.codigoPostal" class="java.lang.String"/>
+	<field name="domicilioExtranjero.calle" class="java.lang.String">
+		<fieldDescription><![CDATA[domicilioExtranjero.calle]]></fieldDescription>
+	</field>
+	<field name="domicilioExtranjero.numeroExterior" class="java.lang.String"/>
+	<field name="domicilioExtranjero.numeroInterior" class="java.lang.String"/>
+	<field name="domicilioExtranjero.ciudadLocalidad" class="java.lang.String"/>
+	<field name="domicilioExtranjero.estadoProvincia" class="java.lang.String"/>
+	<field name="domicilioExtranjero.pais.valor" class="java.lang.String"/>
+	<field name="domicilioExtranjero.codigoPostal" class="java.lang.String"/>
+	<field name="ubicacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="145" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="10" isRemoveLineWhenBlank="true" uuid="9e7cceea-f8b8-4f1e-8066-9650ec6bc7da">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<box bottomPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EN MÉXICO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="267" height="10" isRemoveLineWhenBlank="true" uuid="15ea4d2f-3487-4e7b-bec1-9a94b7a3d348">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO POSTAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="30" width="268" height="10" isRemoveLineWhenBlank="true" uuid="de41dab2-ef85-461d-b9bc-e5c441842c12">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENTIDAD FEDERATIVA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="30" width="267" height="10" isRemoveLineWhenBlank="true" uuid="5bf283a2-dfae-4a9f-981e-5bf8df4ad927">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPIO / ALCALDIA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="267" height="10" isRemoveLineWhenBlank="true" uuid="7ccbcebb-0e7c-47b7-9d60-1faf94a2eeb7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLONIA / LOCALIDAD:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="10" width="268" height="10" isRemoveLineWhenBlank="true" uuid="748ad531-6212-4045-bddd-d7f4ca8d2e38">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO INTERIOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="10" width="267" height="10" isRemoveLineWhenBlank="true" uuid="96b5a21e-cd77-40d3-bdaa-2112bbb03d0a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO EXTERIOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="10" width="267" height="10" isRemoveLineWhenBlank="true" uuid="2b9187ee-7080-4a38-b042-4205976c3a34">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CALLE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="802" height="12" isRemoveLineWhenBlank="true" uuid="4ed13ffd-42a6-420c-8f6a-564162bef50a">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EN EL EXTRANJERO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="20" width="267" height="10" isRemoveLineWhenBlank="true" uuid="48c83a5f-29b4-4d6f-95bd-63d746b2081e">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioMexico.calle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="20" width="267" height="10" isRemoveLineWhenBlank="true" uuid="ecc3b279-7443-4c93-abed-1ce9ecf481cc">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioMexico.numeroExterior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="20" width="268" height="10" isRemoveLineWhenBlank="true" uuid="d6f2b4bf-975a-49c9-8387-747068bfbdbe">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioMexico.numeroInterior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="267" height="10" isRemoveLineWhenBlank="true" uuid="dc3c9455-b324-4af5-9a99-8a0ce94c6768">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioMexico.coloniaLocalidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="40" width="267" height="10" isRemoveLineWhenBlank="true" uuid="37cc66ab-b624-460d-b223-f5846cb71293">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioMexico.municipioAlcaldia.valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="40" width="268" height="10" isRemoveLineWhenBlank="true" uuid="1a3ba248-bab2-4c72-a23b-61b0e59426b8">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioMexico.entidadFederativa.valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="60" width="267" height="10" isRemoveLineWhenBlank="true" uuid="0607c1b3-2f31-460d-b86d-7e24c1d400e1">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "MEXICO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioMexico.codigoPostal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="82" width="267" height="10" isRemoveLineWhenBlank="true" uuid="7f327c47-4f72-41c2-8e0e-8b8eaac4a2fb">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CALLE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="82" width="267" height="10" isRemoveLineWhenBlank="true" uuid="fb83546f-0b25-4831-b39e-3cbe9046c006">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO EXTERIOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="82" width="268" height="10" isRemoveLineWhenBlank="true" uuid="d427c2ae-8e34-47bd-8274-b35f2b930957">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO INTERIOR:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="92" width="267" height="10" isRemoveLineWhenBlank="true" uuid="3a782e7c-b313-499c-914b-e759c5ce2bdb">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioExtranjero.calle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="92" width="267" height="10" isRemoveLineWhenBlank="true" uuid="d3fda3e8-7e09-4815-a0bd-9596db3a833a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioExtranjero.numeroExterior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="92" width="268" height="10" isRemoveLineWhenBlank="true" uuid="a308ca41-5dad-456f-ad8d-5533f1dad110">
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioExtranjero.numeroInterior}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="102" width="267" height="10" isRemoveLineWhenBlank="true" uuid="ad229b7d-ed88-4fea-beed-a49df2bfdeb0">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIUDAD / LOCALIDAD:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="102" width="267" height="10" isRemoveLineWhenBlank="true" uuid="c6c88f69-cc02-41ad-9870-854fa193d9df">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO / PROVINCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="102" width="268" height="10" isRemoveLineWhenBlank="true" uuid="02046e5f-4dc9-4d9b-ac31-3b8cda6bb747">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="122" width="267" height="10" isRemoveLineWhenBlank="true" uuid="a5134a38-0b2e-4fff-ad0b-1511c36bba6b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO POSTAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="112" width="267" height="10" isRemoveLineWhenBlank="true" uuid="7770b26f-4066-4da5-a2c4-6dbab238cba1">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioExtranjero.ciudadLocalidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="112" width="267" height="10" isRemoveLineWhenBlank="true" uuid="0c2ad5ef-ee4b-4ba6-989e-e184ae6f91bd">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioExtranjero.estadoProvincia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="112" width="268" height="10" isRemoveLineWhenBlank="true" uuid="da145dab-87aa-4bc5-a67d-a3dfececc872">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioExtranjero.pais.valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="132" width="267" height="10" isRemoveLineWhenBlank="true" uuid="0b532cfa-1305-4f33-9c9c-2762be13ea7a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{ubicacion}.equals( "EXTRANJERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioExtranjero.codigoPostal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

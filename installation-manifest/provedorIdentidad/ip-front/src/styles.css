@@ -1,0 +1,193 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f8fa;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.invalid-realTime {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+
+/* body {
+    background-color: #f5f8fa;
+} */
+
+
+/* .container {
+    margin-top: 40px;
+} */
+
+.container-form {
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgray;
+    background-clip: padding-box;
+    background-color: #ffffff !important;
+}
+
+
+/* Animaciones */
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+.icon-alert {
+    margin-right: 0px;
+}
+
+.icon-lg {
+    font-size: 40px;
+}
+
+.modal-content {
+    opacity: 0.9;
+}
+
+.modal-body {
+    min-height: 150px;
+}
+
+.alerticonModal {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+/* SECCION MSJ */
+
+
+/* BEGIN */
+
+
+/* .my-notify-info,
+.my-notify-success,
+.my-notify-warning,
+.my-notify-error {
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.my-notify-info:before,
+.my-notify-success:before,
+.my-notify-warning:before,
+.my-notify-error:before {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: 400;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    margin-left: .2em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.my-notify-info:before {
+    content: "f05a";
+}
+
+.my-notify-success:before {
+    content: 'f00c';
+}
+
+.my-notify-warning:before {
+    content: 'f071';
+}
+
+.my-notify-error:before {
+    content: 'f057';
+}
+
+.my-notify-info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+
+.my-notify-success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+
+.my-notify-warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+
+.my-notify-error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+}
+
+.isa_info,
+.isa_success,
+.isa_warning,
+.isa_error {
+    margin: 10px 0px;
+    padding: 12px;
+}
+
+.isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+
+.isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+
+.isa_error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+} */
+
+
+/* END */

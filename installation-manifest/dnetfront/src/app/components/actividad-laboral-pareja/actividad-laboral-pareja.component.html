@@ -1,0 +1,193 @@
+<form class="container-fluid  h-100 overflow-auto ml-2 pt-3 h-75">
+    <div class="title d-flex justify-content-between mb-3">
+        <h4>Actividad laboral de la Pareja</h4> <i class="fas fa-question-circle mr-3 help"></i>
+    </div>
+
+    <div id="content-act-pareja">
+        <div class="row">
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Actividad laboral <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Actividad laboral</label>
+                <select name="actividadLaboralLab" maxlength="10" id="ActLabActLab" #actividadLaboralLab="ngModel" [(ngModel)]="actividadLaboral.ambitoSector.id" required>
+                    <option *ngFor="let al of this.cata.catalogos?.CAT_AMBITO_SECTOR" [value]="al.id">
+                        {{al.valor}}
+                    </option>
+                </select>
+                <div class="invalid-tooltip" *ngIf="actividadLaboralLab.invalid && (actividadLaboralLab.dirty || actividadLaboralLab.touched)">
+                    Por favor seleccione una opción...
+                </div>
+            </div>
+            <div class="flecha-otro">
+                <i *ngIf="actividadLaboral.ambitoSector.id == '9999'" class="fas fa-arrow-right"></i>
+            </div>
+            <div *ngIf="actividadLaboral.ambitoSector.id == '9999'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Especifique actividad <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Especifique actividad</label>
+                <input type="text" name="especificActividad" id="ActLabEspAct" #especificActividad="ngModel" [(ngModel)]="actividadLaboral.ambitoSector.valor" oninput="CustomUpperCase(this);" required>
+                <div class="invalid-tooltip" *ngIf="especificActividad.invalid && (especificActividad.dirty || especificActividad.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+            <div *ngIf="actividadLaboral.ambitoSector.id == '1'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Nivel/orden de gobierno <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Nivel/orden de gobierno</label>
+                <select name="nivelGobierno" maxlength="10" id="ActLabNivGob" #nivelGobierno="ngModel" [(ngModel)]="actividadLaboral.sectorPublico.nivelOrdenGobierno" required>
+                    <option *ngFor="let orden of this.cata.enums?.ENUM_NIVEL_ORDEN_GOBIERNO" [value]="orden.id">
+                        {{orden.valor}}
+                    </option>
+                </select>
+                <div class="invalid-tooltip" *ngIf="nivelGobierno.invalid && (nivelGobierno.dirty || nivelGobierno.touched)">
+                    Por favor seleccione una opción...
+                </div>
+            </div>
+            <div *ngIf="actividadLaboral.ambitoSector.id == '1'" class="col d-flex flex-column justify-content-center">
+                <label [hidden]="!help" for="">Ámbito público <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Ámbito público</label>
+                <select name="ambitoPublico" maxlength="10" id="ActLabAmbPub" #ambitoPublico="ngModel" [(ngModel)]="actividadLaboral.sectorPublico.ambitoPublico" required>
+                    <option *ngFor="let apubli of this.cata.enums?.ENUM_AMBITO_PODER" [value]="apubli.id">
+                        {{apubli.valor}}
+                    </option>
+
+                </select>
+                <div class="invalid-tooltip" *ngIf="ambitoPublico.invalid && (ambitoPublico.dirty || ambitoPublico.touched)">
+                    Por favor seleccione una opción...
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-5">
+            <div *ngIf="actividadLaboral.ambitoSector.id == '1'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Nombre del ente público <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Nombre del ente público</label>
+                <input type="text" name="nombreEnte" maxlength="100" id="ActLabNomPub" #nombreEnte="ngModel" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.sectorPublico.nombreEntePublico" required>
+                <div class="invalid-tooltip" *ngIf="nombreEnte.invalid && (nombreEnte.dirty || nombreEnte.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+            <div *ngIf="actividadLaboral.ambitoSector.id == '2'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Nombre de la Empresa, Sociedad o Asociación <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Nombre de la Empresa, Sociedad o Asociación</label>
+                <input type="text" name="nombreEnte" maxlength="100" id="ActLabNomEmp" #nombreEnte="ngModel" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion" required>
+                <div class="invalid-tooltip" *ngIf="nombreEnte.invalid && (nombreEnte.dirty || nombreEnte.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+
+            <div *ngIf="actividadLaboral.ambitoSector.id == '1'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Empleo,cargo o comisión <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Empleo,cargo o comisión</label>
+                <input type="text" name="empleoCargo" maxlength="10" id="ActLabEmpCarCom" #empleoCargo="ngModel" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.sectorPublico.empleoCargoComision" required>
+                <div class="invalid-tooltip" *ngIf="empleoCargo.invalid && (empleoCargo.dirty || empleoCargo.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+            <div *ngIf="actividadLaboral.ambitoSector.id == '2'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">RFC  <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">RFC </label>
+                <input type="text" name="empleoCargo" maxlength="10" id="ActLabRfc" #empleoCargo="ngModel" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.sectorPrivadoOtro.rfc" required>
+                <div class="invalid-tooltip" *ngIf="empleoCargo.invalid && (empleoCargo.dirty || empleoCargo.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Salario mensual neto <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Salario mensual neto</label>
+                <input type="text" name="salarioNeto" id="ActLabSalMenNet" #salarioNeto="ngModel" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.salarioMensualNeto" required>
+                <div class="invalid-tooltip" *ngIf="salarioNeto.invalid && (salarioNeto.dirty || salarioNeto.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div *ngIf="actividadLaboral.ambitoSector.id == '1'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Área de adscripción <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Área de adscripción</label>
+                <input type="text" name="areaAdscripcion" id="ActLabAreAds" maxlength="100" #areaAdscripcion="ngModel" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.sectorPublico.areaAdscripcion" required>
+                <div class="invalid-tooltip" *ngIf="areaAdscripcion.invalid && (areaAdscripcion.dirty || areaAdscripcion.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+            <div *ngIf="actividadLaboral.ambitoSector.id == '2'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Área <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Área </label>
+                <input type="text" name="areaAdscripcion" id="ActLabAre" maxlength="100" #areaAdscripcion="ngModel" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.sectorPrivadoOtro.area" required>
+                <div class="invalid-tooltip" *ngIf="areaAdscripcion.invalid && (areaAdscripcion.dirty || areaAdscripcion.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+
+            <div *ngIf="actividadLaboral.ambitoSector.id == '1'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Especifique función principal <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Especifique función principal</label>
+                <input type="text" name="funcionPrincipal" id="ActLabEspFucPri" #funcionPrincipal="ngModel" maxlength="100" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.sectorPublico.funcionPrincipal" required>
+                <div class="invalid-tooltip" *ngIf="funcionPrincipal.invalid && (funcionPrincipal.dirty || funcionPrincipal.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+            <div *ngIf="actividadLaboral.ambitoSector.id == '2'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Empleo o cargo <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Empleo o cargo</label>
+                <input type="text" name="funcionPrincipal" id="ActLabEmpCar" #funcionPrincipal="ngModel" maxlength="100" oninput="CustomUpperCase(this);" [(ngModel)]="actividadLaboral.sectorPrivadoOtro.empleoCargo" required>
+                <div class="invalid-tooltip" *ngIf="funcionPrincipal.invalid && (funcionPrincipal.dirty || funcionPrincipal.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+
+            <div *ngIf="actividadLaboral.ambitoSector.id == '2'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Sector <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Sector </label>
+                <select name="funcionPrincipal" #funcionPrincipal="ngModel" id="ActLabSec" maxlength="100" [(ngModel)]="actividadLaboral.sectorPrivadoOtro.sector" required>
+                    <option *ngFor="let sp of this.cata.catalogos.CAT_SECTOR_PRIVADO" [value]="sp.id">
+                        {{sp.valor}}
+                    </option>
+                    </select>
+                <div class="invalid-tooltip" *ngIf="funcionPrincipal.invalid && (funcionPrincipal.dirty || funcionPrincipal.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+
+
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Fecha de ingreso al empleo <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Fecha de ingreso al empleo</label>
+                <input type="date" name="fechaIngreso" #fechaIngreso="ngModel" id="ActLabFecIngEmp" maxlength="20" [(ngModel)]="actividadLaboral.fechaIngreso" required>
+                <div class="invalid-tooltip" *ngIf="fechaIngreso.invalid && (fechaIngreso.dirty || fechaIngreso.touched)">
+                    Campo requerido...
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+          <button (click)="abrirObservaciones()" type="button" class="observaciones"><i
+            class="far fa-envelope"></i> Aclaraciones / Observaciones </button>
+
+            <button class="btn btn-success ml-3" [disabled]="!form.valid" (click)="guardaLocal()">Aceptar</button>
+        </div>
+
+        <div id="obs-act-lab" class="content-observaciones">
+            <div>
+                <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                <label for="opinion">Tu opinión es importante</label>
+                <textarea name="opinion" id="opinion" cols="80" rows="15"></textarea>
+                <button (click)="cerrarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</form>

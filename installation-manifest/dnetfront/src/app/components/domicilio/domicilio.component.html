@@ -1,0 +1,217 @@
+<div id="scrollDomicilio" class="altoScroll" (mousewheel)="_wheel($event);">
+    <form [formGroup]="form" class="container-fluid  ml-2 pt-3 h-75">
+        <div class="title d-flex justify-content-between mb-3">
+            <h4>Domicilio del declarante</h4> <i class="fas fa-question-circle mr-3 help"></i>
+            <span> <img src="assets/image/star.png" class="imgRequired"  alt=""> Dato obligatorio</span>
+
+        </div>
+        <div formGroupName="domicilio" class="row w-25">
+            <div class="col d-flex flex-column justify-content-center" *ngFor="let dato of globals.enums?.ENUM_UBICACION">
+                <label for="ubicacion{{dato.id}}">{{dato.valor}}</label>
+                <input (click)="selectUbicacion(dato.id)" formControlName="ubicacion" (change)="validateStatusForm()" type="radio" [value]="dato.id" id="ubicacion{{dato.id}}">
+            </div>
+            <!-- <div class="col d-flex flex-column justify-content-center">
+            <label for="extranjero">En extranjero</label>
+            <input (click)="selectUbicacion('extranjero')" formControlName="ubicacion" (change)="validateStatusForm()" type="radio" value="extranjero" name="ubicacion" id="extranjero">
+        </div> -->
+        </div>
+        <div formGroupName="domicilio" *ngIf="form.get('domicilio.ubicacion').value == 'MEXICO'">
+            <div class="row mt-5">
+                <div class="col d-flex flex-column justify-content-center">
+                    <h5 class="">En México</h5>
+                </div>
+            </div>
+            <div formGroupName="domicilioMexico" class="row">
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Calle <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Calle</label>
+                    <input type="text" required id="domCal" name="" maxlength="300" formControlName="calle" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioMexico.calle').valid && (form.get('domicilio.domicilioMexico.calle').dirty || form.get('domicilio.domicilioMexico.calle').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Número exterior <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Número exterior</label>
+                    <input type="text" id="domNumExt" required name="" maxlength="50" formControlName="numeroExterior" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioMexico.numeroExterior').valid && (form.get('domicilio.domicilioMexico.numeroExterior').dirty || form.get('domicilio.domicilioMexico.numeroExterior').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Número interior <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Número interior </label>
+                    <input type="text" id="domNumIn" name="" maxlength="50" formControlName="numeroInterior" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Colonia/localidad <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Colonia/localidad</label>
+                    <input type="text" required id="domCol" name="" maxlength="100" formControlName="coloniaLocalidad" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioMexico.coloniaLocalidad').valid && (form.get('domicilio.domicilioMexico.coloniaLocalidad').dirty || form.get('domicilio.domicilioMexico.coloniaLocalidad').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+
+            </div>
+
+            <div formGroupName="domicilioMexico" class="row mt-5">
+                <div formGroupName="entidadFederativa" class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Entidad federativa <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Entidad federativa </label>
+                    <select name="" required id="domEntFed" [compareWith]="globals.compareFn" formControlName="id" (change)="filterMunicipios($event.target.value)">
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let data of globals.catalogos?.CAT_ENTIDAD_FEDERATIVA" [value]="data.id">
+                            {{data.valor}}
+                        </option>
+                    </select>
+                    <span class="invalid-tooltip" *ngIf="form.get('domicilio.domicilioMexico.entidadFederativa.id').touched && form.get('domicilio.domicilioMexico.entidadFederativa.id').pristine  && !form.get('domicilio.domicilioMexico.entidadFederativa.id').valid">
+                        Campo Requerido
+                    </span>
+                </div>
+
+                <div formGroupName="municipioAlcaldia" class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Municipio/Alcaldía <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Municipio/Alcaldía</label>
+                    <select name="" required id="domMunAlc" maxlength="10" formControlName="id">
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let data of this?.filterMuns" [value]="data.id">
+                            {{data.valor}}
+                        </option>
+                    </select>
+                    <span class="invalid-tooltip" *ngIf="form.get('domicilio.domicilioMexico.municipioAlcaldia.id').touched && form.get('domicilio.domicilioMexico.municipioAlcaldia.id').pristine && !form.get('domicilio.domicilioMexico.municipioAlcaldia.id').valid">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Código postal <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Código postal </label>
+                    <input type="text" required id="domCp"  name="" maxlength="5" minlength="5" onkeydown="return solonumero(event);" formControlName="codigoPostal" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioMexico.codigoPostal').valid && (form.get('domicilio.domicilioMexico.codigoPostal').dirty || form.get('domicilio.domicilioMexico.codigoPostal').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+        <div formGroupName="domicilio" *ngIf="form.get('domicilio.ubicacion').value == 'EXTRANJERO'">
+            <div class="row mt-5">
+                <div class="col d-flex flex-column justify-content-center">
+                    <h5 class="">En el extranjero</h5>
+                </div>
+            </div>
+            <div formGroupName="domicilioExtranjero" class="row">
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Calle <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Calle</label>
+                    <input type="text" required id="domExCal" name="" maxlength="300" formControlName="calle" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioExtranjero.calle').valid && (form.get('domicilio.domicilioExtranjero.calle').dirty || form.get('domicilio.domicilioExtranjero.calle').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Número exterior <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Número exterior</label>
+                    <input type="text" name="" id="domExtNumExt" required maxlength="50" formControlName="numeroExterior" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioExtranjero.numeroExterior').valid && (form.get('domicilio.domicilioExtranjero.numeroExterior').dirty || form.get('domicilio.domicilioExtranjero.numeroExterior').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Número interior <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Número interior </label>
+                    <input type="text" name="" id="domExtNumInt"  maxlength="50" formControlName="numeroInterior" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioExtranjero.numeroInterior').valid && (form.get('domicilio.domicilioExtranjero.numeroInterior').dirty || form.get('domicilio.domicilioExtranjero.numeroInterior').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+
+            </div>
+
+            <div formGroupName="domicilioExtranjero" class="row mt-5">
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Ciudad/localidad <i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Ciudad/localidad</label>
+                    <input type="text" name="" id="domExtCiuLoc" required maxlength="100" formControlName="ciudadLocalidad" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioExtranjero.ciudadLocalidad').valid && (form.get('domicilio.domicilioExtranjero.ciudadLocalidad').dirty || form.get('domicilio.domicilioExtranjero.ciudadLocalidad').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Estádo/Provincia<i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Estádo/Provincia</label>
+                    <input type="text" name="" id="domExtEdoPro" required maxlength="100" formControlName="estadoProvincia" oninput="CustomUpperCase(this);" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioExtranjero.estadoProvincia').valid && (form.get('domicilio.domicilioExtranjero.estadoProvincia').dirty || form.get('domicilio.domicilioExtranjero.estadoProvincia').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div formGroupName="pais" class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">País<i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">País</label>
+                    <select name="" required id="domPai" [compareWith]="globals.compareFn" formControlName="id">
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let data of globals.catalogos.CAT_PAIS" [value]="data.id">
+                            {{data.valor}}
+                        </option>
+                    </select>
+                    <span class="invalid-tooltip" *ngIf="form.get('domicilio.domicilioExtranjero.pais.id').touched && form.get('domicilio.domicilioExtranjero.pais.id').pristine && !form.get('domicilio.domicilioExtranjero.pais.id').valid">
+                        Campo Requerido
+                    </span>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" (click)="openHelp('nombre')" for="">Código postal<i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Código postal</label>
+                    <input type="text" name="" required  id="domExtCp" formControlName="codigoPostal" maxlength="10" minlength="1" (change)="validateStatusForm()">
+                    <span class="invalid-tooltip" *ngIf="!form.get('domicilio.domicilioExtranjero.codigoPostal').valid && (form.get('domicilio.domicilioExtranjero.codigoPostal').dirty || form.get('domicilio.domicilioExtranjero.codigoPostal').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <button type="button" (click)="abrirObservaciones()" class="observaciones"><i class="far fa-envelope"></i> Aclaraciones / Observaciones
+                </button>
+            <button *ngIf="form.get('domicilio.ubicacion').value == 'MEXICO'" (click)="guardaLocal(form)" class="btn btn-success ml-3" [disabled]="!form.get('domicilio.domicilioMexico').valid">Aceptar</button>
+            <button *ngIf="form.get('domicilio.ubicacion').value == 'EXTRANJERO'" (click)="guardaLocal(form)" class="btn btn-success ml-3" [disabled]="!form.get('domicilio.domicilioExtranjero').valid">Aceptar</button>
+        </div>
+
+        <div id="obs-domicilio" class="content-observaciones">
+            <div>
+                <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+                <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)" id="aclaracionesObservacionesDomicilio" cols="80" rows="15" maxlength="2000" formControlName="aclaracionesObservaciones"></textarea>
+                <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>

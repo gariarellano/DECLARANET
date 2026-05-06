@@ -1,0 +1,63 @@
+"Consulta de catálogos Declaranet"
+schema {
+    query: Query
+}
+
+"Funciones de consulta"
+type Query {
+"Función para obtener todos los registros del catálogo"
+obtenerCatalogo: [Catalogo]
+
+"Función para obtener los registros activos del catálogo"
+obtenerCatalogoActivo: [Catalogo]
+
+"Función para obtener los registros activos del catálogo por fk"
+obtenerCatalogoActivoFk(fk: Int!): [Catalogo]
+
+"Función para obtener un registro del catálogo por el identificador único"
+obtenerCatalogoPorId(id: Int!): Catalogo
+
+"Función para obtener un registro del catálogo por el identificador único y una llave adicional"
+obtenerCatalogoPorIdFk(id: Int!, fk: Int!): Catalogo
+
+"Función para validar que la información de un catálogo sea correcta"
+validarInfoCatalogo(registro : CatalogoValidar!): Boolean
+}
+
+"Catálogo"
+type Catalogo {
+	"Identificador único del catálogo"
+	id: Int!
+	
+	"Descripción o valor del registro"
+	valor: String
+
+	"Descripción o valor del registro adicional"
+	valorUno: String
+
+	"Alguna llave FK"
+	fk: Int
+
+	"Indica si se encuentra activo o inactivo (0 = INACTIVO 1 = ACTIVO)"
+	activo: Int
+
+	"Fecha de registro"
+	fechaRegistro: String
+}
+
+"Elemento para validar la información de un catálogo"
+input CatalogoValidar {
+
+	"Id del catálogo"
+	id: Int!
+
+	"Descripción o valor del registro"
+	valor: String!
+
+	"Descripción o valor del registro adicional"
+	valorUno: String
+
+	"Alguna llave FK"
+	fk: Int
+
+}

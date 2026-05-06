@@ -1,0 +1,809 @@
+<div class="modal-content" style="height: 600px;">
+    <div class="modal-header">
+
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Datos dependiente económico</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <form #dependienteTipoForm="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="ddependienteRadio" type="radio" required
+                            id="radio{{data.id}}" [(ngModel)]="datosDependiente.tipoOperacion" [value]="data.id"
+                            (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-body" style="overflow-y: scroll">
+        <form #dependienteForm="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel"
+                [(ngModel)]="datosDependiente.tipoOperacion">
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre(s) <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre(s)</label>
+                    <input [disabled]="getDisabled( nombre , datosDependiente.tipoOperacion)" type="text" id="datDepNom"
+                        name="nombre" #nombre="ngModel" maxlength="35" oninput="CustomUpperCase(this);" required
+                        [(ngModel)]="datosDependiente.datosPersonales.nombre">
+                    <div class="invalid-tooltip" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for=""> Primer apellido<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for=""> Primer apellido </label>
+                    <input [disabled]="getDisabled( primerApellido , datosDependiente.tipoOperacion)" type="text"
+                        id="datDepPriApe" name="primerApellido" #primerApellido="ngModel" maxlength="35"
+                        oninput="CustomUpperCase(this);" required
+                        [(ngModel)]="datosDependiente.datosPersonales.primerApellido">
+                    <div class="invalid-tooltip"
+                        *ngIf="primerApellido.invalid && (primerApellido.dirty || primerApellido.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for=""> Segundo apellido<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for=""> Segundo apellido </label>
+                    <input [disabled]="getDisabled( segundoApellido , datosDependiente.tipoOperacion)" type="text"
+                        name="segundoApellido" id="datDepSegAPe" #segundoApellido="ngModel" maxlength="35"
+                        oninput="CustomUpperCase(this);" [(ngModel)]="datosDependiente.datosPersonales.segundoApellido">
+                    <div class="invalid-tooltip"
+                        *ngIf="segundoApellido.invalid && (segundoApellido.dirty || segundoApellido.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Fecha nacimiento <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fecha nacimiento</label>
+                    <input fechaValid="{{fecha}}"
+                        [disabled]="getDisabled( fechaNacimiento , datosDependiente.tipoOperacion)" type="date"
+                        name="fechaNacimiento" id="datDepFecNac" #fechaNacimiento="ngModel" maxlength="20" required
+                        [(ngModel)]="datosDependiente.datosPersonales.fechaNacimiento"
+                        [max]="globals.fechaReferenciaMax">
+                    <!--<div class="invalid-tooltip" *ngIf="fechaNacimiento.invalid && (fechaNacimiento.dirty || fechaNacimiento.touched)">
+                        Campo requerido...
+                    </div>-->
+                    <div class="invalid-tooltip" *ngIf="fechaNacimiento.invalid && fechaNacimiento.touched">
+                        Fecha invalida <i class="fas fa-info-circle" role="button" type="button"
+                            [attr.data-td]="tipoDeclaracion" onclick="abrirModalInfo('modalMsgFechasEncargo',this)"></i>
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC</label>
+                    <input [disabled]="getDisabled( rfcDependiente , datosDependiente.tipoOperacion)" type="text"
+                        name="rfcDependiente" id="datDepRfc" #rfcDependiente="ngModel" oninput="CustomUpperCase(this);"
+                        maxlength="13" rfcValid [(ngModel)]="datosDependiente?.datosPersonales.rfc">
+                    <div class="invalid-tooltip" *ngIf="rfcDependiente.invalid && rfcDependiente.touched">
+                        <div *ngIf="rfcDependiente.errors.rfcValid && rfcDependiente.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Parentesco o relación con declarante <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Parentesco o relación con declarante</label>
+                    <select [disabled]="getDisabled( parentescoRelacion , datosDependiente.tipoOperacion)"
+                        name="parentescoRelacion" [compareWith]="cata.compareFn" id="datDepParRelDec"
+                        #parentescoRelacion="ngModel" (change)="limpiaParentesco();" maxlength="10" required
+                        appSelectValidator [(ngModel)]="datosDependiente.parentescoRelacion">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let Parentesco of this.cata.catalogos.CAT_TIPO_RELACION_DEPENDIENTES"
+                            [ngValue]="Parentesco">
+                            {{Parentesco.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="parentescoRelacion.invalid && (parentescoRelacion.dirty || parentescoRelacion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div *ngIf="datosDependiente.parentescoRelacion.id == '9999'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Especifique parentesco <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique parentesco</label>
+                    <input [disabled]="getDisabled( especificParent , datosDependiente.tipoOperacion)" type="text"
+                        name="especificParent" id="datDepEspPar" #especificParent="ngModel"
+                        [(ngModel)]="datosDependiente.parentescoRelacionOtro" oninput="CustomUpperCase(this);" required>
+                    <div class="invalid-tooltip"
+                        *ngIf="especificParent.invalid && (especificParent.dirty || especificParent.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+            </div>
+            <div class="row p-3">
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">¿Es ciudadano extranjero? <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">¿Es ciudadano extranjero?</label>
+                    <select [disabled]="getDisabled( esExtranjero , datosDependiente.tipoOperacion)" name="esExtranjero"
+                        #esExtranjero="ngModel" id="datDepCiuExt" required
+                        [(ngModel)]="datosDependiente.ciudadanoExtranjero.esExtranjero">
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option [ngValue]=true>SI</option>
+                        <option [ngValue]=false>NO</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="esExtranjero.invalid && (esExtranjero.dirty || esExtranjero.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div *ngIf="datosDependiente.ciudadanoExtranjero.esExtranjero ==false"
+                    class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for="">CURP <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">CURP</label>
+                    <input [disabled]="getDisabled( curp , datosDependiente.tipoOperacion)" type="text" name="curp"
+                        #curp="ngModel" id="datDepCur" maxlength="18" oninput="CustomUpperCase(this);" curpValid
+                        required [(ngModel)]="datosDependiente.ciudadanoExtranjero.curp">
+                    <div class="invalid-tooltip" *ngIf="curp.invalid && curp.touched">
+                        <div *ngIf="curp.errors.CurpValid && curp.touched">
+                            La CURP debe contener el formato correcto...
+                        </div>
+                        <div *ngIf="curp.errors.required">
+                            Campo requerido....
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">¿Habita en el domicilio del declarante? <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">¿Habita en el domicilio del declarante?</label>
+                    <select [disabled]="getDisabled( habitaDomicilioDeclarante , datosDependiente.tipoOperacion)"
+                        name="habitaDomicilioDeclarante" id="datDepHabDomDec" #habitaDomicilioDeclarante="ngModel"
+                        required [(ngModel)]="this.datosDependiente.habitaDomicilioDeclarante">
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option [ngValue]=true>SI</option>
+                        <option [ngValue]=false>NO</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="habitaDomicilioDeclarante.invalid && (habitaDomicilioDeclarante.dirty || habitaDomicilioDeclarante.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between"
+                    *ngIf="datosDependiente.habitaDomicilioDeclarante == false">
+                    <label [hidden]="!help" for="">Lugar donde reside <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Lugar donde reside</label>
+                    <select [disabled]="getDisabled( lugarDondeReside , datosDependiente.tipoOperacion)"
+                        name="lugarDondeReside" #lugarDondeReside="ngModel" id="datDepLugRes" required
+                        [(ngModel)]="datosDependiente.domicilioDependienteEconomico.lugarDondeReside">
+
+                        <option [ngValue]="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let dep of this.cata.enums.ENUM_UBICACION" [value]="dep.id">
+                            {{dep.valor}}</option>
+                        <option value="SE_DESCONOCE">SE DESCONOCE</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="lugarDondeReside.invalid && (lugarDondeReside.dirty || lugarDondeReside.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div *ngIf="datosDependiente?.habitaDomicilioDeclarante == false &&
+                datosDependiente.domicilioDependienteEconomico.lugarDondeReside != 'SE DESCONOCE'"
+                    class="col d-flex flex-column justify-content-between">
+
+                    <button style="width: 280px!important"
+                        *ngIf="datosDependiente.domicilioDependienteEconomico.lugarDondeReside =='MEXICO'" type="button"
+                        class="btn btn-light" data-toggle="modal" data-target="#modal-domicilio-mexico"
+                        (click)="abrirModalLugar('mexico');"><i class="fas fa-map-marked-alt"></i> Agregar domicilio en
+                        México
+                    </button>
+                    <button style="width: 280px!important"
+                        *ngIf="datosDependiente.domicilioDependienteEconomico.lugarDondeReside =='EXTRANJERO'"
+                        type="button" class="btn btn-light" data-toggle="modal"
+                        data-target="#modal-domicilio-extranjero" (click)="abrirModalLugar('extranjero');"><i
+                            class="fas fa-map-marked-alt"></i>
+                        Agregar domicilio en extranjero
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <div class="custom-control custom-checkbox">
+                        <label [hidden]="!help"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">No tiene
+                                actividad laboral <i class="fas fa-info-circle"></i></span> </label>
+                        <label [hidden]="help" for="pareja"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">No
+                                tiene actividad laboral</span></label>
+                        <input [disabled]="getDisabled( ningunoActividad , datosDependiente.tipoOperacion)"
+                            class="fa-3x" name="ningunoActividad" id="datDepTieActLab"
+                            [(ngModel)]="datosDependiente.ninguno" #ningunoActividad=ngModel type="checkbox">
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <button style="width: 280px!important" *ngIf="datosDependiente.ninguno !== true" type="button"
+                        class="btn btn-light" data-toggle="modal" data-target="#modal-domicilio-actividad"
+                        (click)="abrirModalLugar('actividad');"><i class="fas fa-map-marked-alt"></i>
+                        Agregar
+                        actividad laboral
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-success" (click)="guardaLocal()"
+            [disabled]="!dependienteForm.valid || !dependienteTipoForm.valid || !dependienteMexicoForm.valid || !dependienteExtranjeroForm.valid || !actividadLaboral.valid">Aceptar</button>
+        <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+    </div>
+</div>
+
+
+
+<!-- Domicilio en México -->
+<div style="background: rgba(59, 59, 59, 0.603)" class="modal fade bd-example-modal-lg" id="modal-domicilio-mexico"
+    tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div style="top: 70px;" class="modal-dialog modal-lg " role="document">
+        <form #dependienteMexicoForm="ngForm">
+            <input type="hidden" name="tipOpeInputDMx" id="tipOpeInputDMx" #tipOpeInputDMx="ngModel"
+                [(ngModel)]="datosDependiente.tipoOperacion">
+            <div class="modal-content" style="height: 600px!important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Domicilio en México</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"
+                    *ngIf="habitaDomicilioDeclarante?.value == false && datosDependiente.domicilioDependienteEconomico.lugarDondeReside == 'MEXICO'">
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column ">
+                            <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Calle</label>
+                            <input [disabled]="getDisabled( calleMex , datosDependiente.tipoOperacion)" type="text"
+                                name="calleMex" id="datDepCal" #calleMex="ngModel" maxlength="300"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.calle">
+                            <div class="invalid-tooltip"
+                                *ngIf="calleMex.invalid && (calleMex.dirty || calleMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número exterior</label>
+                            <input [disabled]="getDisabled( numExMex , datosDependiente.tipoOperacion)" type="text"
+                                name="numExMex" id="datDepNumExt" #numExMex="ngModel" maxlength="50"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.numeroExterior">
+                            <div class="invalid-tooltip"
+                                *ngIf="numExMex.invalid && (numExMex.dirty || numExMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número interior</label>
+                            <input [disabled]="getDisabled( numInMex , datosDependiente.tipoOperacion)" type="text"
+                                name="numInMex" id="datDepNumInt" #numInMex="ngModel" maxlength="50"
+                                oninput="CustomUpperCase(this);"
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.numeroInterior">
+                            <div class="invalid-tooltip"
+                                *ngIf="numInMex.invalid && (numInMex.dirty || numInMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Colonia/Localidad <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Colonia/Localidad</label>
+                            <input [disabled]="getDisabled( colMex , datosDependiente.tipoOperacion)" type="text"
+                                name="colMex" id="datDepColLoc" #colMex="ngModel" maxlength="100"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.coloniaLocalidad">
+                            <div class="invalid-tooltip" *ngIf="colMex.invalid && (colMex.dirty || colMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Entidad federativa <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Entidad federativa</label>
+                            <select [disabled]="getDisabled( entidadFederativa , datosDependiente.tipoOperacion)"
+                                name="entidadFederativa" id="datDepEntFed" [compareWith]="cata.compareFn"
+                                #entidadFederativa="ngModel" required appSelectValidator
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.entidadFederativa"
+                                (change)="filterMunicipios(entidadFederativa.value.id)">
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let data of this.cata.catalogos?.CAT_ENTIDAD_FEDERATIVA"
+                                    [ngValue]="data">
+                                    {{data.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="entidadFederativa.invalid && (entidadFederativa.dirty || entidadFederativa.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Municipio / Alcaldía <i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Municipio / Alcaldía</label>
+                            <select [disabled]="getDisabled( municipioMex , datosDependiente.tipoOperacion)" type="text"
+                                name="municipioMex" id="datDepMunAlc" #municipioMex="ngModel"
+                                [compareWith]="cata.compareFn" required appSelectValidator
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.municipioAlcaldia">
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let data of this?.filterMuns" [ngValue]="data">
+                                    {{data.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="municipioMex.invalid && (municipioMex.dirty || municipioMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Código postal</label>
+                            <input [disabled]="getDisabled( cp , datosDependiente.tipoOperacion)" type="text" name="cp"
+                                #cp="ngModel" id="datDepCp" maxlength="5" minlength="5"
+                                onkeydown="return solonumero(event);" required
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioMexico.codigoPostal">
+                            <div class="invalid-tooltip" *ngIf="cp.invalid && (cp.dirty || cp.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                        (click)="guardarModalLugar('mexico');"
+                        [disabled]="!dependienteMexicoForm.valid">Aceptar</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Domicilio en Extranjero -->
+<div style="background: rgba(59, 59, 59, 0.603)" class="modal fade bd-example-modal-lg" id="modal-domicilio-extranjero"
+    tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div style="top: 70px;" class="modal-dialog modal-lg " role="document">
+        <form #dependienteExtranjeroForm="ngForm">
+            <input type="hidden" name="tipOpeInputDEx" id="tipOpeInputDEx" #tipOpeInputDEx="ngModel"
+                [(ngModel)]="datosDependiente.tipoOperacion">
+            <div class="modal-content" style="height: 600px!important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Domicilio en Extranjero</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"
+                    *ngIf="habitaDomicilioDeclarante?.value == false && datosDependiente.domicilioDependienteEconomico.lugarDondeReside == 'EXTRANJERO'">
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Calle</label>
+                            <input [disabled]="getDisabled( calleExt , datosDependiente.tipoOperacion)" type="text"
+                                name="calleExt" id="datDepExtCal" #calleExt="ngModel" maxlength="300"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.calle">
+                            <div class="invalid-tooltip"
+                                *ngIf="calleExt.invalid && (calleExt.dirty || calleExt.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número exterior</label>
+                            <input [disabled]="getDisabled( numExExt , datosDependiente.tipoOperacion)" type="text"
+                                name="numExExt" id="datDepExtNumExt" #numExExt="ngModel" maxlength="50"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.numeroExterior">
+
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número interior</label>
+                            <input [disabled]="getDisabled( numIntExt , datosDependiente.tipoOperacion)" type="text"
+                                name="numIntExt" id="datDepExtNumInt" #numIntExt="ngModel" maxlength="50"
+                                oninput="CustomUpperCase(this);"
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.numeroInterior">
+                            <div class="invalid-tooltip"
+                                *ngIf="numIntExt.invalid && (numIntExt.dirty || numIntExt.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Ciudad/localidad <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Ciudad/localidad</label>
+                            <input [disabled]="getDisabled( ciudadLocalidad , datosDependiente.tipoOperacion)"
+                                type="text" name="ciudadLocalidad" id="datDepExtCiuLoc" #ciudadLocalidad="ngModel"
+                                maxlength="100" oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.ciudadLocalidad">
+                            <div class="invalid-tooltip"
+                                *ngIf="ciudadLocalidad.invalid && (ciudadLocalidad.dirty || ciudadLocalidad.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Estado/provincia <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Estado/provincia</label>
+                            <input [disabled]="getDisabled( estadoProvincia , datosDependiente.tipoOperacion)"
+                                type="text" name="estadoProvincia" id="datDepExtEdoPro" #estadoProvincia="ngModel"
+                                maxlength="100" oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.estadoProvincia">
+                            <div class="invalid-tooltip"
+                                *ngIf="estadoProvincia.invalid && (estadoProvincia.dirty || estadoProvincia.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">País <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">País</label>
+                            <select [disabled]="getDisabled( pais , datosDependiente.tipoOperacion)" type="text"
+                                name="pais" id="datDepExtPai" [compareWith]="cata.compareFn" #pais="ngModel"
+                                maxlength="10" required appSelectValidator
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.pais">
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let pais of this.cata.catalogos.CAT_PAIS" [ngValue]="pais">
+                                    {{pais.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip" *ngIf="pais.invalid && (pais.dirty || pais.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Código postal</label>
+                            <input [disabled]="getDisabled( cpExt , datosDependiente.tipoOperacion)" type="text"
+                                name="cpExt" id="datDepExtCodPai" #cpExt="ngModel" required maxlength="10" minlength="1"
+                                oninput="CustomUpperCase(this);"
+                                [(ngModel)]="datosDependienteTmp.domicilioDependienteEconomico.domicilio.domicilioExtranjero.codigoPostal">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                        (click)="guardarModalLugar('extranjero');"
+                        [disabled]="!dependienteExtranjeroForm.valid">Aceptar</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div style="background: rgba(59, 59, 59, 0.603)" class="modal fade bd-example-modal-lg" id="modal-domicilio-actividad"
+    tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div style="top: 70px;" class="modal-dialog modal-lg " role="document">
+        <form #actividadLaboral="ngForm">
+            <input type="hidden" name="tipOpeInputAc" id="tipOpeInputAc" #tipOpeInputAc="ngModel"
+                [(ngModel)]="datosDependiente.tipoOperacion">
+            <div class="modal-content" style="height: 600px!important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Actividad laboral</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" *ngIf="datosDependiente.ninguno !== true">
+                    <div class="row p-3">
+                        <div class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Actividad laboral<i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Actividad laboral</label>
+                            <select [disabled]="getDisabled( actividadLaboral , datosDependiente.tipoOperacion)"
+                                name="actividadLaboral" id="datDepActActLab" [compareWith]="cata.compareFn"
+                                #actividadLaboral="ngModel" (change)="limpiaDatosActividad()" required
+                                appSelectValidator [(ngModel)]="datosDependienteTmp.actividadLaboral.ambitoSector">
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let al of this.cata.catalogos.CAT_AMBITO_SECTOR" [ngValue]="al">
+                                    {{al.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="actividadLaboral.invalid && (actividadLaboral.dirty || actividadLaboral.touched)">
+                                Por favor seleccione una opción...
+                            </div>
+                        </div>
+                        <div *ngIf="datosDependienteTmp.actividadLaboral.ambitoSector.id == '9999'"
+                            class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Especifique actividad <i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Especifique actividad</label>
+                            <input [disabled]="getDisabled( especificParent , datosDependiente.tipoOperacion)"
+                                type="text" name="especificParent" id="datDepActEspAct" #especificParent="ngModel"
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.ambitoSectorOtro"
+                                oninput="CustomUpperCase(this);" required>
+                            <div class="invalid-tooltip"
+                                *ngIf="especificParent.invalid && (especificParent.dirty || especificParent.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                        <div *ngIf="datosDependienteTmp.actividadLaboral.ambitoSector.id == 1"
+                            class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Nivel / Orden de gobierno<i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Nivel / Orden de gobierno</label>
+                            <select [disabled]="getDisabled( nivelOrdenGobierno , datosDependiente.tipoOperacion)"
+                                name="nivelOrdenGobierno" id="datDepActNivGob" #nivelOrdenGobierno="ngModel"
+                                maxlength="10" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPublico.nivelOrdenGobierno">
+                                <option value="null" disabled>SELECCIONE...</option>
+                                <option *ngFor="let orden of this.cata.enums.ENUM_NIVEL_ORDEN_GOBIERNO"
+                                    [value]="orden.id">
+                                    {{orden.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="nivelOrdenGobierno.invalid && (nivelOrdenGobierno.dirty || nivelOrdenGobierno.touched)">
+                                Por favor seleccione una opción...
+                            </div>
+                        </div>
+                        <div *ngIf="datosDependienteTmp.actividadLaboral.ambitoSector.id == 1"
+                            class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Ámbito público<i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Ámbito público</label>
+                            <select [disabled]="getDisabled( ambitoPublico , datosDependiente.tipoOperacion)"
+                                name="ambitoPublico" #ambitoPublico="ngModel" id="datDepActAmbPub" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPublico.ambitoPublico">
+                                <option value="null" disabled>SELECCIONE...</option>
+                                <option *ngFor="let ap of this.cata.enums.ENUM_AMBITO_PODER" [value]="ap.id">
+                                    {{ap.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="ambitoPublico.invalid && (ambitoPublico.dirty || ambitoPublico.touched)">
+                                Por favor seleccione una opción...
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="datosDependienteTmp.actividadLaboral.ambitoSector.id == 1" class="row p-3">
+                        <div class="col d-flex flex-column justify-content-between ">
+                            <label [hidden]="!help" for="">Nombre del ente público<i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Nombre del ente público</label>
+                            <input [disabled]="getDisabled( nombreEntePublico , datosDependiente.tipoOperacion)"
+                                type="text" name="nombreEntePublico" id="datDepActNomPub" #nombreEntePublico="ngModel"
+                                maxlength="100" oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPublico.nombreEntePublico">
+                            <div class="invalid-tooltip"
+                                *ngIf="nombreEntePublico.invalid && (nombreEntePublico.dirty || nombreEntePublico.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between ">
+                            <label [hidden]="!help" for="">Área de adscripción<i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Área de adscripción</label>
+                            <input [disabled]="getDisabled( areaAdscripcion , datosDependiente.tipoOperacion)"
+                                type="text" name="areaAdscripcion" id="datDepActAreAds" #areaAdscripcion="ngModel"
+                                maxlength="100" oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPublico.areaAdscripcion">
+                            <div class="invalid-tooltip"
+                                *ngIf="areaAdscripcion.invalid && (areaAdscripcion.dirty || areaAdscripcion.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between ">
+                            <label [hidden]="!help" for="">Empleo, cargo o comisión<i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Empleo, cargo o comisión</label>
+                            <input [disabled]="getDisabled( empleoCargoComision , datosDependiente.tipoOperacion)"
+                                type="text" name="empleoCargoComision" id="datDepActEmpCarCom"
+                                #empleoCargoComision="ngModel" maxlength="100" oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPublico.empleoCargoComision">
+                            <div class="invalid-tooltip"
+                                *ngIf="empleoCargoComision.invalid && (empleoCargoComision.dirty || empleoCargoComision.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between ">
+                            <label [hidden]="!help" for="">Especifique función principal<i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Especifique función principal</label>
+                            <input [disabled]="getDisabled( funcionPrincipal , datosDependiente.tipoOperacion)"
+                                type="text" name="funcionPrincipal" id="datDepActEspFunPri" #funcionPrincipal="ngModel"
+                                maxlength="100" oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPublico.funcionPrincipal">
+                            <div class="invalid-tooltip"
+                                *ngIf="funcionPrincipal.invalid && (funcionPrincipal.dirty || funcionPrincipal.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row p-3">
+                        <div class="col d-flex flex-column justify-content-between ">
+                            <label [hidden]="!help" for="">Saldo mensual neto<i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Saldo mensual neto</label>
+                            <input [disabled]="getDisabled( salarioMensualNeto , datosDependiente.tipoOperacion)"
+                                type="text" name="salarioMensualNeto" id="datDepActSalMenNet"
+                                #salarioMensualNeto="ngModel" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.salarioMensualNeto"
+                                oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+                            <div class="invalid-tooltip"
+                                *ngIf="salarioMensualNeto.invalid && (salarioMensualNeto.dirty || salarioMensualNeto.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between ">
+                            <label [hidden]="!help" for="">Fecha de ingreso al empleo<i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Fecha de ingreso al empleo</label>
+                            <input fechaValid="{{fecha}}"
+                                [disabled]="getDisabled( fechaIngreso , datosDependiente.tipoOperacion)" type="date"
+                                name="fechaIngreso" maxlength="20" id="datDepActFecIngEmp" #fechaIngreso="ngModel"
+                                required [(ngModel)]="datosDependienteTmp.actividadLaboral.fechaIngreso"
+                                [max]="globals.fechaReferenciaMax">
+                            <!--<div class="invalid-tooltip" *ngIf="fechaIngreso.invalid && (fechaIngreso.dirty || fechaIngreso.touched)">
+                                Campo requerido...
+                            </div>-->
+                            <div class="invalid-tooltip" *ngIf="fechaIngreso.invalid && fechaIngreso.touched">
+                                Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                                    [attr.data-td]="tipoDeclaracion"
+                                    onclick="abrirModalInfo('modalMsgFechasEncargo',this)"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="datosDependienteTmp.actividadLaboral.ambitoSector.id == 2 || datosDependienteTmp.actividadLaboral.ambitoSector.id == 9999"
+                        class="row p-3 ">
+                        <div class=" col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Nombre de la empresa <i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Nombre de la empresa</label>
+                            <input [disabled]="getDisabled( nombreEmpresa , datosDependiente.tipoOperacion)" type="text"
+                                name="nombreEmpresa" id="datDepActNomEmp" maxlength="100" #nombreEmpresa="ngModel"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion">
+                            <div class="invalid-tooltip"
+                                *ngIf="nombreEmpresa.invalid && (nombreEmpresa.dirty || nombreEmpresa.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">RFC <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">RFC</label>
+                            <input [disabled]="getDisabled( rfcEmpresa , datosDependiente.tipoOperacion)" type="text"
+                                name="rfcEmpresa" #rfcEmpresa="ngModel" id="datDepActRfc" maxlength="12"
+                                oninput="CustomUpperCase(this);" rfcMoralValid
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPrivadoOtro.rfc">
+                            <div class="invalid-tooltip" *ngIf="rfcEmpresa.invalid && rfcEmpresa.touched">
+                                <div *ngIf="rfcEmpresa.errors.rfcMoralValid && rfcEmpresa.touched">
+                                    El RFC debe contener el formato correcto...
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Empleo o cárgo<i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Empleo o cárgo</label>
+                            <input [disabled]="getDisabled( empleoCargo , datosDependiente.tipoOperacion)" type="text"
+                                name="empleoCargo" #empleoCargo="ngModel" id="datDepActEmpCar" maxlength="100"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPrivadoOtro.empleoCargo">
+                            <div class="invalid-tooltip"
+                                *ngIf="empleoCargo.invalid && (empleoCargo.dirty || empleoCargo.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                    </div>
+                    <div *ngIf="datosDependienteTmp.actividadLaboral.ambitoSector.id == 2
+                    || datosDependienteTmp.actividadLaboral.ambitoSector.id == 9999" class="row p-3">
+                        <div class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Área<i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Área</label>
+                            <input [disabled]="getDisabled( area , datosDependiente.tipoOperacion)" type="text"
+                                name="area" #area="ngModel" id="datDepActAre" maxlength="100"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPrivadoOtro.area">
+                            <div class="invalid-tooltip" *ngIf="area.invalid && (area.dirty || area.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Proveedor contratista de gobierno <i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Proveedor contratista de gobierno </label>
+                            <select [disabled]="getDisabled( esProveedor , datosDependiente.tipoOperacion)"
+                                name="esProveedor" required id="datDepActProConGob"
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPrivadoOtro.proveedorContratistaGobierno"
+                                #esProveedor="ngModel">
+                                <option value="null" disabled>SELECCIONE...</option>
+                                <option [ngValue]="true">SI</option>
+                                <option [ngValue]="false">NO</option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="esProveedor.invalid && (esProveedor.dirty || esProveedor.touched)">
+                                Por favor seleccione una opción...
+                            </div>
+                        </div>
+
+                        <div class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Sector al que pertenece<i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Sector al que pertenece</label>
+                            <select [disabled]="getDisabled( sector , datosDependiente.tipoOperacion)" name="sector"
+                                [compareWith]="cata.compareFn" id="datDepActSecPer" #sector="ngModel"
+                                (change)="limpiaSector()" required appSelectValidator
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPrivadoOtro.sector">
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let c of this.cata.catalogos.CAT_SECTOR_PRIVADO" [ngValue]="c">
+                                    {{c.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip" *ngIf="sector.invalid && (sector.dirty || sector.touched)">
+                                Por favor seleccione una opción...
+                            </div>
+                        </div>
+                        <div class="flecha-otro">
+                            <i *ngIf="datosDependienteTmp?.actividadLaboral.sectorPrivadoOtro.sector.id == 9999"
+                                class="fas fa-arrow-right"></i>
+                        </div>
+
+                        <div *ngIf="datosDependienteTmp.actividadLaboral.sectorPrivadoOtro.sector.id == 9999"
+                            class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Especifique sector <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Especifique sector</label>
+                            <input [disabled]="getDisabled( especificSector , datosDependiente.tipoOperacion)"
+                                type="text" name="especificSector" id="datDepActEspSec" #especificSector="ngModel"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="datosDependienteTmp.actividadLaboral.sectorPrivadoOtro.sectorOtro">
+                            <div class="invalid-tooltip"
+                                *ngIf="especificSector.invalid && (especificSector.dirty || especificSector.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                        (click)="guardarModalLugar('actividad');" [disabled]="!actividadLaboral.valid">Aceptar</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

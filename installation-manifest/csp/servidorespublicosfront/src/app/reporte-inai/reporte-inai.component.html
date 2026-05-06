@@ -1,0 +1,29 @@
+<ngx-ui-loader [text]="this.spinnerText" [fgsType]="this.spinner.fgsType" [fgsColor]="this.spinner.fgsColor">
+</ngx-ui-loader>
+<div class="container">
+    <div class="row">
+        <div class="centerImage col-lg-12">
+
+            <img *ngIf="this.enteImage" class="rounded" [src]="this.enteImage" width="100%" alt="LogoEnte" />
+
+        </div>
+    </div>
+    <ng-container *ngIf="errorCarga; else cargaPdf">
+        <h2>Error al cargar el documento, intente de nuevo mas tarde.</h2>
+    </ng-container>
+    <ng-template #cargaPdf>
+        <div class="text-center" *ngIf="navSafari">
+            <h2> Para ver la declaración, descargue el documento.</h2>
+            <button type="button" (click)="imprimeSafari();" class="btn btn-outline-danger" value="Buscar"><i class="fas fa-download"></i> Descargar</button>
+
+        </div>
+
+        <div class="text-center h-100" *ngIf="cargaFinalizada && !navSafari">
+
+            <ngx-extended-pdf-viewer [base64Src]="base64" backgroundColor="gray" [height]="'80vh'" [zoom]="zoom" [useBrowserLocale]="true" [handTool]="false" [filenameForDownload]="fileDownload" [showHandToolButton]="true" [showPresentationModeButton]="false" [showOpenFileButton]="true"
+                [showBookmarkButton]="false" [showSecondaryToolbarButton]="true" [showRotateButton]="false" [showHandToolButton]="true" [showScrollingButton]="false" [showSpreadButton]="false" [showPropertiesButton]="false" [showBorders]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </ng-template>
+
+</div>

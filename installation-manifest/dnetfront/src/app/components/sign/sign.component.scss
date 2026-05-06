@@ -1,0 +1,28 @@
+.card-header-declaranet {
+    min-width: 270px;
+    max-width: 540px;
+}
+
+.impresionLink {
+    cursor: pointer;
+    font-size: 32px;
+}
+
+.col-3.offset-2.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-bar {
+    background: #ffffffc0;
+    box-shadow: 0 8px 8px 0 rgba(212, 212, 212, 0.4);
+    display: block;
+    height: 2rem;
+    margin: auto;
+    padding: 5px 15px;
+    position: fixed;
+    top: 35px;
+    width: 100%;
+    z-index: 200 !important;
+}

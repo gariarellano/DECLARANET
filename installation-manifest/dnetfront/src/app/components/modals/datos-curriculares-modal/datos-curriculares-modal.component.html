@@ -1,0 +1,177 @@
+<div class="modal-content" style="height: 100%">
+    <div class="modal-header">
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Datos curriculares</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <form #formOpera="ngForm" [formGroup]="formOperacion">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="tipoOperacion" type="radio" required
+                            id="radio{{data.id}}" [value]="data.id" formControlName="tipoOperacion"
+                            (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form #curricularesForm="ngForm" [formGroup]="form">
+        <div formGroupName="escolaridad" class="modal-body" style="overflow-y: auto">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" formControlName="tipoOperacion">
+
+            <div class="row">
+                <div formGroupName="nivel" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nivel <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nivel <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i> </label>
+                    <select
+                        [attr.data-info]="getDisabled('escolaridad.nivel.id', form.get('escolaridad.tipoOperacion').value)"
+                        name="" id="datCurNiv" formControlName="id" required>
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let data of globals.catalogos.CAT_NIVEL_ACADEMICO" [value]="data.id" required>
+                            {{data.valor}}</option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="form.get('escolaridad.nivel.id').touched && form.get('escolaridad.nivel.id').pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Institución educativa <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Institución educativa <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i> </label>
+                    <input
+                        [attr.data-info]="getDisabled('escolaridad.institucionEducativa', form.get('escolaridad.tipoOperacion').value)"
+                        type="text" id="datCurInsEdu" formControlName="institucionEducativa"
+                        oninput="CustomUpperCase(this);" required>
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('escolaridad.institucionEducativa').valid && (form.get('escolaridad.institucionEducativa').dirty || form.get('escolaridad.institucionEducativa').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Carrera o área de conocimiento <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Carrera o área de conocimiento <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i> </label>
+                    <input
+                        [attr.data-info]="getDisabled('escolaridad.carreraAreaConocimiento', form.get('escolaridad.tipoOperacion').value)"
+                        type="text" id="datCurCarr" formControlName="carreraAreaConocimiento"
+                        oninput="CustomUpperCase(this);" required>
+                    <!-- <span class="invalid-tooltip"
+                        *ngIf="!form.get('escolaridad.carreraAreaConocimiento').valid && (form.get('escolaridad.carreraAreaConocimiento').dirty || form.get('escolaridad.carreraAreaConocimiento').touched)">
+                        Campo Requerido
+                    </span>-->
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('escolaridad.carreraAreaConocimiento').pristine && form.get('escolaridad.carreraAreaConocimiento').value == ''">
+                        Campo Requerido
+                    </span>
+                    <span class="invalid-tooltip"
+                        *ngIf="form.get('escolaridad.carreraAreaConocimiento').errors?.validateCaracteres && form.get('escolaridad.carreraAreaConocimiento').value != ''">
+                        Solo letras y números
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Estatus <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Estatus <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i> </label>
+                    <select
+                        [attr.data-info]="getDisabled('escolaridad.estatus', form.get('escolaridad.tipoOperacion').value)"
+                        name="" id="datCurEst" formControlName="estatus" required>
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let data of this.globals.enums.ENUM_ESTATUS_ESCOLARIDAD" [value]="data.id">
+                            {{data.valor}}</option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('escolaridad.estatus').valid && form.get('escolaridad.estatus').touched && form.get('escolaridad.estatus').pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div formGroupName="documentoObtenido" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Documento obtenido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Documento obtenido <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i> </label>
+                    <select
+                        [attr.data-info]="getDisabled('escolaridad.documentoObtenido.tipo', form.get('escolaridad.tipoOperacion').value)"
+                        name="" id="datCurDocObt" formControlName="tipo" required>
+                        <option [ngValue]="null">SELECCIONE...</option>
+                        <option value="BOLETA">BOLETA</option>
+                        <option value="CERTIFICADO">CERTIFICADO</option>
+                        <option value="CONSTANCIA">CONSTANCIA</option>
+                        <!-- Se mete manual por opcion titulo tan especifica no configurable desde catalogos -->
+                        <option
+                            *ngIf="form.get('escolaridad.nivel.id').value > 3 && form.get('escolaridad.estatus').value === 'FINALIZADO'"
+                            value="TITULO">TITULO</option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('escolaridad.documentoObtenido.tipo').valid && form.get('escolaridad.documentoObtenido.tipo').touched && form.get('escolaridad.documentoObtenido.tipo').pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div formGroupName="documentoObtenido" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Fecha de obtención del documento <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fecha de obtención del documento <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i> </label>
+                    <input
+                        [attr.data-info]="getDisabled('escolaridad.documentoObtenido.fechaObtencion', form.get('escolaridad.tipoOperacion').value)"
+                        type="date" id="datCurFec" formControlName="fechaObtencion" [max]="globals.fechaReferenciaMax"
+                        required>
+                    <!--<span class="invalid-tooltip"
+                        *ngIf="!form.get('escolaridad.documentoObtenido.fechaObtencion').valid && (form.get('escolaridad.documentoObtenido.fechaObtencion').dirty || form.get('escolaridad.documentoObtenido.fechaObtencion').touched)">
+                        Campo Requerido
+                    </span>-->
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('escolaridad.documentoObtenido.fechaObtencion').pristine && form.get('escolaridad.documentoObtenido.fechaObtencion').value == ''">
+                        Campo Requerido
+                    </span>
+                    <span class="invalid-tooltip"
+                        *ngIf="form.get('escolaridad.documentoObtenido.fechaObtencion').errors?.validaFechaLimit && form.get('escolaridad.documentoObtenido.fechaObtencion').value != ''">
+                        Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                            [attr.data-td]="tipoDeclaracion" onclick="abrirModalInfo('modalMsgFechasEncargo',this)"></i>
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Lugar donde se ubica la Institución educativa <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Lugar donde se ubica la Institución educativa <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i> </label>
+                    <select
+                        [attr.data-info]="getDisabled('escolaridad.ubicacion', form.get('escolaridad.tipoOperacion').value)"
+                        name="" id="datCurUbiInsEdu" formControlName="ubicacion" required>
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option value="MEXICO">MÉXICO</option>
+                        <option value="EXTRANJERO">EXTRANJERO</option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('escolaridad.ubicacion').valid && form.get('escolaridad.ubicacion').touched && form.get('escolaridad.ubicacion').pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button counting type="button" class="btn btn-success" [disabled]="!form.valid  || !formOperacion.valid"
+                (click)="guardaLocal(form)">Aceptar</button>
+            <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+        </div>
+    </form>
+</div>

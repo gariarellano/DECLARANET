@@ -1,0 +1,261 @@
+[submodule "validadores/valnotas"]
+	path = validadores/valnotas
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valnotas.git
+[submodule "validaciondeclaracion"]
+	path = validaciondeclaracion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/validaciondeclaracion.git
+[submodule "validadores/valactividadanualant"]
+	path = validadores/valactividadanualant
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valactividadanualant.git
+[submodule "validadores/valdetalleaviso"]
+	path = validadores/valdetalleaviso
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valdetalleaviso.git
+[submodule "validadores/ValIdsDecla"]
+	path = validadores/ValIdsDecla
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/ValIdsDecla.git
+[submodule "validadores/valprestamo"]
+	path = validadores/valprestamo
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valprestamo.git
+[submodule "validadores/valdatosempleo"]
+	path = validadores/valdatosempleo
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valdatosempleo.git
+[submodule "validadores/valparticipacionemp"]
+	path = validadores/valparticipacionemp
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valparticipacionemp.git
+[submodule "validadores/valparticipacioninst"]
+	path = validadores/valparticipacioninst
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valparticipacioninst.git
+[submodule "validadores/valclientesprinc"]
+	path = validadores/valclientesprinc
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valclientesprinc.git
+[submodule "validadores/valfideicomisos"]
+	path = validadores/valfideicomisos
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valfideicomisos.git
+[submodule "validadores/valinversioncb"]
+	path = validadores/valinversioncb
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valinversioncb.git
+[submodule "validadores/valingresonetod"]
+	path = validadores/valingresonetod
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valingresonetod.git
+[submodule "validadores/valbienesmuebles"]
+	path = validadores/valbienesmuebles
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valbienesmuebles.git
+[submodule "validadores/valdependientesecon"]
+	path = validadores/valdependientesecon
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valdependientesecon.git
+[submodule "validadores/valbienesinmuebles"]
+	path = validadores/valbienesinmuebles
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valbienesinmuebles.git
+[submodule "validadores/valadeudospasivos"]
+	path = validadores/valadeudospasivos
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valadeudospasivos.git
+[submodule "validadores/valapoyobenpub"]
+	path = validadores/valapoyobenpub
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valapoyobenpub.git
+[submodule "validadores/valbenprivados"]
+	path = validadores/valbenprivados
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valbenprivados.git
+[submodule "validadores/valrepresentacion"]
+	path = validadores/valrepresentacion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valrepresentacion.git
+[submodule "validadores/valdatospareja"]
+	path = validadores/valdatospareja
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valdatospareja.git
+[submodule "validadores/valexperiencialab"]
+	path = validadores/valexperiencialab
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valexperiencialab.git
+[submodule "validadores/valdatoscurriculares"]
+	path = validadores/valdatoscurriculares
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valdatoscurriculares.git
+[submodule "validadorest/valida/valdatosgral"]
+	path = validadores/valdatosgral
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valdatosgral.git
+[submodule "validadores/valdomiciliodecl"]
+	path = validadores/valdomiciliodecl
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valdomiciliodecl.git
+[submodule "catalogos/CatCodigoPostal"]
+	path = catalogos/CatCodigoPostal
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatCodigoPostal.git
+[submodule "catalogos/CatBeneficio"]
+	path = catalogos/CatBeneficio
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatBeneficio.git
+[submodule "catalogos/CatBeneficiarioPro"]
+	path = catalogos/CatBeneficiarioPro
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatBeneficiarioPro.git
+[submodule "catalogos/CatInstitucion"]
+	path = catalogos/CatInstitucion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatInstitucion.git
+[submodule "catalogos/CatAdeudo"]
+	path = catalogos/CatAdeudo
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatAdeudo.git
+[submodule "catalogos/CatSubInversion"]
+	path = catalogos/CatSubInversion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatSubInversion.git
+[submodule "catalogos/CatMotivoBajaB"]
+	path = catalogos/CatMotivoBajaB
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatMotivoBajaB.git
+[submodule "catalogos/CatFormaAdqBien"]
+	path = catalogos/CatFormaAdqBien
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatFormaAdqBien.git
+[submodule "catalogos/CatRelBienes"]
+	path = catalogos/CatRelBienes
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatRelBienes.git
+[submodule "catalogos/CatTitular"]
+	path = catalogos/CatTitular
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatTitular.git
+[submodule "catalogos/CatInstrumento"]
+	path = catalogos/CatInstrumento
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatInstrumento.git
+[submodule "catalogos/CatRelDependiente"]
+	path = catalogos/CatRelDependiente
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatRelDependiente.git
+[submodule "catalogos/CatSectorPriv"]
+	path = catalogos/CatSectorPriv
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatSectorPriv.git
+[submodule "catalogos/CatInversion"]
+	path = catalogos/CatInversion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatInversion.git
+[submodule "catalogos/CatTipoDecla"]
+	path = catalogos/CatTipoDecla
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatTipoDecla.git
+[submodule "catalogos/CatMueble"]
+	path = catalogos/CatMueble
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatMueble.git
+[submodule "catalogos/CatInmueble"]
+	path = catalogos/CatInmueble
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatInmueble.git
+[submodule "catalogos/CatAmbitoSec"]
+	path = catalogos/CatAmbitoSec
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatAmbitoSec.git
+[submodule "catalogos/CatMunicipioA"]
+	path = catalogos/CatMunicipioA
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatMunicipioA.git
+[submodule "catalogos/CatEntidadFed"]
+	path = catalogos/CatEntidadFed
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatEntidadFed.git
+[submodule "catalogos/CatMoneda"]
+	path = catalogos/CatMoneda
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatMoneda.git
+[submodule "catalogos/CatNivelJerarq"]
+	path = catalogos/CatNivelJerarq
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatNivelJerarq.git
+[submodule "catalogos/CatTipoParticip"]
+	path = catalogos/CatTipoParticip
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatTipoParticip.git
+[submodule "catalogos/CatNivelAcad"]
+	path = catalogos/CatNivelAcad
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatNivelAcad.git
+[submodule "catalogos/CatNacionalidad"]
+	path = catalogos/CatNacionalidad
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatNacionalidad.git
+[submodule "catalogos/CatRegimenMat"]
+	path = catalogos/CatRegimenMat
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatRegimenMat.git
+[submodule "catalogos/CatPais"]
+	path = catalogos/CatPais
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatPais.git
+[submodule "catalogos/CatEstadoCivil"]
+	path = catalogos/CatEstadoCivil
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatEstadoCivil.git
+[submodule "catalogosorigen"]
+	path = catalogosorigen
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogosorigen.git
+[submodule "RecepcionFirma"]
+	path = RecepcionFirma
+	url = git@gitlab.funcionpublica.gob.mx:dnet/RecepcionFirma.git
+[submodule "ServicioImpresion"]
+	path = ServicioImpresion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/ServicioImpresion.git
+[submodule "ConsultaDeclaracion"]
+	path = ConsultaDeclaracion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/ConsultaDeclaracion.git
+[submodule "GuardaDeclaracion"]
+	path = GuardaDeclaracion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/GuardaDeclaracion.git
+[submodule "iniciodeclaracion"]
+	path = iniciodeclaracion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/iniciodeclaracion.git
+[submodule "frontend/dnetfront"]
+	path = frontend/dnetfront
+	url = git@gitlab.funcionpublica.gob.mx:dnet/dnetfront.git
+[submodule "PrecargaHistorica"]
+	path = PrecargaHistorica
+	url = git@gitlab.funcionpublica.gob.mx:dnet/PrecargaHistorica.git
+[submodule "EnteReceptorDecla"]
+	path = EnteReceptorDecla
+	url = git@gitlab.funcionpublica.gob.mx:dnet/EnteReceptorDecla.git
+[submodule "MailSenderSFP"]
+	path = MailSenderSFP
+	url = git@gitlab.funcionpublica.gob.mx:dgti/ejz/MailSenderSFP.git
+[submodule "provedorIdentidad/ip-back"]
+	path = provedorIdentidad/ip-back
+	url = git@gitlab.funcionpublica.gob.mx:dgti/ejz/ip-back.git
+[submodule "provedorIdentidad/ip-registro-back"]
+	path = provedorIdentidad/ip-registro-back
+	url = git@gitlab.funcionpublica.gob.mx:dgti/ejz/ip-registro-back.git
+[submodule "provedorIdentidad/ip-front"]
+	path = provedorIdentidad/ip-front
+	url = git@gitlab.funcionpublica.gob.mx:dgti/ejz/ip-front.git
+[submodule "librerias/Utils-Validador-SFP"]
+	path = librerias/Utils-Validador-SFP
+	url = git@gitlab.funcionpublica.gob.mx:ejzpriv/libreriasmaven/Utils-Validador-SFP.git
+[submodule "librerias/UtilsCatalogo"]
+	path = librerias/UtilsCatalogo
+	url = git@gitlab.funcionpublica.gob.mx:ejzpriv/libreriasmaven/UtilsCatalogo.git
+[submodule "catalogos/CatTipoApoyo"]
+	path = catalogos/CatTipoApoyo
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatTipoApoyo.git
+[submodule "validadores/valvehiculos"]
+	path = validadores/valvehiculos
+	url = git@gitlab.funcionpublica.gob.mx:dnet/valida/valvehiculos.git
+[submodule "catalogos/CatVehiculo"]
+	path = catalogos/CatVehiculo
+	url = git@gitlab.funcionpublica.gob.mx:dnet/catalogos/CatVehiculo.git
+[submodule "tokens/generadortokenkong"]
+	path = tokens/generadortokenkong
+	url = git@gitlab.funcionpublica.gob.mx:dgti/ejz/generadortokenkong.git
+[submodule "librerias/sfp-appiextension"]
+	path = librerias/sfp-appiextension
+	url = git@gitlab.funcionpublica.gob.mx:ejzpriv/libreriasmaven/sfp-appiextension-donar.git
+[submodule "dnetfront"]
+	path = dnetfront
+	url = git@gitlab.funcionpublica.gob.mx:dnet/dnetfront.git
+[submodule "dependencias/entes"]
+	path = dependencias/entes
+	url = git@gitlab.funcionpublica.gob.mx:dgti/ejz/entes.git
+[submodule "cumplimiento/registrocumplimiento"]
+	path = cumplimiento/registrocumplimiento
+	url = git@gitlab.funcionpublica.gob.mx:dnet/cumplimiento/RegistroCumplimiento.git
+[submodule "librerias/configuracionbasica"]
+	path = librerias/configuracionbasica
+	url = git@gitlab.funcionpublica.gob.mx:ejzpriv/libreriasmaven/ConfiguracionBasica.git
+[submodule "herramientas/migra-declaranet"]
+	path = herramientas/migra-declaranet
+	url = git@gitlab.funcionpublica.gob.mx:dnet/migra-declaranet.git
+[submodule "oper/OperBack"]
+	path = oper/OperBack
+	url = git@gitlab.funcionpublica.gob.mx:dnet/oper/OperBack.git
+[submodule "oper/operfront"]
+	path = oper/operfront
+	url = git@gitlab.funcionpublica.gob.mx:dnet/oper/operfront.git
+[submodule "csp/servidorespublicosfront"]
+	path = csp/servidorespublicosfront
+	url = git@gitlab.funcionpublica.gob.mx:dnet/servidorespublicos/servidorespublicosfront.git
+[submodule "csp/consultapublica"]
+	path = csp/consultapublica
+	url = git@gitlab.funcionpublica.gob.mx:dnet/servidorespublicos/consultapublica.git
+[submodule "omext/OmextBack"]
+	path = omext/OmextBack
+	url = git@gitlab.funcionpublica.gob.mx:dnet/omext/OmextBack.git
+[submodule "omext/omextreportes"]
+	path = omext/omextreportes
+	url = git@gitlab.funcionpublica.gob.mx:dnet/omext/omextreportes.git
+[submodule "omext/omextservicioimpresion"]
+	path = omext/omextservicioimpresion
+	url = git@gitlab.funcionpublica.gob.mx:dnet/omext/omextservicioimpresion.git
+[submodule "omext/omextfront"]
+	path = omext/omextfront
+	url = git@gitlab.funcionpublica.gob.mx:dnet/omext/omextfront.git
+[submodule "omext/guardarDeclaracionPdn"]
+	path = omext/guardarDeclaracionPdn
+	url = git@gitlab.funcionpublica.gob.mx:dnet/externos/guardarDeclaracionPdn.git

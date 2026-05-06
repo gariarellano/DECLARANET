@@ -1,0 +1,23 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Wed Jan 27 22:38:12 CST 2021
+file\:\\\\C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\SubgrupoParaDependencias\\ProbarConfDokcerCompose\\installation-manifest\\PrecargaHistorica\\src\\main\\resources/.lastUpdated=1611803900482
+https\://repo.maven.apache.org/maven2/.lastUpdated=1611808355479
+file\://C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\clusterDecla\\PrecargaHistorica/src/main/resources/.lastUpdated=1588017832926
+file\:\\\\C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\SubgrupoParaDependencias\\ProbarConfDokcerCompose\\installation-manifest\\PrecargaHistorica\\src\\main\\resources/.error=
+file\://C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\clusterDecla\\PrecargaHistorica/src/main/resources/.error=
+file\://C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\SubgrupoParaDependencias\\ProbarConfDokcerCompose\\installation-manifest\\PrecargaHistorica/src/main/resources/.error=
+file\://C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\SubgrupoParaDependencias\\ProbarConfDokcerCompose\\installation-manifest\\PrecargaHistorica/src/main/resources/.lastUpdated=1611803800900
+file\:/C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\SubgrupoParaDependencias\\ProbarConfDokcerCompose\\installation-manifest\\PrecargaHistorica/src/main/resources/.lastUpdated=1611803765437
+https\://repo.maven.apache.org/maven2/.error=
+http\://repo.maven.apache.org/maven2/.error=Could not transfer artifact oracle\:ojdbc6\:pom\:11.2.0.3 from/to central (http\://repo.maven.apache.org/maven2)\: Failed to transfer file\: http\://repo.maven.apache.org/maven2/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.pom. Return code is\: 501 , ReasonPhrase\:HTTPS Required.
+file\:\\\\C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\SubgrupoParaDependencias\\ProbarConfDokcerCompose\\installation-manifest\\PrecargaHistorica/src/main/resources/.error=
+default-${REPOSITORY_VALUE}/.lastUpdated=1611804365089
+default-http\://repo.maven.apache.org/maven2/.lastUpdated=1611808692533
+@default-SFP-REPO-http\://sfp-wfds8\:8083/repository/.lastUpdated=1587490075579
+http\://sfp-wfds8\:8083/repository/.error=Could not transfer artifact oracle\:ojdbc6\:pom\:11.2.0.3 from/to SFP-REPO (http\://sfp-wfds8\:8083/repository)\: sfp-wfds8
+file\:\\\\C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\SubgrupoParaDependencias\\ProbarConfDokcerCompose\\installation-manifest\\PrecargaHistorica/src/main/resources/.lastUpdated=1611803823084
+file\:/C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\SubgrupoParaDependencias\\ProbarConfDokcerCompose\\installation-manifest\\PrecargaHistorica/src/main/resources/.error=
+default-http\://sfp-wfds8\:8083/repository/.lastUpdated=1588017836089
+file\://C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\PrecargaHistorica/src/main/resources/.lastUpdated=1585685997995
+${REPOSITORY_VALUE}/.error=Could not transfer artifact oracle\:ojdbc6\:pom\:11.2.0.3 from/to SFP-REPO (${REPOSITORY_VALUE})\: No connector available to access repository SFP-REPO (${REPOSITORY_VALUE}) of type default using the available factories WagonRepositoryConnectorFactory
+file\://C\:\\Users\\gio_j\\Desktop\\PROYECTOS\\SFP\\PrecargaHistorica/src/main/resources/.error=

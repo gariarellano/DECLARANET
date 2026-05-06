@@ -1,0 +1,17 @@
+FROM kong:1.2
+
+ENV KONG_DATABASE=off
+
+COPY kong.yml ./
+
+ENV KONG_DECLARATIVE_CONFIG=kong.yml
+
+ENV KONG_PROXY_ACCESS_LOG=/dev/stdout
+ENV KONG_ADMIN_ACCESS_LOG=/dev/stdout
+ENV KONG_ADMIN_ACCESS_LOG=/dev/stdout
+ENV KONG_ADMIN_ERROR_LOG=/dev/stderr
+ENV KONG_LOG_LEVEL=info
+
+RUN kong config parse kong.yml --v
+
+EXPOSE 8000 8443 8001 8444

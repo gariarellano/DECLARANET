@@ -1,0 +1,98 @@
+<div class="mt-5 col-md-8 offset-md-2">
+    <div class="container-form shadow p-3 mb-5 bg-white rounded ">
+        <h2>Editar usuario</h2>
+        <!-- <hr style="background-color: rgb(135, 135, 141); height: .4px;"> -->
+
+        <form #formConsulta="ngForm" (ngSubmit)="consultaCurp()">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <mat-form-field>
+                        <mat-label>Ingrese el CURP o su RFC</mat-label>
+                        <input matInput required placeholder="XXXX010101XXXXXX01 ó XXXX010101XX0" #curpConsultaInput="ngModel" name="curpConsultaInput" [(ngModel)]="this.curpConsulta" [disabled]="this.usuarioExiste" oninput="CustomUpperCase(this);" minlength="13" maxlength="18">
+                        <mat-error *ngIf="curpConsultaInput.invalid">Curp o RFC inválidos</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group col-md-4">
+                    <button mat-button type="submit" color="primary" [disabled]="this.usuarioExiste || this.loading"><i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Consultar</button>
+                </div>
+            </div>
+        </form>
+
+        <div *ngIf="this.usuarioExiste" class="pullDown">
+            <hr style="background-color: rgb(182, 182, 194); height: 1px;">
+            <h3>Datos del usuario a modificar</h3>
+            <label for="">{{usuarioEdit.nombre}} {{usuarioEdit.primerApellido}} {{usuarioEdit.segundoApellido}}</label>
+            <ul class="nav nav-tabs" id="tabInicio" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="editarCurp-tab" data-toggle="tab" href="#editarCurp" role="tab" aria-controls="editarCurp" aria-selected="true">CURP</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="editarEmail-tab" data-toggle="tab" href="#editarEmail" role="tab" aria-controls="editarEmail" aria-selected="false">Correo electrónico</a>
+                </li>
+                <li class="nav-item" *ngIf="this.resetear===true">
+                    <a class="nav-link" id="recuperarPass-tab" data-toggle="tab" href="#recuperarPass" role="tab" aria-controls="recuperarPass" aria-selected="false">Contraseña temporal</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="editarCurp" role="tabpanel" aria-labelledby="editarCurp-tab">
+                    <form #formEditCurp="ngForm" (ngSubmit)="editaUsuario('curp')">
+                        <div class="form-row mt-3">
+                            <div class="form-group col-md-4">
+                                <mat-form-field class="d-inline-block">
+                                    <mat-label>CURP</mat-label>
+                                    <input matInput required placeholder="XXXX010101XXXXXX01" #curpEditaInput="ngModel" name="curpEditaInput" [(ngModel)]="usuarioEdit.curp" minlength="18" maxlength="18" oninput="CustomUpperCase(this);" curpValid>
+                                    <mat-error *ngIf="curpEditaInput.invalid">Curp inválida</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <button mat-raised-button type="submit" color="primary">Modificar CURP</button>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button mat-raised-button type="reset" on (click)="cancelar();" color="warn">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="editarEmail" role="tabpanel" aria-labelledby="editarEmail-tab">
+                    <form #formEditEmail="ngForm" (ngSubmit)="editaUsuario('email')">
+                        <div class="form-row mt-3">
+                            <div class="form-group col-md-4">
+                                <mat-form-field>
+                                    <mat-label>Correo electrónico</mat-label>
+                                    <input matInput required placeholder="XXXX010101XXXXXX01" #emailEditaInput="ngModel" name="emailEditaInput" [(ngModel)]="usuarioEdit.email" oninput="CustomLowerCase(this);" email>
+                                    <mat-error *ngIf="emailEditaInput.invalid">Correo inválido</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group col-md-4">
+
+                                <mat-form-field>
+                                    <mat-label>Correo electrónico alterno</mat-label>
+                                    <input matInput placeholder="XXXX010101XXXXXX01" #emailAltEditaInput="ngModel" name="emailAltEditaInput" [(ngModel)]="usuarioEdit.emailAlt" oninput="CustomLowerCase(this);" email>
+                                    <mat-error *ngIf="curpEditaInput.invalid">Correo inválido</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <button mat-raised-button type="submit" color="primary">Modificar email</button>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button mat-raised-button type="reset" on (click)="cancelar();" color="warn">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="recuperarPass" role="tabpanel" aria-labelledby="recuperarPass-tab" *ngIf="this.resetear===true">
+                    <div class="row mt-5">
+                        <div class="col-md-3">
+                            <button mat-raised-button type="button" color="primary" (click)="generarTempPass()" [disabled]="this.loading"><i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Generar contraseña temporal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>

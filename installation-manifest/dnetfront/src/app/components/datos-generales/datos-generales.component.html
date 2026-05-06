@@ -1,0 +1,253 @@
+<form #form1 [formGroup]="form" class="container-fluid  ml-2 pt-3 h-75">
+
+    <div class="title d-flex justify-content-between mb-3">
+        <h4>Datos Generales</h4> <i class="fas fa-question-circle mr-3 help"></i>
+        <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+    </div>
+    <div id="scroll1" class="altoScroll" (mousewheel)="_wheel($event);">
+
+        <!-- DATOS PERSONALES -->
+
+        <div formGroupName="datosPersonales" class="row">
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" (click)="abriInfo('datosGenerales','nombre')" for="">{{dataInfo.datosGenerales.nombre.label}} <i class="fas fa-info-circle"></i>
+                </label>
+                <label [hidden]="help" for="" required> {{dataInfo.datosGenerales.nombre.label}} <i
+                        class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                        title="Campo público"></i> </label>
+                <input formControlName="nombre" required type="text" name="" maxlength="35" (change)="validateStatusForm()" oninput="CustomUpperCase(this)" id="datGenNom">
+                <span class="invalid-tooltip" *ngIf="!form.get('datosPersonales.nombre').valid && (form.get('datosPersonales.nombre').dirty || form.get('datosPersonales.nombre').touched)">
+                    Campo Requerido
+                </span>
+
+            </div>
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" (click)="abriInfo('datosGenerales','primerApellido')" for="">{{dataInfo.datosGenerales.primerApellido.label}}<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="" required>{{dataInfo.datosGenerales.primerApellido.label}} <i
+                        class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                        title="Campo público"></i></label>
+                <input type="text" required name="" id="datGenPriApe" maxlength="35" formControlName="primerApellido" (change)="validateStatusForm()" oninput="CustomUpperCase(this)">
+                <span class="invalid-tooltip" *ngIf="!form.get('datosPersonales.primerApellido').pristine && form.get('datosPersonales.primerApellido').value == ''">
+                    Campo Requerido
+                </span>
+            </div>
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" (click)="abriInfo('datosGenerales','segundoApellido')" for="">{{dataInfo.datosGenerales.segundoApellido.label}} <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">{{dataInfo.datosGenerales.segundoApellido.label}} <i
+                        class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                        title="Campo público"></i></label>
+                <input type="text" name="" id="datGenSegApe" maxlength="35" formControlName="segundoApellido" (change)="validateStatusForm()" oninput="CustomUpperCase(this)">
+                <span class="invalid-tooltip" *ngIf="!form.get('datosPersonales.segundoApellido').pristine && form.get('datosPersonales.segundoApellido').value == ''">
+                    Campo Requerido
+                </span>
+            </div>
+        </div>
+
+        <div formGroupName="datosPersonales" class="row mt-3">
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" (click)="abriInfo('datosGenerales','curp')" for="">{{dataInfo.datosGenerales.curp.label}} <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">{{dataInfo.datosGenerales.curp.label}} </label>
+                <input type="text" required name="" id="datGenCur" formControlName="curp" maxlength="18" (change)="validateStatusForm()" oninput="CustomUpperCase(this)">
+                <span class="invalid-tooltip" *ngIf="!form.get('datosPersonales.curp').pristine && form.get('datosPersonales.curp').value == ''">
+                    Campo Requerido
+                </span>
+                <span class="invalid-tooltip" *ngIf="form.get('datosPersonales.curp').errors?.validateCurp && form.get('datosPersonales.curp').value != ''">
+                    Curp Invalida
+                </span>
+
+            </div>
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" (click)="abriInfo('datosGenerales','rfc')" for="">{{dataInfo.datosGenerales.rfc.label}} <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="" required>{{dataInfo.datosGenerales.rfc.label}} </label>
+                <input type="text" required name="" formControlName="rfc" maxlength="10" (change)="validateStatusForm()" oninput="CustomUpperCase(this)" id="datGenRfc">
+                <span class="invalid-tooltip" *ngIf="!form.get('datosPersonales.rfc').pristine && form.get('datosPersonales.rfc').value == ''">
+                    Campo Requerido
+                </span>
+                <span class="invalid-tooltip" *ngIf="form.get('datosPersonales.rfc').errors?.validateRfcControl && form.get('datosPersonales.rfc').value != '' && form.get('datosPersonales.rfc').touched">
+                    RFC Invalido
+                </span>
+                <!-- <span class="invalid-tooltip" *ngIf="form.get('datosPersonales.rfc').errors?.validateRfcControl && form.get('datosPersonales.rfc').value != ''">
+                RFC Invalido
+             </span> -->
+
+            </div>
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Homoclave <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="" required>Homoclave</label>
+                <input type="text" name="" id="datGenHomcla" formControlName="homoclave" maxlength="3" required (change)="validateStatusForm()" oninput="CustomUpperCase(this)">
+                <span class="invalid-tooltip" *ngIf="!form.get('datosPersonales.homoclave').pristine && form.get('datosPersonales.homoclave').value == ''">
+                    Campo Requerido
+                </span>
+                <span class="invalid-tooltip" *ngIf="form.get('datosPersonales.homoclave').errors?.validateHomoControl && form.get('datosPersonales.homoclave').value != ''">
+                    Homoclave Invalida
+                </span>
+            </div>
+        </div>
+
+        <!-- TERMINA DATOS PERSONALES -->
+
+        <div class="row mt-3">
+
+            <!-- CORREO ELECTRONICO -->
+
+            <div formGroupName="correoElectronico" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">{{dataInfo.datosGenerales.correoIns.label}} <i
+                        class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">{{dataInfo.datosGenerales.correoIns.label}} <i
+                        class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                        title="Campo público"></i></label>
+                <input type="text" name="" id="datGenCorIns" formControlName="institucional" maxlength="50" (change)="validateStatusForm()">
+                <span class="invalid-tooltip" *ngIf="form.get('correoElectronico.institucional').errors?.validateEmail && form.get('correoElectronico.institucional').value != ''">
+                    Correo electrónico invalido
+                </span>
+
+            </div>
+            <div formGroupName="correoElectronico" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">{{dataInfo.datosGenerales.correoPer.label}} <i
+                        class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">{{dataInfo.datosGenerales.correoPer.label}}</label>
+                <input type="text" name="" id="datGenCorPer" formControlName="personalAlterno" maxlength="50" (change)="validateStatusForm()">
+                <span class="invalid-tooltip" *ngIf="form.get('correoElectronico.personalAlterno').errors?.validateEmail && form.get('correoElectronico.personalAlterno').value != ''">
+                    Correo electrónico invalido
+                </span>
+            </div>
+
+            <!-- TERMINA CORREO ELECTRONICO -->
+
+            <!-- TELÉFONO CASA -->
+            <div formGroupName="telefonoCasa" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Teléfono de casa <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Teléfono de casa </label>
+                <input type="text" name="" id="datGenTelCas" formControlName="numero" maxlength="10" (change)="validateStatusForm()" oninput="soloNumeroInput(this, 1, 9999999999);" onfocus="focusSoloNumero(this)">
+            </div>
+            <!-- TERMINA TELÉFONO CASA -->
+        </div>
+        <div class="row mt-3">
+
+            <div formGroupName="telefonoCelular">
+                <div formGroupName="paisCelularPersonal" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Lada internacional del celular <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Lada internacional del celular </label>
+                    <select name="" id="datGenLadInt" formControlName="id">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option value="" *ngFor="let pais of globals.catalogos?.CAT_PAIS_LADA" [value]="pais.id">
+                            {{pais.valor}} (+{{pais.valorUno}})
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+            <div formGroupName="telefonoCelular" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Teléfono Celular <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Teléfono Celular </label>
+                <input type="text" name="" id="datGenTelCel" formControlName="numero" maxlength="10" (change)="validateStatusForm()" oninput="soloNumeroInput(this, 1, 9999999999);" onfocus="focusSoloNumero(this)">
+            </div>
+
+            <!--ESTADO CIVIL -->
+            <div formGroupName="situacionPersonalEstadoCivil" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Situación Personal / Estado civil <i
+                        class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Situación Personal / Estado civil </label>
+                <select name="" required id="datGenSitPer" formControlName="id" (change)="validateStatusForm()">
+                    <option value="null" disabled>SELECCIONE...</option>
+                    <option value="" *ngFor="let estado of globals.catalogos?.CAT_ESTADO_CIVIL" [value]="estado.id">
+                        {{estado.valor}}
+                    </option>
+                </select>
+
+                <span class="invalid-tooltip" *ngIf="form.get('situacionPersonalEstadoCivil.valor').touched && form.get('situacionPersonalEstadoCivil.valor').pristine">
+                    Campo Requerido
+                </span>
+            </div>
+            <!--TERMINA ESTADO CIVIL -->
+
+            <!--REGIMEN MATROMONIAL -->
+            <div formGroupName="regimenMatrimonial" *ngIf="form.get('situacionPersonalEstadoCivil.id').value == '2'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Régimen Matrimonial <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Régimen Matrimonial </label>
+                <select name="" required id="datGenRegMat" formControlName="id" (change)="validateStatusForm()">
+                    <option value="null" disabled>SELECCIONE...</option>
+                    <option value="" *ngFor="let regimen of globals.catalogos?.CAT_REGIMEN_MATRIMONIAL"
+                        [value]="regimen.id">
+                        {{regimen.valor}}
+                    </option>I
+                </select>
+                <!-- <span class="invalid-tooltip" *ngIf="form.get('regimenMatrimonial.id').touched && form.get('regimenMatrimonial.id').pristine && form.get('regimenMatrimonial.id').errors?.required"> -->
+                <span class="invalid-tooltip" *ngIf="form.get('regimenMatrimonial.id').errors?.required">
+                    Campo Requerido
+                </span>
+            </div>
+            <!--TERMINA REGIMEN MATROMONIAL-->
+        </div>
+        <div class="row mt-3">
+            <div *ngIf="form.get('regimenMatrimonial.id').value == '9999'" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Especifique el regimen matrimonial<i
+                        class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Especifique el regimen matrimonial <i class="fas fa-globe-americas"
+                        data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                <input type="text" id="datGenRegMatOtr" required name="especificMatri" formControlName="regimenMatrimonialOtro" oninput="CustomUpperCase(this);">
+                <span class="invalid-tooltip" *ngIf="form.get('regimenMatrimonialOtro').touched && form.get('regimenMatrimonialOtro').pristine">
+                    Campo Requerido
+                </span>
+            </div>
+            <!--PAÍS -->
+            <div formGroupName="paisNacimiento" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">País de nacimiento <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">País de nacimiento </label>
+                <select name="" id="datGenPaiNac" required formControlName="id" (change)="validateStatusForm()">
+                    <option value="null" disabled>SELECCIONE...</option>
+                    <option value="" *ngFor="let p of globals.catalogos?.CAT_PAIS" [value]="p.id">
+                        {{p.valor}}
+                    </option>I
+                </select>
+                <span class="invalid-tooltip" *ngIf="!form.get('paisNacimiento.valor').valid && (form.get('paisNacimiento.valor').dirty || form.get('paisNacimiento.valor').touched)">
+                    Campo Requerido
+                </span>
+            </div>
+            <!--TERMINA PAÍS -->
+
+            <!--NACIONALIDAD -->
+            <div formGroupName="nacionalidad" class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Nacionalidad <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Nacionalidad </label>
+                <select name="" id="datGenNac" required formControlName="id" maxlength="10" (change)="validateStatusForm()">
+                    <option value="null" disabled>SELECCIONE...</option>
+                    <option value="" *ngFor="let n of globals.catalogos?.CAT_NACIONALIDAD" [value]="n.id">
+                        {{n.valor}}
+                    </option>I
+                </select>
+                <span class="invalid-tooltip" *ngIf="!form.get('nacionalidad.valor').valid && (form.get('nacionalidad.valor').dirty || form.get('nacionalidad.valor').touched)">
+                    Campo Requerido
+                </span>
+            </div>
+            <!--TERMINA NACIONALIDAD -->
+        </div>
+
+        <div class="row mt-3 ml-1">
+            <button (click)="abrirObservaciones()" type="button" id="observaciones" class="observaciones"><i class="far fa-envelope"></i>
+                Aclaraciones / Observaciones </button>
+            <button (click)="guardaLocal(form)" class="btn btn-success ml-3" id="aceptar" [disabled]="!form.valid">Aceptar</button>
+            <!-- <button (click)="guardaLocal(form)" class="btn btn-success ml-3" [disabled]="!form.valid">Aceptar</button> -->
+        </div>
+
+        <div id="obs-generales" class="content-observaciones">
+            <div>
+                <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+                <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)" id="aclaracionesObservaciones" cols="80" rows="15" maxlength="2000" formControlName="aclaracionesObservaciones"></textarea>
+                <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+
+        <div class="content-info">
+            <div>
+                <h3>{{label}}</h3>
+                <i class="fas fa-info-circle icon-info"></i>
+                <p class="info">{{info}} </p>
+                <p *ngIf="link!=undefined" class="info"><a href="{{link}}" target="_blank">{{leyenda}}</a></p>
+                <p style="justify-content: center"><button (click)="cerrarInfo()" class="btn btn-success">Aceptar</button></p>
+            </div>
+        </div>
+    </div>
+</form>

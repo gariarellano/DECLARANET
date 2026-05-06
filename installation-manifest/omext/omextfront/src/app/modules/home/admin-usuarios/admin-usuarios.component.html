@@ -1,0 +1,263 @@
+<!-- <app-menu-nav></app-menu-nav> -->
+<div class="container mt-5">
+    <h3 class="pt-3">Registro Usuarios</h3>
+    <div class="mt-2">
+        <form #curpForm="ngForm" ngSubmit="consultaUsuario()" *ngIf="!user.curp">
+            <div class="row">
+                <div class="col col-lg-6">
+                    <mat-form-field class="example-form-field">
+                        <mat-label>CURP</mat-label>
+                        <input matInput type="text" name="curpConsultar" required maxlength="18" curpValid [(ngModel)]="curpConsulta" #curpConsultar="ngModel" oninput="customUpperCase(this)">
+
+                    </mat-form-field>
+
+                    <!-- <div>
+
+                        <mat-error *ngIf="curp.invalid && curp.touched">
+                            La CURP debe contener el formato correcto...
+                        </mat-error>
+                    </div> -->
+                </div>
+                <div class="col col-lg-6">
+
+                    <button type="button" class="btn btn-primary" (click)="consultaUsuario()" [disabled]="!curpForm.valid">Consultar</button>
+                </div>
+
+            </div>
+        </form>
+
+        <form #usuariosForm="ngForm" ngSubmit="guardarUsuario()" *ngIf="user.curp">
+            <div class="row">
+                <div class="col col-lg-6">
+                    <mat-form-field class="example-form-field">
+                        <mat-label>CURP</mat-label>
+                        <input matInput type="text" name="curp" required maxlength="18" disabled curpValid [(ngModel)]="user.curp" #curp="ngModel">
+                    </mat-form-field>
+                    <div>
+
+                        <!-- <mat-error *ngIf="curp.invalid && curp.touched">
+                            La CURP debe contener el formato correcto...
+                        </mat-error> -->
+                    </div>
+                    <mat-form-field class="example-form-field">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" required name="user" [(ngModel)]="user.user" oninput="customUpperCase(this)" [disabled]="!saveModel">
+                        <!-- (input)="globals.customUpperCase($event.target)" (ngModelChange)="globals.customUpperCase1($event)" -->
+                    </mat-form-field>
+                    <mat-form-field class="example-form-field">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" required name="email" #email="ngModel" [(ngModel)]="user.email" emailValid oninput="customLpperCase(this)" [disabled]="!saveModel">
+                    </mat-form-field>
+                    <div>
+                        <mat-error *ngIf="email.invalid && email.touched">
+                            El email debe contener el formato correcto...
+                        </mat-error>
+                    </div>
+                    <p>
+                        <mat-checkbox [color]="color" class="example-margin" name="cambioPersona" #cambioPersona="ngModel" [(ngModel)]="saveModel" (change)="checkCambiosPersona();">
+                            <span>Cambiar datos personales</span>
+                        </mat-checkbox>
+                    </p>
+
+                    <!-- <mat-form-field class="example-form-field">
+                        <mat-label>Perfil</mat-label>
+                        <input matInput type="text" [(ngModel)]="value">
+                    </mat-form-field> -->
+
+                </div>
+                <div class="col col-lg-6">
+
+
+                    <!-- <p class="d-flex w-100 justify-content-start">
+                        <button class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" *ngIf="perfilesInst.length==0"><i
+                                class="fas fa-folder-plus"></i>
+                            Agregar perfil</button>
+
+                    </p>
+
+
+                    <p style="display: flex; justify-content: flex-start;">
+
+                        <button *ngFor="let perfil of perfilesInst; let i = index" type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalInstOfProfile" (click)="openInst(i)">{{perfil.profile}} <i class="fas fa-eye"></i></button>
+                    </p> -->
+                    <p>
+                        <mat-checkbox [color]="color" class="example-margin" name="active" #active="ngModel" [(ngModel)]="user.active">
+                            <span>Activo</span>
+                        </mat-checkbox>
+                    </p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Perfil</mat-label>
+                        <mat-select name="perfil" [(ngModel)]="perfil" required>
+                            <mat-option *ngFor="let perfil of perfilesList" [value]="perfil.value">
+                                {{perfil.text}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+
+                <div class="col col-lg-8">
+                    <h3>Instituciones</h3>
+
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            <mat-form-field>
+                                <mat-label>Buscar</mat-label>
+                                <input matInput (keyup)="filtrar($event)" placeholder="institución">
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+                    <div style="height: 230px; overflow-y: auto;">
+                        <div class="mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
+
+                                <ng-container matColumnDef="nombre">
+                                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                                    <td mat-cell *matCellDef="let user"> {{user.nombre}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="select">
+                                    <th mat-header-cell *matHeaderCellDef> </th>
+                                    <td mat-cell *matCellDef="let user"> <button class="btn-primary" (click)="agregarInst(user)">Selecciona</button>
+                                    </td>
+                                </ng-container>
+
+
+
+                                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h3>Instituciones seleccionadas</h3>
+                    <div style="height: 336.5px; overflow-y: auto;">
+                        <p *ngFor="let ins of perfilesArray; let i = index">
+                            <span><i (click)="eliminarInst(i)" style="margin-left: 3px; cursor: pointer;" class="fas fa-minus-circle"></i> {{ins.desc}} </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <p class=" mt-3 text-right">
+                <button type="button" class="btn btn-primary" (click)="guardarUsuario()" [disabled]="!usuariosForm.valid || perfilesArray.length==0">Guardar</button>
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelarUsuario()">Cancelar</button>
+
+            </p>
+
+        </form>
+    </div>
+</div>
+<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Instituciónes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="height: 500px; overflow-y: scroll;">
+
+                <div class="d-flex w-100 justify-content-between">
+                    <mat-form-field>
+                        <mat-label>Buscar</mat-label>
+                        <input matInput (keyup)="filtrar($event)" placeholder="institución">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Perfil</mat-label>
+                        <mat-select name="curp" [(ngModel)]="perfil">
+                            <mat-option *ngFor="let perfil of perfilesList" [value]="perfil.value">
+                                {{perfil.text}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <p style="display: flex; justify-content: flex-start;">
+                    <span *ngFor="let ins of perfilesArray; let i = index">{{ins.nombre}}<i (click)="eliminarInst(i)"
+                            style="margin-left: 3px; cursor: pointer;" class="fas fa-minus-circle"></i> ,</span>
+                </p>
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <td mat-cell *matCellDef="let user"> {{user.nombre}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let user"> <button class="btn-primary" (click)="agregarInst(user)">Selecciona</button>
+                            </td>
+                        </ng-container>
+
+
+
+                        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="guardarPerfil()">Guardar
+                    perfil</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalInstOfProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalInstOfProfile" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5>{{perfilOpen}}</h5>
+            </div>
+            <div class="modal-body" style="height: 300px; overflow-y: scroll;">
+                <div class="d-flex w-100 justify-content-between">
+                    <mat-form-field>
+                        <mat-label>Buscar</mat-label>
+                        <input matInput (keyup)="filtrar($event)" placeholder="institución">
+                    </mat-form-field>
+                </div>
+                <p style="display: flex; justify-content: flex-start;">
+                    <span *ngFor="let ins of instOpen; let i = index;">{{ins.desc}}<i (click)="eliminarInst(i,true)"
+                            style="margin-left: 3px; cursor: pointer;" class="fas fa-minus-circle"></i> ,</span>
+                </p>
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <td mat-cell *matCellDef="let user"> {{user.nombre}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let user"> <button class="btn-primary" (click)="agregarInst(user,true)">Selecciona</button>
+                            </td>
+                        </ng-container>
+
+
+
+                        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div> -->

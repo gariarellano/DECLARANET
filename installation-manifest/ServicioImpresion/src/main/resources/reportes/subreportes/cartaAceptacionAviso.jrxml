@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-06-04T19:13:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartaAceptacion" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cb93256f-7fe2-45a6-a1a1-362d552e5da2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="cartaP1" class="java.lang.String"/>
+	<parameter name="cartaP2" class="java.lang.String"/>
+	<parameter name="folio" class="java.lang.String"/>
+	<parameter name="imagenInstitucionalB64" class="java.lang.String"/>
+	<parameter name="imagenOficialB64" class="java.lang.String"/>
+	<parameter name="nombreEnte" class="java.lang.String"/>
+	<parameter name="transaccion" class="java.lang.String"/>
+	<parameter name="collName" class="java.lang.Integer"/>
+	<parameter name="esAviso" class="java.lang.Boolean"/>
+	<parameter name="numeroDeclaracion" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band height="801" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="36" y="167" width="556" height="460" uuid="3abcab34-6efa-4f07-9ad1-07ba827cf61d">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[org.apache.commons.codec.binary.Base64.decodeBase64($P{imagenOficialB64}.getBytes())]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement x="250" y="10" width="305" height="42" uuid="88232de0-e42a-42bf-bac2-146304b5f34f">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carta de Aceptación para la utilización de la CURP y contraseña como firma del aviso por cambio de dependencia o entidad.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="180" height="90" uuid="30962269-a00d-4c0d-bda3-f57bea22d49d"/>
+				<imageExpression><![CDATA[org.apache.commons.codec.binary.Base64.decodeBase64($P{imagenInstitucionalB64}.getBytes())]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" evaluationTime="Report">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="320" y="52" width="236" height="37" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="91904d96-0d03-4fda-8046-0781d904e303">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Número de transacción: ".concat($P{folio})]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="252" y="52" width="50" height="50" uuid="2b53061e-7de0-4563-abd2-7f561214b598"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $P{folio},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="550" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="32" width="555" height="150" uuid="b83c8bc8-ef6e-4b6d-869b-730f491d9b98">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cartaP1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="233" width="555" height="40" uuid="0426e825-379a-483c-87d1-9b587a6f45d8">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cartaP2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="278" width="555" height="50" uuid="3d9fbbe0-d8d1-4e57-a26b-3660ca361d32">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[2. Que para el envío del aviso referido en el párrafo anterior, utilicé como usuario mi Clave Única de Registro de Población y contraseña con los que ingreso al sistema DeclaraNet, por lo que es de mi exclusiva responsabilidad su uso, así como la información remitida a través de los medios remotos de comunicación electrónica y las consecuencias jurídicas que de ello derive. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="406" width="555" height="15" uuid="052b02e9-ffe5-49b2-9190-6e105d3056b5">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROTESTO LO NECESARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="469" width="555" height="22" uuid="b25f5d52-e8f0-4c0e-915f-5b70260808f2">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[LUGAR Y FECHA DE ENTREGA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="18" width="100" height="14" uuid="874519c2-116a-4b2f-8e0a-02e35e2dc103">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="1" width="555" height="16" uuid="d3d73123-e3f4-4dd3-8be5-34f9f79799fc"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreEnte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="212" width="554" height="15" uuid="35ded00d-5630-4d33-bef4-b3191c4ee6ae">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{esAviso}.equals( true ) ? "MANIFESTACIONES" : "DECLARACIONES"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="334" width="555" height="52" uuid="9c2b2594-a7f1-4762-9c30-ffdc2e7a5045"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$P{esAviso}.equals( true ) ? "3. En virtud de estar de acuerdo con las condiciones antes señaladas, firmo autógrafamente el presente documento, mismo que me comprometo a presentar ante el Órgano Interno de Control o en la Unidad de Responsabilidades de la dependencia, entidad o institución donde concluí y donde ingresé, dentro de los 15 días hábiles siguientes a la presentación del correspondiente aviso por cambio de dependencia o entidad, acompañado de una copia del acuse de recibo generado por el sistema." : "3. En virtud de estar de acuerdo con las condiciones antes señaladas, firmo autógrafamente el presente documento, mismo que me comprometo a presentar ante el Órgano Interno de Control o en la Unidad de Responsabilidades de la dependencia, entidad o institución en la que presto o haya prestado mis servicios, dentro de los quince días hábiles siguientes al envío de la presente declaración de situación patrimonial, acompañado de una copia del acuse de recibo generado por el sistema antes mencionado."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="441" width="555" height="22" uuid="be9eb9f9-6c9c-47a1-a211-54776059f935">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{esAviso}.equals( true ) ? "NOMBRE Y FIRMA DEL MANIFESTANTE:" : "NOMBRE Y FIRMA DEL DECLARANTE:"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="3d449624-4947-4a1b-8e02-492895f5edb9">
+					<printWhenExpression><![CDATA[$P{collName} == 100]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Avenida Insurgentes Sur número 1735, colonia Guadalupe Inn, C.P. 01020, alcaldía Álvaro Obregón, Ciudad de México.
+Tel.: (55) 2000 3000 www.gob.mx/sfp]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

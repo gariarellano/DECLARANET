@@ -1,0 +1,1623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-08-19T14:16:13 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="main" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f04b1e2-6fb6-4ff4-92d0-61879719078e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<subDataset name="escolaridad" uuid="f5621462-d20b-4ffd-9eb9-cdc8f5a078e3">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="tipoDeclaracion" class="java.lang.String"/>
+	<parameter name="imagenOficialB64" class="java.lang.String"/>
+	<parameter name="tipoFormato" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="declaracion.encabezado.fechaActualizacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosCurricularesDeclarante.escolaridad" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosCurricularesDeclarante.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosEmpleoCargoComision.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.experienciasLaborales.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosParejas.aclaracionesObservaciones" class="java.lang.String"/>
+	<field name="declaracion.declaracion.datosDependientesEconomicos.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.prestamoComodato.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.participaEmpresasSociedadesAsociaciones.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.participacionTomaDecisiones.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.apoyos.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.representaciones.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.clientesPrincipales.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.beneficiosPrivados.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.fideicomisos.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.encabezado.tipoDeclaracion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.institucionReceptora.nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.vehiculos.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.fideicomisos.fideicomisos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.beneficiosPrivados.beneficios" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.clientesPrincipales.clientes" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.representaciones.representaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.apoyos.apoyos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.participacionTomaDecisiones.participaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.participaEmpresasSociedadesAsociaciones.participaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.prestamoComodato.prestamo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.adeudosPasivos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.inversionesCuentasValores" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.bienesMuebles" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.vehiculos.vehiculos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.bienesInmuebles" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.actividadAnualAnterior" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.ingresos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosDependientesEconomicos.datosDependientesEconomicos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosParejas.datosParejas" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.experienciasLaborales.experienciaLaboral" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosEmpleoCargoComision.empleoCargoComision" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.domicilioDeclarante" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosGenerales" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.institucionReceptora.ente.nombre" class="java.lang.String"/>
+	<field name="declaracion.declaracion.datosGenerales.datosPersonales.rfc" class="java.lang.String"/>
+	<field name="acuse.fechaRecepcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosGenerales.aclaracionesObservaciones" class="java.lang.String"/>
+	<field name="declaracion.declaracion.domicilioDeclarante.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.ingresos.aclaracionesObservaciones" class="java.lang.String"/>
+	<field name="declaracion.declaracion.actividadAnualAnterior.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.bienesInmuebles.aclaracionesObservaciones" class="java.lang.String"/>
+	<field name="declaracion.declaracion.bienesMuebles.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.inversionesCuentasValores.aclaracionesObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.adeudosPasivos.aclaracionesObservaciones" class="java.lang.String"/>
+	<field name="declaracion.declaracion.representaciones.ninguno" class="java.lang.String"/>
+	<field name="declaracion.declaracion.fideicomisos.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.beneficiosPrivados.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.apoyos.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.participacionTomaDecisiones.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.participaEmpresasSociedadesAsociaciones.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.encabezado.tipoFormato" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.prestamoComodato.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.adeudosPasivos.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.inversionesCuentasValores.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.bienesMuebles.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.vehiculos.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.bienesInmuebles.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosParejas.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.experienciasLaborales.ninguno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.datosDependientesEconomicos.ninguno" class="java.lang.String"/>
+	<field name="declaracion.declaracion.clientesPrincipales.realizaActividadLucrativa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.adeudosPasivos.adeudos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.declaracion.actividadAnualAnterior.servidorPublicoAnioAnterior" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="declaracion.encabezado.anio" class="java.lang.Integer"/>
+	<background>
+		<band height="554" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="36" width="750" height="15" uuid="cb2f1ba4-f3c0-4298-b683-27114bd1bd5b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DECLARACIÓN ".concat(mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{declaracion.encabezado.tipoDeclaracion}).getDescripcion()).concat("MODIFICACION".equals($F{declaracion.encabezado.tipoDeclaracion}) ? (" "+$F{declaracion.encabezado.anio}):"")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="8" width="750" height="14" isRemoveLineWhenBlank="true" uuid="6cb71e4a-c140-4ca8-a1e8-757fd7a16fe4">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.institucionReceptora.nombre}.toUpperCase() != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{declaracion.institucionReceptora.nombre}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="65" width="751" height="14" isRemoveLineWhenBlank="true" uuid="45491ab4-4282-465b-835d-f9fbc955bc11">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{acuse.fechaRecepcion} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FECHA DE RECEPCIÓN: ".concat($F{acuse.fechaRecepcion}.substring( 8, 10 ).concat( "/" ).concat($F{acuse.fechaRecepcion}.substring( 5, 7 )).concat( "/" ).concat($F{acuse.fechaRecepcion}.substring( 0, 4 )))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="22" width="750" height="14" uuid="70e046ab-cf95-42db-8ec7-c89d3abd3aee">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DECLARACIÓN DE SITUACIÓN PATRIMONIAL Y DE INTERESES DE LOS SERVIDORES PÚBLICOS"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="50">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="36" width="751" height="14" isRemoveLineWhenBlank="true" uuid="09feffac-3709-4802-8146-f613f9b55acb">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosGenerales} != null || $F{declaracion.declaracion.datosGenerales.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS GENERALES DEL SERVIDOR PUBLICO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="2" width="750" height="14" isRemoveLineWhenBlank="true" uuid="0e4453ab-e13d-441b-84f2-a7fb71e56070">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.institucionReceptora.nombre}.toUpperCase() != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{declaracion.institucionReceptora.nombre}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="18" width="750" height="12" uuid="732b872c-e517-4878-a972-a015fe81f2c4">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["BAJO PROTESTA DE DECIR VERDAD PRESENTO A USTED MI DECLARACIÓN PATRIMONIAL Y DE INTERESES, CONFORME A LO DISPUESTO EN LOS ARTÍCULOS 32 Y 33 DE LA LEY GENERAL DE RESPONSABILIDADES ADMINISTRATIVAS."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" uuid="ecc7f8f3-9fe9-44b7-95c0-59b8cdbae5fd">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosGenerales} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.datosGenerales")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//datosGenerales.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="43" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="2" width="751" height="14" isRemoveLineWhenBlank="true" uuid="66acb141-13ae-4a3d-b154-19677a89ea1a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null || $F{declaracion.declaracion.datosCurricularesDeclarante.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="0" leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS CURRICULARES DEL DECLARANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="17" width="751" height="12" isRemoveLineWhenBlank="true" uuid="ad849b7a-9036-4c18-8542-638530fb9153">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="6"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESCOLARIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="29" width="114" height="12" isRemoveLineWhenBlank="true" uuid="fef4d215-3198-4a6e-a605-3c4d5f47692b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIVEL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="114" y="29" width="114" height="12" isRemoveLineWhenBlank="true" uuid="45d0dda4-58a2-4cba-9ab4-61c6bddb5c19">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUCIÓN EDUCATIVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="228" y="29" width="114" height="12" isRemoveLineWhenBlank="true" uuid="38eeb1c2-5564-4006-a91e-8c43c13af42f">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UBICACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="342" y="29" width="150" height="12" isRemoveLineWhenBlank="true" uuid="7ba77190-d3ff-49e1-b863-cf68042ce24d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARRERA O ÁREA DE CONOCIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="492" y="29" width="82" height="12" isRemoveLineWhenBlank="true" uuid="4bd13964-5cee-420a-bb7f-67f121750ffd">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTATUS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="574" y="29" width="114" height="12" isRemoveLineWhenBlank="true" uuid="4e04a23f-198c-4e69-9a31-ef062dab3f40">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO OBTENIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="688" y="29" width="63" height="12" uuid="6d604b83-3923-4363-89ac-4d9df0de7064">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DOCUMENTO]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="20" isRemoveLineWhenBlank="true" uuid="a482ed02-13d4-4c3b-b1f8-2bbc0b5dc0e4">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosCurricularesDeclarante.escolaridad} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.datosCurricularesDeclarante.escolaridad")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//escolaridad.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="19">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="3" width="750" height="14" uuid="1ea78bef-0ced-415d-ab00-7e6853d4e96d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DATOS DEL EMPLEO, CARGO O COMISIÓN "+("INICIO".equals($P{tipoDeclaracion}) ? "QUE INICIA":"")+("MODIFICACION".equals($P{tipoDeclaracion}) ? "ACTUAL":"")+("CONCLUSION".equals($P{tipoDeclaracion}) ? "QUE CONCLUYE":"")]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosEmpleoCargoComision.empleoCargoComision} != null]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" uuid="234fa603-b98d-4bd6-af97-45d584a42bda">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.datosEmpleoCargoComision.empleoCargoComision} != null]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="tipoDeclaracion">
+					<subreportParameterExpression><![CDATA[$F{declaracion.encabezado.tipoDeclaracion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.datosEmpleoCargoComision.empleoCargoComision")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//empleoCargoComision.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="21">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="4" width="751" height="14" isRemoveLineWhenBlank="true" uuid="bc3edcd1-1fec-48f2-8a8d-132919371421">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.experienciasLaborales.experienciaLaboral} != null || $F{declaracion.declaracion.experienciasLaborales.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="0" leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXPERIENCIA LABORAL (ÚLTIMOS CINCO EMPLEOS)]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<printWhenExpression><![CDATA[$F{declaracion.declaracion.experienciasLaborales.experienciaLaboral} != null]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" uuid="85408337-36da-4aa4-b6ca-c43890ec7357">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.experienciasLaborales.experienciaLaboral} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.experienciasLaborales.experienciaLaboral")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//experienciaLaboral.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="12">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="751" height="10" isRemoveLineWhenBlank="true" uuid="63709cc9-63ce-4140-8d65-ef1c2c5154a6">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.experienciasLaborales.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="22">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField isStretchWithOverflow="true" evaluationTime="Auto" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="6" width="751" height="14" isRemoveLineWhenBlank="true" uuid="3ff6c287-f0f3-4939-8213-7b6f13c19e02">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.ingresos} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["INICIO".equals($P{tipoDeclaracion}) ? "INGRESOS NETOS DEL DECLARANTE (SITUACIÓN ACTUAL)" : "MODIFICACION".equals($P{tipoDeclaracion}) ? "INGRESOS NETOS DEL DECLARANTE, (ENTRE EL 1 DE ENERO Y 31 DE DICIEMBRE DEL AÑO INMEDIATO ANTERIOR)" : "CONCLUSION".equals($P{tipoDeclaracion}) ?  "INGRESOS DEL AÑO EN CURSO A LA FECHA DE CONCLUSIÓN DEL EMPLEO, CARGO O COMISIÓN NETOS DEL DECLARANTE" : ""]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="251d5439-4582-414d-919a-062b83df7733">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.ingresos} != null]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="tipoDeclaracion">
+					<subreportParameterExpression><![CDATA[$P{tipoDeclaracion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tipoFormato">
+					<subreportParameterExpression><![CDATA[$P{tipoFormato}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.ingresos")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//ingresosNetosSituacionActual.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="17">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="3" width="465" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="ea5fbf7e-75e0-47ad-9a89-547e103c8742">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.actividadAnualAnterior} != null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[¿TE DESEMPEÑASTE COMO SERVIDOR PÚBLICO EN EL AÑO INMEDIATO ANTERIOR?]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="424" y="3" width="190" height="14" isRemoveLineWhenBlank="true" uuid="e7bee2f0-3b69-4133-9500-73355fa331e5">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{declaracion.declaracion.actividadAnualAnterior.servidorPublicoAnioAnterior} ? "Si" : "No"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="22">
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="19" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="0ca99fe2-281c-4ee3-a47a-fc23c45d5ff6">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.actividadAnualAnterior} != null && $F{declaracion.declaracion.actividadAnualAnterior.servidorPublicoAnioAnterior}]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="tipoDeclaracion">
+					<subreportParameterExpression><![CDATA[$P{tipoDeclaracion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tipoFormato">
+					<subreportParameterExpression><![CDATA[$P{tipoFormato}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.actividadAnualAnterior")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//actividadAnualAnterior.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="35">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="5" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="54b6684d-edb2-42cf-a636-88f11f83037f">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[("INICIO".equals($F{declaracion.encabezado.tipoDeclaracion}) || "CONCLUSION".equals($F{declaracion.encabezado.tipoDeclaracion})) && ($F{declaracion.declaracion.bienesInmuebles} != null || $F{declaracion.declaracion.bienesInmuebles.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BIENES INMUEBLES (SITUACIÓN ACTUAL)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="19" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1af5c818-5758-40b9-a62d-e829595e1659">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["MODIFICACION".equals($F{declaracion.encabezado.tipoDeclaracion}) && ($F{declaracion.declaracion.bienesInmuebles} != null || $F{declaracion.declaracion.bienesInmuebles.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BIENES INMUEBLES (ENTRE EL 1 DE ENERO Y EL 31 DE DICIEMBRE DEL AÑO INMEDIATO ANTERIOR)]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="b79580f5-dc70-40db-8596-60e9836ebb2c">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["false".equals($F{declaracion.declaracion.bienesInmuebles.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.bienesInmuebles")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//bienesInmuebles.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="45">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="12" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="c9ff4d26-8371-47b1-9818-b952314a82ab">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[("INICIO".equals($F{declaracion.encabezado.tipoDeclaracion}) || "CONCLUSION".equals($F{declaracion.encabezado.tipoDeclaracion}) ) && ($F{declaracion.declaracion.vehiculos.vehiculos} != null || "true".equals($F{declaracion.declaracion.vehiculos.ninguno}) || $F{declaracion.declaracion.vehiculos.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VEHÍCULOS (SITUACIÓN ACTUAL)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="26" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="812351c0-7e9c-4e97-930a-b87ae89a5ffd">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["MODIFICACION".equals($F{declaracion.encabezado.tipoDeclaracion}) && ($F{declaracion.declaracion.vehiculos.vehiculos} != null || "true".equals($F{declaracion.declaracion.vehiculos.ninguno}) || $F{declaracion.declaracion.vehiculos.aclaracionesObservaciones} != null
+)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VEHÍCULOS (ENTRE EL 1 DE ENERO Y EL 31 DE DICIEMBRE DEL AÑO INMEDIATO ANTERIOR)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="f1ac0cfb-e029-4a0b-a0fd-9158c181152d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.bienesInmuebles.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="5a71316e-5a50-436f-8161-a114102f38d5">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.vehiculos.vehiculos} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.vehiculos.vehiculos")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//vehiculosActual.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="12">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="ffd2bca8-0a85-41cc-a8f7-8634a37ccf91">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.vehiculos.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="42">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="7cd92b60-f1d2-49f3-bacd-e6831ef1b79e">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["INICIO".equals($F{declaracion.encabezado.tipoDeclaracion}) && ($F{declaracion.declaracion.bienesMuebles} != null || $F{declaracion.declaracion.bienesMuebles.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BIENES MUEBLES (SITUACIÓN ACTUAL)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="14" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="04c9d06d-75ff-4037-a395-a5f826ec33c6">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["MODIFICACION".equals($F{declaracion.encabezado.tipoDeclaracion}) && ($F{declaracion.declaracion.bienesMuebles} != null || $F{declaracion.declaracion.bienesMuebles.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BIENES MUEBLES ( ENTRE EL 1 DE ENERO Y EL 31 DE DICIEMBRE DEL AÑO INMEDIATO ANTERIOR )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="28" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="af8e48d7-2abd-48a3-9b95-5a02e4908aab">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["CONCLUSION".equals($F{declaracion.encabezado.tipoDeclaracion}) && ($F{declaracion.declaracion.bienesMuebles} != null || $F{declaracion.declaracion.bienesMuebles.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BIENES MUEBLES]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="4527da7f-7b8a-4f99-b6d5-61f031dae479">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["false".equals($F{declaracion.declaracion.bienesMuebles.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.bienesMuebles")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//bienesMuebles.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="42">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="12" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="9d8b77e2-0ad3-410b-9e1c-c7ee473e5ec6">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[("INICIO".equals($F{declaracion.encabezado.tipoDeclaracion}) || "CONCLUSION".equals($F{declaracion.encabezado.tipoDeclaracion})) && $F{declaracion.declaracion.inversionesCuentasValores} != null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVERSIONES, CUENTAS BANCARIAS Y OTRO TIPO DE VALORES / ACTIVOS (SITUACIÓN ACTUAL)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="26" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="e8ab22df-1034-46d2-b71b-f28ac03af596">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["MODIFICACION".equals($F{declaracion.encabezado.tipoDeclaracion}) && $F{declaracion.declaracion.inversionesCuentasValores} != null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVERSIONES, CUENTAS BANCARIAS Y OTRO TIPO DE VALORES / ACTIVOS ( ENTRE EL 1 DE ENERO Y EL 31 DE DICIEMBRE DEL AÑO INMEDIATO ANTERIOR )]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="9eb049ac-78de-4fac-aa1a-ee891d744868">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.bienesMuebles.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="750" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="dd34fda3-99d7-459d-a2f5-87625906b4c9">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["false".equals($F{declaracion.declaracion.inversionesCuentasValores.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.inversionesCuentasValores")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//inversionesCuentasValores.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="46">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="12" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="83327fab-c134-4bd6-a4b6-3e99928acc8d">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[("INICIO".equals($F{declaracion.encabezado.tipoDeclaracion}) || "CONCLUSION".equals($F{declaracion.encabezado.tipoDeclaracion})) && ($F{declaracion.declaracion.adeudosPasivos} != null || $F{declaracion.declaracion.adeudosPasivos.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADEUDOS / PASIVOS (SITUACIÓN ACTUAL)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="27" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="0cdcd999-7bb2-4931-81fd-356672afbdc6">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["MODIFICACION".equals($F{declaracion.encabezado.tipoDeclaracion}) && ($F{declaracion.declaracion.adeudosPasivos} != null || $F{declaracion.declaracion.adeudosPasivos.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADEUDOS / PASIVOS (ENTRE EL 1 DE ENERO Y EL 31 DE DICIEMBRE DEL AÑO INMEDIATO ANTERIOR)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="dcb0adba-eab7-4c1f-a562-06b77e0de03e">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.inversionesCuentasValores.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="39082905-c597-4a50-b56b-a87e9dc42177">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.adeudosPasivos.adeudos} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.adeudosPasivos")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//adeudosPasivos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="47">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="15" width="750" height="14" isRemoveLineWhenBlank="true" uuid="f015a319-78e5-4003-81e2-07d44aff7a96">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[("INICIO".equals($F{declaracion.encabezado.tipoDeclaracion}) || "CONCLUSION".equals($F{declaracion.encabezado.tipoDeclaracion})) && ($F{declaracion.declaracion.prestamoComodato.prestamo} != null || "true".equals($F{declaracion.declaracion.prestamoComodato.ninguno}) ||  $F{declaracion.declaracion.prestamoComodato.aclaracionesObservaciones} != null)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRÉSTAMO O COMODATO POR TERCEROS (SITUACIÓN ACTUAL)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="" positionType="Float" x="0" y="30" width="750" height="14" isRemoveLineWhenBlank="true" uuid="61d51d91-03f5-49f4-b43f-ae2fb86af039">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["MODIFICACION".equals($F{declaracion.encabezado.tipoDeclaracion}) && ($F{declaracion.declaracion.prestamoComodato.prestamo} != null || "true".equals($F{declaracion.declaracion.prestamoComodato.ninguno}) || $F{declaracion.declaracion.prestamoComodato.aclaracionesObservaciones} != null
+)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRÉSTAMO O COMODATO POR TERCEROS ( ENTRE EL 1 DE ENERO Y EL 31 DE DICIEMBRE DEL AÑO INMEDIATO ANTERIOR )]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="f04af70a-969b-4328-bff9-2f8bb6798039">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.adeudosPasivos.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="9032cfbd-d724-435f-8cc3-89df719d556d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.prestamoComodato.prestamo} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.prestamoComodato.prestamo")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//prestamoComodato.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="14">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="54f14b3e-662f-4076-8ab6-ff8d991002b2">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.prestamoComodato.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="14">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="4b4e53e3-83a2-417e-ad92-d3d7181e3e51">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.participaEmpresasSociedadesAsociaciones.participaciones} != null || "true".equals($F{declaracion.declaracion.participaEmpresasSociedadesAsociaciones.ninguno}) || $F{declaracion.declaracion.participaEmpresasSociedadesAsociaciones.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARTICIPACIÓN EN EMPRESAS, SOCIEDADES O ASOCIACIONES (HASTA LOS 2 ÚLTIMOS AÑOS)]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="750" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="163e6b13-9a79-4528-8fa0-8dbe90ae4cac">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.participaEmpresasSociedadesAsociaciones.participaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TODOS LOS DATOS DE LA PARTICIPACIÓN EN EMPRESAS, SOCIEDADES O ASOCIACIONES DE LA PAREJA O DEPENDIENTES ECONÓMICOS NO SERÁN PÚBLICOS.]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="edebc4cc-c742-4560-87b2-26090b97a001">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.participaEmpresasSociedadesAsociaciones.participaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.participaEmpresasSociedadesAsociaciones.participaciones")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//participaEmpresasSociedadesAsociaciones.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="13">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="828a3cde-47bf-4dfa-ac1f-37a4d7005660">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.participaEmpresasSociedadesAsociaciones.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="24">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="751" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="2ff703ef-1060-4053-9b59-a67b9d26e5d5">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.participacionTomaDecisiones.participaciones} != null || "true".equals($F{declaracion.declaracion.participacionTomaDecisiones.ninguno}) || $F{declaracion.declaracion.participacionTomaDecisiones.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[¿ PARTICIPA EN LA TOMA DE DECISIONES DE ALGUNA DE ESTAS INSTITUCIONES ? (HASTA LOS 2 ÚLTIMOS AÑOS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="14" width="750" height="10" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="df2e3bf3-2cc8-49e8-8d8e-11b3cc5425e2">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.participacionTomaDecisiones.participaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TODOS LOS DATOS DE LA PARTICIPACIÓN EN ALGUNA DE ESTAS INSTITUCIONES DE LA PAREJA O DEPENDIENTES ECONÓMICOS NO SERÁN PÚBLICOS.]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="4cc5455a-618a-4c38-9a1a-1b7f3e0f8607">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.participacionTomaDecisiones.participaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.participacionTomaDecisiones.participaciones")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//participacionTomaDecisiones.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="11">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="fca0e19d-bf09-4966-ad1e-0a076a3f2232">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.participacionTomaDecisiones.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="750" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="87a22fc7-5b70-46ef-bcce-e52df47300d0">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.apoyos.ninguno}.equals("true") || 
+$F{declaracion.declaracion.apoyos.apoyos} != null || $F{declaracion.declaracion.apoyos.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APOYOS O BENEFICIOS PÚBLICOS (HASTA LOS 2 ÚLTIMOS AÑOS)]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="86729c67-ea6f-4cdc-af7f-5bd91d12f2b9">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.apoyos.apoyos} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.apoyos.apoyos")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//apoyos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="13">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="3a9a3c08-5950-479d-8ea2-6b7c77a3b7b6">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.apoyos.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="750" height="14" isRemoveLineWhenBlank="true" uuid="eb997d04-9e9e-4812-b654-7a19ed181169">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.representaciones.ninguno}) || $F{declaracion.declaracion.representaciones.representaciones} != null || $F{declaracion.declaracion.representaciones.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPRESENTACIÓN (HASTA LOS 2 ÚLTIMOS AÑOS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="14" width="750" height="10" isRemoveLineWhenBlank="true" uuid="79e23d6c-d409-455a-86c2-2dd5271034b8">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.representaciones.representaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TODOS LOS DATOS DE REPRESENTACIÓN DE LA PAREJA O DEPENDIENTES ECONÓMICOS NO SERÁN PÚBLICOS.]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" uuid="c212788c-a196-433d-81de-71c4ff23770a">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.representaciones.representaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.representaciones.representaciones")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//representaciones.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="12">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="59853664-c3c2-4525-b753-9f19f2714627">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.representaciones.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="750" height="14" isRemoveLineWhenBlank="true" uuid="056222bd-2386-4333-9ba7-03f04f837615">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.clientesPrincipales.clientes} != null || $F{declaracion.declaracion.clientesPrincipales.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTES PRINCIPALES (HASTA LOS 2 ÚLTIMOS AÑOS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="16" width="750" height="10" isRemoveLineWhenBlank="true" uuid="14053c05-e8a8-4887-9571-087aa243ec9a">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.clientesPrincipales.clientes} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TODOS LOS DATOS DE CLIENTES PRINCIPALES DE LA PAREJA O DEPENDIENTES ECONÓMICOS NO SERÁN PÚBLICOS.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="750" height="10" isRemoveLineWhenBlank="true" uuid="81302859-2ba7-4613-a3f2-870117ef024c">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.clientesPrincipales.clientes} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SE MANIFESTARÁ EL BENEFICIO O GANANCIA DIRECTA DEL DECLARANTE SI SUPERA MENSUALMENTE 250 UNIDADES DE MEDIDA Y ACTUALIZACIÓN (UMA)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="370" height="10" isRemoveLineWhenBlank="true" uuid="ec07373c-9a59-46b5-9bf4-043238dd1314">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.clientesPrincipales.clientes} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[¿REALIZA ALGUNA ACTIVIDAD LUCRATIVA INDEPENDIENTE AL EMPLEO, CARGO O COMISIÓN?:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="36" width="260" height="10" isRemoveLineWhenBlank="true" uuid="0ea71217-10fa-41f0-b271-cb9c54d8466a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.clientesPrincipales.clientes} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[("true".equals($F{declaracion.declaracion.clientesPrincipales.realizaActividadLucrativa}) ) ?  "Si" : "No"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" uuid="96c37dd8-c377-4a79-aff7-cb04c079cbde">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.clientesPrincipales.clientes} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.clientesPrincipales.clientes")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//clientesPrincipales.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="18">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="750" height="14" isRemoveLineWhenBlank="true" uuid="9ff8f2cb-7dab-42f8-8903-b1d166f40642">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.beneficiosPrivados.ninguno}) || $F{declaracion.declaracion.beneficiosPrivados.beneficios} != null || $F{declaracion.declaracion.beneficiosPrivados.aclaracionesObservaciones} != null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BENEFICIOS PRIVADOS (HASTA LOS 2 ÚLTIMOS AÑOS)]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" uuid="04e931e7-7dab-43ec-a637-ddd0e7a5d1c9">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.beneficiosPrivados.beneficios} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.beneficiosPrivados.beneficios")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//beneficiosPrivados.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="14">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="3ad0625f-5cf6-451c-9655-e265b5a279f6">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.beneficiosPrivados.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="750" height="14" isRemoveLineWhenBlank="true" uuid="e7e1838e-9f4b-4cec-b777-1e3ad65cf0ee">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.fideicomisos.ninguno}) || $F{declaracion.declaracion.fideicomisos.fideicomisos} != null || $F{declaracion.declaracion.fideicomisos.aclaracionesObservaciones}!= null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIDEICOMISOS (HASTA LOS 2 ÚLTIMOS AÑOS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="750" height="10" isRemoveLineWhenBlank="true" uuid="8faf8035-dc04-4367-bd18-4d515904b5a4">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.fideicomisos.fideicomisos} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TODOS LOS DATOS DE PARTICIPACIÓN EN FIDEICOMISOS DE LA PAREJA O DEPENDIENTES ECONÓMICOS NO SERÁN PÚBLICOS.]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="751" height="30" isRemoveLineWhenBlank="true" uuid="ea990360-6614-44dd-aafb-e51707784923">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{declaracion.declaracion.fideicomisos.fideicomisos} != null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("declaracion.declaracion.fideicomisos.fideicomisos")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["//reportes//subreportesPublica//fideicomisos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="13">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="750" height="10" isRemoveLineWhenBlank="true" uuid="b5ff45c5-119a-41c8-ab7d-5db9eea76a9a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA["true".equals($F{declaracion.declaracion.fideicomisos.ninguno})]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["( N i n g u n o )"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="8" splitType="Stretch"/>
+	</summary>
+</jasperReport>

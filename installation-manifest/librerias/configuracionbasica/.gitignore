@@ -1,0 +1,9 @@
+/.settings/
+/file-uploads/
+/target/
+/.classpath
+/.project
+/src/main/generated/*
+/.idea
+*.iml
+

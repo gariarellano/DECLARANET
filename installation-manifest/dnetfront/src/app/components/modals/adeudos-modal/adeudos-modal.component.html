@@ -1,0 +1,473 @@
+<div class="modal-content" style="height: 600px;">
+    <div class="modal-header">
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Adeudos / Pasivos</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <form #adeudosTValida="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                <span class="radioValue">TIPO DE OPERACIÓN: </span>
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="adeudoRadio" type="radio" required
+                            id="radio{{data.id}}" [(ngModel)]="adeudo.tipoOperacion" [value]="data.id"
+                            (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-body" style="overflow-y: scroll">
+        <form #adeudosValida="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel"
+                [(ngModel)]="adeudo.tipoOperacion">
+            <div class="row p-3">
+                <div class="col-md-6 d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for="">Titular del adeudo<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Titular del adeudo <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( titularAdeudo , adeudo.tipoOperacion)" name="titularAdeudo"
+                        id="adeTitAde" [compareWith]="cata.compareFn" #titularAdeudo="ngModel" required
+                        [(ngModel)]="adeudo.titular" appSelectValidator>
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let ta of this.cata.catalogos.CAT_TITULAR" [ngValue]="ta">
+                            {{ta.valor}}
+                        </option>
+                    </select>
+                    <span class="invalid-tooltip" *ngIf="titularAdeudo.touched && titularAdeudo.pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+
+
+                <div *ngIf="adeudo.titular.valorUno != null && adeudo.titular.valorUno != 'D'"
+                    class="col d-flex flex-column justify-content-between">
+                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal-tercero"
+                        [ngClass]="{'btn-outline-danger': terceros.length <= 0, 'btn-light': terceros.length > 0 }"><i
+                            class="fas fa-plus"></i> Agregar Tercero <span><img src="assets/image/star.png"
+                                class="imgRequired" alt=""></span>
+                        <i *ngIf="terceros.length > 0" class="fas fa-check text-success ml-3"></i>
+                    </button>
+                </div>
+
+
+
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for="">Tipo de adeudo<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de adeudo <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoAdeudo , adeudo.tipoOperacion)" name="tipoAdeudo"
+                        [compareWith]="cata.compareFn" id="adeTipAde" #tipoAdeudo="ngModel" required
+                        [(ngModel)]="adeudo.tipoAdeudo" appSelectValidator>
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let adeudo of this.cata.catalogos.CAT_TIPO_ADEUDO" [ngValue]="adeudo">
+                            {{adeudo.valor}}
+                        </option>
+                    </select>
+                    <span class="invalid-tooltip" *ngIf="tipoAdeudo.touched && tipoAdeudo.pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="adeudo.tipoAdeudo.id == '9999'" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="adeudo.tipoAdeudo.id == '9999'" class="row p-3">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Especifique el tipo de adeudo <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Especifique el tipo de adeudo <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input [disabled]="getDisabled( especificAdeudo , adeudo.tipoOperacion)" type="text"
+                            name="especificAdeudo" id="adeEspTipAde" maxlength="100" #especificAdeudo="ngModel"
+                            oninput="CustomUpperCase(this);" required [(ngModel)]="adeudo.tipoAdeudoOtro">
+                        <div class="invalid-tooltip"
+                            *ngIf="especificAdeudo.invalid && (especificAdeudo.dirty || especificAdeudo.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Número de cuenta o contrato <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Número de cuenta o contrato</label>
+                    <input [disabled]="getDisabled( numeroCuenta , adeudo.tipoOperacion)" type="text"
+                        name="numeroCuenta" maxlength="50" #numeroCuenta="ngModel"
+                        [required]="adeudo.tipoAdeudo.id != 6" [(ngModel)]="adeudo.numeroCuentaContrato"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip"
+                        *ngIf="numeroCuenta.invalid && (numeroCuenta.dirty || numeroCuenta.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Fecha de adquisición del adeudo/pasivo <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fecha de adquisición del adeudo/pasivo <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input fechaValid="{{fecha}}" [disabled]="getDisabled( fechaAdquisicion , adeudo.tipoOperacion)"
+                        type="date" name="fechaAdquisicion" #fechaAdquisicion="ngModel" id="adeFecAdq" required
+                        [(ngModel)]="adeudo.fechaAdquisicion" [max]="cata.fechaReferenciaMax">
+                    <div class="invalid-tooltip" *ngIf="fechaAdquisicion.invalid && fechaAdquisicion.touched">
+                        Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                            [attr.data-td]="tipoDeclaracion" onclick="abrirModalInfo('modalMsgFechasEncargo',this)"></i>
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Monto original del adeudo/pasivo <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Monto original del adeudo/pasivo <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+
+                    <div *ngIf="adeudo.tipoAdeudo.id == 4 || adeudo.tipoAdeudo.id == 5; else montoOriginalTem">
+                        <input type="text" name="montoOriginal"
+                            [disabled]="getDisabled( montoOriginal , adeudo.tipoOperacion)" #montoOriginal="ngModel"
+                            id="adeMonOrg" required [(ngModel)]="adeudo.montoOriginal.monto"
+                            oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+                        <div class="invalid-tooltip"
+                            *ngIf="montoOriginal.invalid && (montoOriginal.dirty || montoOriginal.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <ng-template #montoOriginalTem>
+                        <input type="text" name="montoOriginal"
+                            [disabled]="getDisabled( montoOriginal , adeudo.tipoOperacion)" #montoOriginal="ngModel"
+                            id="adeMonOrg" required [(ngModel)]="adeudo.montoOriginal.monto"
+                            oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+                        <div class="invalid-tooltip"
+                            *ngIf="montoOriginal.invalid && (montoOriginal.dirty || montoOriginal.touched)">
+                            Campo requerido...
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de moneda <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de moneda <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoMoneda , adeudo.tipoOperacion)" name="tipoMoneda"
+                        [compareWith]="cata.compareFn" id="adeTipMon" #tipoMoneda="ngModel" required
+                        [(ngModel)]="adeudo.montoOriginal.moneda" appSelectValidator>
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let moneda of this.cata.catalogos.CAT_MONEDA" [ngValue]="moneda">
+                            {{moneda.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="tipoMoneda.invalid && (tipoMoneda.dirty || tipoMoneda.touched)">
+                        Seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Saldo insoluto {{cata.textoSaldos}} <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Saldo insoluto {{cata.textoSaldos}}</label>
+                    <input [disabled]="getDisabled( saldoInsoluto , adeudo.tipoOperacion)" type="text"
+                        name="saldoInsoluto" #saldoInsoluto="ngModel" id="adeSalIns" required
+                        [(ngModel)]="adeudo.saldoInsoluto" oninput="soloNumeroInput(this, 0, 9999999999999);"
+                        onfocus="focusSoloNumero(this)">
+                    <div class="invalid-tooltip"
+                        *ngIf="saldoInsoluto.invalid && (saldoInsoluto.dirty || saldoInsoluto.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Otorgante del crédito <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Otorgante del crédito <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( otorganteCredito , adeudo.tipoOperacion)" name="otorganteCredito"
+                        #otorganteCredito="ngModel" id="adeOtoDelCre" required
+                        [(ngModel)]="adeudo.otorganteCredito.tipoPersona">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let pers of this.cata.enums.ENUM_TIPO_PERSONA" [value]="pers.id">
+                            {{pers.valor}}
+                        </option>
+
+                    </select>
+                    <span class="invalid-tooltip" *ngIf="otorganteCredito.touched && otorganteCredito.pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div *ngIf="adeudo.otorganteCredito.tipoPersona == 'PERSONA_MORAL'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Institución o Razón Social<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Institución o Razón Social <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombreMoral , adeudo.tipoOperacion)" type="text" name="nombreMoral"
+                        maxlength="100" id="adeMorInsRazSoc" #nombreMoral="ngModel" required
+                        oninput="CustomUpperCase(this);" [(ngModel)]="adeudo.otorganteCredito.personaMoral.nombre">
+                    <div class="invalid-tooltip"
+                        *ngIf="nombreMoral.invalid && (nombreMoral.dirty || nombreMoral.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div *ngIf="adeudo.otorganteCredito.tipoPersona == 'PERSONA_MORAL'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcMoral , adeudo.tipoOperacion)" type="text" name="rfcMoral"
+                        maxlength="12" id="adeMorRfc" #rfcMoral="ngModel" rfcMoralValid oninput="CustomUpperCase(this);"
+                        [(ngModel)]="adeudo.otorganteCredito.personaMoral.rfc">
+                    <div class="invalid-tooltip" *ngIf="rfcMoral.invalid && rfcMoral.touched">
+                        <div *ngIf="rfcMoral.errors.rfcMoralValid && rfcMoral.touched ">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3" *ngIf="adeudo.otorganteCredito.tipoPersona == 'PERSONA_FISICA'">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre </label>
+                    <input [disabled]="getDisabled( nombreFisica , adeudo.tipoOperacion)" type="text"
+                        name="nombreFisica" id="adeFisNom" maxlength="100" #nombreFisica="ngModel" required
+                        oninput="CustomUpperCase(this);" [(ngModel)]="adeudo.otorganteCredito.personaFisica.nombre">
+                    <div class="invalid-tooltip"
+                        *ngIf="nombreFisica.invalid && (nombreFisica.dirty || nombreFisica.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Primer Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Primer Apellido </label>
+                    <input [disabled]="getDisabled( pApellidoFisica , adeudo.tipoOperacion)" type="text"
+                        name="pApellidoFisica" id="adeFisPriAPe" maxlength="100" #pApellidoFisica="ngModel"
+                        oninput="CustomUpperCase(this);" required
+                        [(ngModel)]="adeudo.otorganteCredito.personaFisica.primerApellido">
+                    <div class="invalid-tooltip"
+                        *ngIf="pApellidoFisica.invalid && (pApellidoFisica.dirty || pApellidoFisica.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Segundo Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Segundo Apellido </label>
+                    <input [disabled]="getDisabled( sApellidoFisica , adeudo.tipoOperacion)" type="text"
+                        name="sApellidoFisica" id="adeFisSegApe" maxlength="100" #sApellidoFisica="ngModel"
+                        oninput="CustomUpperCase(this);"
+                        [(ngModel)]="adeudo.otorganteCredito.personaFisica.segundoApellido">
+
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC </label>
+                    <input [disabled]="getDisabled( rfcFisica , adeudo.tipoOperacion)" type="text" name="rfcFisica"
+                        #rfcFisica="ngModel" id="adeFisRfc" maxlength="13" rfcValid oninput="CustomUpperCase(this);"
+                        [(ngModel)]="adeudo.otorganteCredito.personaFisica.rfc">
+                    <div class="invalid-tooltip" *ngIf="rfcFisica.invalid && rfcFisica.touched">
+                        <div *ngIf="rfcFisica.errors.rfcValid && rfcFisica.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">País <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">País <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( pais , adeudo.tipoOperacion)" name="pais" #pais="ngModel"
+                        id="adeFisPai" [compareWith]="cata.compareFn" appSelectValidator [(ngModel)]="adeudo.paisAdeudo"
+                        required>
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let pais of this.cata.catalogos.CAT_PAIS" [ngValue]="pais">
+                            {{pais.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="pais.invalid && (pais.dirty || pais.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success"
+            [disabled]="!adeudosValida.form.valid || !adeudosTValida.form.valid || (adeudo.titular.valorUno == 'DC' && terceros.length==0)"
+            (click)="guardaLocal()">Aceptar</button>
+        <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+    </div>
+</div>
+
+
+
+<form #adeudosTercero="ngForm">
+    <div for style="background: rgba(59, 59, 59, 0.603)" class="modal fade bd-example-modal-lg" id="modal-tercero"
+        tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static"
+        data-keyboard="false">
+        <div style="top: 70px;" class="modal-dialog modal-lg " role="document">
+            <div class="modal-content" style="height: 600px!important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Terceros</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div *ngIf="terceros.length > 0" class="mt-3 border-dark" style="background:rgb(243, 235, 235)">
+                        <div class="popover-body">
+                            <table style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre ó Razon social</th>
+                                        <th scope="col">RFC</th>
+                                        <th scope="col">Tipo Persona</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let t of terceros; let i = index" style="color: rgb(0, 0, 0)">
+
+                                        <td *ngIf="t.tipoPersona == 'PERSONA_FISICA'">{{t.personaFisica.nombre}}
+                                            {{t.personaFisica.primerApellido}} {{t.personaFisica.segundoApellido}}</td>
+                                        <td *ngIf="t.tipoPersona == 'PERSONA_FISICA'">{{t.personaFisica.rfc}}</td>
+                                        <td *ngIf="t.tipoPersona == 'PERSONA_MORAL'">{{t.personaMoral.nombre}}</td>
+                                        <td *ngIf="t.tipoPersona == 'PERSONA_MORAL'">{{t.personaMoral.rfc}}</td>
+                                        <td>{{t.tipoPersona}}</td>
+
+                                        <td><i class="fas fa-trash-alt" (click)="deleteTercero(i)"
+                                                style="cursor: pointer; color: rgb(99, 18, 18)"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Tipo de persona <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Tipo de persona <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <select [disabled]="getDisabled( tipoPersonaT , adeudo.tipoOperacion)" name="tipoPersonaT"
+                                id="adeTerTipPer" #tipoPersonaT="ngModel" [(ngModel)]="tercero.tipoPersona">
+                                <option [ngValue]=null>SELECCIONE...</option>
+                                <option *ngFor="let pers of this.cata.enums.ENUM_TIPO_PERSONA" [value]="pers.id">
+                                    {{pers.valor}}
+                                </option>
+                            </select>
+                            <span class="invalid-tooltip" *ngIf="tipoPersonaT.touched && tipoPersonaT.pristine">
+                                Campo Requerido
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5" *ngIf="tercero.tipoPersona == 'PERSONA_FISICA'">
+                        <div class="col d-flex flex-column ">
+                            <label [hidden]="!help" for="">Nombre <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Nombre </label>
+                            <input [disabled]="getDisabled( nombreFi , adeudo.tipoOperacion)" type="text"
+                                name="nombreFi" id="adeTerFisNom" #nombreFi="ngModel" maxlength="100" required
+                                oninput="CustomUpperCase(this);" [(ngModel)]="tercero.personaFisica.nombre">
+                            <div class="invalid-tooltip"
+                                *ngIf="nombreFi.invalid && (nombreFi.dirty || nombreFi.touched)">
+                                Campo requerido...
+                            </div>
+
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Primer apellido <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Primer apellido </label>
+                            <input [disabled]="getDisabled( pApelidoFi , adeudo.tipoOperacion)" type="text"
+                                name="pApelidoFi" id="adeTerFisPriApe" #pApelidoFi="ngModel" maxlength="100" required
+                                oninput="CustomUpperCase(this);" [(ngModel)]="tercero.personaFisica.primerApellido">
+                            <div class="invalid-tooltip"
+                                *ngIf="pApelidoFi.invalid && (pApelidoFi.dirty || pApelidoFi.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Segundo apellido <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Segundo apellido </label>
+                            <input [disabled]="getDisabled( sApellidoFi , adeudo.tipoOperacion)" type="text"
+                                name="sApellidoFi" id="adeTerFisSegApe" #sApellidoFi="ngModel" maxlength="100"
+                                oninput="CustomUpperCase(this);" [(ngModel)]="tercero.personaFisica.segundoApellido">
+
+                        </div>
+                    </div>
+                    <div class="row mt-5" *ngIf="tercero.tipoPersona == 'PERSONA_FISICA'">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">RFC <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">RFC </label>
+                            <input [disabled]="getDisabled( rfcFi , adeudo.tipoOperacion)" type="text" name="rfcFi"
+                                #rfcFi="ngModel" id="adeTerFisRfc" maxlength="13" oninput="CustomUpperCase(this);"
+                                [(ngModel)]="tercero.personaFisica.rfc" rfcValid>
+                            <div class="invalid-tooltip" *ngIf="rfcFi.invalid && rfcFi.touched">
+                                <div *ngIf="rfcFi.errors.rfcValid && rfcFi.touched">
+                                    El RFC debe contener el formato correcto...
+                                </div>
+
+                            </div>
+                        </div>
+                        <button [disabled]="!adeudosTercero.form.valid" (click)="aceptarTercero()" type="button"
+                            class="btn btn-success"><i class="fas fa-check"></i>
+                            Aceptar
+                        </button>
+                    </div>
+                    <div class="row mt-5" *ngIf="tercero.tipoPersona == 'PERSONA_MORAL'">
+                        <div class="col d-flex flex-column ">
+                            <label [hidden]="!help" for="">Institución o Razón Social <i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Institución o Razón Social <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input [disabled]="getDisabled( nombreMo , adeudo.tipoOperacion)" type="text"
+                                name="nombreMo" #nombreMo="ngModel" id="adeTerMorInsRazSoc" maxlength="100" required
+                                oninput="CustomUpperCase(this);" [(ngModel)]="tercero.personaMoral.nombre">
+                            <div class="invalid-tooltip"
+                                *ngIf="nombreMo.invalid && (nombreMo.dirty || nombreMo.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">RFC <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                    data-placement="left" title="Campo público"></i></label>
+                            <input [disabled]="getDisabled( rfcMo , adeudo.tipoOperacion)" type="text" name="rfcMo"
+                                #rfcMo="ngModel" id="adeTerMorRfc" maxlength="12" oninput="CustomUpperCase(this);"
+                                [(ngModel)]="tercero.personaMoral.rfc" rfcMoralValid>
+                            <div class="invalid-tooltip" *ngIf="rfcMo.invalid && rfcMo.touched">
+                                <div *ngIf="rfcMo.errors.rfcMoralValid">
+                                    El RFC debe contener el formato correcto...
+                                </div>
+
+                            </div>
+                        </div>
+                        <button (click)="aceptarTercero()" [disabled]="!adeudosTercero.form.valid" type="button"
+                            class="btn btn-success"><i class="fas fa-check"></i>Aceptar
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                        [disabled]="!adeudosTercero.form.valid">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

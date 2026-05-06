@@ -1,0 +1,402 @@
+#Entes para inserciones
+
+"Contiene los datos de control del registro."
+input DatosDeControlInput {
+
+    "Usuario que realiza la operación."
+    usuarioActualiza : Int!
+
+    "Situacion"
+    situacion : SituacionEnum!
+
+}
+
+"Contiene los datos de control del registro."
+input DatosDeControlActualizaInput {
+
+    "Usuario que realiza la operación."
+    usuarioActualiza : Int!
+
+}
+
+"Contiene el municipío."
+input MunicipioInput {
+
+    "Id del municipio."
+    idMunicipio : Int!
+
+    "Descripción del municipio"
+    municipioDesc : String!
+}
+
+"Contiene la entidad federativa."
+input EntidadFederativaInput {
+
+    "Id de la entidad federativa."
+    idEntidadFederativa : Int!
+
+    "Descripción de la entidad federativa."
+    entidadFederativaDesc : String!
+
+    "Municipio, si es el caso."
+    municipio : MunicipioInput
+}
+
+"Contiene el nivel de gobierno."
+input NivelGobiernoInput {  
+
+    "Id del nivel de gobierno."
+    nivelGobierno : NivelGobiernoEnum
+
+    "Entidad federativa, si es el caso."
+    entidadFederativa : EntidadFederativaInput
+}
+
+"Contiene la dependencia."
+input EnteNuevoInput {
+
+    "Ramo al que pertenece."
+    ramo : Int!
+
+    "Unidad responsable a la que pertenece."
+    unidadResponsable : String!
+
+    "Descripción del ente"
+    enteDesc : String!
+
+    "Nombre corto o siglas del ente."
+    nombreCorto : String!
+
+    "RFC del ente."
+    rfc : String
+
+    "Poder al que pertenece el ente."
+    poder : PoderEnum!
+
+    "Tipo de entidad a la que pertenece el ente."
+    tipoEntidad : TipoEntidadEnum!
+
+    "Nivel de gobierno al que pertenece el ente."
+    nivelGobierno : NivelGobiernoInput!
+
+    "Identificador INAI."
+    identificadorINAI : Int
+
+    "Indica si el ente pertence a seguridad nacional; 0: no, 1: sí."
+    segNac : SegNacEnum!
+
+    "Datos de control del ente."
+    datosDeControl : DatosDeControlInput!
+}
+
+
+
+"Contiene la dependencia."
+input EnteActualizaInput {
+
+    "Id del ente."
+    id : ID!
+
+    "Id del ente origen.\nHola."
+    idEnteOrigen : String!
+
+    "Ramo al que pertenece."
+    ramo : Int!
+
+    "Unidad responsable a la que pertenece."
+    unidadResponsable : String!
+
+    "Descripción del ente"
+    enteDesc : String!
+
+    "Nombre corto o siglas del ente."
+    nombreCorto : String!
+
+    "RFC del ente."
+    rfc : String
+
+    "Poder al que pertenece el ente."
+    poder : PoderEnum!
+
+    "Tipo de entidad a la que pertenece el ente."
+    tipoEntidad : TipoEntidadEnum!
+
+    "Nivel de gobierno al que pertenece el ente."
+    nivelGobierno : NivelGobiernoInput!
+
+    "Identificador INAI."
+    identificadorINAI : Int
+
+    "Indica si el ente pertence a seguridad nacional; 0: no, 1: sí."
+    segNac : SegNacEnum!
+
+    "Datos de control del ente."
+    datosDeControl : DatosDeControlActualizaInput!
+}
+
+#Entes para consulta
+"Contiene los datos de control del registro."
+
+type DatosDeControl {
+
+    "Fecha en la que se registró."
+    fechaRegistro : String
+
+    "Fecha en la que se actualizó por última vez."
+    fechaUltimaActualiza : String
+
+    "Usuario que registró."
+    usuarioRegistra : Int
+
+    "Usuario que realizó la última actualización."
+    usuarioActualiza : Int
+
+    "Indica si el usuario está activo o inactivo."
+    activo : Int
+
+    "Situacion"
+    situacion : SituacionEnum
+
+    "Fecha en la que se dio de baja, si es el caso."
+    fechaBaja : String
+}
+
+"Contiene el municipío."
+type Municipio {
+
+    "Id del municipio."
+    idMunicipio : Int
+
+    "Descripción del municipio."
+    municipioDesc : String
+}
+
+"Contiene la entidad federativa."
+type EntidadFederativa {
+
+    "Id de la entidad federativa."
+    idEntidadFederativa : Int
+
+    "Descripción de la entidad federativa."
+    entidadFederativaDesc : String
+
+    "Municipio, si es el caso."
+    municipio : Municipio
+}
+
+"Contiene el nivel de gobierno."
+type NivelGobierno {
+
+    "Id del nivel de gobierno."
+    nivelGobierno : NivelGobiernoEnum!
+
+    "Entidad federativa, si es el caso."
+    entidadFederativa : EntidadFederativa
+}
+
+"Contiene la dependencia."
+type Ente {
+
+    "Id del ente."
+    id : ID
+
+    "Ramo al que pertenece."
+    ramo : Int
+
+    "Unidad responsable a la que pertenece."
+    unidadResponsable : String
+
+    "Descripción del ente"
+    enteDesc : String
+
+    "Nombre corto o siglas del ente."
+    nombreCorto : String
+
+    "RFC del ente."
+    rfc : String
+
+    "Poder al que pertenece el ente."
+    poder : PoderEnum
+
+    "Tipo de entidad a la que pertenece el ente."
+    tipoEntidad : TipoEntidadEnum
+
+    "Nivel de gobierno al que pertenece el ente."
+    nivelGobierno : NivelGobierno
+
+    "Identificador INAI."
+    identificadorINAI : Int
+
+    "Indica si el ente pertence a seguridad nacional; 0: no, 1: sí."
+    segNac : SegNacEnum!
+
+    "Id de ente origen."
+    idEnteOrigen : String
+
+    "Datos de control del ente."
+    datosDeControl : DatosDeControl
+}
+
+"Posibles filtros para entes."
+input FiltroEntes {
+
+    "Id del ente."
+    id : String
+
+    "Ramo al que pertenece."
+    ramo : Int
+
+    "Unidad responsable a la que pertenece."
+    unidadResponsable : String
+
+    "Id del poder al que pertenece."
+    poder : PoderEnum
+
+    "Id del nivel de gobierno al que pertenece."
+    nivelGobierno : NivelGobiernoEnum
+
+    "Id de la entidad federativa a la que pertenece."
+    idEntidadFederativa : Int
+
+    "Id del municipio al que pertenece."
+    idMunicipio : Int
+
+    "Indica si el ente pertence a seguridad nacional; 0: no, 1: sí."
+    segNac : SegNacEnum
+
+    "Tipo de entidad"
+    tipoEntidad : TipoEntidadEnum
+
+    "Situacion"
+    situacion : SituacionEnum
+}
+
+""
+input ParamsSituacion {
+    idEnte : String!
+    situacion : SituacionEnum
+}
+
+"Se muestran los queries que están disponibles."
+type Query {
+
+    "Función para obtener entes."
+    obtenerEntes(filtro : FiltroEntes): [Ente]
+
+    "Función para obtener el histórico de un ente a partir de su idEnteOrigen."
+    obtenerHistoricoEnte(idEnteOrigen : String!): [Ente]
+}
+
+enum SituacionEnum {
+    "Situacion normal, es equivalente a que el enum sea nulo"
+    NORMAL
+
+    "Situacion de transicion"
+    TRANSICION
+
+    "Situacion de liquidacion"
+    LIQUIDACION
+}
+
+"Enum de los tipos de poder"
+enum PoderEnum {
+
+    "Ejecutivo"
+    EJECUTIVO
+
+    "Legislativo"
+    LEGISLATIVO
+
+    "Judicial"
+    JUDICIAL
+
+    "Organismos autónomos"
+    ORGANISMOS_AUTONOMOS
+}
+
+"Enum de los tipos de nivel de gobierno"
+enum NivelGobiernoEnum {
+
+    "Federal"
+    FEDERAL
+
+    "Estatal"
+    ESTATAL
+
+    "Municipal"
+    MUNICIPAL
+}
+
+"Enum que indica si una institucion es o no de seguridad nacional."
+enum SegNacEnum {
+
+    "No es una institución de seguridad nacional."
+    NO_SEG_NAC
+
+    "Sí es una institución de seguridad nacional."
+    SI_SEG_NAC
+}
+
+"Enum con los tipos de entidad"
+enum TipoEntidadEnum {
+
+    "Secretaría o Dependencia."
+    SECRETARIA
+
+    "Organismo Descentralizado."
+    ORGANO_DESCONCENTRADO
+
+    "Organismo Descentralizado."
+    ORGANO_DESCENTRALIZADO
+
+    "Empresa de Participación Estatal."
+    EMPRESA_PARTIC_ESTATAL
+
+    "Institución Nacional de Crédito."
+    INST_NAC_CREDITO
+
+    "Institución Nacional de Seguros y de Fianzas."
+    INST_NAC_SEGUROS_FIANZAS
+
+    "Fideicomiso."
+    FIDEICOMISO
+
+    "Unidad Administrativa."
+    UNIDAD_ADMIN
+
+    "Programa."
+    PROGRAMA
+
+    "Órgano autónomo."
+    ORGANO_AUTONOMO
+
+    "Órgano Regulador Coordinado en Materia Energética."
+    ORGANO_REGULADOR_ENERG
+
+    "Empresa Productiva del Estado."
+    EMPRESA_PROD_ESTADO
+
+    "Fideicomiso Público que forma parte del Sistema Financiero Mexicano."
+    FIDEICOMISO_PUBLICO
+}
+
+"Se muestran las mutaciones que están disponibles."
+type Mutation {
+
+    "Función para agregar un ente nuevo."
+    agregarEnteNuevo(ente : EnteNuevoInput!) : Ente
+
+    "Función para actualizar un ente."
+    actualizarEnte(ente : EnteActualizaInput!) : Ente
+
+    "Función para desactivar un ente, si se manda el argumento de idEnte desactivará únicamente ese ente, si se manda ."
+    desactivarEnte(idEnte : String, idEnteOrigen : String) : Boolean
+
+    "Función para definir la situacion de "
+    definirSituacionEnte(params : ParamsSituacion!) : Ente
+}
+
+schema {
+    query : Query
+    mutation : Mutation
+}

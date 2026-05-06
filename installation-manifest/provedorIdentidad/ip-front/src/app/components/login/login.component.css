@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+.img-declaranet {
+    /* background-image: url('../../../assets/img/sprites.png'); */
+    /* background: url('../../../assets/img/FUNCION_HOTIZONTAL_FB.png') center; */
+    background: url('../../../assets/img/declara-net.svg') center;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-size: 40%;
+    min-height: 70px;
+    width: inherit;
+    min-width: 250px;
+}
+
+.DeclaraNet {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    color: #333333;
+}
+
+.card-header-declaranet {
+    min-width: 270px;
+}
+
+.alert-link {
+    cursor: pointer;
+}
+
+.wrap {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.wrap a {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+}

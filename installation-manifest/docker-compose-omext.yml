@@ -1,0 +1,65 @@
+## docker-compose-omext.yml para realizar el lebantamiento del proyecto de omext (omisos y extemporaneos)
+## del proyecto declaranet, ejecutando el comando $ docker-compose -f docker-compose-omext.yml up -d
+## dentro de la carpeta donde se encuentra este archivo.
+version: "3.8"
+services:
+###############################################################
+##COMIENZA SECCIÓN PARA LEBANTAR OOMEXT##
+###############################################################
+  omextreportes:
+    image: omextreportes
+    build: ./omext/omextreportes/     
+    environment:
+      - URL_ENTES_RECEPTORES_TODOS=http://entereceptordecla:5000/api/consultar-todos/entes/
+      - OMEXT_BACK_FIRMA=http://omextback:5000
+      - db_name_o
+      - host_o
+      - password_o
+      - port_o
+      - username_o
+  
+  omextservicioimpresion:
+    image: omextservicioimpresion
+    build: 
+      context: ./omext/omextservicioimpresion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+  
+  omextback:
+    image: omextback
+    build: 
+      context: ./omext/OmextBack/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - omextreportes
+      - omextservicioimpresion
+    environment:
+      - AMBIENTE=STAGING
+      - SECRET=${OMEXT_SECRET_KEY}
+      - DOMINIO_KONG=kong-api-gateway:8000
+      - TOKEN_APPI=${KEY_API}
+      - IP_DOMINIO_FRONT=${DOMINIO_IDENTIDAD}
+      - ID_CLIENTE=3
+      - URL_GRAPHQL_ENTES=http://entes:5000
+      - URL_REPORTES_DESCARGAR=${DOMINIO_KONG}/omextReportes/
+      - URL_REPORTES_GENERAR=http://omextreportes:5000/crearReporte 
+      - URL_REPORTES_GENERAR_VISTA=http://omextreportes:5000/generarVistas/
+      - URL_ENTES_RECEPTORES_TODOS=http://entereceptordecla:5000/api/consultar-todos/entes/
+      - URL_SERVICIO_IMPRESION_VISTA=http://omextservicioimpresion:5000/api/genera-vita-omiso/
+      - db_name_o
+      - host_o
+      - password_o
+      - port_o
+      - username_o
+  
+  omextfront:
+    image: omextfront
+    build: 
+      context: ./omext/omextfront/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - omextback
+    ports:
+      - 5004:5000

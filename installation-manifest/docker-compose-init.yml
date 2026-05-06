@@ -1,0 +1,9 @@
+## docker-compose-init.yml para realizar el lebantamiento de las librerias
+## principales requeridas para lebantar el proyecto de declaranet.
+version: "3.8"
+services:
+  librerias:
+    image: librerias
+    build: ./librerias/
+    ports:
+      - "4099:80"

@@ -1,0 +1,42 @@
+h1, h2, h3 {
+  color: maroon;
+}
+
+.wy-side-nav-search {
+  background-color: maroon;
+}
+
+.wy-nav-content {
+  background: #fffefd;;
+
+}
+
+.wy-nav-content-wrap{
+  background: #b3b3b3;
+}
+p{
+  text-align: justify;
+}
+
+.projo{
+  color: red;
+}
+
+.docutils td{
+  color: maroon;
+  font-weight: bold;
+}
+
+
+.hljs {
+  border-radius: 1em/2em;
+  background: #D4D1D0;
+}
+
+.nota{
+  color:maroon;
+  font-weight: bold;
+}
+
+
+

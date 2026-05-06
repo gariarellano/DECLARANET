@@ -1,0 +1,78 @@
+
+<span class="ml-4"> <img src="assets/image/star.png" class="imgRequired"  alt=""> Debe registrar al menos una escolaridad.</span>
+<div id="scrollDatosCurri" class="altoScroll" (mousewheel)="_wheel($event);">
+    <form [formGroup]="form" class="container-fluid  ml-2 pt-3 h-75">
+        <!-- <div class="title d-flex justify-content-between mb-3">
+        <h4>Datos curriculares del declarante</h4> <i class="fas fa-question-circle mr-3 help"></i>
+    </div> -->
+        <!-- <div class="row ml-2 mb-3">
+        <i data-toggle="modal" data-target="#exampleModalCenter" class="fas fa-plus-circle btn-add"></i>
+    </div> -->
+        <div class="table-responsive h-75">
+            <table class="table table-striped" aria-describedby="datos curriculares" summary="datos curriculares">
+                <thead>
+                    <tr>
+                        <th scope="col">Tipo operación</th>
+                        <th scope="col">Nivel</th>
+                        <th scope="col">Institución Educativa</th>
+                        <th scope="col">Estatus</th>
+                        <th scope="col" width="150px"></th>
+                        <th scope="col" width="150px"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dato of datosCurricularesDeclarante">
+
+                        <!-- <td>{{getNivel(dato.nivel)}}</td> -->
+                        <td>{{dato.tipoOperacion}}</td>
+                        <td>{{ dato.nivel | getPipeNivAcaPipe }}</td>
+                        <td>{{dato.institucionEducativa}}</td>
+                        <td>{{dato.estatus}}</td>
+                        <!-- <td><i (click)="modificarDatos(dato)" style="color: rgb(27, 79, 236); cursor: pointer;" class="far fa-edit"></i></td> -->
+                        <!-- <td><i style="color: rgb(119, 27, 27); cursor: pointer;" class="fas fa-trash-alt"></i></td> -->
+                        <td class="text-center"><button [attr.id]="'modificar' + dato.idPosicionVista" class="modificar"
+                                (click)="modificarDatos(dato);">
+                                <div class='icon'>
+                                    <i class='fa fa-edit'></i>
+                                </div>
+                                <div class='text'>
+                                    <span [attr.id]="'spanModificar' + dato.idPosicionVista">Modificar</span>
+                                </div>
+                            </button></td>
+                        <td class="text-center"><button *ngIf="!dato.registroHistorico"
+                                [attr.id]="'eliminarDaCu' + dato.idPosicionVista" class="eliminar"
+                                (click)="eliminarDatos($event, dato);" (mouseout)="eliminarMouseout($event, dato)">
+                                <div class='icon'>
+                                    <i class='fa fa-trash-alt'></i>
+                                    <i class='fa fa-question'></i>
+                                    <i class='fa fa-check'></i>
+                                </div>
+                                <div class='text'>
+                                    <span [attr.id]="'spanEliminarDaCu' + dato.idPosicionVista">Eliminar</span>
+                                </div>
+                            </button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="row mt-5">
+            <button (click)="abrirObservaciones()" type="button" class="observaciones"><i class="far fa-envelope"></i>
+                Aclaraciones / Observaciones </button>
+        </div>
+        <div id="obs-curriculares" class="content-observaciones">
+            <div>
+                <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+                <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)"
+                    id="aclaracionesObservaciones" cols="80" rows="15" maxlength="2000" [(ngModel)]="this.aclaObs"
+                    #aclaracion="ngModel" [ngModelOptions]="{standalone: true}"></textarea>
+                <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+<!-- <app-datos-curriculares-modal (aceptar)="procesaAceptar($event)"></app-datos-curriculares-modal> -->

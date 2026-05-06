@@ -1,0 +1,115 @@
+= Cheatsheets
+
+[[CatalogoDTO]]
+== CatalogoDTO
+
+++++
+ DTO generico para los catalogos
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[descripcion]]`@descripcion`|`String`|+++
+
++++
+|[[id]]`@id`|`Number (Integer)`|+++
+
++++
+|===
+
+[[DomicilioDeclaranteDTO]]
+== DomicilioDeclaranteDTO
+
+++++
+ DTO para el domicilio del declarante
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[aclaraciones]]`@aclaraciones`|`String`|-
+|[[domicilioExtranjero]]`@domicilioExtranjero`|`link:dataobjects.html#DomicilioExtranjeroDTO[DomicilioExtranjeroDTO]`|-
+|[[domicilioMexico]]`@domicilioMexico`|`link:dataobjects.html#DomicilioMexicoDTO[DomicilioMexicoDTO]`|-
+|[[tipoDomicilio]]`@tipoDomicilio`|`link:dataobjects.html#CatalogoDTO[CatalogoDTO]`|-
+|===
+
+[[DomicilioExtranjeroDTO]]
+== DomicilioExtranjeroDTO
+
+++++
+ DTO para el domicilio en el extranjero
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[calle]]`@calle`|`String`|-
+|[[ciudadLocalidad]]`@ciudadLocalidad`|`String`|-
+|[[codigoPostal]]`@codigoPostal`|`String`|-
+|[[estadoProvincia]]`@estadoProvincia`|`String`|-
+|[[numeroExterior]]`@numeroExterior`|`String`|-
+|[[numeroInterior]]`@numeroInterior`|`String`|-
+|[[pais]]`@pais`|`link:dataobjects.html#CatalogoDTO[CatalogoDTO]`|-
+|===
+
+[[DomicilioMexicoDTO]]
+== DomicilioMexicoDTO
+
+++++
+ DTO para el domicilio en Mexico
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[calle]]`@calle`|`String`|-
+|[[codigoPostal]]`@codigoPostal`|`Number (Integer)`|-
+|[[coloniaLocalidad]]`@coloniaLocalidad`|`String`|-
+|[[entidadFederativa]]`@entidadFederativa`|`link:dataobjects.html#EntidadFederativaDTO[EntidadFederativaDTO]`|-
+|[[municipioAlcaldia]]`@municipioAlcaldia`|`link:dataobjects.html#MunicipioAlcaldiaDTO[MunicipioAlcaldiaDTO]`|-
+|[[numeroExterior]]`@numeroExterior`|`String`|-
+|[[numeroInterior]]`@numeroInterior`|`String`|-
+|===
+
+[[EntidadFederativaDTO]]
+== EntidadFederativaDTO
+
+++++
+ DTO para la Entidad Federativa
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[descripcion]]`@descripcion`|`String`|-
+|[[id]]`@id`|`Number (Integer)`|-
+|===
+
+[[MunicipioAlcaldiaDTO]]
+== MunicipioAlcaldiaDTO
+
+++++
+ DTO para el municipio o alcaldia
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[descripcion]]`@descripcion`|`String`|-
+|[[entidadFederativa]]`@entidadFederativa`|`link:dataobjects.html#EntidadFederativaDTO[EntidadFederativaDTO]`|-
+|[[id]]`@id`|`Number (Integer)`|-
+|===
+

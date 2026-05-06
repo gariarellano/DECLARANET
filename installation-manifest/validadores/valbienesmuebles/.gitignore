@@ -1,0 +1,10 @@
+/target/
+/file-uploads/
+/.idea/
+*.iml
+/.settings/
+/.classpath
+/.project
+/src/main/generated/*
+
+

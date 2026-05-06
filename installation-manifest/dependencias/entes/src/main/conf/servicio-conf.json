@@ -1,0 +1,6 @@
+{
+"test":true,
+  "http.port": 8080,
+  "db_name": "dependencias",
+  "connection_string": "mongodb://172.29.100.25:27017"
+}

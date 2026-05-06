@@ -1,0 +1,52 @@
+import { DatosGenerales } from './datosGenerales';
+import { DomicilioDeclarante } from './domicilioDeclarante';
+import { DatosCurricularesDeclarante } from './datosCurriculares';
+import { DatosEmpleo } from './datosEmpleo';
+import { Escolaridad } from './datosCurriculares-escolaridad';
+import { DatosPareja } from './datosPareja';
+import { ExperienciaLaboral } from './experienciaLaboral';
+import { DatosDependiente } from './datosDependiente';
+import { ParticipaEmpresasDatos } from './participaEmpresasDatos';
+import { BienesInmuebles } from './bienesInmuebles';
+import { Vehiculos } from './vehiculos';
+import { BienesMuebles } from './bienesMuebles';
+import { Inversiones } from './inversiones';
+import { AdeudosPasivos } from './adeudosPasivos';
+import { PrestamoComodato } from './prestamoComodato';
+import { participaDecisionesDatos } from './participaDesicionesDatos';
+import { ApoyosoBeneficiosDatos } from './ApoyosBeneficios';
+import { RepresenatcionDatos } from './Representacion';
+import { ClientesPrincipalesDatos } from './clientesPrincipales';
+import { BeneficiosPrivadosDatos } from './beneficiosPrivados';
+import { FideicomisosDatos } from './Fedeicomisos';
+import { ActividadLaboral } from './actividadLaboral';
+import { DatosIngresos } from './Ingresos';
+import { actividadAnualAnteriorDatos } from './actividadAnualAnteriorDatos';
+export interface Declaracion {
+  datosGenerales: DatosGenerales;
+  domicilioDeclarante?: DomicilioDeclarante;
+  datosCurricularesDeclarante?: DatosCurricularesDeclarante;
+  datosEmpleoCargoComision?: DatosEmpleo;
+  escolaridad?: Escolaridad;
+  datosParejas?: DatosPareja;
+  experienciasLaborales?: ExperienciaLaboral;
+  datosDependientesEconomicos?: DatosDependiente;
+  /*Seccion II*/
+  participaEmpresasSociedadesAsociaciones?: ParticipaEmpresasDatos;
+  bienesInmuebles?: BienesInmuebles;
+  vehiculos?: Vehiculos;
+  bienesMuebles?: BienesMuebles;
+  inversionesCuentasValores?: Inversiones;
+  adeudosPasivos?: AdeudosPasivos;
+  prestamoComodato?: PrestamoComodato;
+  participacionTomaDecisiones?: participaDecisionesDatos;
+  apoyos?: ApoyosoBeneficiosDatos;
+  representaciones?: RepresenatcionDatos;
+  clientesPrincipales?: ClientesPrincipalesDatos;
+  beneficiosPrivados?: BeneficiosPrivadosDatos;
+  fideicomisos?: FideicomisosDatos;
+  actividadLaboral?: ActividadLaboral;
+  ingresos?: DatosIngresos;
+  actividadAnualAnterior?: actividadAnualAnteriorDatos;
+
+}

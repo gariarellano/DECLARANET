@@ -1,0 +1,31 @@
+header {
+  height: 35px !important;
+  position: fixed !important;
+}
+
+.info-bar {
+background: #ffffffc0;
+box-shadow: 0 8px 8px 0 rgba(212, 212, 212, 0.4);
+display: block;
+height: 2rem;
+margin: auto;
+padding: 5px 15px;
+position: fixed;
+top: 35px;
+width: 100%;
+z-index: 200 !important;
+}
+
+.menu-nav {
+position: fixed !important;
+top: 66px;
+z-index: 300 !important;
+}
+
+.modal-lg {
+max-width: 2000px;
+}
+
+.text-small {
+font-size: 14px !important;
+}

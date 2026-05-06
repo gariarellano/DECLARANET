@@ -1,0 +1,359 @@
+<div class="modal-content" style="height: 500px;">
+    <div class="modal-header">
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Representación</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <form #representacionTipoForm="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="repreRadio" type="radio" required
+                            id="radio{{data.id}}" [(ngModel)]="jsonRepresentacion.tipoOperacion" [value]="data.id"
+                            (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <div class="modal-body" style="overflow-y: scroll">
+        <form #representacionForm="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel"
+                [(ngModel)]="jsonRepresentacion.tipoOperacion">
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Participante<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Participante<i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoPersona , jsonRepresentacion.tipoOperacion)" name="tipoPersona"
+                        id="repPar" [(ngModel)]="jsonRepresentacion.participante" required #tipoPersona="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let tp of this.cata.enums.ENUM_PARTICIPANTE" [value]="tp.id">
+                            {{tp.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="tipoPersona.invalid && (tipoPersona.dirty || tipoPersona.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de Representación<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de Representación <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoRepresentacion , jsonRepresentacion.tipoOperacion)"
+                        name="tipoRepresentacion" id="repTipRep" maxlength="15"
+                        [(ngModel)]="jsonRepresentacion.tipoRepresentacion" required #tipoRepresentacion="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let tr of this.cata.enums.ENUM_TIPO_REPRESENTACION" [value]="tr.id">
+                            {{tr.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="tipoRepresentacion.invalid && (tipoRepresentacion.dirty || tipoRepresentacion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Representante / Representado (Tipo Persona)<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Representante / Representado (Tipo Persona)<i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( representante , jsonRepresentacion.tipoOperacion)"
+                        name="representante" id="repRepRep" maxlength="15"
+                        [(ngModel)]="jsonRepresentacion.representanteRepresentado.tipoPersona" required
+                        #representante="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let rp of this.cata.enums.ENUM_TIPO_PERSONA" [value]="rp.id">
+                            {{rp.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="representante.invalid && (representante.dirty || representante.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+
+                <div *ngIf="jsonRepresentacion.representanteRepresentado.tipoPersona == 'PERSONA_FISICA'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre </label>
+                    <input [disabled]="getDisabled( nomOtor , jsonRepresentacion.tipoOperacion)" type="text"
+                        name="nomOtor" id="repNom"
+                        [(ngModel)]="jsonRepresentacion.representanteRepresentado.personaFisica.nombre" required
+                        maxlength="100" #nomOtor="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nomOtor.invalid && (nomOtor.dirty || nomOtor.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="jsonRepresentacion.representanteRepresentado.tipoPersona == 'PERSONA_FISICA'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Primer Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Primer Apellido </label>
+                    <input [disabled]="getDisabled( apePatOtor , jsonRepresentacion.tipoOperacion)" type="text"
+                        name="apePatOtor" id="repPriApe"
+                        [(ngModel)]="jsonRepresentacion.representanteRepresentado.personaFisica.primerApellido" required
+                        maxlength="100" #apePatOtor="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="apePatOtor.invalid && (apePatOtor.dirty || apePatOtor.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="jsonRepresentacion.representanteRepresentado.tipoPersona == 'PERSONA_FISICA'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Segundo Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Segundo Apellido </label>
+                    <input [disabled]="getDisabled( apeMatOtor , jsonRepresentacion.tipoOperacion)" type="text"
+                        name="apeMatOtor" id="repSegApe"
+                        [(ngModel)]="jsonRepresentacion.representanteRepresentado.personaFisica.segundoApellido"
+                        maxlength="100" #apeMatOtor="ngModel" oninput="CustomUpperCase(this);">
+
+                </div>
+
+                <div *ngIf="jsonRepresentacion.representanteRepresentado.tipoPersona == 'PERSONA_FISICA'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC </label>
+                    <input [disabled]="getDisabled( rfcOtor , jsonRepresentacion.tipoOperacion)" type="text"
+                        name="rfcOtor" id="repRfc" maxlength="13" oninput="CustomUpperCase(this);"
+                        [(ngModel)]="jsonRepresentacion.representanteRepresentado.personaFisica.rfc" rfcValid
+                        #rfcOtor="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfcOtor.invalid && rfcOtor.touched">
+                        <div *ngIf="rfcOtor.errors.rfcValid && rfcOtor.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div *ngIf="jsonRepresentacion.representanteRepresentado.tipoPersona == 'PERSONA_MORAL'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre o razón social del representante/representado<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre o razón social del representante/representado <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombreRazon , jsonRepresentacion.tipoOperacion)" type="text"
+                        name="nombreRazon" id="repMorNom" maxlength="100"
+                        [(ngModel)]="jsonRepresentacion.representanteRepresentado.personaMoral.nombre" required
+                        maxlength="100" #nombreRazon="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip"
+                        *ngIf="nombreRazon.invalid && (nombreRazon.dirty || nombreRazon.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div *ngIf="jsonRepresentacion.representanteRepresentado.tipoPersona == 'PERSONA_MORAL'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfc , jsonRepresentacion.tipoOperacion)" type="text" name="rfc"
+                        maxlength="12" id="repMorRfc"
+                        [(ngModel)]="jsonRepresentacion.representanteRepresentado.personaMoral.rfc" #rfc="ngModel"
+                        rfcMoralValid oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="rfc.invalid && rfc.touched">
+                        <div *ngIf="rfc.errors.rfcMoralValid && rfc.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Fecha de inicio de la representación<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fecha de inicio de la representación <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input fechaValid="{{fecha}}"
+                        [disabled]="getDisabled( fechaInicio , jsonRepresentacion.tipoOperacion)" type="date"
+                        name="fechaInicio" maxlength="20" id="repFecIniRep" [max]="cata.fechaReferenciaMax"
+                        [(ngModel)]="jsonRepresentacion.fechaInicioRepresentacion" required #fechaInicio="ngModel">
+                    <div class="invalid-tooltip" *ngIf="fechaInicio.invalid && fechaInicio.touched">
+                        Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                            [attr.data-td]="tipoDeclaracion" onclick="abrirModalInfo('modalMsgFechasEncargo',this)"></i>
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">¿Recibe remuneración por su representación?<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">¿Recibe remuneración por su representación? <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( remuneracion , jsonRepresentacion.tipoOperacion)"
+                        name="remuneracion" [(ngModel)]="jsonRepresentacion.recibeRemuneracion" id="repRecRemPorRep"
+                        required #remuneracion="ngModel">
+                        <option [ngValue]=null disabled>Seleccione...</option>
+                        <option [ngValue]=true>SI</option>
+                        <option [ngValue]=false>NO</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="remuneracion.invalid && (remuneracion.dirty || remuneracion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div *ngIf="jsonRepresentacion.recibeRemuneracion == true"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Monto mensual neto de su representación<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Monto mensual neto de su representación <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( montoMensual , jsonRepresentacion.tipoOperacion)" type="text"
+                        name="montoMensual" id="repMonMen" [(ngModel)]="jsonRepresentacion.montoMensual.monto" required
+                        #montoMensual="ngModel" oninput="soloNumeroInput(this, 1, 9999999999999);"
+                        onfocus="focusSoloNumero(this)">
+                    <div class="invalid-tooltip"
+                        *ngIf="montoMensual.invalid && (montoMensual.dirty || montoMensual.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="jsonRepresentacion.recibeRemuneracion == true"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de moneda<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de moneda <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( moneda , jsonRepresentacion.tipoOperacion)" name="moneda"
+                        [compareWith]="cata.compareFn" id="repTipMon" appSelectValidator
+                        [(ngModel)]="jsonRepresentacion.montoMensual.moneda" required #moneda="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let m of this.cata.catalogos.CAT_MONEDA" [ngValue]="m">
+                            {{m.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="moneda.invalid && (moneda.dirty || moneda.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for=""><i class="fas fa-info-circle">Lugar donde se ubica</i></label>
+                    <label [hidden]="help" for="">Lugar donde se ubica <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( ubicacion , jsonRepresentacion.tipoOperacion)" name="ubicacion"
+                        maxlength="50" id="repLugDonUbi" [(ngModel)]="jsonRepresentacion.localizacion.ubicacion"
+                        required #ubicacion="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let dato of this.cata.enums.ENUM_UBICACION" [value]="dato.id">
+                            {{dato.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="ubicacion.invalid && (ubicacion.dirty || ubicacion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="jsonRepresentacion.localizacion.ubicacion == 'MEXICO' || jsonRepresentacion.localizacion.ubicacion == 'EXTRANJERO'"
+                        class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="jsonRepresentacion.localizacion.ubicacion =='MEXICO'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Entidad federativa<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Entidad federativa <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( entidad , jsonRepresentacion.tipoOperacion)" name="entidad"
+                        maxlength="50" id="repEntFed" [compareWith]="cata.compareFn" appSelectValidator
+                        [(ngModel)]="jsonRepresentacion.localizacion.localizacionMexico.entidadFederativa" required
+                        #entidad="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let ent of this.cata.catalogos.CAT_ENTIDAD_FEDERATIVA" [ngValue]="ent">
+                            {{ent.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="entidad.invalid && (entidad.dirty || entidad.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div *ngIf="jsonRepresentacion.localizacion.ubicacion =='EXTRANJERO'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">País donde se localiza<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">País donde se localiza <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( pais , jsonRepresentacion.tipoOperacion)" name="pais"
+                        maxlength="50" id="repPaiDonLoc" [compareWith]="cata.compareFn" appSelectValidator
+                        [(ngModel)]="jsonRepresentacion.localizacion.localizacionExtranjero.pais" required
+                        #pais="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let pais of this.cata.catalogos.CAT_PAIS" [ngValue]="pais">
+                            {{pais.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="pais.invalid && (pais.dirty || pais.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for=""><i class="fas fa-info-circle">Sector productivo al que
+                            pertenece</i></label>
+                    <label [hidden]="help" for="">Sector productivo al que pertenece <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( sector , jsonRepresentacion.tipoOperacion)" name="sector"
+                        id="repSecProQuePer" [compareWith]="cata.compareFn" maxlength="50"
+                        [(ngModel)]="jsonRepresentacion.sector" required #sector="ngModel" appSelectValidator>
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let sec of this.cata.catalogos.CAT_SECTOR_PRIVADO" [ngValue]="sec">
+                            {{sec.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="sector.invalid && (sector.dirty || sector.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="jsonRepresentacion.sector.id == '9999'" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="jsonRepresentacion.sector.id == '9999'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( sectorOtro , jsonRepresentacion.tipoOperacion)" type="text"
+                        name="sectorOtro" id="repEsp" [(ngModel)]="jsonRepresentacion.sectorOtro" required
+                        #sectorOtro="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="sectorOtro.invalid && (sectorOtro.dirty || sectorOtro.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success"
+            [disabled]="!representacionForm.form.valid || !representacionTipoForm.form.valid"
+            (click)="guardaLocal()">Aceptar</button>
+        <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+    </div>
+</div>

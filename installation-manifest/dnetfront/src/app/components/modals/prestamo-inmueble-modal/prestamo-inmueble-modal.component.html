@@ -1,0 +1,459 @@
+
+    <div class="modal-content" style="height:400px;">
+        <div class="modal-header">
+            <div class="d-flex w-100">
+                <div class="d-flex w-75">
+                    <h4 class="modal-title">Préstamo bien inmueble</h4>
+                </div>
+                <div class="d-flex w-25 align-items-center">
+                    <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                    <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+     <form #prestaInmuTipoOper="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="adeudoRadio" type="radio" required id="radio{{data.id}}" [(ngModel)]="inmueble.tipoOperacion" [value]="data.id" (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="modal-body" style="overflow-y: scroll">
+        <form #pInmuebleForm="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel" [(ngModel)]="inmueble.tipoOperacion">
+
+                <div class="row p-3">
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Inmueble<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Inmueble <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <select [disabled]="getDisabled(inmuebleD, inmueble.tipoOperacion)" name="inmuebleD" #inmuebleD="ngModel" id="preInmInm" [compareWith]="cata.compareFn"
+                            required appSelectValidator [(ngModel)]="inmueble.inmueble.tipoInmueble">
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let inmueble of this.cata.catalogos.CAT_TIPO_BIEN_INMUEBLE"
+                                [ngValue]="inmueble">
+                                {{inmueble.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip" *ngIf="inmuebleD.touched && inmuebleD.pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="flecha-otro">
+                        <i *ngIf="inmueble.inmueble.tipoInmueble.id == '9999'" class="fas fa-arrow-right"></i>
+                    </div>
+                    <div *ngIf="inmueble.inmueble.tipoInmueble.id == '9999'" class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Especifique</label>
+                        <input [disabled]="getDisabled(especificInmueble, inmueble.tipoOperacion)" type="text" name="especificInmueble" id="preInmEspInm" #especificInmueble="ngModel"
+                            oninput="CustomUpperCase(this);" required [(ngModel)]="inmueble.inmueble.tipoInmuebleOtro">
+                        <div class="invalid-tooltip"
+                            *ngIf="especificInmueble.invalid && (especificInmueble.dirty || especificInmueble.touched)">
+                            Campo requerido...
+                        </div>
+
+                    </div>
+                    <div class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Ubicación del inmueble<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Ubicación del inmueble <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <select [disabled]="getDisabled(ubicacionInmueble, inmueble.tipoOperacion)" name="ubicacionInmueble" #ubicacionInmueble="ngModel" id="preInmUbiInm"
+                            [compareWith]="cata.compareFn" required appSelectValidator
+                            [(ngModel)]="inmueble.inmueble.domicilio.ubicacion">
+                            <option [ngValue]=null disabled>SELECCIONE...</option>
+                            <option *ngFor="let ubi of this.cata.enums.ENUM_UBICACION" [value]="ubi.id">
+                                {{ubi.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip" *ngIf="ubicacionInmueble.touched && ubicacionInmueble.pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <button *ngIf="inmueble.inmueble.domicilio.ubicacion== 'MEXICO'" type="button"
+                            (click)="abreMexico();" class="btn btn-light" data-toggle="modal"
+                            data-target="#modal-domicilio-mexico"><i class="fas fa-map-marked-alt"></i> Domicilio en
+                            México
+                        </button>
+                        <button style="width: 280px!important"
+                            *ngIf="inmueble.inmueble.domicilio.ubicacion == 'EXTRANJERO'" type="button"
+                            (click)="abreExtranjero();" class="btn btn-light" data-toggle="modal"
+                            data-target="#modal-domicilio-extranjero"><i class="fas fa-map-marked-alt"></i>
+                            Domicilio en extranjero
+                        </button>
+                    </div>
+
+                </div>
+                <div class="row p-3">
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Dueño o titular<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Dueño o titular <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <select [disabled]="getDisabled(duenoTitular, inmueble.tipoOperacion)" name="duenoTitular" #duenoTitular="ngModel" id="preInmDueTit"
+                            [compareWith]="cata.compareFn" required appSelectValidator
+                            [(ngModel)]="inmueble.duenoTitular.tipoPersona">
+                            <option [ngValue]=null disabled>SELECCIONE...</option>
+                            <option *ngFor="let due of this.cata.enums.ENUM_TIPO_PERSONA" [value]="due.id">
+                                {{due.valor}}
+                            </option>
+
+                        </select>
+                        <span class="invalid-tooltip" *ngIf="duenoTitular.touched && duenoTitular.pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column" *ngIf="inmueble.duenoTitular.tipoPersona == 'PERSONA_MORAL'">
+                        <label [hidden]="!help" for="">Nombre del dueño o titular<i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nombre del dueño o titular</label>
+                        <input [disabled]="getDisabled(nombreMoral, inmueble.tipoOperacion)" type="text" name="nombreMoral" #nombreMoral="ngModel" id="preInmNomDueTit"
+                            maxlength="100" oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="inmueble.duenoTitular.personaMoral.nombre">
+                        <div class="invalid-tooltip"
+                            *ngIf="nombreMoral.invalid && (nombreMoral.dirty || nombreMoral.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column" *ngIf="inmueble.duenoTitular.tipoPersona == 'PERSONA_MORAL'">
+                        <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">RFC </label>
+                        <input [disabled]="getDisabled(rfcMoralInmu, inmueble.tipoOperacion)" type="text" name="rfcMoralInmu" #rfcMoralInmu="ngModel" id="preInmRfc" maxlength="12"
+                            oninput="CustomUpperCase(this);" rfcMoralValid
+                            [(ngModel)]="inmueble.duenoTitular.personaMoral.rfc">
+                        <div class="invalid-tooltip" *ngIf="rfcMoralInmu.invalid && rfcMoralInmu.touched">
+                            <div *ngIf="rfcMoralInmu.errors.rfcMoralValid && rfcMoralInmu.touched">
+                                El RFC debe contener el formato correcto...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Relación con dueño o titular<i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Relación con dueño o titular</label>
+                        <input [disabled]="getDisabled(relacionDuenoInmu, inmueble.tipoOperacion)" type="text" name="relacionDuenoInmu" #relacionDuenoInmu="ngModel" id="preInmRelDue"
+                            [(ngModel)]="inmueble.relacionConTitular" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="relacionDuenoInmu.invalid && (relacionDuenoInmu.dirty || relacionDuenoInmu.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3" *ngIf="inmueble.duenoTitular.tipoPersona == 'PERSONA_FISICA'">
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Nombre del dueño o titular<i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nombre del dueño o titular </label>
+                        <input [disabled]="getDisabled(nombreFisica, inmueble.tipoOperacion)" type="text" name="nombreFisica" #nombreFisica="ngModel" id="preInmFisNomDue"
+                            maxlength="100" oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="inmueble.duenoTitular.personaFisica.nombre">
+                        <div class="invalid-tooltip"
+                            *ngIf="nombreFisica.invalid && (nombreFisica.dirty || nombreFisica.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Primer Apellido<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Primer Apellido</label>
+                        <input [disabled]="getDisabled(pApellidoFisica, inmueble.tipoOperacion)" type="text" name="pApellidoFisica" #pApellidoFisica="ngModel" id="preInmFisPriApe"
+                            maxlength="100" oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="inmueble.duenoTitular.personaFisica.primerApellido">
+                        <div class="invalid-tooltip"
+                            *ngIf="pApellidoFisica.invalid && (pApellidoFisica.dirty || pApellidoFisica.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Segundo Apellido<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Segundo Apellido</label>
+                        <input [disabled]="getDisabled(sApellidoFisica, inmueble.tipoOperacion)" type="text" name="sApellidoFisica" #sApellidoFisica="ngModel" id="preInmFisSegApe"
+                            maxlength="100" oninput="CustomUpperCase(this);"
+                            [(ngModel)]="inmueble.duenoTitular.personaFisica.segundoApellido">
+                        <div class="invalid-tooltip"
+                            *ngIf="sApellidoFisica.invalid && (sApellidoFisica.dirty || sApellidoFisica.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">RFC</label>
+                        <input [disabled]="getDisabled(rfcFisicaInm, inmueble.tipoOperacion)" type="text" name="rfcFisicaInm" #rfcFisicaInm="ngModel" id="preInmFisRfc" maxlength="13"
+                            oninput="CustomUpperCase(this);" rfcValid
+                            [(ngModel)]="inmueble.duenoTitular.personaFisica.rfc">
+                        <div class="invalid-tooltip" *ngIf="rfcFisicaInm.invalid && rfcFisicaInm.touched">
+                            <div *ngIf="rfcFisicaInm.errors.rfcValid && rfcFisicaInm.touched">
+                                El RFC debe contener el formato correcto...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+         
+
+
+        </form>
+    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success"
+                [disabled]="!pInmuebleForm.valid || !prestaInmuTipoOper.valid || !mexicoFormPresta.valid || !prestaInmExt.valid"
+                (click)="guardaLocal()">Aceptar</button>
+            <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+        </div>
+    </div>
+
+
+<form #mexicoFormPresta="ngForm">
+    <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel" [(ngModel)]="inmueble.tipoOperacion">
+    <!-- Domicilio en México -->
+    <div style="background: rgba(59, 59, 59, 0.603)" class="modal fade bd-example-modal-lg" id="modal-domicilio-mexico"
+        tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static"
+        data-keyboard="false">
+        <div style="top: 70px;" class="modal-dialog modal-lg " role="document">
+            <div class="modal-content" style="height: 600px!important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Domicilio en México</h5>
+                    <button type="button" class="close" data-dismiss="modal" (click)="closeUbicacion();"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" *ngIf="inmueble.inmueble.domicilio.ubicacion === 'MEXICO'">
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column ">
+                            <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Calle</label>
+                            <input  [disabled]="getDisabled(calleMexi, inmueble.tipoOperacion)" type="text" name="calleMexi" maxlength="300" id="preInmMexCal"
+                                oninput="CustomUpperCase(this);" #calleMexi="ngModel" required
+                                [(ngModel)]="bienTmp.domicilio.domicilioMexico.calle">
+                            <div class="invalid-tooltip"
+                                *ngIf="calleMexi.invalid && (calleMexi.dirty || calleMexi.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número exterior </label>
+                            <input [disabled]="getDisabled(numExMex, inmueble.tipoOperacion)" type="text" name="numExMex" maxlength="50" id="preInmMexNumExt"
+                                oninput="CustomUpperCase(this);" #numExMex="ngModel" required
+                                [(ngModel)]="bienTmp.domicilio.domicilioMexico.numeroExterior" id=""
+                                oninput="CustomUpperCase(this);">
+                            <div class="invalid-tooltip"
+                                *ngIf="numExMex.invalid && (numExMex.dirty || numExMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número interior </label>
+                            <input [disabled]="getDisabled(numIntMex, inmueble.tipoOperacion)" type="text" name="numIntMex" maxlength="50" id="preInmMexNumInt"
+                                oninput="CustomUpperCase(this);" #numIntMex="ngModel"
+                                [(ngModel)]="bienTmp.domicilio.domicilioMexico.numeroInterior"
+                                oninput="CustomUpperCase(this);">
+
+                        </div>
+
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Colonia/Localidad <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Colonia/Localidad </label>
+                            <input [disabled]="getDisabled(colMex, inmueble.tipoOperacion)" type="text" name="colMex" #colMex="ngModel" id="preInmMexCol" maxlength="100"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="bienTmp.domicilio.domicilioMexico.coloniaLocalidad"
+                                oninput="CustomUpperCase(this);">
+                            <div class="invalid-tooltip" *ngIf="colMex.invalid && (colMex.dirty || colMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Entidad federativa <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Entidad federativa </label>
+                            <select [disabled]="getDisabled(entidadMex, inmueble.tipoOperacion)" name="entidadMex" [compareWith]="cata.compareFn" id="preInmMexEntFed"
+                                #entidadMex="ngModel" required appSelectValidator
+                                [(ngModel)]="bienTmp.domicilio.domicilioMexico.entidadFederativa"
+                                (change)="filterMunicipios(entidadMex.value.id)">
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let data of this.cata.catalogos?.CAT_ENTIDAD_FEDERATIVA"
+                                    [ngValue]="data">
+                                    {{data.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="entidadMex.invalid && (entidadMex.dirty || entidadMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-5">
+
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Municipio / Alcaldía <i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Municipio / Alcaldía </label>
+                            <select [disabled]="getDisabled(municiMex, inmueble.tipoOperacion)" name="municiMex" #municiMex="ngModel"  id="preInmMexMun"
+                            required [compareWith]="cata.compareFn"
+                                [(ngModel)]="bienTmp.domicilio.domicilioMexico.municipioAlcaldia">
+                                <option [ngValue]="null" disabled>SELECCIONE...</option>
+                                <option *ngFor="let data of this?.filterMuns" [ngValue]="data">
+                                    {{data.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="municiMex.invalid && (municiMex.dirty || municiMex.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Código postal </label>
+                            <input [disabled]="getDisabled(cpMex, inmueble.tipoOperacion)" type="text" name="cpMex" onkeydown="return solonumero(event);" id="preInmMexCp"
+                                #cpMex="ngModel" maxlength="5" minlength="5" required id=""
+                                [(ngModel)]="bienTmp.domicilio.domicilioMexico.codigoPostal"
+                                oninput="CustomUpperCase(this);">
+                            <div class="invalid-tooltip" *ngIf="cpMex.invalid && (cpMex.dirty || cpMex.touched)">
+                                Campo requerido...
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                        [disabled]="!mexicoFormPresta.valid"
+                        (click)="guardaSub('domicilioMexico');">Aceptar</button>
+                    <button type="button" class="btn btn-dark" (click)="closeUbicacion();"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!-- Domicilio en Extranjero -->
+<form #prestaInmExt="ngForm">
+    <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel" [(ngModel)]="inmueble.tipoOperacion">
+    <div style="background: rgba(59, 59, 59, 0.603)" class="modal fade bd-example-modal-lg"
+        id="modal-domicilio-extranjero" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div style="top: 70px;" class="modal-dialog modal-lg " role="document">
+            <div class="modal-content" style="height: 600px!important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Ubicación en Extranjero</h5>
+                    <button type="button" class="close" (click)="closeUbicacion();" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" *ngIf="inmueble.inmueble.domicilio.ubicacion === 'EXTRANJERO'">
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Calle</label>
+                            <input [disabled]="getDisabled(calleExt, inmueble.tipoOperacion)" type="text" name="calleExt" #calleExt="ngModel" id="preInmExtCal" maxlength="300"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="bienTmp.domicilio.domicilioExtranjero.calle">
+                            <div class="invalid-tooltip"
+                                *ngIf="calleExt.invalid && (calleExt.dirty || calleExt.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número exterior</label>
+                            <input [disabled]="getDisabled(numExExt, inmueble.tipoOperacion)" type="text" name="numExExt" #numExExt="ngModel" id="preInmExtNumExt" maxlength="50"
+                                oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="bienTmp.domicilio.domicilioExtranjero.numeroExterior">
+                            <div class="invalid-tooltip"
+                                *ngIf="numExExt.invalid && (numExExt.dirty || numExExt.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número interior</label>
+                            <input [disabled]="getDisabled(numIntExt, inmueble.tipoOperacion)" type="text" name="numIntExt" #numIntExt="ngModel" id="preInmExtNumInt" maxlength="50"
+                                oninput="CustomUpperCase(this);"
+                                [(ngModel)]="bienTmp.domicilio.domicilioExtranjero.numeroInterior">
+                            <div class="invalid-tooltip"
+                                *ngIf="numIntExt.invalid && (numIntExt.dirty || numIntExt.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Ciudad/localidad <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Ciudad/localidad</label>
+                            <input [disabled]="getDisabled(ciudadExt, inmueble.tipoOperacion)" type="text" name="ciudadExt" maxlength="100" id="preInmExtCiuLoc"
+                                #ciudadExt="ngModel" oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="bienTmp.domicilio.domicilioExtranjero.ciudadLocalidad">
+                            <div class="invalid-tooltip"
+                                *ngIf="ciudadExt.invalid && (ciudadExt.dirty || ciudadExt.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Estado/provincia <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Estado/provincia</label>
+                            <input [disabled]="getDisabled(estadoExt, inmueble.tipoOperacion)" type="text" name="estadoExt" maxlength="100" id="preInmExtEdoPro"
+                                #estadoExt="ngModel" required oninput="CustomUpperCase(this);"
+                                [(ngModel)]="bienTmp.domicilio.domicilioExtranjero.estadoProvincia">
+                            <div class="invalid-tooltip"
+                                *ngIf="estadoExt.invalid && (estadoExt.dirty || estadoExt.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">País <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">País</label>
+                            <select [disabled]="getDisabled(paisExtPinmueble, inmueble.tipoOperacion)" name="paisExtPinmueble" #paisExtPinmueble="ngModel" id="preInmExtPai"
+                                appSelectValidator required [(ngModel)]="bienTmp.domicilio.domicilioExtranjero.pais"
+                                [compareWith]="cata.compareFn">
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let pais of this.cata.catalogos.CAT_PAIS" [ngValue]="pais">
+                                    {{pais.valor}}
+                                </option>
+                            </select>
+                            <div class="invalid-tooltip"
+                                *ngIf="paisExtPinmueble.invalid && (paisExtPinmueble.dirty || paisExtPinmueble.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Código postal</label>
+                            <input [disabled]="getDisabled(cpExt, inmueble.tipoOperacion)" type="text" name="cpExt" #cpExt="ngModel" id="preInmExtCp" maxlength="10"
+                                minlength="1" oninput="CustomUpperCase(this);" required
+                                [(ngModel)]="bienTmp.domicilio.domicilioExtranjero.codigoPostal">
+                            <div class="invalid-tooltip" *ngIf="cpExt.invalid && (cpExt.dirty || cpExt.touched)">
+                                Campo requerido...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" [disabled]="!prestaInmExt.valid"
+                        data-dismiss="modal" (click)="guardaSub('domicilioExtranjero');">Aceptar</button>
+                    <button type="button" class="btn btn-dark" (click)="closeUbicacion();"
+                        data-dismiss="modal">Cerrar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

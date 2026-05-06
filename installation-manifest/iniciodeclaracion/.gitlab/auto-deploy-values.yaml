@@ -1,0 +1,5 @@
+readinessProbe:
+  timeoutSeconds: 3
+
+livenessProbe:
+  timeoutSeconds: 15

@@ -1,0 +1,13 @@
+// $principal:rgb(74, 88, 126);
+$principal:#ffffff;
+// $principal:rgb(87, 24, 20);
+$principal-min:lighten($principal, 4%);
+$principal-hover: darken($principal, 10%);
+$secundario:rgb(32, 32, 34);
+$secundario-min:darken($secundario, 3%);
+$secundario-hover: darken($secundario, 10%);
+$secundario-active: lighten($secundario, 20%);
+$verde:rgb(27, 187, 27);
+$rojo:rgb(187, 27, 27);
+$amarillo:rgb(187, 184, 27);
+$textfocus: #d38318;

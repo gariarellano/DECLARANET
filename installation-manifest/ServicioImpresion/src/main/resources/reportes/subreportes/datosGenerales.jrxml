@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-06-04T19:12:17 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="datosGenerales" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ac2a284-2e6f-4bbb-a3dd-f2f8c041b677">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="datosPersonales.nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datosPersonales.primerApellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datosPersonales.segundoApellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datosPersonales.curp" class="java.lang.String"/>
+	<field name="datosPersonales.rfc" class="java.lang.String"/>
+	<field name="correoElectronico.institucional" class="java.lang.String"/>
+	<field name="correoElectronico.personalAlterno" class="java.lang.String"/>
+	<field name="telefonoCasa.numero" class="java.lang.String"/>
+	<field name="telefonoCelular.numero" class="java.lang.String"/>
+	<field name="situacionPersonalEstadoCivil.valor" class="java.lang.String"/>
+	<field name="regimenMatrimonial.valor" class="java.lang.String"/>
+	<field name="paisNacimiento.valor" class="java.lang.String"/>
+	<field name="nacionalidad.valor" class="java.lang.String"/>
+	<field name="aclaracionesObservaciones" class="java.lang.String"/>
+	<field name="regimenMatrimonial." class="java.lang.String"/>
+	<field name="regimenMatrimonialOtro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="regimenMatrimonial.id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="123">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="182" height="10" uuid="a4dd0b0d-c2ce-4615-934d-8daf57530d39">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE(S):]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="0" width="418" height="10" uuid="275a4ecc-040c-4b1f-9835-f4f8ca88e55e">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datosPersonales.primerApellido}.concat(" ").concat($F{datosPersonales.segundoApellido}).concat(" ").concat($F{datosPersonales.nombre})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="182" height="10" uuid="1a7c194b-c63a-4912-9129-5abb8339c9ad">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURP:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="182" height="10" uuid="2ad4d0b0-8a62-4efd-bcfa-2f2745d57182">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RFC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="182" height="10" uuid="d74f6b93-728a-40a6-b5dd-0c7aeedca677">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HOMOCLAVE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="182" height="10" uuid="5597cc3a-b7f9-4137-9106-6798dffc9cb9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORREO ELECTRÓNICO INSTITUCIONAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="182" height="10" uuid="93a61702-9cf0-4135-bca5-95f5678ce56a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORREO ELECTRÓNICO PERSONAL / ALTERNO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="182" height="10" uuid="eea0f686-be0b-4736-b4a5-35c127396880">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO TELEFÓNICO DE CASA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="182" height="10" uuid="bdace7f1-6635-4455-9950-408d9c5618a3">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO CELULAR PERSONAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="182" height="10" uuid="f89e18dd-5aed-45d4-8546-3821b57e443b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SITUACIÓN PERSONAL / ESTADO CIVIL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="90" width="182" height="10" isRemoveLineWhenBlank="true" uuid="e279a461-fd1e-4dd3-9818-62172ecb05e0">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{regimenMatrimonial.valor} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RÉGIMEN MATRIMONIAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="182" height="10" uuid="45be23ff-6834-4143-8938-0056dd7ca5a3">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAÍS DE NACIMIENTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="110" width="182" height="10" uuid="cefff667-2270-4243-9ca8-ee37a955109c">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NACIONALIDAD:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="10" width="618" height="10" uuid="31c26b5a-1872-408f-9289-afbb88022f7e"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datosPersonales.curp}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="20" width="618" height="10" uuid="cf4ae512-09c8-47f9-8ba2-fe92660980f5">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datosPersonales.rfc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="40" width="618" height="10" uuid="83731ea4-3e5b-4599-a7c3-4f3821205793"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{correoElectronico.institucional}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="50" width="618" height="10" uuid="7566d046-9fea-475c-b594-1dae9eabd7ba">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{correoElectronico.personalAlterno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="60" width="618" height="10" uuid="60223b0f-2a14-4342-8f5d-433a5cd2e508"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefonoCasa.numero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="70" width="618" height="10" uuid="5ea191ca-5e33-4674-a97e-448ef056c894"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefonoCelular.numero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="80" width="618" height="10" uuid="0a64274c-cc20-4a86-97cf-191352b6e7f2"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{situacionPersonalEstadoCivil.valor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="90" width="118" height="10" isRemoveLineWhenBlank="true" uuid="f0d25665-7f63-47bf-9de7-77319651bcea"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{regimenMatrimonial.valor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="100" width="618" height="10" uuid="f40b8366-362a-4a1f-b623-5096b08174cd"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{paisNacimiento.valor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="110" width="618" height="10" uuid="8c3fe025-72e3-4dc7-889c-585b3c47994a"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nacionalidad.valor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="30" width="618" height="10" uuid="2a61a91a-18b3-49ce-be79-7647f9b21db1"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datosPersonales.rfc}.substring(($F{datosPersonales.rfc}.length()-3), $F{datosPersonales.rfc}.length())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="300" y="90" width="500" height="10" isRemoveLineWhenBlank="true" uuid="1be2a271-1e7d-48a2-86ce-c50a092aed49">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{regimenMatrimonialOtro} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{regimenMatrimonialOtro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

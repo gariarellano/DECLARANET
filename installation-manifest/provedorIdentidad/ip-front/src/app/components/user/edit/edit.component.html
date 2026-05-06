@@ -1,0 +1,90 @@
+<div class="container-form shadow p-3 mb-5 bg-white rounded ">
+    <app-alert></app-alert>
+    <div>
+        <form #registroForm="ngForm" id="registroForm" (ngSubmit)="guarda(registroForm)" class="animated fadeIn" *ngIf="usuario">
+            <h3>Modificar datos básicos usuario</h3>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="rfc">RFC</label>
+                    <input type="text" class="form-control" id="rfc" #rfc="ngModel" name="rfc" placeholder="RFC" maxlength="10" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': rfc.errors }" [readOnly]="this.status !== '4'" [(ngModel)]="usuario.rfc" required minlength="9"
+                        maxlength="10" rfcValid>
+                    <div class="invalid-feedback" *ngIf=" submitted && rfc.errors">
+                        RFC inválido
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="homo_cve">HOMOCLAVE</label>
+                    <input type="text" class="form-control" id="homo_cve" #homo_cve="ngModel" name="homo_cve" placeholder="000" maxlength="3" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': homo_cve.errors }" [readOnly]="this.status !== '4'" [(ngModel)]="usuario.homoclave"
+                        required>
+                    <div class="invalid-feedback" *ngIf="submitted && homo_cve.errors">
+                        Homoclave inválida
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="curp">CURP</label>
+                    <input type="text" class="form-control" id="curp" name="curp" #curp="ngModel" placeholder="CURP" maxlength="18" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': curp.errors}" [readOnly]="this.status !== '2'" [(ngModel)]="usuario.curp" required
+                        maxlength="18" curpValid>
+                    <div class="invalid-feedback" *ngIf="submitted && curp.errors">
+                        CURP inválida
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" #nombre="ngModel" name="nombre" placeholder="Nombre" maxlength="50" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': registroForm.submitted && nombre.errors }" [(ngModel)]="usuario.nombre"
+                        required>
+                    <div class="invalid-feedback" *ngIf="registroForm.submitted && nombre.errors">
+                        Nombre requerido
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="primerApellido">Primer apellido</label>
+                    <input type="text" class="form-control" id="primerApellido" #primerApellido="ngModel" name="primerApellido" placeholder="Primer apellido" maxlength="50" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': submitted && primerApellido.errors }"
+                        [(ngModel)]="usuario.primerApellido" required>
+                    <div class="invalid-feedback" *ngIf="submitted && primerApellido.errors">
+                        Requerido
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="segundoApellido">Segundo apellido</label>
+                    <input type="text" class="form-control" id="segundoApellido" #segundoApellido="ngModel" name="segundoApellido" placeholder="Segundo apellido" maxlength="50" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': submitted && segundoApellido.errors }"
+                        [(ngModel)]="usuario.segundoApellido">
+                    <div class="invalid-feedback" *ngIf="submitted && segundoApellido.errors">
+                        Requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="rounded float-right">
+                    <button type="submit" class="btn btn-primary" [disabled]="!registroForm.valid || this.loading"><i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Guardar</button>
+                </div>
+                <div class="rounded float-right">
+                    <button id="cancel" type="button" (click)="goToLogin(100)" class="btn btn-danger" [disabled]="this.loading">Cancelar</button>
+                </div>
+            </div>
+            <!-- {{!registroForm.valid || this.loading}} {{!registroForm.valid}} {{this.loading}} -->
+        </form>
+    </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" #modalButton class="btn btn-primary" data-toggle="modal" data-target="#ModalCorrecto" style="display: none;">
+  Launch demo modal
+</button>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalCorrecto" tabindex="-1" role="dialog" aria-labelledby="ModalCorrectoTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="alerticonModal"><img src="assets/img/sucess.png" alt="checkmark" />
+              <h2>Registro guardado exitosamente</h2></span>
+                <p>Redireccionando...</p>
+            </div>
+        </div>
+    </div>
+</div>

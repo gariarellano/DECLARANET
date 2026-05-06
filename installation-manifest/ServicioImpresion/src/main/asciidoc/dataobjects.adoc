@@ -1,0 +1,27 @@
+= Cheatsheets
+
+[[ReporteGralDTO]]
+== ReporteGralDTO
+
+++++
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[nombre]]`@nombre`|`String`|+++
+
++++
+|[[primerApellido]]`@primerApellido`|`String`|+++
+
++++
+|[[rfc]]`@rfc`|`String`|+++
+
++++
+|[[segundoApellido]]`@segundoApellido`|`String`|+++
+
++++
+|===
+

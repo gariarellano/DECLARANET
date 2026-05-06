@@ -1,0 +1,58 @@
+# Input que contiene las propiedades de un documento. 
+# documento Debera ser un Sring base 64 del documento. 
+# fileName Descripcion del nombre que llebara el documento.
+input Document {
+    # String que contiene base 64 un documento.
+    documento : String! 
+    # nombre del archivo.
+    fileName : String!
+}
+
+# Input que contiene las propiedades de un mail o correo electronico. La propiedad html, al contener un character X, contemplara el cuerpo "message" del correo como html para darle forma.
+input Mail{
+    #Propiedad que debera contener el emisor
+    from : String! 
+    #Propiedad que debera contener el receptor
+    to : String!
+    #Propiedad que indica si se desea realizafr un arespuesta del clienhte al correo enviado, se asigna a que correo se desea que se responda.
+    replyTo : [String]
+    #Propiedad que debera contener el receptor (es) como copia
+    copias : [String]
+    #Propiedad que debera contener el receptor (es) como copia oculta
+    copiasOcultas : [String]
+    #Propiedad que debera contener el asunto del correo.
+    asunto : String!
+    #Propiedad que debera contener el contenido del correo.
+    message : String!
+    #Propiedad que en caso de tener body html enviar cualquier character.
+    html : String
+    #input que debera contener el contenido las propiedades de un documento.
+    input : Document
+    #documents que debera contener el contenido las propiedades de uno o varios documentos.
+    documents : [Document]
+}
+
+# type que responde con una propiedad de String respuesta que contiene la propiedad de haber sido enviado.
+type Respuesta {
+    #Propiedad que contiene el resultado del envio de mensaje.
+    mensaje: String
+}
+
+# Type mutaation que permite la ejecucion de mutation
+type Mutation {
+    sendMail(from : String!, to : String!, replyTo : [String], copias : [String], copiasOcultas : [String], asunto : String!, message : String!, html : String,  input : Document, documents : [Document] ): String
+    sendMailObj(input: Mail!): String
+    sendMailObjResp(input: Mail!): Respuesta
+}
+# Type query que permite ejecusiuon de querys
+type Query {    
+    # Método de mailSends responde con String
+    mailSends: String
+}
+#Schema definición de los quqerys y mutations
+schema {
+    #Mutations
+    mutation: Mutation    
+    #Query
+    query: Query
+}

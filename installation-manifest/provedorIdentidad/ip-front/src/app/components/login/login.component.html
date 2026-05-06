@@ -1,0 +1,395 @@
+<div class="row  h-100">
+    <div style="position: absolute; top: 0; left: 0; width: 100px; text-align: left; color: transparent"> -pres </div>
+    <div [ngClass]="(typeWindow === '2') ? 'col-md-12 my-auto' : 'col-md-6 offset-md-3 my-auto'">
+        <app-alert></app-alert>
+        <span class="text-justify">{{textCustomLogin}}</span>
+        <div class="card bg-light mb-3 card-header-declaranet animated fadeIn shadow bg-white rounded " style="max-width: 200 px;">
+            <div class="card-header text-center" *ngIf="this.typeWindow !== '2'  && codeUsr >= 100 ">
+
+
+                <span style="color:#000000;font-family: Montserrat;
+                font-size: 18px;font-weight: normal;">
+Activación del servicio de notificaciones de la
+                </span>
+                <span style="color:#621132;font-family: Montserrat;
+                font-size: 25px;font-weight: bold;">
+ Secretaría de la Función Pública
+                </span>
+            </div>
+            <div class="card-header text-center" *ngIf="this.typeWindow !== '2' && codeUsr < 100">
+                <span class="DeclaraNet">Ingresa con tus credenciales de </span>
+                <div class="img-declaranet img-fluid rounded"></div>
+            </div>
+            <div [ngSwitch]="this.codeUsr">
+                <div class="card-body" *ngSwitchCase="0">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <!-- <p>Ingresa tu CURP y contraseña</p> -->
+                        <div class="form-group">
+                            <!-- <label for="username">CURP</label> -->
+                            <input type="text" [readOnly]="this.usrImported !== ''" placeholder="CURP" formControlName="username" #username class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" oninput="CustomUpperCase(this);" />
+                            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                <div *ngIf="f.username.errors.required">El CURP es requerido</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="password">Contraseña</label> -->
+                            <div class="wrap">
+                                <input type="password" placeholder="Contraseña" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                <a class="text-secondary alert-link" style="font-style: italic;" (click)="forgotPass()">¿La has olvidado?</a>
+                                <!-- <span>Counter</span> -->
+                            </div>
+                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                <div *ngIf="f.password.errors.required">La contraseña es requerida</div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <!-- <p style="margin-top: 10px; text-align: right; font-style: italic;"><a class="text-secondary alert-link" style="font-style: italic;" (click)="forgotPass()">¿Olvidaste tu contraseña?</a></p> -->
+                            <button [disabled]="loading" class="btn btn-danger btn-block">Entrar</button>
+                            <p style="margin-top: 10px;">¿Nuevo Usuario? <a class="alert-link" (click)="createUser()">Registrate</a> </p>
+                        </div>
+                        <div class="form-group text-center" *ngIf="this.typeWindow !== '2'">
+                            <p><a (click)="cancel();" class="alert-link">Salir al sistema</a></p>
+                        </div>
+
+
+                        <div class="text-center">
+                            <img *ngIf="loading" class="rounded" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="card-body" *ngSwitchCase="2">
+                    <!-- 2 usuario sin vincular -->
+                    <div class="form-group" *ngIf="this.renapoEstatus===3">
+                        <p>
+                            Se encontraron inconsistencias en la información capturada con referencia a la información del CURP en RENAPO. Si desea corregir dicha información ir a la siguiente liga:
+                        </p>
+                        <p class="text-center"> <b>
+                      <a (click)="edit(3);" class="alert-link"><i>Modificar información básica de usuario</i></a>
+                      </b>
+                        </p>
+                        <hr>
+                    </div>
+
+                    <div class="form-group">
+                        <p>
+                            Esta de acuerdo en otorgar permisos de vinculación con el sistema <b><i>{{ this.aplicacion }}</i></b>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]="loading" class="btn btn-primary btn-block" (click)="onVincSubmit()">Aceptar</button>
+                    </div>
+                    <div class="form-group text-center">
+                        <p>ó</p>
+                        <a (click)="cancel();" class="alert-link">Salir al sistema</a>
+                    </div>
+                    <div class="text-center">
+                        <img *ngIf="loading" class="rounded" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                        />
+                    </div>
+                </div>
+                <div class="card-body" *ngSwitchCase="99">
+                    <!-- 2.1 Usuario inexistente. Opción removida -->
+                    <div class="form-group">
+                        <p>
+                            Este usuario no existe, ¿Desea crear nuevo usuario?
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]="loading" class="btn btn-success btn-block" (click)="createUser()">Registrar nuevo usuario</button>
+                    </div>
+                    <div class="form-group text-center">
+                        <p>ó</p>
+                        <a (click)="cancel();" class="alert-link">Salir al sistema</a>
+                    </div>
+                    <div class="text-center">
+                        <img *ngIf="loading" class="rounded" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                        />
+                    </div>
+                </div>
+                <div class="card-body" *ngSwitchCase="3">
+                    <!-- 3 Recuperar contraseña -->
+                    <div *ngIf="!this.recoverPassEmail; else recoverPassEmailSent">
+                        <form [formGroup]="recoveryPasswordForm">
+                            <p>
+                                {{this.recoveryText}}
+                            </p>
+
+                            <div class="form-group">
+                                <!-- <label for="username">CURP</label> -->
+                                <input type="text" placeholder="CURP" formControlName="usernameRecovery" #usernameRecovery class="form-control" [ngClass]="{ 'is-invalid': submitted && recForm.usernameRecovery.errors }" oninput="CustomUpperCase(this);" />
+                                <div *ngIf="submitted && recForm.usernameRecovery.errors" class="invalid-feedback">
+                                    <div *ngIf="recForm.usernameRecovery.errors.required">El CURP es requerido</div>
+                                </div>
+                                <div *ngIf="secretKeyCaptcha">
+                                    <div class=" mt-3 text-center">
+
+                                        <re-captcha formControlName="recaptchaReactive" name="captcha"></re-captcha>
+                                    </div>
+                                    <div *ngIf="submitted && recForm.recaptchaReactive.errors" class="invalid-realTime">
+                                        <div *ngIf="recForm.recaptchaReactive.errors.required">Validar captcha</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button [disabled]="loading" class="btn btn-primary btn-block" (click)="recoveryPassword()">Aceptar</button>
+                            </div>
+                            <div class="form-group text-center">
+                                <p><a (click)="backToHome();" class="alert-link">Regresar</a></p>
+                                <p><a (click)="cancel();" class="alert-link">Salir al sistema</a></p>
+                            </div>
+                            <div class="text-center">
+                                <img *ngIf="loading" class="rounded" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                                />
+                            </div>
+                        </form>
+                    </div>
+                    <ng-template #recoverPassEmailSent>
+                        <div>
+
+
+                            <p>
+                                Se ha enviado un correo con la liga de recuperación a:
+                                <br/><br/> {{this.recPassServ.body.email}}
+                            </p>
+                            <p><i>
+                                Gracias a la alta participación de las y los servidores públicos, recibimos un elevado número de solicitudes para la recuperación de contraseñas. Por ello, este proceso podría tomar más minutos de lo habitual. Recuerda: todas las personas podrán declarar en tiempo y forma
+                            </i>
+                            </p>
+                        </div>
+                        <div class="text-center">
+                            <a (click)="cancel('Saliendo del sistema');" class="alert-link">Salir al sistema</a>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="card-body" *ngSwitchCase="4">
+                    <!-- 4 Usuario sin activar en IP y activación por liga -->
+                    <div>
+
+                        <p>
+                            Esta cuenta de usuario aun no se encuentra activa.</p>
+                        <p>Se ha enviado un correo de activación a:</p>
+                        <p> {{this.authserv.body.correo}} </p>
+                        <p>En caso de no haber recibido el correo, solicita un reenvío</p>
+
+                        <div class="form-group text-center" *ngIf="this.loading"><i>Solicitud reenviada</i></div>
+                        <div class="form-group text-center">
+
+                            <button class="btn btn-primary" [disabled]="this.loading" (click)="resendActivationMail()">
+                          <i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>
+                          {{ this.resendActivationMailTextButton }}
+                        </button>
+                        </div>
+                        <div class="form-group text-center">
+                            <p><a (click)="cancel();" class="alert-link">Salir al sistema</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" *ngSwitchCase="5">
+                    <!-- 5. Problemas de validación con RENAPO -->
+                    <div>
+                        <p class="text-center text-warning icon-lg"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></p>
+                        <p> {{ this.msjRenapoEstatus }} </p>
+                        <div class="form-group text-center" *ngIf="this.renapoEstatus === 2">
+                            <p><a (click)="edit(2);" class="alert-link"><i>Modificar información básica de usuario</i></a></p>
+                            <p>o</p>
+                        </div>
+                        <div class="form-group text-center">
+                            <p><a (click)="cancel();" class="alert-link">Salir al sistema</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" *ngSwitchCase="100.1">
+                    <!-- 5. Problemas de validación con RENAPO -->
+                    <div>
+                        <div class="container">
+                            <p>Detectamos que existe un pre-registro para el servicio de notificaciones de la Secretaría de la Función Pública, ¿Deseas concluir el registro?</p>
+                            <!-- <p class="text-left"> {{ this.msjRedirect }} </p> -->
+
+                            <button type="button" #closeModalTelegram class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="text-center">
+                                        <button type="button" data-dismiss="modal" class="btn btn-success mr-3" [disabled]="this.loading" (click)="aceptoSincroTelegram(true, 0);">
+                                            <i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Confirmar</button>
+                                        <button type="button" data-dismiss="modal" class="btn btn-danger ml-3" (click)="cancelTelegram();" [disabled]="this.loading">
+                                            <i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mt-5">
+                            <p><a (click)="cancel();" class="alert-link">Salir al sistema</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" *ngSwitchCase="100.3">
+                    <!-- 5. Problemas de validación con RENAPO -->
+                    <div>
+                        <div class="container text-center">
+                            <p class="text-justify">Es necesario que el chat se encuentre ativo para poder recibir mensajes, para abrirlo, ingresa a la siguiente dirección: </p>
+                            <!-- <p class="text-justify">https://t.me/stagingNotifSfp_bot </p> -->
+                            <p><a [href]="telegramUrl" target="_blank" class="alert-link">{{telegramUrl}}</a></p>
+                            <p class="text-justify">Ó escanea el siguiente código QR con tu teléfono: </p>
+                            <!-- <p class="text-left"> {{ this.msjRedirect }} </p> -->
+                            <qr-code [value]="telegramUrl" size="300" errorCorrectionLevel="M"></qr-code>
+
+                            <button type="button" #closeModalTelegram class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
+
+                        </div>
+                        <div class="form-group text-center mt-3">
+                            <p><a (click)="backTotelegramSendToken();" class="alert-link">Regresar</a></p>
+                            <p><a (click)="cancel();" class="alert-link">Salir al sistema</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" *ngSwitchCase="100">
+                    <!-- 6. Validacion telegram -->
+                    <form [formGroup]="sincronizaTelegram">
+                        <p>
+                            Escribe el código que se envió a tu Telegram:
+                        </p>
+
+                        <div class="form-group">
+                            <!-- <label for="username">CURP</label> -->
+                            <div class="row">
+                                <div class="col-7">
+                                    <input required type="text" placeholder="########" pattern="[A-Z0-9]{8}$" formControlName="codigoTelegram" #codigoTelegram class="form-control" [readOnly]="intentos >= 3" [ngClass]="{ 'is-invalid': submitted && codigoTelegram.errors }" maxlength="8" minlength="8"
+                                        oninput="CustomUpperCase(this);" />
+                                    <div *ngIf="submitted" class="invalid-realTime">
+                                        <div *ngIf="sincTelForm.codigoTelegram.errors">Código requerido, mínimo 8 carácteres</div>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+
+                                    <!-- <button [disabled]="loading" class="btn btn-primary c" (click)="aceptoSincroTelegram(true);">Reenviar código</button> -->
+                                    <button class="btn btn-primary Reenviar código" [disabled]="this.loading || loadingResendCodeTelegramButton" (click)="aceptoSincroTelegram(true);">
+                                        <i class="fa fa-spinner fa-spin" *ngIf="this.loading  || loadingResendCodeTelegramButton"></i>
+                                        {{ this.resendCodeTelegramButton }}
+                                      </button>
+                                    <!-- <div *ngIf="submitted && codigoTelegram.errors" class="invalid-realTime">
+                                        <div *ngIf="sincTelForm.codigoTelegram.errors">Código requerido</div>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="text-center">
+                                            <button *ngIf="intentos < 3" [disabled]="loading" class="btn btn-primary mr-3" (click)="sendTokenTelegram(codigoTelegram.value)">Aceptar</button>
+                                            <button [disabled]="loading" class="btn btn-danger ml-3" (click)="cancelTelegram()">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <!-- <p><a (click)="backToHome();" class="alert-link">Regresar</a></p> -->
+                            <p><a (click)="cancel();" class="alert-link">Salir al sistema</a></p>
+                        </div>
+                        <div class="text-center">
+                            <img *ngIf="loading" class="rounded" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body" *ngSwitchCase="99">
+                    <!-- 4.1 Usuario sin activar en IP y activación por código. Opción temporalmente en desuso -->
+
+                    <form [formGroup]="validateUsrForm" (ngSubmit)="validateUsr()">
+                        <p>
+                            Se ha enviado un código de validación al/los correo(s) registrado, capturarlo para continuar:
+                        </p>
+
+                        <div class="form-group">
+                            <!-- <label for="username">CURP</label> -->
+                            <input type="text" placeholder="clave" formControlName="token" class="form-control" [ngClass]="{ 'is-invalid': submitted && valForm.token.errors }" oninput="CustomUpperCase(this);" />
+                            <div *ngIf="submitted && valForm.token.errors" class="invalid-feedback">
+                                <div *ngIf="valForm.token.errors.required">Requerido</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button [disabled]="loading" class="btn btn-primary btn-block" (click)="validateUsr()">Aceptar</button>
+                        </div>
+                        <div class="form-group text-center">
+                            <p>ó</p>
+                            <a (click)="cancel();" class="alert-link">Salir al sistema</a>
+                        </div>
+                        <div class="text-center">
+                            <img *ngIf="loading" class="rounded" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+<button type="button" #modalButton class="btn btn-primary" data-toggle="modal" data-target="#ModalCorrecto" style="display: none;">
+    Launch demo modal
+  </button>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalCorrecto" tabindex="-1" role="dialog" aria-labelledby="ModalCorrectoTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p>Se encontraron inconsistencias en la información capturada con referencia a la información del CURP en RENAPO. Si desea corregir dicha información ir a la siguiente liga:</p>
+                <p><a (click)="edit(3);" class="alert-link"><i> Modificar información básica de usuario</i></a></p>
+                <hr>
+                <p><a (click)="hurryRedirect();" class="alert-link"><i>Navegar al sitio</i></a></p>
+
+                <p class="text-left"> {{ this.msjRedirect }} </p>
+
+
+                <button type="button" #closeModalButton class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+<button type="button" #modalButtonTelegram class="btn btn-primary" data-toggle="modal" data-target="#modalTelegram" style="display: none;">
+    Launch demo modal
+  </button>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalTelegram" tabindex="-1" role="dialog" aria-labelledby="modalTelegramTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p>¿Deseas eliminar el pre-registro de Telegram asociado a esta cuenta?</p>
+                <!-- <p class="text-left"> {{ this.msjRedirect }} </p> -->
+
+                <button type="button" #closeModalTelegram class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <button type="button" data-dismiss="modal" class="btn btn-primary mr-3" (click)="eliminaSincroTelegram();">Confirmar</button>
+                                <button type="button" data-dismiss="modal" class="btn btn-danger ml-3" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1388 @@
+## docker-compose.yml para realizar el lebantamiento de todo el proyecto declaranet
+## en un ambiente docker, ejecutando el comando $ docker-compose up  dentro de
+## la carpeta donde se encuentra este archivo.
+version: "3.8"
+services:
+###############################################################
+##COMIENZA SECCIÓN PARA LEBANTAR PROVEEDOR DE IDENTIDAD "IDP"##
+###############################################################
+  generadortokenkong:
+    image: generadortokenkong
+    build: ./tokens/generadortokenkong/
+    environment:
+      - SERVER_PORT
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      #Esta llave debe ser secreta y privada, en el readme del proyecto se explica como generarlas private / public
+      - LLAVE_PRIVADA=MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDYBUgywYaXRs+HMQqjVWl10yC5sd4JYrN9EJ/phRdWw3WZPq0DVUXHzbuFzjep1lOpD4nwzxaHSeRa3SF3p1kns2eXoyCD1CYzE1lphQv3M1BAzLz65bd+FWtp9BxuynFpuURhIAsn2K8k7O7bUVB9sZ3w2TP1rOjgoYpR1iFZs41FBnkz2rb7N814yTiG40KxjpNubDwIfMEj0sFFk1xTl274nwH+ARgjtR2vx0X8EiFqFHdsoe/FfUZWyJT+gvavmELBB4ZRG0yC7budulbrVPX27aVuAqRRU0Wt6fuQPVL+6zTZpVzEXNv596qWwR/7CmxxM1tecH611RI4VdFvAgMBAAECggEBAJBpV4622WcgK3RRUK9IViwybFo3khvsI9mj14OhOa0DFgbQY5Eq3G9qFcapyYR8h4kpnimiB4mB2Gr2EX2QHoXv5Xz1zLLUjITwloF4NDuZzjjDpkKEd1qOrzQxwSA/rfnjpNbZORv2O4AP9M4hWhHtP4zXZ2kBot0ooPN8lucDajOvxtLno6okrNfNjwdLiZK6lIN8O0IQQPI1dLJAECL6TLrxBHWEkr95rx7dtkyhaW0SAAxqd5AJ/z66LJBTybxdo1aQX7NNC8Klh/tIZpVv+5199QRcLJEDutSV3Oo92oo9spy+xLV+o+ktB5IXkLfmFtZ7AQAt7A43VFVAVaECgYEA/nN9qqp/2aYBj0wvFmH9ALDjJ0sZurKtX5eRAej+XcWvy+xlOr8Tgz+btQAjT0SJmrma0p7M2Ns9eHq4C+Y7xclWQ044YqPj7IMMncXf2NeYXTsfFbxwnsipbhmRT6lPczIQDuBEMfDhqfOLmLcP1Y8QRiwTh09brjH+M6qDClMCgYEA2VXnu0kE6JaJSqcDgPwxWVCyTGLMQqjtBfWtMp0V/0LXWRD1ynrTcxISFAEE3BT0is/SOCdzmkEdtSyHM8sre4D87v40eD2Vnmf5LMwAWF3KGY4CwtG/W+l4kta+bU9Fik1/VfeYXWchM+VeKKTScKOcYtM4C57OQFQjtBshUPUCgYBHf04tWXFJR/MiP8bvZCNCQXHihaC6LCC5Po55We23jafDBi6/nhcuhv4KkvpY+Kottr+BNSvcN2aDZwA2H8Bl6Bf8G4uOc/zEZWJzJrmqZZIjiExIwEVo6HtrO3XwS2POu591fqDK46OVLKDqDW4+lM9+2D24hJz/Sn7iJ6RgjwKBgQCXEhqxWZFa54DpbmyGFUdsUSaO6EIZt/iCIwLQYtbuh5TPaXWg2H3wx8ffNdId9UcC0nDK7clymP7AeAJHI1vHTqMCsZrhVdWRta5D0E4RHqij2M3chBXjGsfgMftOWkL5XuM7a47ypgQzYaVw1RkeiOvk2fNkSHAP0Sy8PfuLnQKBgQCxtLcyJPRf3tOHqV4ePz8SrR+oQtz0uOe62rjXj7t+4pM2MUn2hOgsp1TaYIKofNFKq64M2S8KvAxEdVQIjLrEDNKWgf9Wnj5R/Dmeo+o80rYpGAcjyip32rCAnDgtWTDoUKrujF5iAqjwUsIrxWpxvt/VhCG83l2OGxTVxbeC9g==
+      - LLAVE_PUBLICA=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2AVIMsGGl0bPhzEKo1VpddMgubHeCWKzfRCf6YUXVsN1mT6tA1VFx827hc43qdZTqQ+J8M8Wh0nkWt0hd6dZJ7Nnl6Mgg9QmMxNZaYUL9zNQQMy8+uW3fhVrafQcbspxablEYSALJ9ivJOzu21FQfbGd8Nkz9azo4KGKUdYhWbONRQZ5M9q2+zfNeMk4huNCsY6Tbmw8CHzBI9LBRZNcU5du+J8B/gEYI7Udr8dF/BIhahR3bKHvxX1GVsiU/oL2r5hCwQeGURtMgu27nbpW61T19u2lbgKkUVNFren7kD1S/us02aVcxFzb+feqlsEf+wpscTNbXnB+tdUSOFXRbwIDAQAB
+      - db_name=${db_name_ma}
+      - host=${host_ma}
+      - password=${password_ma}
+      - port=${port_ma}
+      - usernameDb=${username_ma}
+
+  ip-back:
+    image: ip-back
+    build: ./provedorIdentidad/ip-back/
+    depends_on:
+      - mailsender
+      - generadortokenkong
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - JSN_CONFIG_CONNECTION
+      - IP_SERVER_PORT
+      - IP_DOMINIO_CORREO=http://mailsender:5000/
+      - IP_DOMINIO_VALIDAR_CURP=https://servicios.apps.funcionpublica.gob.mx/renapo/validacurp/
+      - TIEMPO_24HR=86400
+      - TIEMPO_25S=600
+      - TIEMPO_60S=60
+      - URL_GENERADOR_TOKEN=http://generadortokenkong:5000/generarToken
+      - CUENTA_CORREO_FROM
+      #se tiene que configurar la URL publica con la que se va a exponer el aplicativo de ip-front
+      - IP_DOMINIO_FRONT=${DOMINIO_IDENTIDAD}
+      - IP_DOMINIO_IDENTIDAD=${DOMINIO_IDENTIDAD}
+      - KEY_API
+  ip-registro-back:
+    image: ip-registro-back
+    build: ./provedorIdentidad/ip-registro-back/
+    depends_on:
+      - ip-back
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - JSN_CONFIG_CONNECTION
+      - IP_SERVER_PORT
+      - CUENTA_CORREO_FROM
+      - IP_DOMINIO_CORREO=http://mailsender:5000/
+      - IP_DOMINIO_FRONT=${DOMINIO_IDENTIDAD}
+      - IP_DOMINIO_IDENTIDAD=${DOMINIO_IDENTIDAD}
+      - IP_DOMINIO_VALIDAR_CURP=https://servicios.apps.funcionpublica.gob.mx/renapo/validacurp/
+      - URL_REESTABLECER_PWD_FRONT=http://${DOMINIO_IDENTIDAD}/recovery
+  ip-front:
+    image: ip-front
+    build:
+      context: ./provedorIdentidad/ip-front/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+        JS_URL_PROD_PUB: ${DOMINIO_IDENTIDAD}
+        JS_API_PROD: ${DOMINIO_KONG}/identidad/login/public/authorize
+    ports:
+      - "4000:5000"
+
+#####################################
+## SERVICIO DE ENTES - DEPENDENCIAS##
+#####################################
+  entes:
+    image: entes
+    build: ./dependencias/entes/
+    environment:
+      - API_ENTES=${KEY_API}
+      - HEADER_API_ENTES=keyDoMutation
+      - MONGO_CONNECTION_STRING
+      - MONGO_DB
+      - MONGO_PASSWORD
+      - MONGO_USERNAME
+      - SERVER_PORT
+    ports:
+      - "5001:5000"
+
+
+#############################################
+##COMIENZA SECCION PARA LEBANTAR DECLARANET##
+#############################################
+##Fase de catalogos a partir del puesto 5001 au asignacion:      
+  catadeudo:
+    image: catadeudo
+    build: 
+      context: ./catalogos/CatAdeudo/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_tipo_adeudo
+  catentidadfed:
+    image: catentidadfed
+    build: 
+      context: ./catalogos/CatEntidadFed/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_ENTIDAD_FEDERATIVA
+  catinstrumento:
+    image: catinstrumento
+    build: 
+      context: ./catalogos/CatInstrumento/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_tipo_instrumento
+  catmunicipioa:
+    image: catmunicipioa
+    build: 
+      context: ./catalogos/CatMunicipioA/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_MUNICIPIO_ALCALDIA
+  catregimenmat:
+    image: catregimenmat
+    build: 
+      context: ./catalogos/CatRegimenMat/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_REGIMEN_MATRIMONIAL
+  cattipoapoyo:
+    image: cattipoapoyo
+    build: 
+      context: ./catalogos/CatTipoApoyo/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_tipo_apoyo
+  catambitosec:
+    image: catambitosec
+    build: 
+      context: ./catalogos/CatAmbitoSec/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_AMBITO_SECTOR
+  catestadocivil:
+    image: catestadocivil
+    build: 
+      context: ./catalogos/CatEstadoCivil/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_ESTADO_CIVIL
+  catinversion:
+    image: catinversion
+    build: 
+      context: ./catalogos/CatInversion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_TIPO_INVERSION
+  catnacionalidad:
+    image: catnacionalidad
+    build: 
+      context: ./catalogos/CatNacionalidad/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_NACIONALIDAD
+  catrelbienes:
+    image: catrelbienes
+    build: 
+      context: ./catalogos/CatRelBienes/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_tipo_relacion_bienes
+  cattipodecla:
+    image: cattipodecla
+    build: 
+      context: ./catalogos/CatTipoDecla/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_TIPO_DECLARACION
+  catbeneficiariopro:
+    image: catbeneficiariopro
+    build: 
+      context: ./catalogos/CatBeneficiarioPro/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_beneficiario_programa
+  catformaadqbien:
+    image: catformaadqbien
+    build: 
+      context: ./catalogos/CatFormaAdqBien/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_forma_adquisicion_bien
+  catmoneda:
+    image: catmoneda
+    build: 
+      context: ./catalogos/CatMoneda/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_MONEDA
+  catnivelacad:
+    image: catnivelacad
+    build: 
+      context: ./catalogos/CatNivelAcad/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_NIVEL_ACADEMICO
+  catreldependiente:
+    image: catreldependiente
+    build: 
+      context: ./catalogos/CatRelDependiente/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_tipo_relacion_dependientes
+  cattipoparticip:
+    image: cattipoparticip
+    build: 
+      context: ./catalogos/CatTipoParticip/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_TIPO_PARTICIPACION
+  catbeneficio:
+    image: catbeneficio
+    build: 
+      context: ./catalogos/CatBeneficio/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_tipo_beneficio
+  catinmueble:
+    image: catinmueble
+    build: 
+      context: ./catalogos/CatInmueble/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_TIPO_BIEN_INMUEBLE
+  catmotivobajab:
+    image: catmotivobajab
+    build: 
+      context: ./catalogos/CatMotivoBajaB/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_motivo_baja_bien
+  catniveljerarq:
+    image: catniveljerarq
+    build: 
+      context: ./catalogos/CatNivelJerarq/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_NIVEL_JERARQUICO
+  catsectorpriv:
+    image: catsectorpriv
+    build: 
+      context: ./catalogos/CatSectorPriv/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_sector_privado
+  cattitular:
+    image: cattitular
+    build: 
+      context: ./catalogos/CatTitular/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_titular
+  catcodigopostal:
+    image: catcodigopostal
+    build: 
+      context: ./catalogos/CatCodigoPostal/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_codigo_postal
+  catinstitucion:
+    image: catinstitucion
+    build: 
+      context: ./catalogos/CatInstitucion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_tipo_institucion
+  catmueble:
+    image: catmueble
+    build: 
+      context: ./catalogos/CatMueble/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_TIPO_BIEN_MUEBLE
+  catpais:
+    image: catpais
+    build: 
+      context: ./catalogos/CatPais/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=CAT_PAIS
+  catsubinversion:
+    image: catsubinversion
+    build: 
+      context: ./catalogos/CatSubInversion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_subtipo_inversion
+  catvehiculo:
+    image: catvehiculo
+    build: 
+      context: ./catalogos/CatVehiculo/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_HOST
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_USERNAME
+      - max_pool_size
+      - min_pool_size
+      - initial_pool_size
+      - CAT_DNET_TABLE=cat_tipo_vehiculo
+  
+##Fase de validadores comenzando en el puerto 5051 su asignación
+  valactividadanualant:
+    image: valactividadanualant
+    build: 
+      context: ./validadores/valactividadanualant/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valbienesmuebles:
+    image: valbienesmuebles
+    build: 
+      context: ./validadores/valbienesmuebles/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valdatospareja:
+    image: valdatospareja
+    build: 
+      context: ./validadores/valdatospareja/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valfideicomisos:
+    image: valfideicomisos
+    build: 
+      context: ./validadores/valfideicomisos/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valparticipacionemp:
+    image: valparticipacionemp
+    build: 
+      context: ./validadores/valparticipacionemp/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valadeudospasivos:
+    image: valadeudospasivos
+    build: 
+      context: ./validadores/valadeudospasivos/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valclientesprinc:
+    image: valclientesprinc
+    build: 
+      context: ./validadores/valclientesprinc/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valdependientesecon:
+    image: valdependientesecon
+    build: 
+      context: ./validadores/valdependientesecon/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL 
+      - SERVER_PORT
+      - URL_CATALOGOS
+  validsdecla:
+    image: validsdecla
+    build: 
+      context: ./validadores/ValIdsDecla/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - consultadeclaracion
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+      - DOM_CONSULTA_DECLA=http://consultadeclaracion:5000/api/
+      - URL_PRECARGA_HISTORICO=http://precargahistorica:5000/obtenerDeclaracion
+  valparticipacioninst:
+    image: valparticipacioninst
+    build: 
+      context: ./validadores/valparticipacioninst/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valapoyobenpub:
+    image: valapoyobenpub
+    build: 
+      context: ./validadores/valapoyobenpub/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valdatoscurriculares:
+    image: valdatoscurriculares
+    build: 
+      context: ./validadores/valdatoscurriculares/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valdetalleaviso:
+    image: valdetalleaviso
+    build: 
+      context: ./validadores/valdetalleaviso/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valingresonetod:
+    image: valingresonetod
+    build: 
+      context: ./validadores/valingresonetod/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valprestamo:
+    image: valprestamo
+    build: 
+      context: ./validadores/valprestamo/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valbenprivados:
+    image: valbenprivados
+    build: 
+      context: ./validadores/valbenprivados/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valdatosempleo:
+    image: valdatosempleo
+    build: 
+      context: ./validadores/valdatosempleo/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valdomiciliodecl:
+    image: valdomiciliodecl
+    build: 
+      context: ./validadores/valdomiciliodecl/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valinversioncb:
+    image: valinversioncb
+    build: 
+      context: ./validadores/valinversioncb/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valrepresentacion:
+    image: valrepresentacion
+    build: 
+      context: ./validadores/valrepresentacion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valbienesinmuebles:
+    image: valbienesinmuebles
+    build: 
+      context: ./validadores/valbienesinmuebles/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valdatosgral:
+    image: valdatosgral
+    build: 
+      context: ./validadores/valdatosgral/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valexperiencialab:
+    image: valexperiencialab
+    build: 
+      context: ./validadores/valexperiencialab/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valnotas:
+    image: valnotas
+    build: 
+      context: ./validadores/valnotas/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+  valvehiculos:
+    image: valvehiculos
+    build: 
+      context: ./validadores/valvehiculos/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - URL_CATALOGOS
+
+##Fase de orquestadores  a partir de los puesrtos 5100
+  #Orqestador de validaciones de las declaraciones
+  validaciondeclaracion:
+    image: validaciondeclaracion
+    build: 
+      context: ./validaciondeclaracion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - catalogosorigen
+      - guardadeclaracion
+      - valactividadanualant
+      - valadeudospasivos
+      - valapoyobenpub
+      - valbenprivados
+      - valbienesinmuebles
+      - valbienesmuebles
+      - valdetalleaviso
+      - valclientesprinc
+      - valdatoscurriculares
+      - valdependientesecon
+      - valdatosgral
+      - valdatospareja
+      - valdomiciliodecl
+      - valdatosempleo
+      - valexperiencialab
+      - valfideicomisos
+      - validsdecla
+      - valingresonetod
+      - valinversioncb
+      - valnotas
+      - valparticipacionemp
+      - valparticipacioninst
+      - valprestamo
+      - valrepresentacion
+      - valvehiculos
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL=40
+      - SERVER_PORT
+      - VRTX_INSTANCIAS_HTTP=8
+      - VRTX_INSTANCIAS_LLAMADOR=8
+      - RUTA_ACT_ANUAL_ANT=actividadAnualAnterior|http://valactividadanualant:5000/validador/
+      - RUTA_ADEUDOS=adeudosPasivos|http://valadeudospasivos:5000/validador/
+      - RUTA_APOY_BEN_PUB=apoyos|http://valapoyobenpub:5000/validador/
+      - RUTA_BENEFI_PRIV=beneficiosPrivados|http://valbenprivados:5000/validador/
+      - RUTA_BIENES_INM=bienesInmuebles|http://valbienesinmuebles:5000/validador/
+      - RUTA_BIENES_M=bienesMuebles|http://valbienesmuebles:5000/validador/
+      - RUTA_CAMBIO_DEPENDENCIA=detalleAvisoCambioDependencia|http://valdetalleaviso:5000/validador/
+      - RUTA_CLIENTES_PRINC=clientesPrincipales|http://valclientesprinc:5000/validador/
+      - RUTA_DATOS_CURRIC=datosCurricularesDeclarante|http://valdatoscurriculares:5000/validador/
+      - RUTA_DATOS_DEP=datosDependientesEconomicos|http://valdependientesecon:5000/validador/
+      - RUTA_DATOS_GENERALES=datosGenerales|http://valdatosgral:5000/validador/
+      - RUTA_DATOS_PAREJA=datosParejas|http://valdatospareja:5000/validador/
+      - RUTA_DOMICILIO=domicilioDeclarante|http://valdomiciliodecl:5000/validador/
+      - RUTA_EMPLEO=datosEmpleoCargoComision|http://valdatosempleo:5000/validador/
+      - RUTA_EXPER_LAB=experienciasLaborales|http://valexperiencialab:5000/validador/
+      - RUTA_FIDEICOMISOS=fideicomisos|http://valfideicomisos:5000/validador/
+      - RUTA_IDS=ids|http://validsdecla:5000/validador/
+      - RUTA_INGRESOS=ingresos|http://valingresonetod:5000/validador/
+      - RUTA_INVERSIONES=inversionesCuentasValores|http://valinversioncb:5000/validador/
+      - RUTA_NOTAS_ACLARATORIAS=notasAclaratorias|http://valnotas:5000/validador/
+      - RUTA_PARTIC_EMPRESA=participaEmpresasSociedadesAsociaciones|http://valparticipacionemp:5000/validador/
+      - RUTA_PARTIC_TOMA_DESC=participacionTomaDecisiones|http://valparticipacioninst:5000/validador/
+      - RUTA_PRESTAMO=prestamoComodato|http://valprestamo:5000/validador/
+      - RUTA_REPRESENTACIONES=representaciones|http://valrepresentacion:5000/validador/
+      - RUTA_VEHICULOS=vehiculos|http://valvehiculos:5000/validador/
+      - SERVICIO_GUARDADO=http://guardadeclaracion:5000/api/guarda-declaracion/
+  #Catalogo origen expone los catalogos en un solo punto requiere que los catalogos ya esten corriendo.
+  catalogosorigen:
+    image: catalogosorigen
+    build: 
+      context: ./catalogosorigen/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - catadeudo
+      - catentidadfed
+      - catinstrumento
+      - catmunicipioa
+      - catregimenmat
+      - cattipoapoyo
+      - catambitosec
+      - catestadocivil
+      - catinversion
+      - catnacionalidad
+      - catrelbienes
+      - cattipodecla
+      - catbeneficiariopro
+      - catformaadqbien
+      - catmoneda
+      - catnivelacad
+      - catreldependiente
+      - cattipoparticip
+      - catbeneficio
+      - catinmueble
+      - catmotivobajab
+      - catniveljerarq
+      - catsectorpriv
+      - cattitular
+      - catcodigopostal
+      - catinstitucion
+      - catmueble
+      - catpais
+      - catsubinversion
+      - catvehiculo
+      - entes
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - IP_SERVER_PORT
+      - VRTX_INSTANCIAS_HTTP=4
+      - VRTX_INSTANCIAS_LLAMADOR=8
+      - CAT_AMBITO_SECTOR=http://catambitosec:5000/publico/
+      - CAT_BENEFICIARIO_PROGRAMA=http://catbeneficiariopro:5000/publico/
+      - CAT_CODIGO_POSTAL=http://catcodigopostal:5000/publico/
+      - CAT_ENTES=http://entes:5000/
+      - CAT_ENTIDAD_FEDERATIVA=http://catentidadfed:5000/publico/
+      - CAT_ESTADO_CIVIL=http://catestadocivil:5000/publico/
+      - CAT_FORMA_ADQUISICION_BIEN=http://catformaadqbien:5000/publico/
+      - CAT_MONEDA=http://catmoneda:5000/publico/
+      - CAT_MOTIVO_BAJA_BIEN=http://catmotivobajab:5000/publico/
+      - CAT_MUNICIPIO_ALCALDIA=http://catmunicipioa:5000/publico/
+      - CAT_NACIONALIDAD=http://catnacionalidad:5000/publico/
+      - CAT_NIVEL_ACADEMICO=http://catnivelacad:5000/publico/
+      - CAT_NIVEL_JERARQUICO=http://catniveljerarq:5000/publico/
+      - CAT_PAIS=http://catpais:5000/publico/
+      - CAT_PAIS_LADA=http://catpais:5000/publico/
+      - CAT_REGIMEN_MATRIMONIAL=http://catregimenmat:5000/publico/
+      - CAT_SECTOR_PRIVADO=http://catsectorpriv:5000/publico/
+      - CAT_SUBTIPO_INVERSION=http://catsubinversion:5000/publico/
+      - CAT_TIPO_ADEUDO=http://catadeudo:5000/publico/
+      - CAT_TIPO_APOYO=http://cattipoapoyo:5000/publico/
+      - CAT_TIPO_BENEFICIO=http://catbeneficio:5000/publico/
+      - CAT_TIPO_BIEN_INMUEBLE=http://catinmueble:5000/publico/
+      - CAT_TIPO_BIEN_MUEBLE=http://catmueble:5000/publico/
+      - CAT_TIPO_DECLARACION=http://cattipodecla:5000/publico/
+      - CAT_TIPO_INSTITUCION=http://catinstitucion:5000/publico/
+      - CAT_TIPO_INSTRUMENTO=http://catinstrumento:5000/publico/
+      - CAT_TIPO_INVERSION=http://catinversion:5000/publico/
+      - CAT_TIPO_PARTICIPACION=http://cattipoparticip:5000/publico/
+      - CAT_TIPO_RELACION_BIENES=http://catrelbienes:5000/publico/
+      - CAT_TIPO_RELACION_DEPENDIENTES=http://catreldependiente:5000/publico/
+      - CAT_TIPO_VEHICULO=http://catvehiculo:5000/publico/
+      - CAT_TITULAR=http://cattitular:5000/publico/
+  #Módulo principal para el comienzo del llenado de una declaracion despues de la autenticación
+  iniciodeclaracion:
+    image: iniciodeclaracion
+    build: 
+      context: ./iniciodeclaracion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - consultadeclaracion
+      - catalogosorigen
+      - ip-registro-back
+      - precargahistorica
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      #variable que indica a que ambiante se pretende autenticar el usuario de logueo  STAGING o PRODUCTION, esto por la URL de la libreria de autenticación
+      - AMBIENTE=STAGING
+      - db_name
+      - password
+      - username
+      - host
+      - port
+      - URL_CATALOGOS=http://catalogosorigen:5000/validar
+      - URL_DECLARACION=http://consultadeclaracion:5000/api/consulta-declaracion-historico
+      - URL_DECLARACION_HISTORIAL=http://consultadeclaracion:5000/api/consulta-historial-precarga/
+      - URL_DECLARACION_PRECARGA=http://consultadeclaracion:5000/api/consulta-precarga/
+      - URL_INTARNA_CLUSTER=http://ip-registro-back:5000/api/private/user/:id?curp=:CURP&secretkey=:SECRET
+      ##version con la que se firma la declaración (puesta en marcha del sistema)
+      - VERSION_DECLARACION=20210101
+      - VERSION_NOTA=20210101
+      ##identificador del cliente que es asignado a por el Proveedor de Identidad (IDP)
+      - ID_CLIENTE
+      - SECRET_KEY
+      #Ocupa la libreria sfp-apiextension, por eso se setean estas varaibles
+      - DOMINIO_KONG=kong-api-gateway:8000
+      - IP_DOMINIO_FRONT=${DOMINIO_IDENTIDAD}
+      - TOKEN_APPI=${KEY_API}
+      
+
+  #Módulo principal para poder guardar declaraciones en formato Json
+  guardadeclaracion:
+    image: guardadeclaracion
+    build: 
+      context: ./GuardaDeclaracion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - entereceptordecla
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - db_name
+      - host
+      - password
+      - port
+      - username   
+      - URL_ENTES=http://entereceptordecla:5000/api/consultar-todos/entes/
+      - REGISTRO_CUMPLIMIENTO=http://registrocumplimiento:5000/api/reg-cump-declaranet/
+      - REGISTRO_PDN=http://guardardeclaracionpdn:5000/api/guarda-declaracion/
+      #dato de control para collecion recepcionWeb100
+      - VERSION_RECEPCION_WEB=20200101
+
+  #Módulo principal para poder consultar declaraciones en formato Json
+  consultadeclaracion:
+    image: consultadeclaracion
+    build: 
+      context: ./ConsultaDeclaracion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - precargahistorica
+      - catalogosorigen
+      - entes
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - db_name
+      - host
+      - password
+      - port
+      - username
+      - URL_CAT_ORIGEN=http://catalogosorigen:5000/catalogos/
+      - URL_ENTE=http://entes:5000/
+      - URL_PRECARGA_HISTORICO=http://precargahistorica:5000/obtenerDeclaracion
+      ##- URL_RUSP=http://${IP_HOMOLOGADA_CLUSTER}/api/graphql/
+
+  #Microservicio encargado de realizar la consulta de declaraciones en formato pdf standar base64
+  servicioimpresion:
+    image: servicioimpresion
+    build: 
+      context: ./ServicioImpresion/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - consultadeclaracion
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - PATH_DECLARACION=http://consultadeclaracion:5000/api/
+      - URL_DECLARACION=http://consultadeclaracion:5000/api/consulta-declaracion-si
+      - URL_FIRMADO_DECLARACION=http://consultadeclaracion:5000/api/consulta-firmado-declaracion
+      - URL_DECLARACION_V2
+      # Objeto ejemplo para aquellos que realizan rescate de declraciones al servicio de impresion de declranetPlus (módulo actualizado para exponer un path REST)
+      - PETICION_V2={"idImpDecCertificada":"0","aplicacionCliente":"1","tipoDocumentoCertificacion":"0","parametroClienteCertificacion":"0"}
+  #Modulo que requiere de módulos como consulta declaración, mailsender, ipregistro y servicioimpresion
+  recepcionfirma:
+    image: recepcionfirma
+    build: 
+      context: ./RecepcionFirma/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - consultadeclaracion
+      - servicioimpresion
+      - mailsender
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      ##Variable que indica en que ambiente corre para las firmas de las declaraciones STAGING "pruebas" o PRODUCTION
+      - AMBIENTE=STAGING
+      - BITACORA_FIEL=https://ejzpriv-firma-electronica-bitacorafiel-staging.apps.funcionpublica.gob.mx/api/public/datos
+      #para un ambiente productivo utilizar las dos lineas siguientes
+        #- AMBIENTE=PRODUCTION
+        #- DOM_BITACORA_FIEL=https://ejzpriv-firma-electronica-bitacorafiel.apps.funcionpublica.gob.mx/api/public/datos
+      - DOM_CONSULTA_ACUSE=http://servicioimpresion:5000/api/consulta-acuse/
+      - DOM_CONSULTA_DECLA=http://consultadeclaracion:5000/api/consulta-declaracion
+      - DOM_CONSULTA_DECLA_REPORTE=http://servicioimpresion:5000/api/consulta-declaracion
+      - DOM_GUARDAR_DECLA=http://guardadeclaracion:5000/api/recepcion-declaracion
+      - CUENTA_CORREO_DECLARANET
+      - DOMINIO_CORREO=http://mailsender:5000/      
+      - ID_CLIENTE
+      - SECRET_KEY
+      #Ocupa la libreria sfp-apiextension, por eso se setean estas varaibles
+      - DOMINIO_KONG=kong-api-gateway:8000
+      - IP_DOMINIO_FRONT=${DOMINIO_IDENTIDAD}
+      - TOKEN_APPI=${KEY_API}
+
+  #Modulo que se permite conectar a la base de datos de declaranetPlus para poder 
+  #realizar una precarga de datos de las declaraciones la base de datos ORACLE.
+  precargahistorica:
+    image: precargahistorica
+    build: 
+      context: ./PrecargaHistorica/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      # para poder hacer precargas de informacion de su base de datos transaccional declaranetPlus se define la siguiente cadena:
+      - CONEXION
+      - DATABASE_DRIVER=oracle.jdbc.driver.OracleDriver
+      - IDEL_POLL=1
+      - INIT_POOL=1
+      - MAX_POOL=3
+      - MIN_POOL=1
+      
+  entereceptordecla:
+    image: entereceptordecla
+    build: 
+      context: ./EnteReceptorDecla/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - entes
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT
+      - db_name
+      - host
+      - password
+      - port
+      - username
+      - URL_CATALOGOS=http://catalogosorigen:5000/validar
+      - URL_ENTES=http://entes:5000/
+  mailsender:
+    image: mailsender
+    build: ./MailSenderSFP/
+    environment:
+      - VRTX_INSTANCE
+      - VRTX_WKER_POOL
+      - SERVER_PORT      
+      - DOMINIO_SFP_ANTISPAM      
+      - MAIL_SMTP_HOST
+      - CUENTA_CORREO_FROM
+      - PASS_CORREO_FROM
+      - PUERTO_SMTP
+
+########################################
+##COMIENZA SECCION PARA LEBANTAR OMEXT##
+########################################
+  registrocumplimiento:
+    image: registrocumplimiento
+    build:
+      context: ./cumplimiento/registrocumplimiento/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - guardadeclaracion
+    environment:
+      - db_name_o
+      - host_o
+      - password_o
+      - port_o
+      - username_o
+      - EXISTE_ENTERECEPTOR_ID_ENTE=http://entereceptordecla:5000/api/ente-receptor-id/%s
+      - POCES_BUSQ_EN_CUMP=true
+      - REG_DECLA_POR_NUMERO_CUMPLIMIENTO=http://guardadeclaracion:5000/api/reportar-por-no-cumplimiento/
+    ports:
+      - "5005:5000"
+
+  guardardeclaracionpdn:
+    image: guardardeclaracionpdn
+    build:
+      context: ./omext/guardarDeclaracionPdn/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    depends_on:
+      - guardadeclaracion
+    environment:
+      - db_name_o
+      - host_o
+      - password_o
+      - port_o
+      - username_o
+      - CAT_DNET_DATABASE_NAME
+      - CAT_DNET_DATABASE_USERNAME
+      - CAT_DNET_DATABASE_PORT
+      - CAT_DNET_DATABASE_PASSWORD
+      - CAT_DNET_DATABASE_HOST
+
+
+#################################
+## SERVICIO DE KONG API-GATEGAY##
+#################################
+  kong-api-gateway:
+    image: kong-api-gateway
+    build: ./kong-api-gateway/
+    depends_on:
+      - generadortokenkong
+      - ip-back
+      - ip-registro-back
+      - iniciodeclaracion
+      - validaciondeclaracion
+      - recepcionfirma
+      - servicioimpresion
+      - catalogosorigen
+    ports:
+      - "5120:8000"
+      - "5121:8001"
+
+
+##Fase de lebantamiento de interface Front end
+  dnetfront:
+    image: dnetfront
+    build: 
+      context: ./dnetfront/
+      args:
+        REPOSITORY_VALUE: ${REPOSITORY_VALUE}
+    ports:
+      - "5000:5000"
+
+###############################################################
+##                  PANEL DE ADMINISTRADOR                   ##
+###############################################################
+  admin-panel:
+    image: admin-panel
+    build: ./admin-panel/
+    ports:
+      - "8080:5010"
+    environment:
+      - SERVER_PORT=5010
+      - ADMIN_PANEL_PASSWORD=${ADMIN_PANEL_PASSWORD}
+      # MongoDB - declaraciones
+      - MONGO_HOST=${IP_LOCAL_HOST_DOCKER}
+      - MONGO_PORT=27017
+      - MONGO_DB=${db_name}
+      - MONGO_USER=${username}
+      - MONGO_PASS=${password}
+      # PostgreSQL - usuarios (identidad)
+      - PG_HOST=${IP_LOCAL_HOST_DOCKER}
+      - PG_PORT=5434
+      - PG_DB=identidad
+      - PG_USER=identidadsfpusr
+      - PG_PASS=userpasss123
+      - TOTAL_COLECCIONES=20
+    restart: unless-stopped

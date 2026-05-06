@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-06-03T12:17:26 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="datosGenerales" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ac2a284-2e6f-4bbb-a3dd-f2f8c041b677">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="datosPersonales.nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datosPersonales.primerApellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datosPersonales.segundoApellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datosPersonales.curp" class="java.lang.String"/>
+	<field name="datosPersonales.rfc" class="java.lang.String"/>
+	<field name="correoElectronico.institucional" class="java.lang.String"/>
+	<field name="correoElectronico.personalAlterno" class="java.lang.String"/>
+	<field name="telefonoCasa.numero" class="java.lang.String"/>
+	<field name="telefonoCelular.numero" class="java.lang.String"/>
+	<field name="situacionPersonalEstadoCivil.valor" class="java.lang.String"/>
+	<field name="regimenMatrimonial.valor" class="java.lang.String"/>
+	<field name="paisNacimiento.valor" class="java.lang.String"/>
+	<field name="nacionalidad.valor" class="java.lang.String"/>
+	<field name="aclaracionesObservaciones" class="java.lang.String"/>
+	<field name="regimenMatrimonial." class="java.lang.String"/>
+	<field name="regimenMatrimonialOtro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="regimenMatrimonial.id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="24">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="182" height="10" uuid="a4dd0b0d-c2ce-4615-934d-8daf57530d39">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE(S):]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="0" width="418" height="10" uuid="275a4ecc-040c-4b1f-9835-f4f8ca88e55e">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datosPersonales.primerApellido}.concat(" ").concat($F{datosPersonales.segundoApellido}).concat(" ").concat($F{datosPersonales.nombre})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="11" width="182" height="10" uuid="5597cc3a-b7f9-4137-9106-6798dffc9cb9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORREO ELECTRÓNICO INSTITUCIONAL:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="11" width="618" height="10" uuid="83731ea4-3e5b-4599-a7c3-4f3821205793"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{correoElectronico.institucional}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

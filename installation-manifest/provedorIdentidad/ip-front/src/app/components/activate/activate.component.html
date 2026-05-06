@@ -1,0 +1,19 @@
+<div class="col-md-6 offset-md-3">
+    <app-alert></app-alert>
+    <div class="card bg-light card-header-declaranet animated fadeIn shadow bg-white rounded " style="margin-top: 100px;max-width: 200 px;">
+        <div class="card-header text-center">
+            <!-- <div class="img-declaranet img-fluid rounded"></div> -->
+            <h3 style="color:#da0000;font-family: Montserrat;
+            font-size: 35px;font-weight: bold;"> Servicio de Identidad Digital </h3>
+        </div>
+        <div class="card-body text-center" *ngIf="bandera" id="success">
+            <i class="fa fa-check" aria-hidden="true"></i>
+            <p>Activación realizada con éxito.</p>
+        </div>
+        <div class="card-body text-center" *ngIf="!bandera" id="error">
+            <i class="fa fa-window-close " aria-hidden="true"></i>
+            <p>Fallo al realizar la activación.</p>
+            <p>{{ this.msjError }}</p>
+        </div>
+    </div>
+</div>

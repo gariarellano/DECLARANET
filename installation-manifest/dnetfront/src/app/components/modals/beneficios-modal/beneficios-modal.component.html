@@ -1,0 +1,252 @@
+<div class="modal-content" style="height: 600px;">
+    <div class="modal-header">
+
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Beneficios privados</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+            </div>
+        </div>
+    </div>
+
+    <form #beneficiosTForm="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="beneficiosRadio" type="radio" required id="radio{{data.id}}" [(ngModel)]="beneficiosPrivados.tipoOperacion" [value]="data.id" (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="modal-body" style="overflow-y: scroll">
+        <form #beneficiosForm="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel" [(ngModel)]="beneficiosPrivados.tipoOperacion">
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de beneficio<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de beneficio <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( beneficioA , beneficiosPrivados.tipoOperacion)" name="beneficioA" id="benTipBen" [(ngModel)]="beneficiosPrivados.tipoBeneficio" [compareWith]="compareFn" appSelectValidator required #beneficioA="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let beneficio of this.cata.catalogos.CAT_TIPO_BENEFICIO" [ngValue]="beneficio">
+                            {{beneficio.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="beneficioA.invalid && (beneficioA.dirty || beneficioA.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="beneficiosPrivados.tipoBeneficio.id == '9999'" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="beneficiosPrivados.tipoBeneficio.id == '9999'" class="col d-flex flex-column ">
+                    <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( otrosTipo , beneficiosPrivados.tipoOperacion)" type="text" name="otrosTipo" id="benEspTipBie" [(ngModel)]="beneficiosPrivados.tipoBeneficioOtro" required maxlength="100" #otrosTipo="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="otrosTipo.invalid && (otrosTipo.dirty || otrosTipo.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Beneficiario<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Beneficiario <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( beneficiarioD , beneficiosPrivados.tipoOperacion)" name="beneficiarioD" id="benBen" maxlength="10" [(ngModel)]="beneficiosPrivados.beneficiario" required #beneficiarioD="ngModel" [compareWith]="compareFn" appSelectValidator>
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let beneficiario of this.cata.catalogos.CAT_BENEFICIARIO_PROGRAMA"
+                            [ngValue]="beneficiario">
+                            {{beneficiario.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="beneficiarioD.invalid && (beneficiarioD.dirty || beneficiarioD.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Otorgante<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Otorgante <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( otorgante , beneficiosPrivados.tipoOperacion)" name="otorgante" id="benOto" maxlength="20" [(ngModel)]="beneficiosPrivados.otorgante.tipoPersona" required #otorgante="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let pers of this.cata.enums.ENUM_TIPO_PERSONA" [value]="pers.id">
+                            {{pers.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="otorgante.invalid && (otorgante.dirty || otorgante.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div *ngIf="beneficiosPrivados.otorgante.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre o razón social del otorgante<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre o razón social del otorgante <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( razon , beneficiosPrivados.tipoOperacion)" type="text" name="razon" id="benMorNom" maxlength="100" [(ngModel)]="beneficiosPrivados.otorgante.personaMoral.nombre" required maxlength="100" #razon="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="razon.invalid && (razon.dirty || razon.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="beneficiosPrivados.otorgante.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre </label>
+                    <input [disabled]="getDisabled( nomOtor , beneficiosPrivados.tipoOperacion)" type="text" name="nomOtor" id="benFisNom" [(ngModel)]="beneficiosPrivados.otorgante.personaFisica.nombre" required maxlength="100" #nomOtor="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nomOtor.invalid && (nomOtor.dirty || nomOtor.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="beneficiosPrivados.otorgante.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Primer Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Primer Apellido </label>
+                    <input [disabled]="getDisabled( apePatOtor , beneficiosPrivados.tipoOperacion)" type="text" name="apePatOtor" id="benFisPriApe" [(ngModel)]="beneficiosPrivados.otorgante.personaFisica.primerApellido" required maxlength="100" #apePatOtor="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="apePatOtor.invalid && (apePatOtor.dirty || apePatOtor.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="beneficiosPrivados.otorgante.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Segundo Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Segundo Apellido </label>
+                    <input [disabled]="getDisabled( apeMatOtor , beneficiosPrivados.tipoOperacion)" type="text" name="apeMatOtor" id="benFisSegApe" [(ngModel)]="beneficiosPrivados.otorgante.personaFisica.segundoApellido" maxlength="100" #apeMatOtor="ngModel" oninput="CustomUpperCase(this);">
+                </div>
+
+
+
+
+                <div *ngIf="beneficiosPrivados.otorgante.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcBene , beneficiosPrivados.tipoOperacion)" type="text" name="rfc" maxlength="12" id="benMorRfc" [(ngModel)]="beneficiosPrivados.otorgante.personaMoral.rfc" #rfcBene="ngModel" rfcMoralValid oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="rfcBene.invalid && rfcBene.touched">
+                        <div *ngIf="rfcBene.errors.rfcMoralValid && rfcBene.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div *ngIf="beneficiosPrivados.otorgante.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC </label>
+                    <input [disabled]="getDisabled( rfcOtor , beneficiosPrivados.tipoOperacion)" type="text" name="rfcOtor" maxlength="13" id="benFisRfc" oninput="CustomUpperCase(this);" [(ngModel)]="beneficiosPrivados.otorgante.personaFisica.rfc" rfcValid #rfcOtor="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfcOtor.invalid && rfcOtor.touched">
+                        <div *ngIf="rfcOtor.errors.rfcValid && rfcOtor.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Forma de recepción del beneficio<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Forma de recepción del beneficio <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( formaRecepcion , beneficiosPrivados.tipoOperacion)" name="formaRecepcion" maxlength="10" id="benForRecDelBen" [(ngModel)]="beneficiosPrivados.formaRecepcion" required #formaRecepcion="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let rec of this.cata.enums.ENUM_FORMA_RECEPCION" [value]="rec.id">
+                            {{rec.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="formaRecepcion.invalid && (formaRecepcion.dirty || formaRecepcion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div *ngIf="beneficiosPrivados.formaRecepcion == 'ESPECIE'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Especifique el beneficio<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique el beneficio <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( especifique , beneficiosPrivados.tipoOperacion)" type="text" name="especifique" id="benEspBen" [(ngModel)]="beneficiosPrivados.especifiqueBeneficio" required maxlength="100" #especifique="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="especifique.invalid && (especifique.dirty || especifique.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Monto mensual aproximado del beneficio<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Monto mensual aproximado del beneficio <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( monto , beneficiosPrivados.tipoOperacion)" type="text" name="monto" id="benMonMen" [(ngModel)]="beneficiosPrivados.montoMensualAproximado.monto" required #monto="ngModel" oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+                    <div class="invalid-tooltip" *ngIf="monto.invalid && (monto.dirty || monto.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de moneda<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de moneda <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( moneda , beneficiosPrivados.tipoOperacion)" name="moneda" id="benTipMon" [compareWith]="cata.compareFn" appSelectValidator [(ngModel)]="beneficiosPrivados.montoMensualAproximado.moneda" required #moneda="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let m of this.cata.catalogos.CAT_MONEDA" [ngValue]="m">
+                            {{m.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="moneda.invalid && (moneda.dirty || moneda.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Sector productivo al que pertenece <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Sector productivo al que pertenece <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( sector , beneficiosPrivados.tipoOperacion)" name="sector" id="benSecProQuePer" [compareWith]="cata.compareFn" appSelectValidator [(ngModel)]="beneficiosPrivados.sector" required #sector="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let sec of this.cata.catalogos.CAT_SECTOR_PRIVADO" [ngValue]="sec">
+                            {{sec.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="sector.invalid && (sector.dirty || sector.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="beneficiosPrivados.sector.id == '9999'" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="beneficiosPrivados.sector.id == '9999'" class="col d-flex flex-column ">
+                    <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( otroEspecifique , beneficiosPrivados.tipoOperacion)" type="text" name="otroEspecifique" id="benEspBenPri" [(ngModel)]="beneficiosPrivados.sectorOtro" required maxlength="100" #otroEspecifique="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="otroEspecifique.invalid && (otroEspecifique.dirty || otroEspecifique.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" [disabled]="!beneficiosForm.form.valid || !beneficiosTForm.form.valid" (click)="guardaLocal()">Aceptar</button>
+        <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+    </div>
+</div>

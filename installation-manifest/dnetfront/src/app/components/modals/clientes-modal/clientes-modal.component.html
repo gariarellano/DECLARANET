@@ -1,0 +1,284 @@
+<div class="modal-content" style="height: 600px;">
+    <div class="modal-header">
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Clientes principales</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+            </div>
+        </div>
+    </div>
+
+    <form #clientesTipoForm="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="clientesRadio" type="radio" required id="radio{{data.id}}" [(ngModel)]="clientesPrincipal.tipoOperacion" [value]="data.id" (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-body" style="overflow-y: scroll">
+        <form #clientesForm="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel" [(ngModel)]="clientesPrincipal.tipoOperacion">
+            <div class="row p-3">
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo participante<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo participante</label>
+                    <select [disabled]="getDisabled( participante , clientesPrincipal.tipoOperacion)" name="participante" id="cliPriTipPar" [(ngModel)]="clientesPrincipal.participante" required #participante="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let dep of this.cata.enums.ENUM_PARTICIPANTE" [value]="dep.id">
+                            {{dep.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="participante.invalid && (participante.dirty || participante.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre de la empresa o servicio que proporciona<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre de la empresa o servicio que proporciona <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombreEmpresa , clientesPrincipal.tipoOperacion)" type="text" name="nombreEmpresa" id="cliPriNomEmp" [(ngModel)]="clientesPrincipal.nombreEmpresaServicio" required maxlength="100" #nombreEmpresa="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nombreEmpresa.invalid && (nombreEmpresa.dirty || nombreEmpresa.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfc , clientesPrincipal.tipoOperacion)" type="text" name="rfc" maxlength="12" id="cliPriRfc" [(ngModel)]="clientesPrincipal.rfcEmpresa" #rfc="ngModel" rfcMoralValid oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="rfc.invalid && rfc.touched">
+                        <div *ngIf="rfc.errors.rfcMoralValid && rfc.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row p-3">
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Cliente Principal<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Cliente Principal</label>
+                    <select [disabled]="getDisabled( tipoPersona , clientesPrincipal.tipoOperacion)" name="tipoPersona" [(ngModel)]="clientesPrincipal.clientePrincipal.tipoPersona" id="cliPriCliPri" required #tipoPersona="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let tipPer of this.cata.enums.ENUM_TIPO_PERSONA" [value]="tipPer.id">
+                            {{tipPer.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="tipoPersona.invalid && (tipoPersona.dirty || tipoPersona.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+
+                <div *ngIf="clientesPrincipal.clientePrincipal.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre </label>
+                    <input [disabled]="getDisabled( nomOtor , clientesPrincipal.tipoOperacion)" type="text" name="nomOtor" id="cliPriFisNom" [(ngModel)]="clientesPrincipal.clientePrincipal.personaFisica.nombre" required maxlength="100" #nomOtor="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nomOtor.invalid && (nomOtor.dirty || nomOtor.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="clientesPrincipal.clientePrincipal.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Primer Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Primer Apellido </label>
+                    <input [disabled]="getDisabled( apePatOtor , clientesPrincipal.tipoOperacion)" type="text" name="apePatOtor" id="cliPriFisPriApe" [(ngModel)]="clientesPrincipal.clientePrincipal.personaFisica.primerApellido" required maxlength="100" #apePatOtor="ngModel"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="apePatOtor.invalid && (apePatOtor.dirty || apePatOtor.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div *ngIf="clientesPrincipal.clientePrincipal.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre o razón social del cliente principal<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre o razón social del cliente principal <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( razonSocial , clientesPrincipal.tipoOperacion)" type="text" name="razonSocial" id="cliPriMorNom" [(ngModel)]="clientesPrincipal.clientePrincipal.personaMoral.nombre" required maxlength="100" #razonSocial="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div *ngIf="clientesPrincipal.clientePrincipal.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC del cliente principal<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC del cliente principal <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcCliente , clientesPrincipal.tipoOperacion)" type="text" name="rfcCliente" maxlength="12" id="cliPriMorRfcCli" rfcMoralValid [(ngModel)]="clientesPrincipal.clientePrincipal.personaMoral.rfc" #rfcCliente="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="rfcCliente.invalid && rfcCliente.touched">
+                        <div *ngIf="rfcCliente.errors.rfcMoralValid && rfcCliente.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+
+                <div *ngIf="clientesPrincipal.clientePrincipal.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Segundo Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Segundo Apellido </label>
+                    <input [disabled]="getDisabled( apeMatOtor , clientesPrincipal.tipoOperacion)" type="text" name="apeMatOtor" id="cliPriFisSegApe" #apeMatOtor='ngModel' [(ngModel)]="clientesPrincipal.clientePrincipal.personaFisica.segundoApellido" maxlength="100" oninput="CustomUpperCase(this);">
+
+                </div>
+
+                <div *ngIf="clientesPrincipal.clientePrincipal.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC </label>
+                    <input [disabled]="getDisabled( rfcOtor , clientesPrincipal.tipoOperacion)" type="text" name="rfcOtor" id="cliPriFisRfc" maxlength="13" oninput="CustomUpperCase(this);" [(ngModel)]="clientesPrincipal.clientePrincipal.personaFisica.rfc" rfcValid #rfcOtor="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfcOtor.invalid && rfcOtor.touched">
+
+                        <div *ngIf="rfcOtor.errors.rfcValid && rfcOtor.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Sector productivo al que pertenece <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Sector productivo al que pertenece <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( sector , clientesPrincipal.tipoOperacion)" name="sector" id="cliPriSecPro" [compareWith]="cata.compareFn" maxlength="50" [(ngModel)]="clientesPrincipal.sector" appSelectValidator required #sector="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let sec of this.cata.catalogos.CAT_SECTOR_PRIVADO" [ngValue]="sec">
+                            {{sec.valor}}
+                        </option>
+
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="sector.invalid && (sector.dirty || sector.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="clientesPrincipal.sector.id == 9999" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="clientesPrincipal.sector.id == 9999" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( sectorOtro , clientesPrincipal.tipoOperacion)" type="text" name="sectorOtro" id="cliPriEspSecOtr" [(ngModel)]="clientesPrincipal.sectorOtro" required maxlength="100" #sectorOtro="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="sectorOtro.invalid && (sectorOtro.dirty || sectorOtro.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Monto aproximado del beneficio o ganancia mensual que obtiene del
+                        cliente
+                        principal<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Monto aproximado del beneficio o ganancia mensual que obtiene del
+                        cliente
+                        principal <i class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( monto , clientesPrincipal.tipoOperacion)" type="text" name="monto" [(ngModel)]="clientesPrincipal.montoAproximadoGanancia.monto" id="cliPriMonApro" required #monto="ngModel" oninput="soloNumeroInput(this, 1, 9999999999999);"
+                        onfocus="focusSoloNumero(this)">
+                    <div class="invalid-tooltip" *ngIf="monto.invalid && (monto.dirty || monto.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de moneda<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de moneda <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( moneda , clientesPrincipal.tipoOperacion)" name="moneda" [compareWith]="cata.compareFn" id="cliPriTipMon" appSelectValidator [(ngModel)]="clientesPrincipal.montoAproximadoGanancia.moneda" required #moneda="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let m of this.cata.catalogos.CAT_MONEDA" [ngValue]="m">
+                            {{m.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="moneda.invalid && (moneda.dirty || moneda.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Lugar donde se ubica <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Lugar donde se ubica <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( lugarUbica , clientesPrincipal.tipoOperacion)" name="lugarUbica" maxlength="10" id="cliPriLugDonUbica" [(ngModel)]="clientesPrincipal.localizacion.ubicacion" required #lugarUbica="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let dato of this.cata.enums.ENUM_UBICACION" [value]="dato.id">
+                            {{dato.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="lugarUbica.invalid && (lugarUbica.dirty || lugarUbica.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="clientesPrincipal.localizacion.ubicacion == 'MEXICO' || clientesPrincipal.localizacion.ubicacion == 'EXTRANJERO'" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="clientesPrincipal.localizacion.ubicacion == 'MEXICO'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Entidad federativa <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Entidad federativa <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( entidad , clientesPrincipal.tipoOperacion)" name="entidad" maxlength="10" id="cliPriMexEntFed" [compareWith]="cata.compareFn" [(ngModel)]="clientesPrincipal.localizacion.localizacionMexico.entidadFederativa" required #entidad="ngModel"
+                        appSelectValidator>
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let ent of this.cata.catalogos.CAT_ENTIDAD_FEDERATIVA" [ngValue]="ent">
+                            {{ent.valor}}
+                        </option>
+                    </select>
+
+                    <div class="invalid-tooltip" *ngIf="entidad.invalid && (entidad.dirty || entidad.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div *ngIf="clientesPrincipal.localizacion.ubicacion == 'EXTRANJERO'" class=" col d-flex flex-column
+                                    justify-content-between">
+                    <label [hidden]="!help" for="">País donde se localiza<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">País donde se localiza <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( pais , clientesPrincipal.tipoOperacion)" name="pais" maxlength="10" id="cliPriExtPaiLoc" [compareWith]="cata.compareFn" [(ngModel)]="clientesPrincipal.localizacion.localizacionExtranjero.pais" required #pais="ngModel"
+                        appSelectValidator>
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let pais of this.cata.catalogos.CAT_PAIS" [ngValue]="pais">
+                            {{pais.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="pais.invalid && (pais.dirty || pais.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" [disabled]="!clientesForm.form.valid || !clientesTipoForm.form.valid" (click)="guardaLocal()">Aceptar</button>
+        <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+    </div>
+</div>

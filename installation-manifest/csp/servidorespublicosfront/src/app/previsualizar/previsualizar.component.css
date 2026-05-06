@@ -1,0 +1,5 @@
+.scroll-wrapper {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll !important;
+    /* important:  dimensions or positioning here! */
+}

@@ -1,0 +1,646 @@
+<header>
+    <div class="col-sm-4">
+        <!--i class="fas fa-bars abrirMenu"></!i>
+        <span class="abrirMenu">Abrir</span-->
+    </div>
+    <div class="col-sm-4 text-center mt-1 pr-0 d-block py-1">
+        <!-- <span class="DeclaraNet" translate="no">Declara</span>
+        <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+        <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+    </div>
+    <!--div class="cuenta-content"><i class="fas fa-user-circle cuenta"></i><span class="cuenta">{{usuario.nombre}}</span>
+    </div-->
+
+</header>
+<div class="info-bar">
+    <div class="row">
+        <div class="col-sm-4 text-small">
+
+        </div>
+        <div class="col-sm-4 text-center">
+            <span class="DeclaraNet" [ngClass]="{DnetRojo: institucionReceptora.collName === 100}">{{institucionReceptora.ente.nombre}}</span>
+        </div>
+        <div class="col-sm-4 text-center" style="cursor: pointer;">
+            <i class="fas fa-user-circle cuenta"></i>
+            <span class="cuenta">{{usuario.nombre}}</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="menu-cuenta  menu-cuenta2 fix-menu-princ">
+    <ng-container></ng-container>
+
+    <!-- <li (click)="declaracion();"><i class="fas fa-file-alt"></i> Volver a la declaración</li> -->
+    <li (click)="home();"><i class="fas fa-home"></i>Regresar a Inicio</li>
+    <li (click)="logout();"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</li>
+</div>
+
+
+<div id="content-cargando">
+    <div class="spinner-border text-success" role="status">
+    </div>
+    <span>Cargando</span>
+</div>
+
+<!-- <div id="content-btnSave">
+       <button id="guardaDatos" class="btn btn-success">Guardar <i class="fas fa-save"></i></button>
+</div> -->
+
+<div class="contenedor" style="overflow:scroll;">
+
+
+
+    <div class="container mt-3" *ngIf="firmaRealizada === false;  else signed">
+        <ng-container *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'INICIO' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'CONCLUSION' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'MODIFICACION'">
+            <h3>Proceso de firmado y envío de la declaración</h3>
+            <h5>Validando datos de la declaración</h5>
+
+            <div class="text-justify text-small">
+                <p>
+                    De conformidad con lo señalado en la Quinta y Novena de las NORMAS E INSTRUCTIVO PARA EL LLENADO Y PRESENTACIÓN DEL FORMATO DE DECLARACIONES: DE SITUACIÓN PATRIMONIAL Y DE INTERESES, publicado en el Diario Oficial de la Federación el 23 de septiembre
+                    de 2019, se establece:
+                </p>
+                <p>
+                    <b>“Quinta. De los medios de presentación.</b>
+                    <br> De conformidad con los artículos 34 y 48 de la Ley, las Declaraciones deberán ser presentadas a través de medios electrónicos, empleándose e.firma o usuario y contraseña.”
+                </p>
+                <p>
+                    <b>“Novena. Mecanismo de firmado y envío de las Declaraciones.</b>
+                    <br> Para el envío de las Declaraciones se tendrán las siguientes opciones: <br> a) Utilizando la e.firma y/o <br> b) Utilizando usuario y contraseña.”
+                </p>
+                <p>Usuario y contraseña: Se refiere a la Clave Única de Registro de Población y contraseña que utilizó para ingresar a su sesión de DeclaraNet.</p>
+                <p>Seleccione una de las siguientes opciones para el firmado y envío de su declaración patrimonial y de intereses:
+                </p>
+
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'">
+            <h3>Proceso de firmado y envío del aviso por cambio de dependencia o entidad</h3>
+            <h5>Validando datos del aviso por cambio de dependencia o entidad</h5>
+            <div class="text-justify text-small">
+                <p>
+                    De conformidad con lo señalado en la Quinta y Novena de las NORMAS E INSTRUCTIVO PARA EL LLENADO Y PRESENTACIÓN DEL FORMATO DE DECLARACIONES: DE SITUACIÓN PATRIMONIAL Y DE INTERESES, publicado en el Diario Oficial de la Federación el 23 de septiembre
+                    de 2019, se establece:
+                </p>
+                <p>
+                    <b>“Quinta. De los medios de presentación.</b>
+                    <br> De conformidad con los artículos 34 y 48 de la Ley, las Declaraciones deberán ser presentadas a través de medios electrónicos, empleándose e.firma o usuario y contraseña.”
+                </p>
+                <p>
+                    <b>“Novena. Mecanismo de firmado y envío de las Declaraciones.</b>
+                    <br> Para el envío de las Declaraciones se tendrán las siguientes opciones: <br> a) Utilizando la e.firma y/o <br> b) Utilizando usuario y contraseña.”
+                </p>
+                <p>Usuario y contraseña: Se refiere a la Clave Única de Registro de Población y contraseña que utilizó para ingresar a su sesión de DeclaraNet.</p>
+                <p>Seleccione una de las siguientes opciones para el firmado y envío de su aviso por cambio de dependencia o entidad:
+                </p>
+
+            </div>
+        </ng-container>
+        <ng-container *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'NOTA'">
+            <h3>Proceso de firmado y envío de la nota aclaratoria</h3>
+            <h5>Validando datos del aviso por cambio de dependencia o entidad</h5>
+            <div class="text-justify text-small">
+                <p>
+                    De conformidad con lo señalado en la Quinta y Novena de las NORMAS E INSTRUCTIVO PARA EL LLENADO Y PRESENTACIÓN DEL FORMATO DE DECLARACIONES: DE SITUACIÓN PATRIMONIAL Y DE INTERESES, publicado en el Diario Oficial de la Federación el 23 de septiembre
+                    de 2019, se establece:
+                </p>
+                <p>
+                    <b>“Quinta. De los medios de presentación.</b>
+                    <br> De conformidad con los artículos 34 y 48 de la Ley, las Declaraciones deberán ser presentadas a través de medios electrónicos, empleándose e.firma o usuario y contraseña.”
+                </p>
+                <p>
+                    <b>“Novena. Mecanismo de firmado y envío de las Notas aclaratorias.</b>
+                    <br> Para el envío de las Notas aclaratorias se tendrán las siguientes opciones: <br> a) Utilizando la e.firma y/o <br> b) Utilizando usuario y contraseña.”
+                </p>
+                <p>Usuario y contraseña: Se refiere a la Clave Única de Registro de Población y contraseña que utilizó para ingresar a su sesión de DeclaraNet.</p>
+                <p>Seleccione una de las siguientes opciones para el firmado y envío de su aviso por cambio de dependencia o entidad:
+                </p>
+
+            </div>
+        </ng-container>
+
+
+        <!-- <h3 *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion !== 'AVISO'">Proceso de firmado y envío de la declaración</h3>
+        <h5 *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion !== 'AVISO'">Validando datos de la declaración</h5>
+        <h3 *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'">Proceso de firmado y envío del aviso por cambio de dependencia o entidad</h3>
+        <h5 *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'">Validando datos del aviso por cambio de dependencia o entidad</h5> -->
+
+        <!-- <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion !== 'AVISO'" class="text-justify text-small">
+            <p>
+                De conformidad con lo señalado en la Quinta y Novena de las NORMAS E INSTRUCTIVO PARA EL LLENADO Y PRESENTACIÓN DEL FORMATO DE DECLARACIONES: DE SITUACIÓN PATRIMONIAL Y DE INTERESES, publicado en el Diario Oficial de la Federación el 23 de septiembre
+                de 2019, se establece:
+            </p>
+            <p>
+                <b>“Quinta. De los medios de presentación.</b>
+                <br> De conformidad con los artículos 34 y 48 de la Ley, las Declaraciones deberán ser presentadas a través de medios electrónicos, empleándose e.firma o usuario y contraseña.”
+            </p>
+            <p>
+                <b>“Novena. Mecanismo de firmado y envío de las Declaraciones.</b>
+                <br> Para el envío de las Declaraciones se tendrán las siguientes opciones: <br> a) Utilizando la e.firma y/o <br> b) Utilizando usuario y contraseña.”
+            </p>
+            <p>Usuario y contraseña: Se refiere a la Clave Única de Registro de Población y contraseña que utilizó para ingresar a su sesión de DeclaraNet.</p>
+            <p>Seleccione una de las siguientes opciones para el firmado y envío de su declaración patrimonial y de intereses:
+            </p>
+
+        </div> -->
+
+        <!-- <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'" class="text-justify text-small">
+            <p>
+                De conformidad con lo señalado en la Quinta y Novena de las NORMAS E INSTRUCTIVO PARA EL LLENADO Y PRESENTACIÓN DEL FORMATO DE DECLARACIONES: DE SITUACIÓN PATRIMONIAL Y DE INTERESES, publicado en el Diario Oficial de la Federación el 23 de septiembre
+                de 2019, se establece:
+            </p>
+            <p>
+                <b>“Quinta. De los medios de presentación.</b>
+                <br> De conformidad con los artículos 34 y 48 de la Ley, las Declaraciones deberán ser presentadas a través de medios electrónicos, empleándose e.firma o usuario y contraseña.”
+            </p>
+            <p>
+                <b>“Novena. Mecanismo de firmado y envío de las Declaraciones.</b>
+                <br> Para el envío de las Declaraciones se tendrán las siguientes opciones: <br> a) Utilizando la e.firma y/o <br> b) Utilizando usuario y contraseña.”
+            </p>
+            <p>Usuario y contraseña: Se refiere a la Clave Única de Registro de Población y contraseña que utilizó para ingresar a su sesión de DeclaraNet.</p>
+            <p>Seleccione una de las siguientes opciones para el firmado y envío de su aviso por cambio de dependencia o entidad:
+            </p>
+
+        </div> -->
+
+        <form class="form-inline">
+            <div class=" d-flex justify-content-start  w-100" *ngIf="pintaFirmaFIEL">
+                <div class=" w-100 justify-content-start d-inline-flex">
+                    <div class="d-flex  w-75 p-3">
+                        <label for="">¿Deseas firmar con tu Firma Electrónica Avanzada (FIEL)? <i
+                                class="fas fa-info-circle"></i></label>
+                    </div>
+                    <div class="d-flex  w-25 p-3">
+                        <button type="button" class="btn btn-success col-sm-10" data-target="#modalFirmaFiel" id="modalFirmaIFiel" data-toggle="modal"><i class="fas fa-highlighter"></i> &nbsp;
+                            Firmar</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="modalFirmaFiel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'INICIO' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'CONCLUSION' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'MODIFICACION'" class="modal-title" id="exampleModalLabel">
+                                Proceso de firmado y envío de la declaración (FIEL)
+                            </h5>
+                            <h5 *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'" class="modal-title" id="exampleModalLabel">
+                                Proceso de firmado y envío del aviso por cambio de dependencia o entidad (FIEL)
+                            </h5>
+                            <h5 *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'NOTA'" class="modal-title" id="exampleModalLabel">
+                                Proceso de firmado y envío de la nota aclaratoria (FIEL)
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'INICIO' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'CONCLUSION' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'MODIFICACION'" class="modal-body text-justify">
+                            <p> Validando datos de su declaración
+                                <br>
+                                <br> su declaración se encuentra completamente lleno.
+                                <br>
+                                <br> En este momento, se encuentra iniciando el proceso para firmado y envío de su declaración, para lo cual debe verificar cuidadosamente la vista preliminar antes de continuar, ya que los datos deben ser los mismos con
+                                los que ingresó al sistema DeclaraNet, ya que de lo contrario no podrá firmarlo y enviarlo.
+                                <br>
+                                <br> Su Registro Federal de Contribuyentes (RFC) que obra en su aviso por cambio de dependencia, debe ser el mismo con el que obtuvo su e.firma expedida por el SAT, ya que de lo contrario no podrá firmarlo.
+                                <br>
+                                <br> Se le recuerda que para este proceso, el sistema sólo acepta como válida, la Firma Electrónica Avanzada (e.firma) que haya tramitado ante el SAT. La e.firma consta de 3 componentes que debe de tener a la mano: archivo
+                                .cer, archivo .key y la contraseña.
+                                <br>
+                                <br> La contraseña que debe ingresar en este punto es la que registró ante el SAT cuando tramitó su e.firma y no con la que ingresó al sistema DeclaraNet.
+                            </p>
+                        </div>
+                        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'" class="modal-body text-justify">
+                            <p> Validando datos de su aviso por cambio de dependencia o entidad
+                                <br>
+                                <br> Su aviso por cambio de dependencia o entidad se encuentra completamente lleno.
+                                <br>
+                                <br> En este momento, se encuentra iniciando el proceso para firmado y envío de su aviso por cambio de dependencia o entidad, para lo cual debe verificar cuidadosamente la vista preliminar antes de continuar, ya que los
+                                datos deben ser los mismos con los que ingresó al sistema DeclaraNet, ya que de lo contrario no podrá firmarlo y enviarlo.
+                                <br>
+                                <br> Su Registro Federal de Contribuyentes (RFC) que obra en su aviso por cambio de dependencia, debe ser el mismo con el que obtuvo su e.firma expedida por el SAT, ya que de lo contrario no podrá firmarlo.
+                                <br>
+                                <br> Se le recuerda que para este proceso, el sistema sólo acepta como válida, la Firma Electrónica Avanzada (e.firma) que haya tramitado ante el SAT. La e.firma consta de 3 componentes que debe de tener a la mano: archivo
+                                .cer, archivo .key y la contraseña.
+                                <br>
+                                <br> La contraseña que debe ingresar en este punto es la que registró ante el SAT cuando tramitó su e.firma y no con la que ingresó al sistema DeclaraNet.
+                            </p>
+                        </div>
+                        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'NOTA'" class="modal-body text-justify">
+                            <p> Validando datos de su nota aclaratoria
+                                <br>
+                                <br> su nota aclaratoria se encuentra completamente lleno.
+                                <br>
+                                <br> En este momento, se encuentra iniciando el proceso para firmado y envío de su nota aclaratoria, para lo cual debe verificar cuidadosamente la vista preliminar antes de continuar, ya que los datos deben ser los mismos
+                                con los que ingresó al sistema DeclaraNet, ya que de lo contrario no podrá firmarlo y enviarlo.
+                                <br>
+                                <br> Su Registro Federal de Contribuyentes (RFC) que obra en su aviso por cambio de dependencia, debe ser el mismo con el que obtuvo su e.firma expedida por el SAT, ya que de lo contrario no podrá firmarlo.
+                                <br>
+                                <br> Se le recuerda que para este proceso, el sistema sólo acepta como válida, la Firma Electrónica Avanzada (e.firma) que haya tramitado ante el SAT. La e.firma consta de 3 componentes que debe de tener a la mano: archivo
+                                .cer, archivo .key y la contraseña.
+                                <br>
+                                <br> La contraseña que debe ingresar en este punto es la que registró ante el SAT cuando tramitó su e.firma y no con la que ingresó al sistema DeclaraNet.
+                            </p>
+                        </div>
+                        <div class="modal-footer text-center container-fluid">
+
+                            <button type="button" (click)="firmaFIEL()" data-dismiss="modal" class="btn btn-primary col-md-4">
+                                <i class="fas fa-highlighter"></i> Continuar con la firma</button>
+                            <button type="button" class="btn btn-danger col-md-3" data-dismiss="modal">
+                                <i class="fas fa-times"></i> Cancelar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class=" d-flex justify-content-start  w-100">
+                <div class=" w-100 justify-content-start d-inline-flex">
+                    <div class="d-flex  w-75 p-3">
+                        <label>¿Deseas hacerlo con tu CURP y contraseña? <i class="fas fa-info-circle"></i></label>
+                    </div>
+                    <div class="d-flex  w-25 p-3">
+                        <button type="button" class="btn btn-success col-sm-10" data-target="#modalFUPFirma" id="modalFUPFirmar" data-toggle="modal"><i class="fas fa-highlighter"></i> &nbsp;
+                            Firmar</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class=" d-flex justify-content-start  w-100">
+                <div class=" w-100 justify-content-center d-inline-flex">
+                    <div class="d-flex  w-25 p-3">
+                        <label></label>
+                    </div>
+                    <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'NOTA'" class="d-flex  w-50 p-3">
+                        <button type="button" class="btn btn-primary col-sm-6" id="regresar" (click)="nota();">
+                              <i class="fas fa-home"></i> Regresar a la nota aclaratoria</button>
+                    </div>
+                    <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'INICIO' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'CONCLUSION' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'MODIFICACION'" class="d-flex  w-50 p-3">
+                        <button type="button" class="btn btn-primary col-sm-6" id="regresar" (click)="declaracion();">
+                            <i class="fas fa-home"></i> Regresar a la declaración</button>
+                    </div>
+                    <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'" class="d-flex  w-50 p-3">
+                        <button type="button" class="btn btn-primary col-sm-6" id="regresar" (click)="aviso();"> <i
+                                class="fas fa-home"></i> Regresar a el aviso</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </form>
+
+    </div>
+
+
+    <ng-template #signed>
+        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'INICIO' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'CONCLUSION' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'MODIFICACION'" class="container mt-3">
+            <h3>Declaración firmada exitosamente</h3>
+            <div class=" row">
+                <div class=" col-3 offset-2 text-center">
+
+                    <label for="">Visualizar acuse <i class="fas fa-info-circle"></i></label>
+                </div>
+                <div class="col-3">
+                    <a (click)="previsualizar('acuse', 'Acuse')" class="text-danger impresionLink" title="Visualizar acuse"><i class="far fa-file-alt"></i></a>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-3 offset-2 text-center">
+                    <label for="">Visualizar declaración <i class="fas fa-info-circle"></i></label>
+                </div>
+                <div class="col-3">
+                    <a (click)="previsualizar('declaracion', 'Declaración')" class="text-info impresionLink" title="Visualizar declaración"><i class="far fa-file-alt"></i></a>
+                </div>
+            </div>
+
+
+        </div>
+        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'" class="container mt-3">
+            <h3>Aviso firmado exitosamente</h3>
+            <div class=" row">
+                <div class=" col-3 offset-2 text-center">
+
+                    <label for="">Visualizar acuse <i class="fas fa-info-circle"></i></label>
+                </div>
+                <div class="col-3">
+                    <a (click)="previsualizar('acuse', 'Acuse')" class="text-danger impresionLink" title="Visualizar acuse"><i class="far fa-file-alt"></i></a>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-3 offset-2 text-center">
+                    <label for="">Visualizar aviso <i class="fas fa-info-circle"></i></label>
+                </div>
+                <div class="col-3">
+                    <a (click)="previsualizar('declaracion', 'Aviso')" class="text-info impresionLink" title="Visualizar declaración"><i class="far fa-file-alt"></i></a>
+                </div>
+            </div>
+
+
+        </div>
+        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'NOTA'" class="container mt-3">
+            <h3>Nota firmada exitosamente</h3>
+            <div class=" row">
+                <div class=" col-3 offset-2 text-center">
+
+                    <label for="">Visualizar acuse <i class="fas fa-info-circle"></i></label>
+                </div>
+                <div class="col-3">
+                    <a (click)="previsualizar('acuse', 'Acuse')" class="text-danger impresionLink" title="Visualizar acuse"><i class="far fa-file-alt"></i></a>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-3 offset-2 text-center">
+                    <label for="">Visualizar Nota <i class="fas fa-info-circle"></i></label>
+                </div>
+                <div class="col-3">
+                    <a (click)="previsualizar('declaracion', 'Nota Aclaratoria')" class="text-info impresionLink" title="Visualizar declaración"><i class="far fa-file-alt"></i></a>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'NOTA'"
+            class="container mt-3 d-flex flex-column w-100 justify-content-center align-items-center">
+            <h3>Nota firmada exitosamente</h3>
+            <div class="row">
+                <div class=" col-12 offset-2 text-center">
+
+                    <label for="">Visualizar acuse <i class="fas fa-info-circle"></i></label> <a
+                        (click)="previsualizar('acuse', 'Acuse')" class="text-danger impresionLink"
+                        title="Visualizar acuse"><i class="far fa-file-alt"></i></a>
+                </div>
+
+            </div>
+            <div class=" row">
+                <div class=" col-12 offset-2 text-center">
+                    <label for="">Visualizar aviso <i class="fas fa-info-circle"></i></label> <a
+                        (click)="previsualizar('declaracion', 'Declaración')" class="text-info impresionLink"
+                        title="Visualizar declaración"><i class="far fa-file-alt"></i></a>
+                </div>
+            </div>
+
+
+        </div> -->
+    </ng-template>
+
+</div>
+
+
+<button type="button" #modalFIELButton class="btn btn-primary" data-toggle="modal" data-target="#modalFIEL" style="display: none;" data-backdrop="static" data-keyboard="false">
+</button>
+<!-- Modal -->
+<div class="modal fade" id="modalFIEL" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="sfpSign" [attr.data-info]="this.cl+ ',' + this.sk"></div>
+                <input type="hidden" id="ngGetTransact">
+                <button type="button" id="getTransactButton" style="display: none;" (click)="getTransact1();">
+                    Launch demo modal
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<button type="button" #modalFUPButton class="btn btn-primary" data-toggle="modal" data-target="#modalFUP" style="display: none;">
+    Launch demo modal
+</button>
+<div class="modal fade" id="modalFUP" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5>Declaración a presentar</h5> -->
+                <button type="button" class="close" data-dismiss="modal" [disabled]="this.loading" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="col-md-8 offset-md-2">
+                    <app-alert></app-alert>
+                    <div class="card bg-light mb-3 card-header-declaranet animated fadeIn shadow bg-white rounded " style="max-width: 200 px;">
+                        <div class="card-header text-center">
+                            <div class="text-center mt-1 d-block">
+                                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+                              <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form #formFirmaFUP="ngForm" (ngSubmit)="firmarFUP()">
+
+                                <p>CURP: {{this.usuario.curp}}</p>
+                                <p>Ingresa tu contraseña</p>
+
+                                <div class="form-group">
+                                    <!-- <label for="password">Contraseña</label> -->
+                                    <input type="password" placeholder="Contraseña" #password name="password" [(ngModel)]="pswd" class="form-control" [ngClass]="{ 'is-invalid': submitted && password.errors }" />
+                                    <!-- <span>Counter</span> -->
+                                    <div *ngIf="submitted && password.errors" class="invalid-feedback">
+                                        <div *ngIf="password.errors.required">La contraseña es requerida</div>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center">
+                                    <!-- <p style="margin-top: 10px; text-align: right; font-style: italic;"><a class="text-secondary alert-link" style="font-style: italic;" (click)="forgotPass()">¿Olvidaste tu contraseña?</a></p> -->
+                                    <button type="submit" [disabled]="loading" class="btn btn-danger btn-block">
+                                        <span *ngIf="!this.loading"> Firmar </span>
+                                        <span class="spinner-grow spinner-grow-sm" *ngIf="this.loading" role="status"
+                                            aria-hidden="true">
+                                            Firmando...</span>
+
+                                    </button>
+                                </div>
+
+                                <div class="text-center">
+                                    <img *ngIf="loading" class="rounded" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                                    />
+                                </div>
+
+                            </form>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Firma FUP -->
+
+<div class="modal fade" id="modalFUPFirma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'INICIO' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'CONCLUSION' || this.declaracionLoaded.encabezado.tipoDeclaracion === 'MODIFICACION'" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proceso de firmado y envío de la declaración (FUP)
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body text-justify" style="overflow-y: scroll; height: 500px; ">
+                <p> Condiciones Generales Para poder firmar y enviar su declaración con Clave Única de Registro de Población (CURP) y contraseña, debe leer y aceptar las siguientes condiciones generales:
+                </p>
+                <p>
+                    Con fundamento en los artículos 108 y 109 de la Constitución Política de los Estados Unidos Mexicanos; 1, 2, 14, 16, 26 y 37, fracción XVI de la Ley Orgánica de la Administración Pública Federal; 1, 2, fracción I, 4, fracción I, 9, 29, 32, 33, 34, 35,
+                    46, primer párrafo, 47 y 48 de la Ley General de Responsabilidades Administrativas, publicada en el Diario Oficial de la Federación el dieciocho de julio de dos mil dieciséis, en el ACUERDO por el que el Comité Coordinador del Sistema
+                    Nacional Anticorrupción emite el formato de declaraciones: de situación patrimonial y de intereses; y expide las normas e instructivo para su llenado y presentación, publicado en el Diario Oficial de la Federación el dieciséis de noviembre
+                    de dos mil dieciocho, en el ACUERDO por el que se modifican los Anexos Primero y Segundo del Acuerdo por el que el Comité Coordinador del Sistema Nacional Anticorrupción emite el formato de declaraciones: de situación patrimonial y
+                    de intereses; y expide las normas e instructivo para su llenado y presentación, publicado en el Diario Oficial de la Federación el veintitrés de septiembre de dos mil diecinueve, por el que se establece que de conformidad con los artículos
+                    34 y 48 de la Ley, las declaraciones de situación patrimonial y de intereses deberán ser presentadas a través de medios electrónicos, empleándose e.firma o usuario y contraseña utilizados para ingresar al sistema DeclaraNet, así como
+                    en términos de las DISPOSICIONES Generales que establecen los mecanismos de identificación digital y control de acceso que deberán observar las dependencias y entidades de la Administración Pública Federal y las empresas productivas
+                    del Estado, publicadas en el Diario Oficial de la Federación el diez de mayo de dos mil dieciocho, y en virtud de haber optado por firmar y enviar mi declaración de situación patrimonial y de intereses a través de mi usuario mediante
+                    la utilización de mi Clave Única de Registro de Población (CURP) y contraseña utilizados para ingresar al sistema DeclaraNet, procedo a realizar las siguientes:
+
+                </p>
+                <h5>DECLARACIONES</h5>
+                <p>
+                    <br> 1. Toda la información que {{prefijoInstitucion}} {{institucionReceptora.ente.nombre}} reciba con Clave Única de Registro de Población (CURP) y contraseña utilizados para ingresar al sistema DeclaraNet, es auténtica y atribuible
+                    a mi persona, por lo que será mi exclusiva responsabilidad, la información que ésta reciba por medios remotos de comunicación electrónica, la cual presento bajo protesta de decir verdad.
+                    <br> 2. Acepto el compromiso de guardar mi contraseña de manera responsable, pues es única y exclusiva para mi acceso al sistema electrónico para la presentación de declaraciones de situación patrimonial y de conflicto de interés DeclaraNet.
+                    <br> 3. En virtud de estar de acuerdo con las condiciones antes señaladas, firmo autógrafamente el presente documento, mismo que me comprometo a presentar ante el Órgano Interno de Control o en la Unidad de Responsabilidades de la
+                    dependencia, entidad o institución en la que presto o haya prestado mis servicios, dentro de los quince días hábiles siguientes al envío de la presente declaración de situación patrimonial, acompañado de una copia del acuse de recibo
+                    generado por el sistema antes mencionado.
+
+                    <br><br> <input type="checkbox" name="aceptoTerm" id="aceptoTerm" [(ngModel)]="aceptado"> He leído y acepto las condiciones descritas
+
+                </p>
+            </div>
+            <div class="modal-footer text-center container-fluid">
+
+                <button type="button" (click)="preparaFirmaFUP()" data-dismiss="modal" class="btn btn-primary col-md-3" [disabled]="!aceptado">
+                    <i class="fas fa-highlighter"></i> Continuar con la firma</button>
+                <button type="button" class="btn btn-danger col-md-2" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancelar</button>
+
+            </div>
+        </div>
+
+        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'AVISO'" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proceso de firmado y envío del aviso por cambio de dependencia o entidad (FUP)
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body text-justify" style="overflow-y: scroll; height: 500px; ">
+                <p> Condiciones Generales Para poder firmar y enviar su aviso por cambio de dependencia o entidad con Clave Única de Registro de Población (CURP) y contraseña, debe leer y aceptar las siguientes condiciones generales:
+                </p>
+                <p>
+                    Con fundamento en los artículos 108 y 109 de la Constitución Política de los Estados Unidos Mexicanos; 1, 2, 14, 16, 26 y 37, fracción XVI de la Ley Orgánica de la Administración Pública Federal; 1, 2, fracción I, 4, fracción I, 9, 29, 32, 33, 34, 35,
+                    46, primer párrafo, 47 y 48 de la Ley General de Responsabilidades Administrativas, publicada en el Diario Oficial de la Federación el dieciocho de julio de dos mil dieciséis, en el ACUERDO por el que el Comité Coordinador del Sistema
+                    Nacional Anticorrupción emite el formato de declaraciones: de situación patrimonial y de intereses; y expide las normas e instructivo para su llenado y presentación, publicado en el Diario Oficial de la Federación el dieciséis de noviembre
+                    de dos mil dieciocho, en el ACUERDO por el que se modifican los Anexos Primero y Segundo del Acuerdo por el que el Comité Coordinador del Sistema Nacional Anticorrupción emite el formato de declaraciones: de situación patrimonial y
+                    de intereses; y expide las normas e instructivo para su llenado y presentación, publicado en el Diario Oficial de la Federación el veintitrés de septiembre de dos mil diecinueve, por el que se establece que de conformidad con los artículos
+                    34 y 48 de la Ley, las declaraciones de situación patrimonial y de intereses deberán ser presentadas a través de medios electrónicos, empleándose e.firma o usuario y contraseña utilizados para ingresar al sistema DeclaraNet, así como
+                    en términos de las DISPOSICIONES Generales que establecen los mecanismos de identificación digital y control de acceso que deberán observar las dependencias y entidades de la Administración Pública Federal y las empresas productivas
+                    del Estado, publicadas en el Diario Oficial de la Federación el diez de mayo de dos mil dieciocho, y en virtud de haber optado por firmar y enviar mi aviso por cambio de dependencia o entidad a través de mi usuario mediante la utilización
+                    de mi Clave Única de Registro de Población (CURP) y contraseña utilizados para ingresar al sistema DeclaraNet, procedo a realizar las siguientes:
+
+                </p>
+                <h5>DECLARACIONES</h5>
+                <p>
+                    <br> 1. Toda la información que {{prefijoInstitucion}} {{institucionReceptora.ente.nombre}} reciba con Clave Única de Registro de Población (CURP) y contraseña utilizados para ingresar al sistema DeclaraNet, es auténtica y atribuible
+                    a mi persona, por lo que será mi exclusiva responsabilidad, la información que ésta reciba por medios remotos de comunicación electrónica, la cual presento bajo protesta de decir verdad.
+                    <br> 2. Acepto el compromiso de guardar mi contraseña de manera responsable, pues es única y exclusiva para mi acceso al sistema electrónico para la presentación de declaraciones de situación patrimonial y de conflicto de interés DeclaraNet.
+                    <br> 3. En virtud de estar de acuerdo con las condiciones antes señaladas, firmo autógrafamente el presente documento, mismo que me comprometo a presentar ante el Órgano Interno de Control o en la Unidad de Responsabilidades de la
+                    dependencia, entidad o institución en la que presto o haya prestado mis servicios, dentro de los quince días hábiles siguientes al envío del presente aviso por cambio de dependencia, acompañado de una copia del acuse de recibo generado
+                    por el sistema antes mencionado.
+
+                    <br><br> <input type="checkbox" name="aceptoTerm" id="aceptoTerm" [(ngModel)]="aceptado"> He leído y acepto las condiciones descritas
+
+                </p>
+            </div>
+            <div class="modal-footer text-center container-fluid">
+
+                <button type="button" (click)="preparaFirmaFUP()" data-dismiss="modal" class="btn btn-primary col-md-3" [disabled]="!aceptado">
+                    <i class="fas fa-highlighter"></i> Continuar con la firma</button>
+                <button type="button" class="btn btn-danger col-md-2" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancelar</button>
+
+            </div>
+        </div>
+
+        <div *ngIf="this.declaracionLoaded.encabezado.tipoDeclaracion === 'NOTA'" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proceso de firmado y envío de la nota aclaratoria (FUP)
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body text-justify" style="overflow-y: scroll; height: 500px; ">
+                <p> Condiciones Generales Para poder firmar y enviar su nota aclaratoria con Clave Única de Registro de Población (CURP) y contraseña, debe leer y aceptar las siguientes condiciones generales:
+                </p>
+                <p>
+                    Con fundamento en los artículos 108 y 109 de la Constitución Política de los Estados Unidos Mexicanos; 1, 2, 14, 16, 26 y 37, fracción XVI de la Ley Orgánica de la Administración Pública Federal; 1, 2, fracción I, 4, fracción I, 9, 29, 32, 33, 34, 35,
+                    46, primer párrafo, 47 y 48 de la Ley General de Responsabilidades Administrativas, publicada en el Diario Oficial de la Federación el dieciocho de julio de dos mil dieciséis, en el ACUERDO por el que el Comité Coordinador del Sistema
+                    Nacional Anticorrupción emite el formato de declaraciones: de situación patrimonial y de intereses; y expide las normas e instructivo para su llenado y presentación, publicado en el Diario Oficial de la Federación el dieciséis de noviembre
+                    de dos mil dieciocho, en el ACUERDO por el que se modifican los Anexos Primero y Segundo del Acuerdo por el que el Comité Coordinador del Sistema Nacional Anticorrupción emite el formato de declaraciones: de situación patrimonial y
+                    de intereses; y expide las normas e instructivo para su llenado y presentación, publicado en el Diario Oficial de la Federación el veintitrés de septiembre de dos mil diecinueve, por el que se establece que de conformidad con los artículos
+                    34 y 48 de la Ley, las declaraciones de situación patrimonial y de intereses deberán ser presentadas a través de medios electrónicos, empleándose e.firma o usuario y contraseña utilizados para ingresar al sistema DeclaraNet, así como
+                    en términos de las DISPOSICIONES Generales que establecen los mecanismos de identificación digital y control de acceso que deberán observar las dependencias y entidades de la Administración Pública Federal y las empresas productivas
+                    del Estado, publicadas en el Diario Oficial de la Federación el diez de mayo de dos mil dieciocho, y en virtud de haber optado por firmar y enviar mi aviso por cambio de dependencia o entidad a través de mi usuario mediante la utilización
+                    de mi Clave Única de Registro de Población (CURP) y contraseña utilizados para ingresar al sistema DeclaraNet, procedo a realizar las siguientes:
+
+                </p>
+                <h5>DECLARACIONES</h5>
+                <p>
+                    <br> 1. Toda la información que {{prefijoInstitucion}} {{institucionReceptora.ente.nombre}} reciba con Clave Única de Registro de Población (CURP) y contraseña utilizados para ingresar al sistema DeclaraNet, es auténtica y atribuible
+                    a mi persona, por lo que será mi exclusiva responsabilidad, la información que ésta reciba por medios remotos de comunicación electrónica, la cual presento bajo protesta de decir verdad.
+                    <br> 2. Acepto el compromiso de guardar mi contraseña de manera responsable, pues es única y exclusiva para mi acceso al sistema electrónico para la presentación de declaraciones de situación patrimonial y de conflicto de interés DeclaraNet.
+                    <br> 3. En virtud de estar de acuerdo con las condiciones antes señaladas, firmo autógrafamente el presente documento, mismo que me comprometo a presentar ante el Órgano Interno de Control o en la Unidad de Responsabilidades de la
+                    dependencia, entidad o institución en la que presto o haya prestado mis servicios, dentro de los quince días hábiles siguientes al envío del presente aviso por cambio de dependencia, acompañado de una copia del acuse de recibo generado
+                    por el sistema antes mencionado.
+
+                    <br><br> <input type="checkbox" name="aceptoTerm" id="aceptoTerm" [(ngModel)]="aceptado"> He leído y acepto las condiciones descritas
+
+                </p>
+            </div>
+            <div class="modal-footer text-center container-fluid">
+
+                <button type="button" (click)="preparaFirmaFUP()" data-dismiss="modal" class="btn btn-primary col-md-3" [disabled]="!aceptado">
+                    <i class="fas fa-highlighter"></i> Continuar con la firma</button>
+                <button type="button" class="btn btn-danger col-md-2" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancelar</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="ModalError" tabindex="-1" role="dialog" aria-labelledby="ModalErrorTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="alerticonModal text-center"><img src="../../../assets/image/error.png" alt="checkmark" />
+                </span>
+                <p class="text-center">{{errorFirma}}</p>
+            </div>
+            <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+        </div>
+    </div>
+</div>

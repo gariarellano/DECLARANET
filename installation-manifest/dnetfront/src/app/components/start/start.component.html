@@ -1,0 +1,312 @@
+<ngx-ui-loader [text]="this.spinnerText" [fgsType]="this.spinner.fgsType" [fgsColor]="this.spinner.fgsColor">
+</ngx-ui-loader>
+<header>
+    <div id="left"></div>
+    <div class="text-center">
+        <!-- <span class="DeclaraNet" translate="no">Declara</span>
+          <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+        <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+    </div>
+    <div class="cuenta-content"><i class="fas fa-user-circle cuenta"></i><span class="cuenta">{{usuario.nombre}}</span>
+    </div>
+</header>
+<div class="menu-cuenta menu-cuenta1">
+    <!-- <li><i class="fas fa-home" (click)="home();"></i> Salir de declaración</li> -->
+    <li (click)="logout();"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</li>
+</div>
+<div class="row">
+    <div class="centerImage">
+        <img *ngIf="this.enteImage" class="rounded" [src]="this.enteImage" width="100%" />
+    </div>
+</div>
+<div id="content-cargando">
+    <div class="spinner-border text-success" role="status">
+    </div>
+    <span>Cargando</span>
+</div>
+<!-- <div id="content-btnSave">
+    <button id="guardaDatos" class="btn btn-success">Guardar <i class="fas fa-save"></i></button>
+    </div> -->
+<div class="contenedor">
+    <div class="container mb-5 h-75" style="overflow-y: scroll">
+        <ul class="nav nav-tabs" id="tabInicio" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="presentar-tab" data-toggle="tab" href="#presentar" role="tab" aria-controls="presentar" aria-selected="true">Declaraciones pendientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="presentadas-tab" data-toggle="tab" href="#presentadas" role="tab" aria-controls="presentadas" aria-selected="false" (click)="historialDeclaracion()">Declaraciones
+             presentadas</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="presentar" role="tabpanel" aria-labelledby="presentar-tab">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Declaración</th>
+                            <th>Fecha de encargo/<br />ejercicio</th>
+                            <th>Presentar</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="declaracionPendiente">
+                        <tr>
+                            <td>{{initLoad.declaracion.encabezado.tipoDeclaracion}}</td>
+                            <td>{{initLoad.declaracion.encabezado.anio}}</td>
+                            <td><button type="button" class="btn btn-danger" (click)="continuarDeclaracion(initLoad.declaracion);" role="button">Continuar</button></td>
+                            <td><button type="button" class="btn btn-danger" id="seguroElimina" data-target="#seguroEliminar" data-toggle="modal" role="button">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="!declaracionPendiente">
+                        <tr>
+                            <td>Nueva declaración</td>
+                            <td></td>
+                            <!-- <td><a class="btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#modalPrevMsj">Presentar</a></td> -->
+                            <td><a class="btn btn-danger" style="color: #fff; cursor: pointer;" role="button" (click)="mensajePresentarDeclaracion();">Presentar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="presentadas" role="tabpanel" aria-labelledby="presentadas-tab">
+                <div class="text-center" *ngIf="!historial && !historialCargado">
+                    <div class="spinner-grow text-dark" style="width: 3rem; height: 3rem; position: absolute; top: calc(50% - 1.5rem); left: calc(50% - 1.5rem);" role="status">
+                        <span class="sr-only">Cargando...</span>
+                    </div>
+                    <p class="text-dark" style="width: 3rem; height: 3rem; position: absolute; top: calc(50% + 1.5rem); left: calc(50% - 2.1rem);">
+                        Cargando
+                    </p>
+                </div>
+                <div class="text-center mt-5" *ngIf="!historial && historialCargado">
+                    <h4 *ngIf="!historial" style="color: rgb(145, 139, 139); text-align: center; margin-top: 200px;">No existen declaraciones presentadas anteriormente</h4>
+                </div>
+                <div class="table-responsive h-75" *ngIf="historial">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Declaración o aviso</th>
+                                <th>Fecha de encargo/<br />ejercicio</th>
+                                <th>Fecha de presentación</th>
+                                <th>Declaración</th>
+                                <th>Acuse</th>
+                                <th>Nota aclaratoria</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let datos of historial">
+                                <td *ngIf="datos.tipoDeclaracion != 'NOTA'">{{datos.tipoDeclaracion}}</td>
+                                <td *ngIf="datos.tipoDeclaracion != 'NOTA' && datos.tipoDeclaracion != 'MODIFICACION'">
+                                    {{datos.fechaEncargo}}
+                                </td>
+                                <td *ngIf="datos.tipoDeclaracion != 'NOTA' && datos.tipoDeclaracion == 'MODIFICACION'">
+                                    {{datos.anio}}
+                                </td>
+                                <td *ngIf="datos.tipoDeclaracion != 'NOTA'">{{datos.fechaRecepcion}}</td>
+                                <td *ngIf="datos.tipoDeclaracion != 'NOTA'">
+                                    <a class="text-info" (click)="previsualizar('declaracion', 'Declaración', datos.numeroDeclaracion, datos.idUsuario, datos.collName, datos.tipoDeclaracion)" title="Visualizar Declaración" style="cursor: pointer;"><i
+                               class="far fa-file-alt"></i></a>
+                                </td>
+                                <td *ngIf="datos.tipoDeclaracion != 'NOTA'">
+                                    <a class="text-danger" (click)="previsualizar('acuse', 'Acuse', datos.numeroDeclaracion, datos.idUsuario, datos.collName, datos.tipoDeclaracion)" title="Visualizar Acuse" style="cursor: pointer;"><i
+                               class="far fa-file-alt"></i></a>
+                                </td>
+                                <td *ngIf="datos.tipoDeclaracion != 'NOTA'">
+                                    <!-- <a class="text-warning" [routerLink]="['/nota']" title="Crear una nota aclaratoria" style="cursor: pointer;"><i class="far fa-file-alt"></i></a> -->
+                                    <a class="notaTd" (click)="prevNotas(datos)" title="Historial de aclaraciones" style="cursor: pointer;"><i class="far fa-file-alt"></i> <span
+                               *ngIf="false">0</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Eliminar -->
+<div class="modal fade" id="seguroEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+             <h5 class="modal-title" id="eliminarDeclaración">Eliminar</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">×</span>
+             </button>
+             </div> -->
+            <div class="modal-body">
+                <h5> Se eliminará toda la información capturada en el formato. </h5>
+                <h5> <strong> ¿Desea continuar?</strong> </h5>
+            </div>
+            <div class="modal-footer text-center d-flex justify-content-center container-fluid">
+                <button type="button" (click)="eliminarDeclaracion();" data-dismiss="modal" class="btn btn-success col-md-2 mr-5 ">
+             <i class="fas fa-trash-alt"></i> Confirmar</button>
+                <button type="button" class="btn btn-danger col-md-2 ml-5" data-dismiss="modal">
+             <i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalNuevaDeclaracion" tabindex="-1" role="dialog" aria-labelledby="modalNuevaDeclaracionTitle" aria-hidden="true" *ngIf="!this.declaracionPendiente">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Declaración a presentar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+            </div>
+            <div class="modal-body">
+                <form class="container-fluid" (ngSubmit)="presentarDeclaracion()" #formPresentar="ngForm">
+                    <div class="row">
+                        <div class="col d-flex flex-column justify-content-between col-md-6 ">
+                            <label for="declaracion">Declaración</label>
+                            <select [(ngModel)]="this.tipoDeclara.id" name="declaracion" id="declaracion" #declaracion="ngModel" (change)="filterAnios(declaracion.value)" required>
+                   <option value="null" disabled>SELECCIONE...</option>
+                   <option *ngFor="let obj of this.initLoad.declaracionAPresentar"
+                   [value]="obj.idTipoDecla">{{obj.descDecla}}</option>
+                   </select>
+                            <div class="invalid-tooltip" *ngIf="!declaracion.valid && formPresentar.submitted">
+                                Valor requerido
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between col-md-6" *ngIf="declaracion.value === 'MODIFICACION'  ">
+                            <!-- <div class="col d-flex flex-column justify-content-between " *ngIf="declaracion.value === '2' || declaracion.value === '6' "> -->
+                            <label for="anio">Año</label>
+                            <select [(ngModel)]="this.tipoDeclara.anio" name="anio" id="anio" #anio="ngModel" required (change)="filterAniosAnt(anio.value)">
+                   <option value="null" disabled>SELECCIONE...</option>
+                   <option [value]='anio' *ngFor="let anio of this.filteredAnios">{{anio}}</option>
+                    <option value='AniosAnterior' *ngIf="this.filteredAniosAnt === null">AÑOS ANTERIORES...
+                   </option> 
+                   </select>
+                            <div class="invalid-tooltip" *ngIf="!anio.valid && formPresentar.submitted">
+                                Valor requerido
+                            </div>
+                            <div class="invalid-tooltip invalid-tooltip-info" *ngIf="this.filteredAniosAnt !== null && !anio.valid && !formPresentar.submitted">
+                                Seleccione el año de la declaración anterior
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between col-md-6" *ngIf="declaracion.value === 'INICIO' || declaracion.value === 'CONCLUSION' || declaracion.value === 'AVISO'">
+                            <!-- <div class="col d-flex flex-column justify-content-between " *ngIf="declaracion.value === '0' || declaracion.value === '1' "> -->
+                            <label for="fechaEncargo" *ngIf="declaracion.value === 'INICIO'">Fecha de inicio del
+                   encargo</label>
+                            <label for="fechaEncargo" *ngIf="declaracion.value === 'CONCLUSION'">Fecha de conclusión del
+                   encargo</label>
+                            <label for="fechaEncargo" *ngIf="declaracion.value === 'AVISO'">Fecha de Egreso</label>
+                            <input fechaValid="{{fecha}}" type="date" [max]="today" [min]="declaracion.value === 'AVISO' ? minAviso : ''" name="fechaEncargo" [(ngModel)]="this.tipoDeclara.fechaEncargo" #fechaEncargo="ngModel" required>
+                            <div class="invalid-tooltip" *ngIf="fechaEncargo.invalid && fechaEncargo.touched">
+                                La fecha seleccionada debe ser igual o anterior ala fecha actual y mayor o igual a {{fechaMin}}
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-between col-md-12">
+                            <!-- <div class="col d-flex flex-column justify-content-between " *ngIf="declaracion.value === '2' || declaracion.value === '6' "> -->
+                            <label *ngIf="this.tipoDeclara.id != 'AVISO'" for="tipoFormato">Nivel de encargo mas
+                   alto:</label>
+                            <label *ngIf="this.tipoDeclara.id == 'AVISO'" for="tipoFormato">Ultimo nivel de encargo:
+                   </label>
+                            <select [(ngModel)]="this.tipoDeclara.nivelJerarquico" name="tipoFormato" id="tipoFormato" #tipoFormato="ngModel" [compareWith]="globals.compareFn" required appSelectValidator>
+                   <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                   <option *ngFor="let data of globals.catalogos?.CAT_NIVEL_JERARQUICO" [ngValue]="data">
+                   {{data.valor}}
+                   </option>
+                   </select>
+                            <div class="invalid-tooltip" *ngIf="!tipoFormato.valid && formPresentar.submitted">
+                                Valor requerido
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-danger" [disabled]="presentando || !formPresentar.form.valid">
+                   <span class="spinner-grow spinner-grow-sm" *ngIf="presentando" role="status"
+                      aria-hidden="true"></span>
+                   {{presentando ? 'Cargando...' : 'Presentar'}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" #modalError class="btn btn-primary" data-toggle="modal" data-target="#modalError" style="display: none;">
+ Launch demo modal
+ </button>
+<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+                <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="alerticonModal">
+                <img src="assets/image/error.png" alt="checkmark" />
+                <p class="text-black">{{this.modalErrorMsj}}</p>
+                <div *ngIf="this.modalErrorMsjArr">
+                   <p *ngFor="let error of modalErrorMsjArr">{{error.error}}</p>
+                </div>
+             </span>
+                <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" #modalPrevMsj class="btn btn-primary" data-toggle="modal" data-target="#modalPrevMsj" style="display: none;">
+ Launch demo modal
+ </button>
+<div class="modal fade" id="modalPrevMsj" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+            </div>
+            <div class="modal-body text-justify">
+                <span class="alerticonModal">
+                <h3 class="text-center"><img src="assets/image/info.png" alt="checkmark" height="35px"
+                   class="mr-3" />ATENTO AVISO</h3>
+
+                <div [innerHTML]="msjPresentarDelaracion">
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12 text-right">
+                        <a class="btn btn-primary" href="#" role="button" data-toggle="modal" data-dismiss="modal" data-target="#modalNuevaDeclaracion">Entendido</a>
+                    </div>
+                </div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal ConfirmarFechaEncargo -->
+<div class="modal fade" id="confirmarFechaEncargo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+             <h5 class="modal-title" id="eliminarDeclaración">Eliminar</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">×</span>
+             </button>
+             </div> -->
+            <div class="modal-body text-center" *ngIf="globals.declaracionLoaded">
+                <h5>La fecha de ({{globals.declaracionLoaded.encabezado.tipoDeclaracion}}) del encargo ({{globals.declaracionLoaded.encabezado.fechaEncargo}}), no coincide con la reportada en RUSP por el Área de Recursos Humandos de su institución ({{this.globals.declaracionLoaded.declaracion.datosEmpleoCargoComision.empleoCargoComision[0].fechaEncargo}}).</h5>
+                <h5> ¿Desea continuar? </h5>
+            </div>
+            <div class="modal-footer text-center d-flex justify-content-center container-fluid">
+                <button type="button" (click)="abrirDeclaracion(true);" data-dismiss="modal" class="btn btn-success col-md-2 mr-5 ">
+             <i class="fas fa-check"></i> Confirmar</button>
+                <button type="button" class="btn btn-danger col-md-2 ml-5" (click)="abrirPresentar()">
+             <i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

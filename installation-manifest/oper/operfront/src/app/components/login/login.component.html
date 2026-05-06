@@ -1,0 +1,27 @@
+<header>
+    <div class="row bg-light ">
+        <div class="centerImage">
+            <img *ngIf="this.enteImage" class="rounded" [src]="this.enteImage" width="120%" alt="enteImg" />
+        </div>
+    </div>
+</header>
+<div style="position: absolute; top: 0; left: 0; width: 100px; text-align: left; color: white"> -pres </div>
+
+<div class="wrapper fadeInDown">
+    <div class="login bg-light">
+        <div class="content-login">
+            <div class="content-img">
+                <img src="../../../assets/img/OPER.png" alt="logoOper" />
+            </div>
+            <div class="content-button">
+                <div id="DnetTool" [attr.data-info]="this.cl + ',' + this.sk" class="ingreso mt-2 col-md-8 offset-2">
+
+                    <button type="button" id="DnetToolButton" class="botonlogoOmext btn btn-danger btn-block" value="Ingresar" [disabled]="!flagEnte">
+            <span class="spinner-grow spinner-grow-sm" *ngIf="!flagEnte" role="status" aria-hidden="true"></span>
+            {{flagEnte?'Ingresar':'Cargando...'}}
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

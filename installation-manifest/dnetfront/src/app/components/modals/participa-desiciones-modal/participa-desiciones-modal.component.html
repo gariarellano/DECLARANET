@@ -1,0 +1,268 @@
+<div class="modal-content" style="height: 600px;">
+    <div class="modal-header">
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">¿Participa en la toma de decisiones de alguna de estas instituciones?</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <form #participaTDeciForm="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="participacionesRadio" type="radio" required
+                            id="radio{{data.id}}" [(ngModel)]="parTomaDecisiones.tipoOperacion" [value]="data.id"
+                            (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-body" style="overflow-y: scroll">
+        <form #participaDeciForm="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel"
+                [(ngModel)]="parTomaDecisiones.tipoOperacion">
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Participante<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Participante<i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoPersona , parTomaDecisiones.tipoOperacion)" name="tipoPersona"
+                        id="parDesPar" maxlength="50" [(ngModel)]="parTomaDecisiones.participante" required
+                        #tipoPersona="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let dep of this.cata.enums.ENUM_PARTICIPANTE" [value]="dep.id">
+                            {{dep.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="tipoPersona.invalid && (tipoPersona.dirty || tipoPersona.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de institución<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de institución <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoInstitucion , parTomaDecisiones.tipoOperacion)"
+                        name="tipoInstitucion" id="parDesTipIns" maxlength="50"
+                        [(ngModel)]="parTomaDecisiones.tipoInstitucion" [compareWith]="cata.compareFn"
+                        appSelectValidator required #tipoInstitucion="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let ti of this.cata.catalogos.CAT_TIPO_INSTITUCION" [ngValue]="ti">
+                            {{ti.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="tipoInstitucion.invalid && (tipoInstitucion.dirty || tipoInstitucion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div class="flecha-otro">
+                    <i *ngIf="parTomaDecisiones.tipoInstitucion.id == '9999'" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="parTomaDecisiones.tipoInstitucion.id == '9999'"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( valorInstitucion , parTomaDecisiones.tipoOperacion)" type="text"
+                        name="valorInstitucion" id="parDesEspTipIns" [(ngModel)]="parTomaDecisiones.tipoInstitucionOtro"
+                        required maxlength="100" #valorInstitucion="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip"
+                        *ngIf="valorInstitucion.invalid && (valorInstitucion.dirty || valorInstitucion.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre de la institución<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre de la institución</label>
+                    <input [disabled]="getDisabled( nombreInstitucion , parTomaDecisiones.tipoOperacion)" type="text"
+                        name="nombreInstitucion" id="parDesNomIns" maxlength="100"
+                        [(ngModel)]="parTomaDecisiones.institucion.nombre" required maxlength="250"
+                        #nombreInstitucion="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip"
+                        *ngIf="nombreInstitucion.invalid && (nombreInstitucion.dirty || nombreInstitucion.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC</label>
+                    <input [disabled]="getDisabled( rfcInstitucion , parTomaDecisiones.tipoOperacion)" type="text"
+                        name="rfcInstitucion" id="parDesRfc" maxlength="100"
+                        [(ngModel)]="parTomaDecisiones.institucion.rfc" maxlength="12" #rfcInstitucion="ngModel"
+                        oninput="CustomUpperCase(this);" rfcMoralValid>
+                    <div class="invalid-tooltip" *ngIf="rfcInstitucion.invalid && rfcInstitucion.touched">
+                        <div *ngIf="rfcInstitucion.errors.rfcMoralValid && rfcInstitucion.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Puesto / Rol<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Puesto / Rol <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rol , parTomaDecisiones.tipoOperacion)" type="text" name="rol"
+                        [(ngModel)]="parTomaDecisiones.puestoRol" id="parDesPueRol" required maxlength="100"
+                        #rol="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="rol.invalid && (rol.dirty || rol.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Fecha de inicio de participación dentro de la institución<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fecha de inicio de participación dentro de la institución <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input fechaValid="{{fechaValid}}"
+                        [disabled]="getDisabled( fecha , parTomaDecisiones.tipoOperacion)" type="date" name="fecha"
+                        maxlength="100" id="parDesFecParDenIns" [max]="cata.fechaReferenciaMax"
+                        [(ngModel)]="parTomaDecisiones.fechaInicioParticipacion" required #fecha="ngModel">
+                    <div class="invalid-tooltip" *ngIf="fecha.invalid && fecha.touched">
+                        Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                            [attr.data-td]="tipoDeclaracion" onclick="abrirModalInfo('modalMsgFechasEncargo',this)"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">¿Recibe remuneración por su participación?<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">¿Recibe remuneración por su participación? <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( remuneracion , parTomaDecisiones.tipoOperacion)"
+                        name="remuneracion" id="parDesResRemPorPar" [(ngModel)]="parTomaDecisiones.recibeRemuneracion"
+                        required #remuneracion="ngModel">
+                        <option [ngValue]=null disabled>Seleccione...</option>
+                        <option [ngValue]=true>SI</option>
+                        <option [ngValue]=false>NO</option>
+                    </select>
+                    <div class="invalid-tooltip"
+                        *ngIf="remuneracion.invalid && (remuneracion.dirty || remuneracion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+
+                <div *ngIf="parTomaDecisiones.recibeRemuneracion == true"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Monto mensual neto<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Monto mensual neto <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( Monto , parTomaDecisiones.tipoOperacion)" type="text"
+                        #Monto="ngModel" id="parDesMonMenNet" name="Monto"
+                        [(ngModel)]="parTomaDecisiones.montoMensual.monto"
+                        oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)" required>
+                    <div class="invalid-tooltip" *ngIf="Monto.invalid && (Monto.dirty || Monto.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+
+                <div *ngIf="parTomaDecisiones.recibeRemuneracion == true"
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de moneda<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de moneda <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( moneda , parTomaDecisiones.tipoOperacion)" name="moneda"
+                        id="parDesTipMon" [(ngModel)]="parTomaDecisiones.montoMensual.moneda" required #moneda="ngModel"
+                        appSelectValidator [compareWith]="cata.compareFn">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let m of this.cata.catalogos.CAT_MONEDA" [ngValue]="m">
+                            {{m.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="moneda.invalid && (moneda.dirty || moneda.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Lugar donde se ubica<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Lugar donde se ubica <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( lugarUbica , parTomaDecisiones.tipoOperacion)" name="lugarUbica"
+                        id="parDesLugUbi" [(ngModel)]="parTomaDecisiones.localizacion.ubicacion" required
+                        #lugarUbica="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let dato of this.cata.enums.ENUM_UBICACION" [value]="dato.id">
+                            {{dato.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="lugarUbica.invalid && (lugarUbica.dirty || lugarUbica.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div *ngIf="parTomaDecisiones.localizacion.ubicacion == 'MEXICO' || parTomaDecisiones.localizacion.ubicacion == 'EXTRANJERO'  "
+                    class="flecha-otro">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="parTomaDecisiones.localizacion.ubicacion == 'MEXICO' "
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Entidad federativa<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Entidad federativa <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( entidad , parTomaDecisiones.tipoOperacion)" name="entidad"
+                        appSelectValidator id="parDesEntFed" [compareWith]="cata.compareFn"
+                        [(ngModel)]="parTomaDecisiones.localizacion.localizacionMexico.entidadFederativa" required
+                        #entidad="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let ent of this.cata.catalogos.CAT_ENTIDAD_FEDERATIVA" [ngValue]="ent">
+                            {{ent.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="entidad.invalid && (entidad.dirty || entidad.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div *ngIf="parTomaDecisiones.localizacion.ubicacion == 'EXTRANJERO' "
+                    class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">País donde se localiza<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">País donde se localiza <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( pais , parTomaDecisiones.tipoOperacion)" name="pais" maxlength="50"
+                        appSelectValidator id="parDesPaiDonLoc"
+                        [(ngModel)]="parTomaDecisiones.localizacion.localizacionExtranjero.pais" required
+                        #pais="ngModel" [compareWith]="cata.compareFn">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let pais of this.cata.catalogos.CAT_PAIS" [ngValue]="pais">
+                            {{pais.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="pais.invalid && (pais.dirty || pais.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success"
+            [disabled]="!participaDeciForm.form.valid || !participaTDeciForm.form.valid"
+            (click)="guardaLocal()">Aceptar</button>
+        <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+    </div>
+</div>

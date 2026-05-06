@@ -1,0 +1,41 @@
+// *** Se recomienda ejecutar las creaciones de los indices ya que se hayan creado las colecciones en la base de datos 
+// *** mongo (declaranet), estos indices le ayudan a declaranet a responder rapidamente las consultas, ya que haya un 
+// *** volumen de datos importante.
+// ***
+// *** Solo contiene los indices de las colecciones que representan al ente receptor "principal" para aquellos nuevos 
+// *** entes registrados con su collName diferente al principal se deben acrear de igual manera ya que haya un volumen 
+// *** importante en sus datos, para la respuesta rapida de la base de datos.
+
+
+// *** Colección: reservaSN100 ***
+db.reservaSN100.createIndex({"curp": 1.0}, {"name": "idx_Curp", "sparse": true, "background": true});
+db.reservaSN100.createIndex({"rfc": 1.0}, {"name": "idx_rfc", "sparse": true, "background": true});
+db.reservaSN100.createIndex({"idUsrDecnet": 1.0}, {"name": "idx_idUsrDnetRSN100", "sparse": true, "background": true});
+
+// *** Colección: reservaSNPend100 ***
+db.reservaSNPend100.createIndex({"rfc": 1.0}, {"name": "idx_RFCResPend", "sparse": true, "background": true});
+db.reservaSNPend100.createIndex({"curp": 1.0}, {"name": "idx_CURPResPend", "sparse": true, "background": true});
+
+// *** Colección: recepcionWeb100 ***
+db.recepcionWeb100.createIndex({"_id": 1}, {"name": "_id_"});
+db.recepcionWeb100.createIndex({"declaracion.numeroDeclaracion": 1, "declarante.idUsrDecnet": 1}, {"name": "idxNumDecIdUsr", "background": true});
+db.recepcionWeb100.createIndex({"declarante.idUsrDecnet": 1, "declaracion.tipoDeclaracion": 1, "declaracion.anio": 1, "declaracion.fechaEncargo": 1}, {"name": "idxIdUsrTipoDecAnioFechEncargo", "background": true});
+db.recepcionWeb100.createIndex({"declarante.idUsrDecnet": 1}, {"name": "idxIdUsr", "background": true});
+db.recepcionWeb100.createIndex({"declaracion.fechaRecepcion": 1.0, "declaracion.tipoDeclaracion": 1.0}, {"name": "idxFecRecepTipoDecla", "background": true});
+db.recepcionWeb100.createIndex({"declarante.curp": 1.0}, {"name": "idx_recWebCurp", "background": true});
+db.recepcionWeb100.createIndex({"declaracion.noComprobante": 1.0}, {"name": "idx_RWNoDeclaracion", "background": true});
+db.recepcionWeb100.createIndex({"declarante.rfc": 1.0}, {"name": "idx_rfcRecWeb100", "background": true});
+db.recepcionWeb100.createIndex({"declarante.idUsrDecnet": 1.0, "declaracion.tipoDeclaracion": 1.0}, {"name": "idx_idUsrDecNet_tipoDec", "background": false});
+
+// *** Colección: declaracionTemp100 ***
+db.declaracionTemp100.createIndex({"encabezado.usuario.idUsuario": 1}, {"name": "idxIdUsr", "background": true});
+db.declaracionTemp100.createIndex({"encabezado.usuario.curp": 1}, {"name": "idx_curp", "background": true});
+
+// *** Colección: datosPublicos100 ***
+db.datosPublicos100.createIndex({"nombre": 1.0, "dependencia": 1.0, "idDependencia": 1.0, "idUsrDecnet": 1.0}, {"name": "idx_datPub100", "background": true});
+db.datosPublicos100.createIndex({"idUsrDecnet": 1.0}, {"name": "idx_datPubIdUsrDNet100", "background": true});
+db.datosPublicos100.createIndex({"rfc": 1.0}, {"name": "idx_rfcDP100", "sparse": true, "background": true});
+db.datosPublicos100.createIndex({"curp": 1.0}, {"name": "idx_curpDP100", "sparse": true, "background": true});
+db.datosPublicos100.createIndex({"nombre": 1.0}, {"name": "idx_nombreDP100", "background": true});
+// *** Para el funcionamiento de "consulta publica o servidores publico (aplicativo)" es importante ejecutar este indice para su funcionamiento.
+db.datosPublicos100.createIndex({"_fts": "text", "_ftsx": 1}, {"name": "idxTextNombreDP100", "language_override": "language", "background": true, "textIndexVersion": 3, "weights": {"nombre": 1}});

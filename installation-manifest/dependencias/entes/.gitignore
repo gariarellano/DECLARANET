@@ -1,0 +1,8 @@
+/target/
+/.idea/
+.project
+.classpath
+/.vertx/
+/.settings/
+*.iml
+build_and_run.sh

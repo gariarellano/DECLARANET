@@ -1,0 +1,109 @@
+<!-- <header>
+    <div id="left"></div>
+    <div class="cuenta-content"></div>
+</header>
+<div class="menu-cuenta">
+    <li><i class="fas fa-cog"></i> Ajustes</li>
+    <li><i class="fas fa-sign-out-alt"></i> Salir</li>
+</div> -->
+
+<div id="content-cargando">
+    <div class="spinner-border text-success" role="status">
+    </div>
+    <span>Cargando</span>
+</div>
+
+<!-- <div id="content-btnSave">
+       <button id="guardaDatos" class="btn btn-success">Guardar <i class="fas fa-save"></i></button>
+</div> -->
+
+<div class="contenedor">
+
+    <div style="float: left; width: 45%; min-width: 450px;" class="text-left">
+        <div style="position: absolute; top: 0; left: 0; width: 100px; text-align: left; color: white"> -pres </div>
+        <form #loginForm="ngForm" autocomplete="off">
+            <div class="col-md-12 text-left mt-5 centrar">
+                <!-- <h1 class="title">DECLARANET</h1> -->
+                <div class="mt-5  col-md-8 offset-2 ">
+                    <img *ngIf="this.enteImage" class="rounded" [src]="this.enteImage" width="100%" />
+                </div>
+
+
+                <div class="mt-5 col-md-8 offset-2">
+                    <!-- <span class="DeclaraNet" translate="no">Declara</span>
+                    <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                    <img class="rounded" src="../../../assets/image/declara-net.svg" width="100%" />
+                </div>
+
+                <div class="mt-5  col-md-8 offset-2">
+                    <span style="color: rgb(33 13 250);">
+                        Inicia sesión
+                    </span>
+                </div>
+                <div class="mt-1  col-md-8 offset-2">
+
+                    <mat-form-field class="col-md-12 p-0">
+                        <input matInput placeholder="Ingrese su CURP" name="curp" id="curp" curpValid #curp="ngModel" [(ngModel)]="this.curpLogin" oninput="CustomUpperCase(this);" class="col-md-12" required maxlength="18" minlength="18">
+
+                        <div class="invalid-tooltip" *ngIf="curp.invalid && curp.touched">
+                            <div *ngIf="curp.errors.CurpValid && curp.touched">
+                                La CURP debe contener el formato correcto...
+                            </div>
+                            <div *ngIf="curp.errors.required">
+                                Campo requerido....
+                            </div>
+                            <!-- <div>
+                                {{curp.errors | json}}
+                            </div> -->
+                        </div>
+
+                    </mat-form-field>
+                    <!-- <input name="curp" #curp="ngModel" [(ngModel)]="this.curpLogin" oninput="CustomUpperCase(this);" class="col-md-12" required maxlength="18" minlength="18"> -->
+                </div>
+                <div id="DnetTool" [attr.data-info]="this.cl+ ',' + this.sk" data-usr="curp" class="mt-4  col-md-8 offset-2">
+                    <button type="submit" id="DnetToolButton" class="btn btn-login btn-block" [disabled]="!loginForm.valid || !flagEnte">
+                        <!-- <span class="glyphicon glyphicon-log-in" style="max-width: 400px;"></span> -->
+                            <span style="font-size: 18px;" *ngIf="flagEnte"> Iniciar sesión</span>
+                            <span class="spinner-grow spinner-grow-sm" *ngIf="!flagEnte" role="status" aria-hidden="true">
+                                </span>
+                                <span style="font-size: 18px;" *ngIf="!flagEnte"> Cargando datos de inicio...</span>
+                            
+                        </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div style="float: right; width: 55%" class="divRight">
+        <!-- <div class="divTransparent">
+        </div> -->
+    </div>
+
+    <!-- <div class="container shadow bg-white rounded">
+
+
+    </div> -->
+</div>
+
+
+<div class="modal fade" id="modalLoginInicio" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-justify">
+                <div [innerHTML]="msjLoginInicio"></div>
+                <div class="row mt-3">
+                    <div class="col-md-12 text-right">
+                        <a class="btn btn-primary" href="#" role="button" data-toggle="modal" data-dismiss="modal">Entendido</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

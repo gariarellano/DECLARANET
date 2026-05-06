@@ -1,0 +1,1499 @@
+schema {
+	mutation: Mutation
+	query: Query
+}
+"Query que no se va a ocupar."
+type Query {
+	querySimple(cualquierCosa: String) : String
+}
+
+"Funciones de creación y modificación."
+type Mutation {
+	"Funcion que guarda una declaracion de inicio, modificacion o declaracion"
+	guardarDeclaracion(parametros: Parametros!) : Respuesta
+
+	"Funcion que guarda el aviso por cambio de dependencia"
+	guardarAviso(parametros: ParametrosAviso!) : Respuesta
+
+	"Funcion que guarda notas aclaratorias"
+	guardarNotas(parametros: ParametrosNotas!) : Respuesta
+}
+
+"Parametros enviados para declaraciones"
+input Parametros {
+	declaracion : DeclaracionCompleta!
+	digitoVerificador : String!
+}
+
+"Parametros enviados para el aviso por cambio de dependencia"
+input ParametrosAviso {
+	declaracion : AvisoCambioCompleta!
+	digitoVerificador : String!
+}
+
+"Parametros enviados para el aviso por cambio de dependencia"
+input ParametrosNotas {
+	declaracion : NotasAclaratoriasCompleta!
+	digitoVerificador : String!
+}
+
+"Declaracion con la informacion que se guardara"
+input DeclaracionCompleta {
+	institucionReceptora: InstitucionReceptora!
+	encabezado: Encabezado!
+	firmada: Boolean!
+	declaracion: Declaracion!
+	numeroDeclaracionPrecarga: String
+}
+
+"Informacion del aviso por cambio de dependencia"
+input AvisoCambioCompleta {
+	institucionReceptora: InstitucionReceptora!
+	encabezado: Encabezado!
+	firmada: Boolean!
+	declaracion: AvisoCambio!
+}
+
+"Informacion del aviso por cambio de dependencia"
+input NotasAclaratoriasCompleta {
+	institucionReceptora: InstitucionReceptora!
+	encabezado: EncabezadoNotas!
+	firmada: Boolean!
+	declaracion: NotasAclaratorias!
+}
+
+"Datos de la institucion receptora"
+input InstitucionReceptora {
+	_id: String!
+	nombre: String!
+	ente: EnteReceptor!
+	collName:Int
+}
+
+"Nivel orden de gobierno"
+input NivelOrdenGobierno {
+	nivelOrdenGobierno:EnumNivelGobierno
+	entidadFederativa:EntidadFederativa
+}
+
+"Encabezado"
+input Encabezado {
+	numeroDeclaracion: String
+	tipoDeclaracion:EnumTipoDeclaracion!
+	anio: Int!
+	fechaEncargo: String
+	fechaRegistro: String!
+	fechaActualizacion: String
+	usuario: Usuario!
+	tipoFormato:EnumTipoFormato!
+	versionDeclaracion:Int!
+	nivelJerarquico:CatalogoUnoFk!
+}
+
+"Encabezado"
+input EncabezadoDecOrigenNotas {
+	numeroDeclaracion: String
+	tipoDeclaracion:EnumTipoDeclaracion!
+	anio: Int!
+	fechaEncargo: String
+	fechaRegistro: String!
+	fechaActualizacion: String
+	usuario: Usuario!
+	tipoFormato:EnumTipoFormato!
+	versionDeclaracion:Int!
+	nivelJerarquico:CatalogoUnoFk
+}
+
+"Encabezado para notas"
+input EncabezadoNotas {
+	numeroDeclaracion: String
+	tipoDeclaracion:EnumTipoDeclaracionNota!
+	tipoFormato:EnumTipoFormato!
+	fechaRegistro: String!
+	fechaActualizacion: String
+	usuario: Usuario!
+	versionNota: String!
+	declaracionOrigen:DeclaracionOrigen!
+	datosPersonales:DatosPersonalesNotas!
+}
+
+"Declaracion a la que hace referencia la nota aclaratoria"
+input DeclaracionOrigen {
+	encabezado: EncabezadoDecOrigenNotas!
+	acuse: Acuse!
+}
+
+"Acuse de la declaracion a la que hace referencia la nota aclaratoria"
+input Acuse {
+	fechaRecepcion: String
+}
+
+"Usuario"
+input Usuario {
+	idUsuario: Int!
+	idSp: Int
+	curp: String!
+	id_movimiento: Int
+}
+
+input EntidadFederativa{
+	id: Int!
+	valor: String!
+	municipioAlcaldia: MunicipioAlcaldia
+}
+
+input MunicipioAlcaldia {
+	id: Int!
+	valor: String!
+}
+
+"Respuesta con informacion sobre el estado de la accion y posibles errores"
+type Respuesta {
+	"Estado de la respuesta"
+	estado: String!
+
+	"Información sobre los modulos de la declaracion."
+	modulos: [Modulo]
+
+	declaracion: String
+}
+
+"Información sobre el módulo"
+type Modulo {
+
+	"Nombre del módulo."
+	modulo: String
+
+	"Observaciones sobre el módulo."
+	errores:[Error]
+}
+
+"Error."
+type Error {
+	"Posición fila."
+	posicionFila: Int
+
+	"Nombre del campo."
+	nombreCampo: String
+
+	"Valor del campo."
+	propiedadValor:String
+
+	"Lista de errores."
+	listErrorMensajes:[MensajeError]
+}
+
+"Mensaje de error."
+type MensajeError {
+
+	"Identificador del error."
+	errorId:Int
+
+	"Mensaje del error."
+	mensaje:String
+
+	"Mensaje alterno del error."
+	mensajeAlterno:String
+}
+
+### NOTAS ACLARATORIAS
+
+"Declaración patrimonial."
+input NotasAclaratorias {
+
+	"Notas aclaratorias de Datos generales."
+	datosGenerales: Nota
+
+	"Notas aclaratorias de Domicilio del declarante."
+	domicilioDeclarante: Nota
+
+	"Notas aclaratorias de Datos curriculares del declarante"
+	datosCurricularesDeclarante:Nota
+
+	"Notas aclaratorias de Datos del empleo, cargo o comisión"
+	datosEmpleoCargoComision:Nota
+
+	"Notas aclaratorias de Experiencias laborales"
+	experienciasLaborales:Nota
+
+	"Notas aclaratorias de Datos de parejas"
+	datosParejas:Nota
+
+	"Notas aclaratorias de Datos de los dependientes economicos"
+	datosDependientesEconomicos:Nota
+
+	"Notas aclaratorias de Ingresos"
+	ingresos:Nota
+
+	"Notas aclaratorias de Actividad anual anterior"
+	actividadAnualAnterior:Nota
+
+	"Notas aclaratorias de Bienes inmuebles"
+	bienesInmuebles:Nota
+
+	"Notas aclaratorias de Vehículos"
+	vehiculos:Nota
+
+	"Notas aclaratorias de Bienes muebles"
+	bienesMuebles:Nota
+
+	"Notas aclaratorias de Inversiones en cuentas de valores"
+	inversionesCuentasValores:Nota
+
+	"Notas aclaratorias de Adeudos / pasivos"
+	adeudosPasivos:Nota
+
+	"Notas aclaratorias de Préstamo comodato"
+	prestamoComodato:Nota
+
+	"Notas aclaratorias de Participa en empresas, sociedades, asociaciones"
+	participaEmpresasSociedadesAsociaciones:Nota
+
+	"Notas aclaratorias de Participacion el la toma de decisiones"
+	participacionTomaDecisiones:Nota
+
+	"Notas aclaratorias de Apoyos"
+	apoyos:Nota
+
+	"Notas aclaratorias de Representaciones"
+	representaciones:Nota
+
+	"Notas aclaratorias de Clientes principales"
+	clientesPrincipales:Nota
+
+	"Notas aclaratorias de Beneficios privados"
+	beneficiosPrivados:Nota
+
+	"Notas aclaratorias de Fideicomisos"
+	fideicomisos:Nota
+
+	"Notas aclaratorias para el aviso por cambio de dependencia"
+	detalleAvisoCambioDependencia:Nota
+
+}
+
+"Nota"
+input Nota {
+	aclaracionesObservaciones: String!
+}
+
+### AVISO POR CAMBIO DE DEPENDENCIA
+"Aviso por cambio de dependencia"
+input AvisoCambio {
+	"Datos generales."
+	datosGenerales: DatosGenerales
+
+	"Domicilio del declarante."
+	domicilioDeclarante: DomicilioDeclarante
+
+	"Informacion relevante del aviso de cambio de dependencia"
+	detalleAvisoCambioDependencia: DetalleAviso
+}
+
+"Información del aviso por cambio de dependencia"
+input DetalleAviso {
+	empleoCargoComisionConcluye :EmpleoCargoComisionConcluye!
+	empleoCargoComisionInicia : EmpleoCargoComisionInicia!
+	aclaracionesObservaciones: String
+}
+
+"Informacion del empleo cargo o comision que concluye"
+input EmpleoCargoComisionConcluye {
+	ente : EnteReceptor!
+	nivelJerarquico : CatalogoUnoFk!
+	fechaConclusionEncargo : String!
+}
+
+"Informacion del empleo cargo o comision que inicia"
+input EmpleoCargoComisionInicia {
+	id:String
+	ente : EnteReceptor!
+	fechaInicioEncargo : String!
+	areaAdscripcion : String!
+	empleoCargoComision : String!
+	nivelJerarquico : CatalogoUnoFk!
+	nivelEmpleoCargoComision : String!
+	contratadoPorHonorarios : Boolean!
+	domicilio : Domicilio!
+}
+
+#### DECLARACION
+
+"Declaración patrimonial."
+input Declaracion {
+
+	"Datos generales."
+	datosGenerales: DatosGenerales
+
+	"Domicilio del declarante."
+	domicilioDeclarante: DomicilioDeclarante
+
+	"Datos curriculares del declarante"
+	datosCurricularesDeclarante:DatosCurriculares
+
+	"Datos del empleo, cargo o comisión"
+	datosEmpleoCargoComision:DatosEmpleoCargoComision
+
+	"Experiencias laborales"
+	experienciasLaborales:ExperienciasLaborales
+
+	"Datos de parejas"
+	datosParejas:DatosParejas
+
+	"Datos de los dependientes economicos"
+	datosDependientesEconomicos:DatosDependienteEconomicos
+
+	"Ingresos"
+	ingresos:Ingresos
+
+	"Actividad anual anterior"
+	actividadAnualAnterior:ActividadAnualAnterior
+
+	"Bienes inmuebles"
+	bienesInmuebles:BienesInmuebles
+
+	"Vehículos"
+	vehiculos:Vehiculos
+
+	"Bienes muebles"
+	bienesMuebles:BienesMuebles
+
+	"Inversiones en cuentas de valores"
+	inversionesCuentasValores:InversionesCuentasValores
+
+	"Adeudos / pasivos"
+	adeudosPasivos:AdeudosPasivos
+
+	"Préstamo comodato"
+	prestamoComodato:PrestamoComodato
+
+	"Participa en empresas, sociedades, asociaciones"
+	participaEmpresasSociedadesAsociaciones:ParticipaEmpresasSociedadesAsociaciones
+
+	"Participacion el la toma de decisiones"
+	participacionTomaDecisiones:ParticipacionTomaDecisiones
+
+	"Apoyos"
+	apoyos:Apoyos
+
+	"Representaciones"
+	representaciones:Representaciones
+
+	"Clientes principales"
+	clientesPrincipales:ClientesPrincipales
+
+	"Beneficios privados"
+	beneficiosPrivados:BeneficiosPrivados
+
+	"Fideicomisos"
+	fideicomisos:Fideicomisos
+
+}
+
+#### I_DATOS_GENERALES
+
+"I Datos generales"
+input DatosGenerales{
+
+	datosPersonales: DatosPersonales!
+	verificar:Boolean
+	correoElectronico: CorreoDTO!
+	telefonoCasa: TelefonoDTO!
+	telefonoCelular: TelefonoDTO!
+	situacionPersonalEstadoCivil: Catalogo!
+	regimenMatrimonial: Catalogo
+	regimenMatrimonialOtro: String
+	paisNacimiento: Catalogo!
+	nacionalidad: Catalogo!
+	aclaracionesObservaciones: String
+}
+
+
+
+####  I_DOMICILIO_DECLARANTE
+
+"I Domicilio del declarante"
+input DomicilioDeclarante {
+	domicilio: Domicilio!
+	aclaracionesObservaciones: String
+	verificar:Boolean
+}
+
+
+
+####  I_DATOS_CURRICULARES -- datosCurricularesDeclarante
+#### Se permite precarga - multiples campos nulos
+
+"I Datos curriculares"
+input DatosCurriculares {
+	aclaracionesObservaciones: String
+	escolaridad: [DatoCurricular]
+}
+
+input DatoCurricular {
+	id: String
+	idPosicionVista: String!
+	registroHistorico: Boolean!
+	verificar:Boolean!
+	"!"tipoOperacion: EnumTipoOperacion
+	"!"nivel: Catalogo
+	"!"institucionEducativa: String
+	"!"carreraAreaConocimiento: String
+	"!"estatus: EnumEstatusEscolaridad
+	"!"documentoObtenido: DocumentoObtenido
+	"!"ubicacion: EnumUbicacion
+}
+
+input DocumentoObtenido {
+	"!"tipo: EnumTipoDocumento
+	"!"fechaObtencion: String
+}
+
+enum EnumTipoDocumento {
+	BOLETA
+	CERTIFICADO
+	CONSTANCIA
+	TITULO
+}
+
+
+####  I_DATOS_EMPLEO -- datosEmpleoCargoComision
+
+"I Datos del empleo"
+input DatosEmpleoCargoComision {
+	aclaracionesObservaciones : String
+	empleoCargoComision : [EmpleoCargoComision]!
+}
+
+input EmpleoCargoComision {
+	idPosicionVista :  String!
+	registroHistorico : Boolean!
+	verificar:Boolean!
+	tipoOperacion : EnumTipoOperacion
+	idMovimiento : Int
+	id : String
+	"!"ente : EnteReceptor
+	"!"areaAdscripcion : String
+	"!"empleoCargoComision : String
+	"!"nivelJerarquico : CatalogoUnoFk
+	"!"nivelEmpleoCargoComision : String
+	"!"contratadoPorHonorarios : Boolean
+	"!"remuneracionNeta : MontoMoneda
+	"!"tipoRemuneracion : EnumTipoRemuneracion
+	"!"funcionPrincipal : String
+	"!"fechaEncargo : String
+	"!"telefonoOficina : TelefonoOficina
+	"!"domicilio : Domicilio
+}
+
+input EnteReceptor{
+	id : String!
+	nombre : String!
+	nivelOrdenGobierno : NivelOrdenGobierno!
+	ambitoPublico : EnumAmbitoPoder!
+}
+
+
+input TelefonoOficina{
+	numero : String
+	extension : String
+}
+
+
+####  I_EXPERIENCIA_LABORAL -- experienciasLaborales
+#### Se permite precarga - multiples campos nulos
+
+"I Experiencias laborales"
+input ExperienciasLaborales {
+	aclaracionesObservaciones: String
+	ninguno: Boolean!
+	experienciaLaboral: [ExperienciaLaboral]
+}
+
+input ExperienciaLaboral {
+	actividadLaboral: ActividadLaboral
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	id: String
+	tipoOperacion: EnumTipoOperacion
+}
+
+input ActividadLaboral {
+	"!"ambitoSector: Catalogo
+	ambitoSectorOtro: String
+	sectorPublico: SectorPublico
+	sectorPrivadoOtro: SectorPrivado
+	"!"fechaIngreso: String
+	"!"fechaEgreso: String
+	"!"ubicacion: EnumUbicacion
+}
+
+input ActividadLaboralDependiente {
+	"!"ambitoSector: Catalogo
+	ambitoSectorOtro: String
+	sectorPublico: SectorPublico
+	sectorPrivadoOtro: SectorPrivadoDependientes
+	"!"fechaIngreso: String
+	salarioMensualNeto:Int
+}
+
+
+input SectorPublico {
+	"!"nivelOrdenGobierno: EnumNivelGobierno
+	"!"ambitoPublico: EnumAmbitoPoder
+	"!"nombreEntePublico: String
+	"!"areaAdscripcion: String
+	"!"empleoCargoComision: String
+	"!"funcionPrincipal: String
+}
+
+input SectorPrivado {
+	"!"nombreEmpresaSociedadAsociacion: String
+	rfc: String
+	"!"area: String
+	"!"empleoCargo: String
+	"!"sector: Catalogo
+	"!"sectorOtro: String
+}
+
+input SectorPrivadoDependientes {
+	"!"nombreEmpresaSociedadAsociacion: String
+	rfc: String
+	"!"area: String
+	"!"empleoCargo: String
+	"!"sector: Catalogo
+	sectorOtro:String
+	"!"proveedorContratistaGobierno:Boolean
+}
+
+
+####  I_DATOS_PAREJA -- datosParejas
+#### Se permite precarga - multiples campos nulos
+
+"I Datos de pareja"
+input DatosParejas {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	datosParejas:[DatosPareja]
+}
+
+input DatosPareja {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	"!"tipoOperacion:EnumTipoOperacion
+	"!"datosPersonales:DatosPersonalesDependiente
+	"!"relacionConDeclarante:EnumRelacionDeclarante
+	"!"ciudadanoExtranjero:CiudadanoExtranjero
+	"!"esDependienteEconomico:Boolean
+	"!"habitaDomicilioDeclarante:Boolean
+	domicilioDependienteEconomico:DomicilioDependienteEconomico
+	"!"ninguno:Boolean
+	actividadLaboral:ActividadLaboralDependiente
+}
+
+enum EnumRelacionDeclarante {
+	CONYUGE
+	CONCUBINARIO
+	SOCIEDAD_CONVIVENCIA
+	OTRO
+}
+
+####  I_DATOS_DEPENDIENTE -- datosDependientesEconomicos
+#### Se permite precarga - multiples campos nulos
+
+"I Datos del Dependiente económico"
+input DatosDependienteEconomicos {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	datosDependientesEconomicos:[DatosDependienteEconomico]
+}
+
+input DatosDependienteEconomico {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	"!"tipoOperacion:EnumTipoOperacion
+	"!"datosPersonales:DatosPersonalesDependiente
+	"!"parentescoRelacion:Catalogo
+	parentescoRelacionOtro:String
+	"!"ciudadanoExtranjero:CiudadanoExtranjero
+	"!"habitaDomicilioDeclarante:Boolean
+	domicilioDependienteEconomico:DomicilioDependienteEconomico
+	ninguno:Boolean!
+	actividadLaboral:ActividadLaboralDependiente
+}
+
+####  I_INGRESOS_NETOS -- ingresos
+
+"I Ingresos"
+input Ingresos {
+
+	tipoRemuneracion: EnumTipoRemuneracion!
+	remuneracionNetaCargoPublico: MontoMoneda!
+	otrosIngresosTotal: MontoMoneda!
+	actividadIndustrialComercialEmpresarial: [ActividadIndustrialCE]!
+	actividadFinanciera: [ActividadFinanciera]!
+	enajenacionBienes: [EnajenacionBien]
+	serviciosProfesionales: [ServiciosProfesionales]!
+	otrosIngresos: [OtrosIngresos]!
+	ingresoNetoDeclarante: Remuneracion!
+	ingresoNetoParejaDependiente: Remuneracion
+	totalIngresosNetos: Remuneracion
+	aclaracionesObservaciones: String
+
+}
+
+####  I_ACTIVIDAD_ANUAL_ANT -- actividadAnualAnterior
+
+"I Actividad anual anterior"
+input ActividadAnualAnterior {
+	aclaracionesObservaciones: String
+	servidorPublicoAnioAnterior: Boolean!
+	actividadAnual: ActividadAnual
+}
+
+input ActividadAnual {
+	fechaInicio: String!
+	fechaConclusion: String!
+	enajenacionBienes: [EnajenacionBien]!
+	tipoRemuneracion: EnumTipoRemuneracion!
+	remuneracionNetaCargoPublico: MontoMoneda!
+	otrosIngresosTotal: MontoMoneda!
+	actividadIndustrialComercialEmpresarial: [ActividadIndustrialCE]!
+	actividadFinanciera: [ActividadFinanciera]!
+	serviciosProfesionales: [ServiciosProfesionales]!
+	otrosIngresos: [OtrosIngresos]!
+	ingresoNetoDeclarante: Remuneracion!
+	ingresoNetoParejaDependiente: Remuneracion
+	totalIngresosNetos: Remuneracion
+}
+
+input EnajenacionBien {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean
+	tipoBien: EnumTipoBien!
+	remuneracion: MontoMoneda!
+}
+
+enum EnumTipoBien {
+	MUEBLE
+	INMUEBLE
+	VEHICULO
+}
+
+enum EnumTipoBienPrestamo {
+	INMUEBLE
+	VEHICULO
+}
+
+
+####  I_BIENES_INMUEBLES -- bienesInmuebles
+#### Se permite precarga - multiples campos nulos
+
+"I Bienes inmuebles"
+input BienesInmuebles {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	bienesInmuebles:[BienInmueble]
+
+}
+
+input BienInmueble {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	"!"tipoOperacion:EnumTipoOperacion
+	"!"tipoInmueble:Catalogo
+	tipoInmuebleOtro:String
+	"!"titular:CatalogoUno
+	"!"porcentajePropiedad:Int
+	"!"superficieTerrenoM2:Int
+	"!"superficieConstruccionM2:Int
+	terceros:[Persona]
+	"!"transmisores:[Transmisor]
+	"!"formaAdquisicion:Catalogo
+	formaPago:EnumFormaPago
+	valorAdquisicion:MontoMoneda
+	"!"fechaAdquisicion:String
+	datoIdentificacion:String
+	valorConformeA:String
+	domicilio:Domicilio
+	motivoBaja:Catalogo
+	motivoBajaOtro: String
+	valorVenta:MontoMoneda
+}
+
+
+####  I_VEHICULOS -- vehiculos
+#### Se permite precarga - multiples campos nulos
+
+"I Vehiculos"
+input Vehiculos {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	vehiculos:[Vehiculo]
+}
+
+input Vehiculo{
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	"!"tipoOperacion:EnumTipoOperacion
+	"!"tipoVehiculo:Catalogo
+	tipoVehiculoOtro: String
+	marca:String
+	modelo:String
+	anio:Int
+	numeroSerieRegistro:String
+	"!"titular:CatalogoUno
+	terceros:[Persona]
+	"!"transmisores:[Transmisor]
+	"!"formaAdquisicion:Catalogo
+	formaPago:EnumFormaPago
+	valorAdquisicion:MontoMoneda
+	"!"fechaAdquisicion:String
+	lugarRegistro:Localizacion
+	motivoBaja:Catalogo
+	motivoBajaOtro: String
+	valorVenta:MontoMoneda
+}
+
+
+####  I_BIENES_MUEBLES -- bienesMuebles
+#### Se permite precarga - multiples campos nulos
+
+"I Bienes muebles"
+input BienesMuebles {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	bienesMuebles:[BienMueble]
+}
+
+input BienMueble{
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	"!"tipoOperacion:EnumTipoOperacion
+	"!"tipoBien:Catalogo
+	tipoBienOtro:String
+	"!"titular:CatalogoUno
+	"!"descripcionGeneralBien:String
+	terceros:[Persona]
+	"!"transmisores:[Transmisor]
+	"!"formaAdquisicion:Catalogo
+	formaPago:EnumFormaPago
+	valorAdquisicion:MontoMoneda
+	"!"fechaAdquisicion:String
+	motivoBaja:Catalogo
+	motivoBajaOtro: String
+	valorVenta:MontoMoneda
+}
+
+####  I_INVERSIONES -- inversionesCuentasValores
+#### Se permite precarga - multiples campos nulos
+
+"I InversionesCuentasValores"
+input InversionesCuentasValores {
+	ninguno: Boolean!
+	inversion: [Inversion]
+	aclaracionesObservaciones: String
+}
+
+input Inversion {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	"!"tipoOperacion:EnumTipoOperacion
+	"!"tipoInversion: Catalogo
+	"!"subTipoInversion: CatalogoFk
+	"!"titular: CatalogoUno
+	terceros: [Persona]
+	"!"numeroCuentaContrato: String
+	"!"ubicacion:EnumUbicacion
+	"!"localizacionInversion: LocalizacionInversion
+	"!"saldo: MontoMoneda
+}
+
+input LocalizacionInversion {
+	pais: Catalogo
+	institucionRazonSocial: PersonaMoral
+}
+
+
+####  I_ADEUDOS_PASIVOS -- adeudosPasivos
+#### Se permite precarga - multiples campos nulos
+
+"I Adeudos pasivos"
+input AdeudosPasivos {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	adeudos:[Adeudo]
+}
+
+input Adeudo {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	"!"tipoOperacion:EnumTipoOperacion
+	"!"titular:CatalogoUno
+	"!"tipoAdeudo:Catalogo
+	tipoAdeudoOtro:String
+	numeroCuentaContrato:String
+	"!"fechaAdquisicion:String
+	"!"montoOriginal:MontoMoneda
+	"!"saldoInsoluto:Int
+	terceros:[Persona]
+	otorganteCredito:Persona
+	"!"paisAdeudo:Catalogo
+}
+
+
+####  I_PRESTAMO_COMODATO -- prestamoComodato
+
+"I Prestamo comodato"
+
+input PrestamoComodato {
+	ninguno : Boolean!
+	aclaracionesObservaciones : String
+	prestamo : [Prestamo]
+}
+
+input Prestamo{
+	idPosicionVista :  String!
+	registroHistorico : Boolean!
+	verificar:Boolean!
+	tipoOperacion : EnumTipoOperacion
+	id : String
+	tipoBien : EnumTipoBien!
+	inmueble : InmueblePrestamo
+	vehiculo : VehiculoPrestamo
+    duenoTitular : Persona
+    relacionConTitular : String!
+}
+
+input InmueblePrestamo{
+	tipoInmueble : Catalogo!
+	tipoInmuebleOtro : String
+	domicilio : Domicilio
+}
+
+input VehiculoPrestamo{
+	tipoVehiculo:Catalogo!
+	tipoVehiculoOtro: String
+	marca:String
+	modelo:String
+	anio:Int
+	numeroSerieRegistro:String
+	lugarRegistro:Localizacion
+}
+
+####  II_PARTICIPACION_EMPRESAS -- participaEmpresasSociedadesAsociaciones
+
+"II Participacion de empresas sociedades asociaciones"
+input ParticipaEmpresasSociedadesAsociaciones {
+	ninguno: Boolean!
+	participaciones: [ParticipacionEmp]
+	aclaracionesObservaciones: String
+
+}
+
+input ParticipacionEmp {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	tipoOperacion:EnumTipoOperacion
+	participante: EnumParticipante!
+	nombreEmpresaSociedadAsociacion: PersonaMoral!
+	porcentajeParticipacion: Int!
+	tipoParticipacion: Catalogo!
+	tipoParticipacionOtro: String
+	sector: Catalogo!
+	sectorOtro: String
+	recibeRemuneracion: Boolean!
+	montoMensual: MontoMoneda
+	localizacion: Localizacion!
+}
+
+
+
+####  II_TOMA_DECISIONES -- participacionTomaDecisiones
+
+"II Toma de decisiones"
+input ParticipacionTomaDecisiones {
+	ninguno: Boolean!
+	participaciones: [Participacion]
+	aclaracionesObservaciones: String
+
+}
+
+input Participacion {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	tipoOperacion:EnumTipoOperacion
+	participante: EnumParticipante!
+	tipoInstitucion: Catalogo!
+	tipoInstitucionOtro: String
+	institucion: PersonaMoral!
+	puestoRol: String!
+	fechaInicioParticipacion: String!
+	recibeRemuneracion: Boolean!
+	montoMensual: MontoMoneda
+	localizacion: Localizacion!
+}
+
+
+####  II_APOYOS_BENEFICIOS -- apoyos
+
+"II Apoyos, beneficios"
+input Apoyos {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	apoyos:[Apoyo]
+
+}
+
+input Apoyo {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	tipoOperacion:EnumTipoOperacion
+	beneficiarioPrograma:Catalogo!
+	nombrePrograma:String!
+	institucionOtorgante:String!
+	nivelOrdenGobierno:EnumNivelGobierno!
+	tipoApoyo:Catalogo!
+	tipoApoyoOtro: String
+	formaRecepcion:EnumFormaRecepcion
+	montoApoyoMensual:MontoMoneda!
+	especifiqueApoyo:String
+}
+
+enum EnumFormaRecepcion {
+	MONETARIO
+	ESPECIE
+}
+
+####  II_REPRESENTACION -- representaciones
+
+"II Representaciones"
+input Representaciones {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	representaciones:[Representacion]
+
+}
+
+input Representacion {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	tipoOperacion:EnumTipoOperacion
+	participante:EnumParticipante!
+	tipoRepresentacion:EnumTipoRepresentacion!
+	fechaInicioRepresentacion:String!
+	representanteRepresentado:Persona
+	recibeRemuneracion:Boolean!
+	montoMensual:MontoMoneda
+	localizacion:Localizacion
+	sector:Catalogo!
+	sectorOtro: String
+}
+
+enum EnumParticipante {
+	DECLARANTE
+	PAREJA
+	DEPENDIENTE_ECONOMICO
+}
+
+enum EnumTipoRepresentacion {
+	REPRESENTANTE
+	REPRESENTADO
+}
+
+####  II_CLIENTES_PRINCIPALES -- clientesPrincipales
+
+"II Clientes principales"
+input ClientesPrincipales {
+	realizaActividadLucrativa: Boolean!
+	clientes: [Cliente]
+	aclaracionesObservaciones: String
+
+}
+
+input Cliente {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	tipoOperacion: EnumTipoOperacion
+	participante: EnumParticipante!
+	nombreEmpresaServicio: String!
+	rfcEmpresa: String
+	clientePrincipal: Persona!
+	sector: Catalogo!
+	sectorOtro: String
+	montoAproximadoGanancia: MontoMoneda!
+	localizacion: Localizacion!
+}
+
+
+
+####  II_BENEFICIOS_PRIVADOS -- beneficiosPrivados
+
+"II BeneficiosPrivados"
+input BeneficiosPrivados {
+	aclaracionesObservaciones: String
+	ninguno:Boolean!
+	beneficios:[BeneficioPrivado]
+
+}
+
+input BeneficioPrivado {
+	id:String
+	idPosicionVista:String!
+	verificar:Boolean!
+	registroHistorico:Boolean!
+	tipoOperacion:EnumTipoOperacion
+	tipoBeneficio:Catalogo!
+	tipoBeneficioOtro: String
+	beneficiario:Catalogo!
+	otorgante:Persona!
+	formaRecepcion:EnumFormaRecepcion!
+	especifiqueBeneficio:String
+	montoMensualAproximado:MontoMoneda
+	sector:Catalogo
+	sectorOtro: String
+}
+
+####  II_FIDEICOMISOS -- fideicomisos
+
+"II Fideicomisos"
+input Fideicomisos {
+	ninguno: Boolean!
+	fideicomisos: [Fideicomiso]
+	aclaracionesObservaciones: String
+}
+
+input Fideicomiso {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	tipoOperacion: EnumTipoOperacion
+	participante: EnumParticipante!
+	tipoFideicomiso: EnumTipoFideicomiso!
+	tipoParticipacion: EnumTipoParticipacionF!
+	rfcFideicomiso: String
+	fideicomitente: Persona!
+	fiduciario: PersonaMoral!
+	fideicomisario: Persona!
+	sector: Catalogo!
+	sectorOtro: String
+	localizacion: EnumUbicacion!
+}
+
+enum EnumTipoFideicomiso {
+	PUBLICO
+	PRIVADO
+	MIXTO
+}
+
+enum EnumTipoParticipacionF {
+	FIDEICOMITENTE
+	FIDUCIARIO
+	FIDEICOMISARIO
+	COMITE_TECNICO
+}
+
+#### DATOS PERSONALES
+
+input DatosPersonales {
+	nombre: String!
+	primerApellido: String!
+	segundoApellido: String
+	curp: String!
+	rfc: String!
+}
+
+input DatosPersonalesNotas {
+	nombre: String!
+	primerApellido: String!
+	segundoApellido: String
+	curp: String!
+	rfc: String!
+	personalAlterno: String
+}
+
+input DatosPersonalesDependiente {
+	"!"nombre: String
+	"!"primerApellido: String
+	segundoApellido: String
+	rfc: String
+	"!"fechaNacimiento:String
+}
+
+input CorreoDTO {
+	institucional: String
+	personalAlterno: String
+}
+
+input TelefonoDTO {
+	numero: String
+	paisCelularPersonal: Catalogo
+}
+
+#### CIUDADANO EXTRANJERO
+
+input CiudadanoExtranjero {
+	"!"	esExtranjero:Boolean
+	curp:String
+}
+
+#### DOMICILIO DEPENDIENTE ECONOMICO
+input DomicilioDependienteEconomico {
+	lugarDondeReside:EnumLugarReside
+	domicilio:Domicilio
+}
+
+#### DOMICILIO
+"Submodulo con un domicilio"
+input Domicilio {
+
+	"Indica si es un domicilio en México o en el extranjero. !"
+	ubicacion: EnumUbicacion
+
+	"Domicilio en México."
+	domicilioMexico: DomicilioMexico
+
+	"Domicilio en el Extranjero."
+	domicilioExtranjero: DomicilioExtranjero
+
+}
+
+input Localizacion {
+	"!"ubicacion:EnumUbicacion
+
+	localizacionMexico: LocalizacionMexico
+
+	localizacionExtranjero: LocalizacionExtrajero
+}
+
+"Localización en México"
+input LocalizacionMexico {
+	"Entidad federativa. !"
+	entidadFederativa: Catalogo
+}
+
+"Domicilio en México."
+input DomicilioMexico {
+
+	"Calle en México !"
+	calle: String
+
+	"Número exterior."
+	numeroExterior: String
+
+	"Número interior."
+	numeroInterior: String
+
+	"Colonia o localidad. !"
+	coloniaLocalidad: String
+
+	"Municipio o alcaldía. !"
+	municipioAlcaldia: CatalogoFk
+
+	"Entidad federativa."
+	entidadFederativa: Catalogo
+
+	"Código postal !"
+	codigoPostal: String
+}
+
+"Localizacion en el extranjero"
+input LocalizacionExtrajero {
+	"País. !"
+	pais: Catalogo
+}
+
+"Domicilio en el extranjero."
+input DomicilioExtranjero {
+
+	"Calle en el extranjero. !"
+	calle: String
+
+	"Numero exterior."
+	numeroExterior: String
+
+	"Numero interior."
+	numeroInterior: String
+
+	"Ciudad o localidad en el extranjero. !"
+	ciudadLocalidad: String
+
+	"Estado o provincia en el extranjero. !"
+	estadoProvincia: String
+
+	"País. !"
+	pais: Catalogo
+
+	"Código postal. !"
+	codigoPostal: String
+}
+
+#### INGRESOS
+
+input ActividadIndustrialCE {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean!
+	verificar:Boolean!
+	nombreRazonSocial: String!
+	tipoNegocio: String!
+	remuneracion: MontoMoneda!
+}
+
+input ActividadFinanciera {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean
+	verificar:Boolean
+	tipoInstrumento: Catalogo!
+	tipoInstrumentoOtro: String
+	remuneracion: MontoMoneda!
+}
+
+input ServiciosProfesionales {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean
+	verificar:Boolean
+	tipoServicio: String!
+	remuneracion: MontoMoneda!
+}
+
+input OtrosIngresos {
+	id:String
+	idPosicionVista:String!
+	registroHistorico:Boolean
+	verificar:Boolean
+	tipoIngreso:String!
+	remuneracion: MontoMoneda!
+}
+
+#### PERSONA
+
+input Persona {
+	id:String
+	idPosicionVista:String
+	verificar:Boolean
+	"!"tipoPersona:EnumTipoPersona
+	personaFisica:PersonaFisica
+	personaMoral:PersonaMoral
+}
+
+input Transmisor {
+	id:String
+	idPosicionVista: String
+	verificar: Boolean
+	relacionConTitular: Catalogo
+	relacionConTitularOtro: String
+	"!"tipoPersona:EnumTipoPersona
+	personaFisica:PersonaFisica
+	personaMoral:PersonaMoral
+}
+
+input PersonaFisica {
+	nombre:String!
+	primerApellido:String
+	segundoApellido:String
+	rfc:String
+}
+
+input PersonaMoral {
+	rfc:String
+	nombre:String
+}
+
+#### MONTO MONEDA
+
+input MontoMoneda {
+	moneda: Catalogo
+	monto: Long
+}
+
+input Remuneracion {
+	remuneracion: MontoMoneda!
+}
+
+#### USO COMUN
+
+"Catalogo"
+input Catalogo {
+
+	"Identificador."
+	id: Int!
+
+	"Descripción."
+	valor: String!
+}
+
+"Catalogo fk"
+input CatalogoFk {
+
+	"Identificador."
+	id: Int!
+
+	"Llave foranea"
+	fk: Int!
+
+	"Descripción."
+	valor: String!
+}
+
+"Catalogo Uno"
+input CatalogoUno {
+
+	"Identificador."
+	id: Int!
+
+	"Descripción."
+	valor: String!
+
+	"Descripción"
+	valorUno:String!
+}
+
+"Catalogo Uno Fk"
+input CatalogoUnoFk {
+
+	"Identificador."
+	id: Int!
+
+	"Llave foranea"
+	fk: Int!
+
+	"Descripción."
+	valor: String!
+
+	"Valor uno"
+	valorUno:String!
+}
+
+
+#### ENUMS
+
+"Enum del nivel de gobierno"
+enum EnumNivelGobierno {
+	FEDERAL
+	ESTATAL
+	MUNICIPAL
+}
+
+"Enum del ambito"
+enum EnumAmbitoPoder {
+	EJECUTIVO
+	JUDICIAL
+	LEGISLATIVO
+	ORGANISMOS_AUTONOMOS
+}
+
+"Enum del tipo de formato"
+enum EnumTipoFormato {
+	COMPLETO
+	SIMPLIFICADO
+}
+
+"Enum con el tipo de declaracion"
+enum EnumTipoDeclaracion {
+	INICIO
+	CONCLUSION
+	MODIFICACION
+	AVISO
+}
+
+"Enum con el tipo de declaracion notas aclaratorias"
+enum EnumTipoDeclaracionNota {
+	NOTA
+}
+
+"Enum del tipo de operacion"
+enum EnumTipoOperacion {
+	AGREGAR
+	MODIFICAR
+	SIN_CAMBIO
+	BAJA
+}
+
+"Enum del ambito de sector"
+enum EnumAmbitoSector {
+	PUBLICO
+	PRIVADO
+	OTRO
+}
+
+"Enum con el estatus de escolaridad"
+enum EnumEstatusEscolaridad {
+	FINALIZADO
+	CURSANDO
+	TRUNCO
+}
+
+"Enum con la forma de adquisición"
+enum EnumFormaAdquisicion {
+	COMPRAVENTA
+	CESION
+	DONACION
+	HERENCIA
+	PERMUTA
+	RIFA_SORTEO
+	SENTENCIA
+}
+
+"Enum con la forma de pago"
+enum EnumFormaPago {
+	CREDITO
+	CONTADO
+	NO_APLICA
+}
+
+"Enum con el tipo de persona"
+enum EnumTipoPersona{
+	PERSONA_FISICA
+	PERSONA_MORAL
+}
+
+"Enum con el tipo de remuneración"
+enum EnumTipoRemuneracion {
+	MENSUAL
+	ANUAL_ANTERIOR
+	ANUAL_ACTUAL
+}
+
+"Enum con la ubicacion"
+enum EnumUbicacion {
+	MEXICO
+	EXTRANJERO
+}
+
+"Enum con el lugar donde reside"
+enum EnumLugarReside {
+	MEXICO
+	EXTRANJERO
+	SE_DESCONOCE
+}

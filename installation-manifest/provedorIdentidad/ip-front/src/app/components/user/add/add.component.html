@@ -1,0 +1,281 @@
+<div class="container-form shadow p-3 mb-5 bg-white rounded ">
+    <app-alert></app-alert>
+    <div>
+        <form #registroForm="ngForm" id="registroForm" (ngSubmit)="guarda(registroForm)" class="animated fadeIn">
+            <h3>Nuevo Usuario - Verifica tu RFC</h3>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="rfc">RFC</label>
+                    <input type="text" class="form-control" id="rfc" #rfc="ngModel" name="rfc" placeholder="RFC" maxlength="10" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': primerVal && rfc.errors }" [readOnly]="this.usuarioNuevo" [(ngModel)]="usuario.rfc"
+                        required minlength="9" maxlength="10" rfcValid>
+                    <div class="invalid-feedback" *ngIf="primerVal && rfc.errors">
+                        RFC inválido
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="homo_cve">HOMOCLAVE</label>
+                    <input type="text" class="form-control" id="homo_cve" #homo_cve="ngModel" name="homo_cve" placeholder="000" maxlength="3" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': primerVal && homo_cve.errors }" [readOnly]="this.usuarioNuevo" [(ngModel)]="usuario.homoclave"
+                        required>
+                    <div class="invalid-feedback" *ngIf="primerVal && homo_cve.errors">
+                        Homoclave inválida
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="curp">CURP</label>
+                    <input type="text" class="form-control" id="curp" name="curp" #curp="ngModel" placeholder="CURP" maxlength="18" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': primerVal && curp.errors}" [readOnly]="this.usuarioNuevo" [(ngModel)]="usuario.curp"
+                        required maxlength="18" curpValid>
+                    <div class="invalid-feedback" *ngIf="primerVal && curp.errors">
+                        CURP inválida
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" *ngIf="!this.usuarioNuevo">
+                <div class="rounded float-right">
+                    <button type="button" class="btn btn-primary" [disabled]="this.usuarioNuevo || this.loading" (click)="validateRfcCurp(registroForm)"><i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Comprobar</button>
+                </div>
+                <div class="rounded float-right">
+                    <button id="cancel" type="button" (click)="goToLogin(100)" class="btn btn-danger" [disabled]="this.loading"><i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Cancelar</button>
+                </div>
+            </div>
+            <hr>
+            <div *ngIf="this.usuarioNuevo" class="pullDown">
+                <h3>Datos del usuario</h3>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" #nombre="ngModel" name="nombre" placeholder="Nombre" maxlength="50" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': registroForm.submitted && nombre.errors }" [(ngModel)]="usuario.nombre"
+                            required>
+                        <div class="invalid-feedback" *ngIf="registroForm.submitted && nombre.errors">
+                            Nombre requerido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="primerApellido">Primer apellido</label>
+                        <input type="text" class="form-control" id="primerApellido" #primerApellido="ngModel" name="primerApellido" placeholder="Primer apellido" maxlength="50" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': submitted && primerApellido.errors }"
+                            [(ngModel)]="usuario.primerApellido" required>
+                        <div class="invalid-feedback" *ngIf="submitted && primerApellido.errors">
+                            Requerido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="segundoApellido">Segundo apellido</label>
+                        <input type="text" class="form-control" id="segundoApellido" #segundoApellido="ngModel" name="segundoApellido" placeholder="Segundo apellido" maxlength="50" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': submitted && segundoApellido.errors }"
+                            [(ngModel)]="usuario.segundoApellido">
+                        <div class="invalid-feedback" *ngIf="submitted && segundoApellido.errors">
+                            Requerido
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="celular">Número celular</label>
+                        <input type="text" class="form-control" id="celular" #celular="ngModel" name="celular" placeholder="celular" maxlength="13" minlength="10" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': submitted && celular.errors }" [(ngModel)]="usuario.numCelular"
+                            required>
+                        <div class="invalid-feedback" *ngIf="submitted && celular.errors">
+                            Requerido
+                        </div>
+                    </div>
+                    <div class="stretchRight form-group col-md-4" [hidden]="!celular.valid">
+                        <!--  -->
+                        <label for="confirmCelular">Confirmar Número Celular</label>
+                        <input type="text" class="form-control" id="confirmCelular" #confirmCelular="ngModel" [(ngModel)]="confirmCelVar" name="confirmCelular" placeholder="celular" maxlength="13" minlength="10" oninput="CustomUpperCase(this);" [ngClass]="{ 'is-invalid': submitted && confirmCelular.errors }"
+                            required validateEqual="celular" reverse="false">
+                        <div class="invalid-feedback" *ngIf="submitted && (confirmCelular.errors?.required || confirmCelular.errors?.minlength)">
+                            Valor requerido
+                        </div>
+                    </div>
+                    <div class="col-md-4 align-bottom">
+                        <div class="row text-danger" *ngIf="confirmCelular.errors?.validateEqual && confirmCelular.dirty">
+                            <div class="col text-left icon-alert" [ngStyle]="{'margin-top': sg.innerWidth > 740 ? '35px' : '0px' }">
+                                <i class="fa fa-exclamation-triangle fa-1x"></i> No coinciden
+                            </div>
+                        </div>
+                        <div class="row text-success" *ngIf="confirmCelular && celular.valid && confirmCelular.valid">
+                            <div class="col text-left icon-alert" [ngStyle]="{'margin-top': sg.innerWidth > 740 ? '35px' : '0px' }">
+                                <i class="fa fa-check fa-1x"></i> Coinciden
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="emailLaboral">Correo electrónico</label>
+                        <input type="email" class="form-control" id="emailLaboral" name="emailLaboral" #emailLaboral="ngModel" placeholder="example@dominio.gob.mx" [ngClass]="{ 'is-invalid': submitted && emailLaboral.errors }" [(ngModel)]="usuario.email" required email oninput="CustomLowerCase(this);">
+                        <div class="invalid-feedback" *ngIf="submitted && emailLaboral.errors">
+                            Email inválido
+                        </div>
+                        <!-- {{usuario.email === ''}} -->
+                    </div>
+                    <ng-container *ngIf="emailLaboral.valid && usuario?.email !== ''">
+
+
+                        <!-- <div class="stretchRight form-group col-md-4" *ngIf="emailLaboral.valid && usuario?.email !== ''"> -->
+                        <div class="stretchRight form-group col-md-4">
+                            <label for="confirmEmailLaboral">Confirmar correo electrónico</label>
+                            <input type="email" class="form-control" id="confirmEmailLaboral" #confirmEmailLaboral="ngModel" name="confirmEmailLaboral" placeholder="example@dominio.gob.mx" [ngClass]="{ 'is-invalid': submitted && confirmEmailLaboral.errors }" [(ngModel)]="confirmEmailLaboralVar"
+                                oninput="CustomLowerCase(this);" required validateEqual="emailLaboral" reverse="false" email>
+                            <div class="invalid-feedback" *ngIf="submitted && confirmEmailLaboral.errors">
+                                Email inválido
+                            </div>
+
+                        </div>
+                        <div class="col-md-4 align-bottom">
+                            <!-- <div class="row text-danger" *ngIf="confirmEmailLaboral.dirty"> -->
+                            <div class="row text-danger" *ngIf="confirmEmailLaboral.errors?.validateEqual && confirmEmailLaboral.dirty">
+                                <!--   -->
+                                <div class="col text-left icon-alert" [ngStyle]="{'margin-top': sg.innerWidth > 740 ? '35px' : '0px' }">
+                                    <i class="fa fa-exclamation-triangle fa-1x"></i> No coinciden
+                                </div>
+                            </div>
+                            <div class="row text-success" *ngIf="emailLaboral.valid && confirmEmailLaboral.valid">
+                                <div class="col text-left icon-alert" [ngStyle]="{'margin-top': sg.innerWidth > 740 ? '35px' : '0px' }">
+                                    <i class="fa fa-check fa-1x"></i> Coinciden
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="emailPersonal">Correo electrónico alterno</label>
+                        <input type="text" class="form-control" id="emailPersonal" #emailPersonal="ngModel" name="emailPersonal" placeholder="example@dominio.com" [ngClass]="{ 'is-invalid': submitted && emailPersonal.errors }" [(ngModel)]="usuario.emailAlt" email oninput="CustomLowerCase(this);">
+                        <div class="invalid-feedback" *ngIf="submitted && emailPersonal.errors">
+                            Email inválido
+                        </div>
+                    </div>
+                    <ng-container *ngIf="emailPersonal.valid && usuario.emailAlt !== ''">
+                        <div class="stretchRight form-group col-md-4">
+                            <label for="confirmEmailPersonal">Confirmar correo electrónico alterno</label>
+                            <input type="text" class="form-control" id="confirmEmailPersonal" #confirmEmailPersonal="ngModel" [(ngModel)]="confirmEmailPersonalVar" name="confirmEmailPersonal" placeholder="example@dominio.com" [ngClass]="{ 'is-invalid': submitted && confirmEmailPersonal.errors }"
+                                oninput="CustomLowerCase(this);" required validateEqual="emailPersonal" reverse="false" email>
+                            <div class="invalid-feedback" *ngIf="submitted && confirmEmailPersonal.errors">
+                                Email inválido
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-bottom">
+                            <div class="row text-danger" *ngIf="confirmEmailPersonal.errors?.validateEqual && confirmEmailPersonal.dirty">
+                                <div class="col text-left icon-alert" [ngStyle]="{'margin-top': sg.innerWidth > 740 ? '35px' : '0px' }">
+                                    <i class="fa fa-exclamation-triangle fa-1x"></i> No coinciden
+                                </div>
+                            </div>
+                            <div class="row text-success" *ngIf="emailPersonal.valid && confirmEmailPersonal.valid">
+                                <div class="col text-left icon-alert" [ngStyle]="{'margin-top': sg.innerWidth > 740 ? '35px' : '0px' }">
+                                    <i class="fa fa-check fa-1x"></i> Coinciden
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <hr>
+                <h3>Credenciales de acceso</h3>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="contraseña">Contraseña</label>
+                        <input type="password" class="form-control" id="pw" #pw="ngModel" name="pw" placeholder="Contraseña" [ngClass]="{ 'is-invalid': submitted && pw.errors }" [(ngModel)]="usuario.pwdEnc" required passwordValid>
+                        <div class="invalid-realTime" *ngIf="pw.dirty && pw.errors?.passwordInvalid">
+                            Mínimo 8 caracteres, que incluyan al menos 1 letra y 1 número.
+                        </div>
+                        <div class="invalid-feedback" *ngIf="submitted && pw.errors">
+                            Requerido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="confirmarContraseña">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="confirmPw" #confirmPw="ngModel" [(ngModel)]="confirmPwVar" name="confirmPw" placeholder="Contraseña" [ngClass]="{ 'is-invalid': submitted && confirmPw.errors }" required validateEqual="pw" reverse="false"
+                            passwordValid>
+                        <div class="invalid-realTime" *ngIf="confirmPw.dirty && confirmPw.errors?.passwordInvalid">
+                            Mínimo 8 caracteres, que incluyan al menos 1 letra y 1 número.
+                        </div>
+                        <div class="invalid-feedback" *ngIf="submitted && confirmPw.errors">
+                            Requerido
+                        </div>
+                    </div>
+                    <div class="col-md-4 align-bottom">
+                        <div class="row text-danger" *ngIf="confirmPw.errors?.validateEqual && confirmPw.dirty">
+                            <div class="col text-left icon-alert" [ngStyle]="{'margin-top': sg.innerWidth > 740 ? '35px' : '0px' }">
+                                <i class="fa fa-exclamation-triangle fa-1x"></i> Contraseñas no coinciden
+                            </div>
+                        </div>
+                        <div class="row text-success" *ngIf="pw.valid && confirmPw.valid">
+                            <div class="col text-left icon-alert" [ngStyle]="{'margin-top': sg.innerWidth > 740 ? '35px' : '0px' }">
+                                <i class="fa fa-check fa-1x"></i> Correcto
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" *ngIf="this.usuarioNuevo">
+                    <div class="rounded float-right">
+                        <button id="save" type="submit" class="btn btn-primary" [disabled]="this.loading"><i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>{{btnRegisterText}}</button>
+                    </div>
+                    <div class="rounded float-right">
+                        <button id="cancelSave" type="button" (click)="goToLogin(100)" class="btn btn-danger" [disabled]="this.loading"><i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Cancelar</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12" style="margin-top: 10px;">
+                        <app-alert></app-alert>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" #modalButton class="btn btn-primary" data-toggle="modal" data-target="#ModalCorrecto" style="display: none;">
+    Launch demo modal
+  </button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalCorrecto" tabindex="-1" role="dialog" aria-labelledby="ModalCorrectoTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div> -->
+            <div class="modal-body">
+                <span class="alerticonModal"><img src="assets/img/sucess.png" alt="checkmark" />
+                <h2>Registro guardado exitosamente</h2></span>
+                <p>Es necesario activar el usuario, por lo que se te ha enviado un correo para realizar la activación.</p>
+                <p class="text-danger">{{this.activateMailSentMsg}}</p>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<button type="button" #modalErrorButton class="btn btn-primary" data-toggle="modal" data-target="#ModalError" style="display: none;">
+  Launch demo modal
+</button>
+<!-- Modal -->
+<div class="modal fade" id="ModalError" tabindex="-1" role="dialog" aria-labelledby="ModalErrorTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <span class="alerticonModal"><img src="assets/img/error.png" alt="checkmark" />
+              </span>
+                <p class="text-center">El email laboral y email personal no pueden ser el mismo</p>
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+          </div> -->
+        </div>
+    </div>
+</div>

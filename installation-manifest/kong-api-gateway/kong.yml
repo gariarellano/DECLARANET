@@ -1,0 +1,931 @@
+_format_version: "1.1"
+#_transform: true
+
+services:
+  - name: consultar-ente
+    url: http://entereceptordecla:5000
+    path: /api/consultar-ente/
+    routes:
+    - name: ruta_consultar_ente
+      preserve_host: false
+      methods: 
+      - GET
+      - POST
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/consultar-ente
+      
+  - name: catalogos
+    url: http://catalogosorigen:5000
+    routes:
+    - name: ruta_catalogos
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/catalogos
+
+  - name: declaranet_firma
+    url: http://recepcionfirma:5000
+    path: /api/
+    routes:
+    - name: ruta_firma_declaracion
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/recepcion-firma/
+  
+  - name: identidad_login_private
+    url: http://ip-back:5000
+    path: /api/private/
+    tags:
+    - identidad
+    - registro
+    - private
+    routes:
+    - name: ruta_identidad_login_private
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - PUT
+      - DELETE
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /identidad/login/private/
+#      - /identidad/registro/private/
+
+  - name: identidad_login_public
+    url: http://ip-back:5000
+    path: /api/public/
+    tags:
+    - identidad
+    - login
+    - public
+    routes:
+    - name: ruta_identidad_login_public
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - PUT
+      - DELETE
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /identidad/login/public/
+  
+  - name: identidad_registro_public
+    url: http://ip-registro-back:5000
+    path: /api/public/
+    tags:
+    - identidad
+    - public
+    - registro
+    routes:
+    - name: ruta_identidad_registro_public
+      tags :
+      - identidad
+      - registro
+      - public
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - PUT
+      - DELETE
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /identidad/registro/public/
+  
+  - name: oper-oper
+    url: http://ip-registro-back:5000
+    path: /api/oper/user
+    routes:
+    - name: ruta_oper_para_consuta
+      tags :
+      - oper
+      - user
+      preserve_host: false
+      methods: 
+      - GET
+      - PUT
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /api/oper/user
+
+  - name: identidad_registro_private
+    url: http://ip-registro-back:5000
+    path: /api/private/
+    tags:
+    - identidad
+    - public
+    - registro
+    routes:
+    - name: ruta_identidad_registro_private
+      tags :
+      - identidad
+      - registro
+      - public
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - PUT
+      - DELETE
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /identidad/registro/private/
+
+  - name: impresion
+    url: http://servicioimpresion:5000
+    path: /api
+    routes:
+    - name: ruta_impresion
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/api
+
+  - name: inicio_declaracion
+    url: http://iniciodeclaracion:5000
+    path: /api
+    routes:
+    - name: ruta_inicio_declaracion
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/inicioDeclaracion/api
+  
+  - name: inicio_declaracion_publica
+    url: http://iniciodeclaracion:5000
+    path: /iniciar
+    routes:
+    - name: ruta_inicio_declaracion_publica
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/inicioDeclaracion/iniciar
+
+  - name: ente_receptor
+    url: http://entereceptordecla:5000
+    path: /api/ente-receptor/
+    routes:
+    - name: ruta_ente_receptor
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/ente-receptor
+
+  - name: guarda_declaracion
+    url: http://validaciondeclaracion:5000
+    routes:
+    - name: ruta_guarda_declaracion
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/validarDeclaracion
+
+  - name: renovarTokens
+    url: http://generadortokenkong:5000
+    path: /renovarToken
+    routes:
+    - name: renovar_token_ruta
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /renovarToken
+  
+  - name: TokensKong
+    url: http://generadortokenkong:5000
+    path: /
+    routes:
+    - name: Tokenskong-route
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - PUT
+      - DELETE
+      - PATCH
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /seguridad/
+
+  - name: consulta-servidores-puiblicos
+    url: http://consultapublica:5000
+    path: /api/
+    routes:
+    - name: ruta_consulta_servidores_pub
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /declaranet/consulta-servidores-publicos/
+      - /declaranet/gabinete/
+  
+  - name: oper-bak-end-inicio
+    url: http://operback:5000
+    path: /inicio/
+    routes:
+    - name: route-inicio-oper
+      preserve_host: false
+      methods: 
+      - POST
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /oper-login/
+  
+  - name: oper-back-end
+    url: http://operback:5000
+    path: /api/
+    routes:
+    - name: Oper-Back-route
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /oper
+  
+  - name: omext_back
+    url: http://omextback:5000
+    routes:
+    - name: ruta_omext_back
+      preserve_host: false
+      methods: 
+      - POST
+      - GET
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /omext
+  
+  - name: omext-iniciar
+    url: http://omextback:5000
+    path: /inicio/
+    routes:
+    - name: omext-iniciar-route
+      preserve_host: false
+      methods: 
+      - POST
+      - OPTIONS
+      protocols:
+      - http
+      - https
+      paths:
+      - /omext-login/
+
+  - name: omext_descarga_reportes
+    url: http://omextreportes:5000
+    path: /descargarReporte
+    routes:
+    - name: ruta_omext_descarga_reportes
+      preserve_host: false
+      methods: 
+      - GET
+      protocols:
+      - http
+      - https
+      paths:
+      - /omextReportes
+  
+  - name: cumplimiento-regisro
+    url: http://registrocumplimiento:5000
+    path: /api/
+    routes:
+    - name: registro-cumplimiento
+      preserve_host: false
+      methods: 
+      - GET
+      - OPTIONS
+      - POST
+      protocols:
+      - http
+      - https
+      paths:
+      - /nolocalizados
+
+plugins:
+  - name: jwt
+    service: renovarTokens
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - jwt
+
+  - name: jwt
+    service: TokensKong
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - Oper-stdo
+    
+  - name: cors
+    service: renovarTokens
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+
+  - name: cors
+    service: ente_receptor
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+
+  - name: cors
+    service: catalogos
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+  
+  - name: jwt
+    service: catalogos
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - jwt
+
+  - name: jwt
+    service: declaranet_firma
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - jwt
+    
+  - name: cors
+    service: declaranet_firma
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+
+  - name: cors
+    service: identidad_login_private
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+  
+  - name: cors
+    service: identidad_registro_public
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+  
+  - name: jwt
+    service: identidad_registro_public
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - Oper-stdo
+
+  - name: cors
+    service: impresion
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+
+  - name: jwt
+    service: impresion
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - jwt
+  
+  - name: jwt
+    service: inicio_declaracion
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - jwt
+  
+  - name: cors
+    service: inicio_declaracion
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+
+  - name: cors
+    service: identidad_registro_private
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      - PUT
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+      
+  - name: cors
+    service: guarda_declaracion
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+      
+  - name: jwt
+    service: guarda_declaracion
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - jwt
+
+  - name: cors
+    service: identidad_login_public
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+  
+  - name: cors
+    service: inicio_declaracion_publica
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+      
+  - name: jwt
+    service: oper-back-end
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - jwt
+
+  - name: cors
+    service: omext_back
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+      preflight_continue: true
+      credentials: false
+
+  - name: jwt
+    service: omext_back
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - Omext-stdo
+    
+  - name: jwt
+    service: cumplimiento-regisro
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      secret_is_base64: false
+      key_claim_name: iss
+      claims_to_verify: 
+      - exp
+      run_on_preflight: false
+      uri_param_names:
+      - Omext-stdo
+
+  - name: cors
+    service: consulta-servidores-puiblicos
+    run_on: first
+    protocols:
+    - http
+    - https
+    config:
+      methods:
+      - GET
+      - POST
+      exposed_headers:
+      - content-type
+      - pragma
+      - authorization
+      headers:
+      - content-type
+      - authorization
+      - dominio
+      origins:
+      - "*"
+#      - "importante limitar este a solo los origin del llamado de su configuracion, para productivo ejemplo:"
+#      - "http://${DOMINIO_FRONT_CSP}"
+      preflight_continue: true
+      credentials: false
+
+consumers:
+- username: jwtdnet
+  custom_id: idjwtdnet
+- username: Oper-stdo
+  custom_id: idOper-stdo
+- username: Omext-stdo
+  custom_id: idOmext-stdo
+
+jwt_secrets:
+- consumer: jwtdnet
+  algorithm: RS256
+  rsa_public_key: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2AVIMsGGl0bPhzEKo1Vp
+    ddMgubHeCWKzfRCf6YUXVsN1mT6tA1VFx827hc43qdZTqQ+J8M8Wh0nkWt0hd6dZ
+    J7Nnl6Mgg9QmMxNZaYUL9zNQQMy8+uW3fhVrafQcbspxablEYSALJ9ivJOzu21FQ
+    fbGd8Nkz9azo4KGKUdYhWbONRQZ5M9q2+zfNeMk4huNCsY6Tbmw8CHzBI9LBRZNc
+    U5du+J8B/gEYI7Udr8dF/BIhahR3bKHvxX1GVsiU/oL2r5hCwQeGURtMgu27nbpW
+    61T19u2lbgKkUVNFren7kD1S/us02aVcxFzb+feqlsEf+wpscTNbXnB+tdUSOFXR
+    bwIDAQAB
+    -----END PUBLIC KEY-----
+  key: jwtdnet
+  secret: NvK4b1TXkXLIhirLSm04kD4HwSxtA8r4
+
+- consumer: Oper-stdo
+  algorithm: RS256
+  rsa_public_key: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2AVIMsGGl0bPhzEKo1Vp
+    ddMgubHeCWKzfRCf6YUXVsN1mT6tA1VFx827hc43qdZTqQ+J8M8Wh0nkWt0hd6dZ
+    J7Nnl6Mgg9QmMxNZaYUL9zNQQMy8+uW3fhVrafQcbspxablEYSALJ9ivJOzu21FQ
+    fbGd8Nkz9azo4KGKUdYhWbONRQZ5M9q2+zfNeMk4huNCsY6Tbmw8CHzBI9LBRZNc
+    U5du+J8B/gEYI7Udr8dF/BIhahR3bKHvxX1GVsiU/oL2r5hCwQeGURtMgu27nbpW
+    61T19u2lbgKkUVNFren7kD1S/us02aVcxFzb+feqlsEf+wpscTNbXnB+tdUSOFXR
+    bwIDAQAB
+    -----END PUBLIC KEY-----
+  key: Oper-stdo
+  secret: NvK4b1TXkXLIhirLLm04KD4HZSxta4r8
+
+- consumer: Omext-stdo
+  algorithm: RS256
+  rsa_public_key: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2AVIMsGGl0bPhzEKo1Vp
+    ddMgubHeCWKzfRCf6YUXVsN1mT6tA1VFx827hc43qdZTqQ+J8M8Wh0nkWt0hd6dZ
+    J7Nnl6Mgg9QmMxNZaYUL9zNQQMy8+uW3fhVrafQcbspxablEYSALJ9ivJOzu21FQ
+    fbGd8Nkz9azo4KGKUdYhWbONRQZ5M9q2+zfNeMk4huNCsY6Tbmw8CHzBI9LBRZNc
+    U5du+J8B/gEYI7Udr8dF/BIhahR3bKHvxX1GVsiU/oL2r5hCwQeGURtMgu27nbpW
+    61T19u2lbgKkUVNFren7kD1S/us02aVcxFzb+feqlsEf+wpscTNbXnB+tdUSOFXR
+    bwIDAQAB
+    -----END PUBLIC KEY-----
+  key: Omext-stdo
+  secret: NvV4b1TXkZLIhirLDm04KZ5HZXxte5r9

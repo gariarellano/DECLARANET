@@ -1,0 +1,53 @@
+<div class="col-md-6 offset-md-3">
+    <app-alert></app-alert>
+    <div class="card bg-light mb-3 card-header-declaranet animated fadeIn shadow bg-white rounded " style="max-width: 200 px;">
+        <div class="card-header text-center">
+            <div class="img-declaranet img-fluid rounded"></div>
+        </div>
+        <div class="card-body">
+            <form class="formulario" #registroForm="ngForm" id="registroForm" (ngSubmit)="guarda(registroForm)">
+                <h3>Generar Nueva Contraseña</h3>
+                <div class="form-group">
+                    <label>CURP:</label> <span> {{curp}}</span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="pw" #pw="ngModel" name="pw" placeholder="Contraseña" [ngClass]="{ 'is-invalid': submitted && pw.errors }" [(ngModel)]="usuario.pwdEnc" required passwordValid>
+                    <div class="invalid-realTime" *ngIf="pw.dirty && pw.errors?.passwordInvalid">
+                        Mínimo 8 caracteres, que incluyan al menos 1 letra y 1 número.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="submitted && pw.errors">
+                        Requerido
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="confirmPw" #confirmPw="ngModel" [(ngModel)]="confirmPwVar" name="confirmPw" placeholder="Confirmar contraseña" [ngClass]="{ 'is-invalid': submitted && confirmPw.errors }" required validateEqual="pw" reverse="false"
+                        passwordValid>
+                    <div class="invalid-realTime" *ngIf="confirmPw.dirty && confirmPw.errors?.passwordInvalid">
+                        Mínimo 8 caracteres, que incluyan al menos 1 letra y 1 número.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="submitted && confirmPw.errors">
+                        Requerido
+                    </div>
+                </div>
+                <div class="col-md-6 align-bottom">
+                    <div class="row text-danger" *ngIf="confirmPw.errors?.validateEqual && confirmPw.dirty">
+                        <div class="col text-left icon-alert">
+                            <i class="fa fa-exclamation-triangle fa-1x"></i> Contraseñas no coinciden
+                        </div>
+                    </div>
+                    <div class="row text-success" *ngIf="pw.valid && confirmPw.valid">
+                        <div class="col text-left icon-alert">
+                            <i class="fa fa-check fa-1x"></i> Correcto
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 align-bottom" style="margin-top: 15px;" *ngIf="!processSuccess">
+                    <div class="row">
+                        <button class="btn btn-primary" type="submit" [disabled]="this.loading"> <i class="fa fa-spinner fa-spin" *ngIf="this.loading"></i>Aceptar</button>
+                        <button class="btn btn-danger" type="reset" [disabled]="this.loading">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

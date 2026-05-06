@@ -1,0 +1,334 @@
+.eliminar,
+.modificar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+    outline: 0;
+    overflow: hidden;
+}
+
+.eliminar .icon,
+.modificar .icon {
+    position: relative;
+    background: #1D242B;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    -webkit-transition: .2s color;
+    transition: .2s color;
+    border-radius: 2px;
+}
+
+.eliminar .icon .fa,
+.modificar .icon .fa {
+    width: 30px;
+    -webkit-transition: .2s all;
+    transition: .2s all;
+}
+
+.eliminar .icon .fa-check {
+    color: #38B87C;
+}
+
+.eliminar .icon .fa-question {
+    color: #2492FF;
+}
+
+.eliminar .icon:after,
+.modificar .icon:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: #1D242B;
+    top: 12.5px;
+    right: 1px;
+    -webkit-transition: .2s right;
+    transition: .2s right;
+    z-index: 1;
+}
+
+.eliminar .text {
+    position: relative;
+    width: 0;
+    height: 30px;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif;
+    background: #F34541;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    font-weight: 300;
+    -webkit-transition: .2s all;
+    transition: .2s all;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.modificar .text {
+    position: relative;
+    width: 0;
+    height: 30px;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif;
+    background: #2492FF;
+    ;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    font-weight: 300;
+    -webkit-transition: .2s all;
+    transition: .2s all;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.eliminar .text span,
+.modificar .text span {
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    -webkit-transition: .3s all;
+    transition: .3s all;
+}
+
+.eliminar:hover .icon,
+.modificar:hover .icon {
+    color: #F34541;
+    border-radius: 0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.modificar:hover .icon {
+    color: #2492FF;
+    border-radius: 0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.eliminar:hover .icon:after,
+.modificar:hover .icon:after {
+    right: -2px;
+}
+
+.eliminar:hover .text,
+.modificar:hover .text {
+    width: 120px;
+}
+
+.eliminar:hover .text span,
+.modificar:hover .text span {
+    opacity: 1;
+    top: 0;
+}
+
+.eliminar.confirm .icon {
+    border-radius: 0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.eliminar.confirm .icon .fa {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+}
+
+.eliminar.confirm .icon:after {
+    right: -2px;
+}
+
+.eliminar.confirm .text {
+    background: #2492FF;
+    width: 120px;
+}
+
+.eliminar.confirm .text span {
+    opacity: 1;
+    top: 0;
+}
+
+.eliminar.done .icon {
+    border-radius: 0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.eliminar.done .icon .fa {
+    -webkit-transform: translateY(-60px);
+    transform: translateY(-60px);
+}
+
+.eliminar.done .icon:after {
+    right: -2px;
+}
+
+.eliminar.done .text {
+    background: #38B87C;
+    width: 120px;
+}
+
+.eliminar.done .text span {
+    opacity: 1;
+    top: 0;
+}
+
+@-webkit-keyframes fadeInZoom {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(0.7);
+        transform: scale(0.7);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInZoom {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(0.7);
+        transform: scale(0.7);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+.agregar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+    outline: 0;
+    overflow: hidden;
+}
+
+.agregar .icon {
+    position: relative;
+    background: transparent;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    -webkit-transition: .2s color;
+    transition: .2s color;
+    border-radius: 2px;
+}
+
+.agregar .icon .fa {
+    width: 30px;
+    -webkit-transition: .2s all;
+    transition: .2s all;
+}
+
+.agregar .icon:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: transparent;
+    top: 12.5px;
+    right: 1px;
+    -webkit-transition: .2s right;
+    transition: .2s right;
+    z-index: 1;
+}
+
+.agregar .text {
+    position: relative;
+    width: 0;
+    height: 30px;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif;
+    background: #F34541;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    font-weight: 300;
+    -webkit-transition: .2s all;
+    transition: .2s all;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.agregar .text {
+    position: relative;
+    width: 0;
+    height: 30px;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif;
+    background: #1BBB1B;
+    ;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    font-weight: 300;
+    -webkit-transition: .2s all;
+    transition: .2s all;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.agregar .text span {
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    -webkit-transition: .3s all;
+    transition: .3s all;
+}
+
+.agregar:hover .icon {
+    color: #F34541;
+    border-radius: 0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.agregar:hover .icon {
+    color: #2492FF;
+    border-radius: 0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.agregar:hover .icon:after {
+    right: -2px;
+}
+
+.agregar:hover .text {
+    width: 120px;
+}
+
+.agregar:hover .text span {
+    opacity: 1;
+    top: 0;
+}

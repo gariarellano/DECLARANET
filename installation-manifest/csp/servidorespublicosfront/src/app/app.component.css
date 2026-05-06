@@ -1,0 +1,17 @@
+.footer {
+    position: relative;
+    margin-top: 50px;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+}
+ .text{
+font-size: 150%!important;
+color: gray;
+margin: 0 !important;
+}
+.textd{
+    font-size: 85%!important;
+    color: gray;
+    margin: 0 !important;
+    }

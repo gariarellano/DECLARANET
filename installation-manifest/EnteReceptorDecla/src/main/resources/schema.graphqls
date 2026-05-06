@@ -1,0 +1,266 @@
+#DTO principal - ente
+input EnteInput{
+	"nombre del ente"
+	nombre : String!
+	"boolean de activo"
+	activo : Boolean!
+	"fecha de incorporacion del ente"
+	fechaIncorporacion : String!
+	"variable para el path"
+	path : String!
+	"variable para almacenar el collName"
+	collName : Int!
+	"variable para almacenar la img B64"
+	imagenB64: String!
+	"variable para almacenar la img oficial B64"
+	imagenOficialB64: String!
+	"variable para almacenar la img institucional B64"
+	imagenInstitucionalB64: String!
+	"variable de ente"
+	ente : Entes!
+	"variable para prefijo"
+	prefijo : Prefijos
+	"variable para la llave de encriptado"
+	llaveEncriptado : String
+	"variable para la firma de convenio"
+	fechaFirmaConvenio : String!
+	"variable de datos de contacto"
+	datosContacto : DatosContacto!
+	"url consulta decla"
+	urlConsDecla : String!
+	"url de la precarga"
+	urlPrecarga : String!
+}
+
+type EnteNuevo{
+	"id ente guardado"
+	_id : String
+	"id del ente nuevo"
+	id : String
+	"nombre del ente"
+	nombre : String
+	"boolean de archivo boolean"
+	activo : Boolean
+	"fecha de incorporacion del ente"
+	fechaIncorporacion : String
+	"variable para el path"
+	path : String
+	"variable para almacenar el collName"
+	collName : Int
+	"variable para almacenar la img B64"
+	imagenB64: String
+	"variable para almacenar la img oficial B64"
+	imagenOficialB64: String
+	"variable para almacenar la img institucional B64"
+	imagenInstitucionalB64: String
+	"variable de ente"
+	ente : EntesType
+	"variable para prefijo"
+	prefijo : Prefijos
+	"variable para la llave de encriptado"
+	llaveEncriptado : String
+	"variable para la firma de convenio"
+	fechaFirmaConvenio : String
+	"variable de datos de contacto"
+	datosContacto : DatosContactoType
+	"url consulta decla"
+	urlConsDecla : String!
+	"url de la precarga"
+	urlPrecarga : String!
+}
+
+input DatosContacto{
+	nombreCompleto : String!
+	puesto : String!
+	telefonoOficina : String
+	telefonoCelular : String
+	correoElectronico : String
+}
+
+type DatosContactoType{
+	nombreCompleto : String
+	puesto : String
+	telefonoOficina : String
+	telefonoCelular : String
+	correoElectronico : String
+}
+
+
+ 
+ input Entes{
+ 	id : String!
+ 	nombre : String!
+ 	nivelOrdenGobierno : NivelGobiernoInput!
+ 	ambitoPublico : EnumAmbitoPoder!
+ }
+ 
+  type EntesType{
+ 	id : String
+ 	nombre : String
+ 	nivelOrdenGobierno : NivelGobierno
+ 	ambitoPublico : EnumAmbitoPoder
+ }
+
+
+type NivelGobierno {
+
+    "Id del nivel de gobierno."
+    nivelOrdenGobierno : NivelGobiernoEnum!
+
+    "Entidad federativa, si es el caso."
+    entidadFederativa : EntidadFederativa
+}
+
+"Contiene la entidad federativa."
+type EntidadFederativa {
+
+    "Id de la entidad federativa."
+    idEntidadFederativa : Int
+
+    "Descripción de la entidad federativa."
+    entidadFederativaDesc : String
+
+    "Municipio, si es el caso."
+    municipio : Municipio
+}
+
+"Contiene el municipío."
+type Municipio {
+
+    "Id del municipio."
+    idMunicipio : Int
+
+    "Descripción del municipio."
+    municipioDesc : String
+}
+
+
+
+
+"Contiene el nivel de gobierno."
+input NivelGobiernoInput {  
+
+    "Id del nivel de gobierno."
+    nivelOrdenGobierno : NivelGobiernoEnum
+
+    "Entidad federativa, si es el caso."
+    entidadFederativa : EntidadFederativaInput
+}
+
+"Contiene la entidad federativa."
+input EntidadFederativaInput {
+
+    "Id de la entidad federativa."
+    idEntidadFederativa : Int!
+
+    "Descripción de la entidad federativa."
+    entidadFederativaDesc : String!
+
+    "Municipio, si es el caso."
+    municipio : MunicipioInput
+}
+
+
+"Contiene el municipío."
+input MunicipioInput {
+
+    "Id del municipio."
+    idMunicipio : Int!
+
+    "Descripción del municipio"
+    municipioDesc : String!
+}
+
+
+"Enum de los tipos de nivel de gobierno"
+enum NivelGobiernoEnum {
+
+    "Federal"
+    FEDERAL
+
+    "Estatal"
+    ESTATAL
+
+    "Municipal"
+    MUNICIPAL
+}
+
+"Enum del ambito"
+enum EnumAmbitoPoder {
+	EJECUTIVO
+	JUDICIAL
+	LEGISLATIVO
+	ORGANISMOS_AUTONOMOS
+}
+"enum de prefijos"
+enum Prefijos{
+	"El"
+	El
+	"La"
+	La
+	"Los"
+	Los
+	"Ella"
+	Ella
+	"Se"
+	Se
+}
+
+"Información sobre el módulo"
+type Modulo {
+
+	"Nombre del módulo."
+	modulo: String
+
+	"Observaciones sobre el módulo."
+	errores:[Error]
+	
+	"variable para saber si esta incompleto"
+	incompleto : Boolean
+	
+	"ente de retorno"
+	ente : EnteNuevo
+}
+
+"Error."
+type Error {
+	"Posición fila."
+	posicionFila: Int
+
+	"Nombre del campo."
+	nombreCampo: String
+
+	"Valor del campo."
+	propiedadValor:String
+
+	"Lista de errores."
+	listErrorMensajes:[MensajeError]
+}
+
+"Mensaje de error."
+type MensajeError {
+
+	"Identificador del error."
+	errorId:Int
+
+	"Mensaje del error."
+	mensaje:String
+
+	"Mensaje alterno del error."
+	mensajeAlterno:String
+}
+
+
+type Mutation {
+    agregarEnte(enteNuevo : EnteInput!): Modulo
+}
+
+type Query {
+
+    queryDefault: String
+}
+
+schema {
+    query : Query
+    mutation : Mutation
+}

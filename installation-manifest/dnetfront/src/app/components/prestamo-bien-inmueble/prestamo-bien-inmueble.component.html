@@ -1,0 +1,125 @@
+<div id="scrollComodatos" (mousewheel)="_wheel($event);">
+
+    <div *ngIf="bienInmuebles.prestamo == null || bienInmuebles.prestamo.length <= 0 " class="row d-flex w-100 ml-2 align-items-center">
+        <label [hidden]="!help" (click)="abriInfo('pareja')"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">No
+            Ninguno<i class="fas fa-info-circle"></i></span> </label>
+        <label [hidden]="help" for="prestamoInmueble"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">Ninguno</span></label>
+        <input class="fa-3x" id="prestamoInmueble" [(ngModel)]="this.bienInmuebles.ninguno" (change)="pareja()" name="prestamoInmueble" type="checkbox">
+    </div>
+    <div class="contenedor">
+
+        <div class="container-fluid">
+
+            <ul class="nav nav-tabs" id="tabInicio" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="presentar-tab" data-toggle="tab" href="#presentar" role="tab" aria-controls="presentar" aria-selected="true">Inmuebles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="presentadas-tab" data-toggle="tab" href="#presentadas" role="tab" aria-controls="presentadas" aria-selected="false">Vehículos</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="presentar" role="tabpanel" aria-labelledby="presentar-tab">
+                    <table class="table table-striped" aria-describedby="tabla prestamo inmueble" summary="tabla prestamo inmueble">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tipo operación</th>
+                                <th scope="col">Inmuebles</th>
+                                <th scope="col" width="200px"></th>
+                                <th scope="col" width="200px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let dato of bienInmuebles.prestamo">
+                                <td *ngIf="dato.tipoBien == 'INMUEBLE'">{{dato.tipoOperacion}}</td>
+                                <td *ngIf="dato.tipoBien == 'INMUEBLE'">{{dato.inmueble.tipoInmueble.valor}}</td>
+
+                                <!-- <td><i (click)="modificarDatos(dato)" style="color: rgb(27, 79, 236); cursor: pointer;" class="far fa-edit"></i></td> -->
+                                <!-- <td><i style="color: rgb(119, 27, 27); cursor: pointer;" class="fas fa-trash-alt"></i></td> -->
+                                <td *ngIf="dato.tipoBien == 'INMUEBLE'" class="text-center"><button [attr.id]="'modificar' + dato.idPosicionVista" class="modificar" (click)="modificarDatosI(dato);">
+                                    <div class='icon'>
+                                        <i class='fa fa-edit'></i>
+                                    </div>
+                                    <div class='text'>
+                                        <span [attr.id]="'spanModificar' + dato.idPosicionVista">Modificar</span>
+                                    </div>
+                                </button></td>
+                                <td *ngIf="dato.tipoBien == 'INMUEBLE'" class="text-center"><button *ngIf="!dato.registroHistorico" [attr.id]="'eliminarPrestaBiIn' + dato.idPosicionVista" class="eliminar" (click)="eliminarDatos($event, dato);" (mouseout)="eliminarMouseout($event, dato)">
+                                    <div class='icon'>
+                                        <i class='fa fa-trash-alt'></i>
+                                        <i class='fa fa-question'></i>
+                                        <i class='fa fa-check'></i>
+                                    </div>
+                                    <div class='text'>
+                                        <span [attr.id]="'spanEliminarPrestaBiIn' + dato.idPosicionVista">Eliminar</span>
+                                    </div>
+                                </button></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="tab-pane fade" id="presentadas" role="tabpanel" aria-labelledby="presentadas-tab">
+                    <div class="table-responsive h-75">
+                        <table class="table table-striped" aria-describedby="tabla prestamo vehiculo" summary="tabla prestamo vehiculo">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tipo operación</th>
+                                    <th scope="col">Vehículo</th>
+                                    <th scope="col" width="200px"></th>
+                                    <th scope="col" width="200px"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let dato of bienInmuebles.prestamo">
+                                    <td *ngIf="dato.tipoBien == 'VEHICULO'">{{dato.tipoOperacion}}</td>
+                                    <td *ngIf="dato.tipoBien == 'VEHICULO'">{{dato.vehiculo?.modelo}}</td>
+                                    <!-- <td><i (click)="modificarDatos(dato)" style="color: rgb(27, 79, 236); cursor: pointer;" class="far fa-edit"></i></td> -->
+                                    <!-- <td><i style="color: rgb(119, 27, 27); cursor: pointer;" class="fas fa-trash-alt"></i></td> -->
+                                    <td *ngIf="dato.tipoBien == 'VEHICULO'" class="text-center"><button [attr.id]="'modificar' + dato.idPosicionVista" class="modificar" (click)="modificarDatosV(dato);">
+                                        <div class='icon'>
+                                            <i class='fa fa-edit'></i>
+                                        </div>
+                                        <div class='text'>
+                                            <span [attr.id]="'spanModificar' + dato.idPosicionVista">Modificar</span>
+                                        </div>
+                                    </button></td>
+                                    <td *ngIf="dato.tipoBien == 'VEHICULO'" class="text-center"><button *ngIf="!dato.registroHistorico" [attr.id]="'eliminarPrestaBiIn' + dato.idPosicionVista" class="eliminar" (click)="eliminarDatos($event, dato);" (mouseout)="eliminarMouseout($event, dato)">
+                                        <div class='icon'>
+                                            <i class='fa fa-trash-alt'></i>
+                                            <i class='fa fa-question'></i>
+                                            <i class='fa fa-check'></i>
+                                        </div>
+                                        <div class='text'>
+                                            <span [attr.id]="'spanEliminarPrestaBiIn' + dato.idPosicionVista">Eliminar</span>
+                                        </div>
+                                    </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row mt-5">
+                <button (click)="abrirObservaciones()" type="button" class="observaciones"><i
+            class="far fa-envelope"></i> Aclaraciones / Observaciones </button>
+            </div>
+
+            <div id="obs-prestamo-inmueble" class="content-observaciones">
+                <div>
+                    <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                    <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+                    <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)" id="aclaracionesObservaciones" cols="80" rows="15" maxlength="2000" [(ngModel)]="this.aclaObs" #aclaracion="ngModel"></textarea>
+                    <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

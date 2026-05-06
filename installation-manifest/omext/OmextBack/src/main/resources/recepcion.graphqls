@@ -1,0 +1,962 @@
+schema {
+	query: Query
+}
+
+type Query {
+
+	"""
+	Se obtiene lista de servidores publicos obligados de acuerdo a los filtros determinados
+	"""
+	obtenerServidores( filtro: FiltroInput!): RespuestaServidores
+
+	"""
+	Se genera un reporte de acuerdo a los filtros determinados, se devuelve url donde se descarga el reporte
+	"""
+	generarReporteServidores( filtro: FiltroReporteServidoresInput!): String
+
+	"""
+	Buscador de servidores publicos obligados con resultados limitados
+	"""
+	buscarServidores( filtro : FiltroBusqServInput) : RespuestaBusqServ
+
+	"""
+	Se obtiene informacion estadistica de servidores publicos obligados
+	"""
+	obtenerInformacionGraficas( filtro: FiltroGraficaInput!): RespuestaGrafica
+
+	"""
+	Se obtiene informacion por institucion del cumplimiento
+	"""
+	obtenerInformacionInst( filtro: FiltroInstInput!): RespuestaCumplimientoPorInst
+
+	"""
+	Se obtiene informacion por institucion y unidad administrativa de acuerdo a los filtros determinados
+	"""
+	obtenerInformacionUA( filtro: FiltroUAInput!): RespuestaCumplimientoPorUR
+
+	"""
+	Se obtiene lista de periodos disponibles de acuerdo al filtro
+	"""
+	obtenerPeriodos(filtro : FiltroPeriodoInput! ) : RespuestaPeriodos
+
+	"""
+	Se obtiene lista de instituciones por periodo de acuerdo al filtro
+	"""
+	obtenerInstPeriodo(filtro : FiltroInstPeriodoInput!) : RespuestaPeriodosPorInst
+
+	"""
+	Se obtiene la vista, una lista de instituciones disponibles de acuerdo al filtro
+	"""
+	obtenerVistas(filtro : FiltroVistaInput!) : RespuestaVista
+
+	"""
+	Se obtinen servidores de una institución y una vista
+	"""
+	obtenerServidoresVista(filtro : FiltroServidoresVistaInput!) : RespuestaServidoresVista
+
+	"""
+	Se obtienen vistas por pendientes a usuarios
+	"""
+	obtenerVistasPendientesUsuario(filtro : FiltroPendientesUsuario!) : RespuestaVistaPendiente
+
+	"""
+	Se obtiene el string de la impresion de la vista por folio
+	"""
+	generarImpresionVistaPorFolio(filtro : FiltroImpresionVistaInput!) : String
+
+	"""
+	Se obtienen conteos agrupados
+	"""
+	obtenerInformacionGrupos(filtro : FiltroGruposInput!) : RespuestaCumplimientoPorGrupo
+}
+
+type Mutation {
+
+	"""
+	Extiende periodos de una vista por institucion
+	"""
+	extenderPeriodoInst(extension : ExtensionPeriodoInstitucionInput) : Boolean
+
+	"""
+	Extiende periodo
+	"""
+	extenderPeriodo(extension : ExtensionPeriodoInput) : Boolean
+
+	"""
+	Genera la vista
+	"""
+	generarVistasOmisos(vistasOmisos : VistasOmisosInput!) : Boolean
+
+	"""
+	Guardar periodo
+	"""
+	guardarPeriodo(periodo : PeriodoInput!) : String
+
+	"""
+	Termina el proceso de firma una vez creado el listado
+	"""
+	terminarProcesoVista(params : ParametrosProcesoVistaInput)  : Boolean
+
+}
+
+input ParametrosProcesoVistaInput {
+	folio : String!
+	collName : Int !
+}
+
+input ExtensionPeriodoInput {
+	collName :Int!
+	idPeriodo : String!
+	fechaLimite : String!
+}
+
+input ExtensionPeriodoInstitucionInput {
+	collName : Int!
+	idPeriodo : String!
+	idEnte : String!
+	fechaLimite : String
+}
+
+input VistasOmisosInput {
+	collName : Int!
+	idPeriodo : String!
+	instituciones : [String]
+	usuarioRegistro : UsuarioInput!
+}
+
+input PeriodoActualizacionInput {
+	collName : Int!
+	instituciones : [String]!
+	tipoIncumplimiento : EnumTipoIncumplimiento!
+	anio : Int!
+	mes: EnumMes
+	tipoDeclaracion : EnumTipoDeclaracion!
+	fechaLimite : String!
+
+}
+
+input PeriodoInput {
+	collName : Int!
+	anio : Int!
+	mes: EnumMes
+	tipoDeclaracion : EnumTipoDeclaracion!
+	fechaLimite : String!
+	usuarioRegistro : UsuarioInput!
+
+}
+
+input UsuarioInput {
+	nombre : String!
+	primerApellido : String!
+	segundoApellido:String!
+	curp : String!
+	rfc : String!
+	homoclave : String!
+	email : String!
+}
+
+input FiltroPeriodoInput {
+
+	condiciones: CondicionesPeriodoInput!
+
+	offset : Int!
+
+	tamanio : Int!
+
+	collName: Int!
+}
+
+"""
+"""
+input CondicionesPeriodoInput {
+	tipoDeclaracion : EnumTipoDeclaracion
+	anio : Int
+	mes : EnumMes
+}
+
+"""
+
+"""
+input FiltroInstPeriodoInput {
+
+	"Condiciones para la consulta de peridodos por institucion"
+	condiciones: CondicionesInstPeriodoInput!
+
+	"collName de la consulta"
+	collName : Int!
+}
+
+input CondicionesInstPeriodoInput {
+	idPeriodo : String!
+}
+
+"""
+
+"""
+input FiltroVistaInput {
+
+	condiciones: CondicionesVistaInput!
+
+	collName : Int!
+
+}
+
+input CondicionesVistaInput {
+	tipoIncumplimiento : EnumTipoIncumplimiento!
+	tipoDeclaracion : EnumTipoDeclaracion!
+	idPeriodo: String!
+	anio : Int!
+	mes : EnumMes
+
+}
+
+input FiltroServidoresVistaInput {
+	condiciones: CondicionesServidoresVistaInput!
+
+	ordenamiento : [OrdenamientoInput]
+
+	offset : Int!
+
+	tamanio : Int!
+
+	collName : Int!
+}
+
+"""
+
+"""
+input CondicionesServidoresVistaInput {
+	idPeriodo : String!
+	folio : String
+	idEnte : String
+}
+
+"""
+
+"""
+input FiltroPendientesUsuario {
+	idUsuario: String!
+}
+
+"""
+
+"""
+input FiltroImpresionVistaInput {
+	condiciones: CondicionesImpresionVistaInput!
+
+	collName : Int!
+}
+
+"""
+"""
+input CondicionesImpresionVistaInput {
+	folio : String !
+}
+
+"""
+
+"""
+input FiltroInput {
+
+	offset: Int!
+
+	tamanio: Int!
+
+	cumplimiento : EnumCumplimiento!
+
+	condiciones: CondicionesInput!
+
+	ordenamiento: [OrdenamientoInput]
+
+	collName: Int!
+
+}
+
+"""
+
+"""
+input FiltroReporteServidoresInput {
+
+	nombreReporte : String!
+
+	cumplimiento : EnumCumplimiento!
+
+	condiciones: CondicionesInput!
+
+	ordenamiento: [OrdenamientoInput]
+
+	collName: Int!
+}
+
+"""
+"""
+input FiltroBusqServInput {
+
+	cumplimiento : EnumCumplimiento!
+
+	condiciones: CondicionesBusqServInput!
+
+	collName: Int!
+
+}
+
+"""
+
+"""
+input FiltroGraficaInput {
+
+	condiciones: CondicionesGraficaInput!
+
+	collName: Int!
+
+}
+
+
+input CondicionesGraficaInput {
+
+	idEnte : [String]
+
+	tipoDeclaracion : EnumTipoDeclaracion!
+
+	idNivelJerarquico : [Int]
+
+	sindicalizado : EnumSindicalizado
+
+	ramo : Int
+
+	ur : String
+
+	anio : Int!
+
+	mes : [EnumMes]
+
+}
+
+input OrdenamientoInput {
+	orden : EnumOrden
+	campo : EnumCampoOrden
+}
+
+enum EnumCampoOrden {
+	NOMBRES
+	PRIMER_APELLIDO
+	SEGUNDO_APELLIDO
+	CURP
+}
+
+input CondicionesInput {
+
+	idEnte : [String]!
+
+	nombreEnte : String
+
+	idNivelJerarquico : [Int]
+
+	tipoDeclaracion : EnumTipoDeclaracion!
+
+	ramo : Int
+
+	ur : String
+
+	claveUa: String
+
+	anio : Int!
+
+    mes : [EnumMes]
+
+	nombresApellidos : String
+
+	sindicalizado : EnumSindicalizado
+
+}
+
+input CondicionesBusqServInput {
+
+	idEnte : [String]
+
+	nombreEnte : String
+
+	tipoDeclaracion : EnumTipoDeclaracion!
+
+	idNivelJerarquico : [Int]
+
+	sindicalizado : EnumSindicalizado
+
+	ramo : Int
+
+	ur : String
+
+	claveUa: String
+
+	anio : Int!
+
+	mes : [EnumMes]
+
+	curp : String
+
+	nombresApellidos : String
+
+}
+
+input FiltroInstInput {
+
+	condiciones: CondicionesInstInput!
+
+	collName: Int!
+
+}
+
+input FiltroGruposInput {
+
+	condiciones: CondicionesGruposInput!
+
+	collName: Int!
+
+}
+
+input CondicionesInstInput {
+
+	idEnte : [String]
+
+	tipoDeclaracion : EnumTipoDeclaracion!
+
+	idNivelJerarquico : [Int]
+
+	sindicalizado : EnumSindicalizado
+
+	ramo : Int
+
+	ur : String
+
+	anio : Int!
+
+	mes : [EnumMes]
+
+	nombresApellidos : String
+
+}
+
+input CondicionesGruposInput {
+
+	tipoDeclaracion : EnumTipoDeclaracion!
+
+	anio : Int!
+}
+
+type RespuestaVistaPendiente {
+	total : Int!
+	instituciones: [Vista]
+}
+
+type Periodo {
+	idPeriodo : String!
+	tipoDeclaracion: EnumTipoDeclaracion!
+	extensiones : [EnteExtension]!
+	mes : EnumMes
+	fechaRegistro: String!
+	fechaLimite: String!
+	vistasGeneradas : EnumEstatusPeriodo!
+	venceFechaLimite: Boolean!
+}
+
+enum EnumEstatusVista {
+	NO_GENERADA
+	EN_PROCESO
+	GENERADA_SIN_FIRMAS
+	GENERADA
+}
+
+enum EnumEstatusPeriodo {
+	SIN_VISTAS
+	VISTAS_EN_PROCESO
+	CON_VISTAS
+}
+
+
+type EnteExtension {
+	idEnte : String!
+	fechaLimite : String!
+}
+
+type RespuestaPeriodos {
+	paginacion : Paginacion!
+	periodos : [Periodo]
+}
+
+type InstitucionPeriodo {
+	idEnte : String!
+	nombreEnte : String!
+	obligado : Int!
+	cumplio : Int!
+	extemporaneo: Int!
+	pendiente: Int!
+	extensionPeriodo : String
+	vistaOmisosGenerada : EnumEstatusVista
+	vistaExtGenerada : EnumEstatusVista
+}
+
+type RespuestaPeriodosPorInst {
+	total : Int!
+	periodo : Periodo!
+	instituciones : [InstitucionPeriodo]!
+}
+
+type Vista {
+	tipoDeclaracion: EnumTipoDeclaracion!
+	vistaGenerada : EnumEstatusVista!
+	folio: String!
+	fechaLimite : String
+	fechaRegistro: String
+	totalServidores: Int
+	tipoIncumplimiento : EnumTipoIncumplimiento!
+	ente : EnteVista
+	remitente : String
+	anio : Int
+	mes : String
+	numOficio : Int
+}
+
+type EnteVista {
+	idEnte : String!
+	nombreCorto : String!
+	nombreEnte : String!
+}
+
+type RespuestaVista {
+	total : Int!
+	vistas: [Vista]
+	periodo : Periodo!
+}
+
+type ServidorVista {
+	folio: String!
+	tipoIncumplimiento : EnumTipoIncumplimiento!
+	idPeriodo: String!
+	anio : Int!
+	tipoDeclaracion : EnumTipoDeclaracion!
+	numero: Int
+	curp: String!
+	nombres: String!
+	primerApellido: String!
+	segundoApellido: String!
+	claveUa : String
+	unidadAdministrativa: String
+	empleoCargoComision: String
+}
+
+type RespuestaServidoresVista {
+	paginacion : Paginacion
+	servidores : [ServidorVista]
+}
+
+type RespuestaGrafica {
+
+	total : Int
+
+	resultado : [DatoGrafica]!
+}
+
+type DatoGrafica {
+
+	name : String
+
+	value : Int
+
+}
+
+
+type RespuestaCumplimientoPorInst {
+	total : Int!
+
+	resultado : [DatosInst]!
+}
+
+type RespuestaCumplimientoPorGrupo {
+
+	total : Int!
+
+	resultado : [DatosGrupo]
+}
+
+type DatosInst {
+	idEnte: String!
+
+	nombreEnte: String !
+
+	nombreCorto: String !
+
+	situacion : EnumSituacion!
+
+	obligado : Int!
+
+	pendiente : Int!
+
+	cumplio : Int!
+
+	extemporaneo : Int!
+
+	porcCumplimiento : Float!
+
+	ramo : Int!
+
+	ur: String!
+
+}
+
+type DatosGrupo {
+
+	grupo : Int!
+
+	nombreGrupo : String!
+
+	obligado : Int!
+
+	pendiente : Int!
+
+	cumplio : Int!
+
+	extemporaneo : Int!
+
+	porcCumplimiento : Float!
+
+}
+
+type RespuestaCumplimientoPorUR {
+	total : Int!
+
+	resultado : [DatosUA]!
+}
+
+input FiltroUAInput {
+
+	condiciones: CondicionesUAInput!
+
+	collName: Int!
+
+}
+
+input CondicionesUAInput {
+
+	idEnte : [String]!
+
+	tipoDeclaracion : EnumTipoDeclaracion!
+
+	idNivelJerarquico : [Int]
+
+	sindicalizado : EnumSindicalizado
+
+	ramo : Int
+
+	ur : String!
+
+	anio : Int!
+
+	mes : [EnumMes]
+
+}
+
+type DatosUA {
+
+	claveUa: String!
+
+	unidadAdministrativa : String!
+
+	idEnte: String!
+
+	obligado : Int!
+
+	pendiente : Int!
+
+	cumplio : Int!
+
+	extemporaneo : Int!
+
+	porcCumplimiento : Float!
+
+	ur: String!
+
+}
+
+enum EnumSituacion {
+
+	"Situacion normal, es equivalente a que el enum sea nulo"
+	NORMAL
+
+	"Situacion de transicion"
+	TRANSICION
+
+	"Situacion de liquidacion"
+	LIQUIDACION
+
+	INACTIVO
+
+}
+
+type RespuestaServidores {
+
+	paginacion : Paginacion!
+
+	servidoresPublicos : [ServidorPublico]!
+}
+
+type RespuestaBusqServ {
+
+	servidoresPublicos : [ServidorPublico]!
+}
+
+type Paginacion {
+
+	offset: Int!
+
+	tamanio: Int
+
+	total : Int
+
+}
+
+type ServidorPublico {
+
+	datosRusp : DatosRusp!
+
+	datosDecla : DatosDecla
+
+	activo : Int
+
+	fechaRegistro: String
+
+	cumplimiento : EnumCumplimiento
+
+	extemporaneo : Boolean
+}
+
+type DatosRusp {
+
+	idMovimiento: Int
+
+	tipoObligacion : EnumTipoObligacion
+
+	seguridadNacional: Int
+
+	idSp: Int
+
+	curp: String
+
+	nombres: String
+
+	primerApellido: String
+
+	segundoApellido: String
+
+	nombreCompleto: String
+
+	sexo: EnumSexo
+
+	idEnte: String
+
+	nombreEnte: String
+
+	ramo: Int
+
+	ur: String
+
+	idTipoEnte: Int
+
+	tipoEnte: String
+
+	claveUa: String
+
+	unidadAdministrativa: String
+
+	idPuesto: String
+
+	empleoCargoComision: String
+
+	nivelEmpleoCargoComision: String
+
+	idNivelJerarquico : Int
+
+	valorNivelJerarquico: String
+
+	idPuestoEstrategico: Int
+
+	puestoEstrategico: String
+
+	fechaIngresoInstitucion: String
+
+	fechaTomaPosesionPuesto: String
+
+	fechaObligacionDeclara: String
+
+	fechaBaja: String
+
+	anio: Int
+
+	declaracionPatrimonial: String
+
+	idMotivoDeclaracionPatrimonial: Int
+
+	motivoDeclaracionPatrimonial: String
+
+	idTipoContratacion: Int
+
+	tipoContratacion: String
+
+	politicamenteExpuesto: String
+
+	idMotivoBaja: String
+
+	motivoBaja: String
+
+	idAltaAsociadaBaja: String
+
+	id: String
+
+	activo: Int
+
+	fechaRegistro: String
+
+	tipoDeclaracionDesc: String
+
+	cumplimientoDesc: String
+
+}
+
+type DatosDecla {
+
+	idDNetNoLocalizado: String
+
+	idEnte: String
+
+	idNivelJerarquico : Int
+
+	valorNivelJerarquico: String
+
+	areaAdscripcion: String
+
+	empleoCargoComision: String
+
+	nivelEmpleoCargoComision: String
+
+	idMovimiento: String
+
+	idRecepcionWeb: String
+
+	noComprobante: String
+
+	fechaRecepcion: String
+
+	anio: Int
+
+	tipoDeclaracion: EnumTipoDeclaracion
+
+	curp: String
+
+	idUsrDecNet : Int
+
+	numeroDeclaracion : String
+
+	idSp: Int
+
+	institucionReceptora : InstitucionReceptora
+
+}
+
+type InstitucionReceptora {
+
+	id : String
+
+	collName : Int
+
+	ente : Ente
+}
+
+type Ente {
+
+	ambitoPublico: EnumAmbitoPublico
+
+	id : String
+
+	nivelOrdenGobierno : EnumNivelOrdenGobierno
+
+	nombre : String
+}
+
+type NivelOrdenGobierno {
+
+	nivelOrdenGobierno : EnumNivelOrdenGobierno
+
+}
+
+enum EnumAmbitoPublico {
+
+	EJECUTIVO
+
+	JUDICIAL
+
+	LEGISLATIVO
+
+	ORGANISMOS_AUTONOMOS
+}
+
+enum EnumTipoObligacion {
+
+	ACTIVO_MAYO
+
+}
+
+enum EnumTipoDeclaracion {
+	INICIO
+	CONCLUSION
+	MODIFICACION
+	AVISO
+}
+
+enum EnumNivelOrdenGobierno {
+	FEDERAL
+	ESTATAL
+	MUNICIPAL
+
+}
+
+enum EnumSexo {
+	HOMBRE
+	MUJER
+}
+
+enum EnumMes {
+	ENERO
+	FEBRERO
+	MARZO
+	ABRIL
+	MAYO
+	JUNIO
+	JULIO
+	AGOSTO
+	SEPTIEMBRE
+	OCTUBRE
+	NOVIEMBRE
+	DICIEMBRE
+}
+
+enum EnumOrden {
+	ASC
+	DESC
+}
+
+enum EnumCumplimiento {
+	OBLIGADO
+	CUMPLIO
+	PENDIENTE
+	EXTEMPORANEO
+}
+
+enum EnumSindicalizado {
+	SOLO_SINDICALIZADOS
+	SIN_SINDICALIZADOS
+	INCLUIR_SINDICALIZADOS
+}
+
+enum EnumTipoIncumplimiento {
+	OMISO
+	EXTEMPORANEO
+}

@@ -1,0 +1,254 @@
+<header>
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4 text-center mt-1 pr-0 d-block">
+        <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" alt="logo"/>
+    </div>
+
+</header>
+<div class="info-bar">
+    <div class="row">
+        <div class="col-sm-4 text-small">
+            {{tipoDeclaracion}} - {{fechaEncargo}}
+        </div>
+        <div class="col-sm-4 text-center">
+            <span class="DeclaraNet"
+                [ngClass]="{DnetRojo: institucionReceptora.collName === 100}">{{institucionReceptora.ente.nombre}}</span>
+        </div>
+        <div class="col-sm-4 text-center" style="cursor: pointer;">
+            <i class="fas fa-user-circle cuenta"></i>
+            <span class="cuenta">{{usuario.nombre}}</span>
+        </div>
+    </div>
+</div>
+<div class="menu-cuenta menu-cuenta2 fix-menu-princ">
+    <ul>
+    <li (click)="home();"><i class="fas fa-home"></i> Salir de declaración</li>
+    <li (click)="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</li>
+    </ul>
+</div>
+
+
+<div id="content-cargando">
+    <div class="spinner-border text-success" role="status">
+    </div>
+    <span>Guardando...</span>
+</div>
+
+
+<a id="goForwardBtn" (click)="goForward()" class="d-none"></a>
+<a id="goBackBtn" (click)="goBack()" class="d-none"></a>
+
+<div id="content-btnSave">
+
+
+    <button *ngIf="!this.errorCarga && this.declaracionLoaded.declaracion.datosGenerales.verificar === true;" id=""
+        (click)="previsualizar()" class="btn btn-info mr-2" style="min-width: 140px;">Vista previa <br /> <i
+            class="fas fa-eye"></i></button>
+    <!-- <button *ngIf="!this.errorCarga" id="guardaDatos" (click)="guardaDeclaracion();"
+        class="btn btn-success mr-2">Guardar <br /> <i class="fas fa-save"></i></button> -->
+        <button *ngIf="!this.errorCarga" id="guardaDatos" (click)="guardaDeclaracion();" class="btn btn-success mr-2 test" [disabled]="!flagGuardar || flagGuardando" data-toggle="tooltip" data-placement="top" [attr.title]="revisaTooltip()">
+            {{flagGuardando? 'Guardando' : 'Guardar'}} <br /> <i class="fas fa-save"></i></button>
+    <button *ngIf="!this.errorCarga && this.declaracionLoaded.firmada === true;" data-target="#modalFirmar"
+        id="modalFirma" data-toggle="modal" class="btn btn-primary mr-2">Firmar <br /> <i
+            class="fas fa-highlighter"></i></button>
+
+</div>
+
+
+
+<div class="modal fade" id="modalFirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proceso de firmado y envío del aviso por cambio de dependencia o entidad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> Antes de su envío, se recomienda ampliamente revise su aviso por cambio de dependencia o entidad mediante la opción de <strong>
+                        VISTA PRELIMINAR</strong>, ya que una vez enviada,<strong> NO podrá hacer correcciones o
+                        enviarla de nueva cuenta.</strong></p>
+                <p> Para EL FIRMADO Y ENVÍO del aviso por cambio de dependencia o entidad, debe contar con su e.firma, la cual se tramita
+                    previamente ante el Servicio de Administración Tributaria (SAT), o mediante su Clave Única de
+                    Registro de Población (CURP) y contraseña con que ingresa
+                    al sistema DeclaraNet.</p>
+            </div>
+            <div class="modal-footer text-center container-fluid">
+
+                <button type="button" (click)="firmar()" data-dismiss="modal" class="btn btn-primary col-md-4">
+                    <i class="fas fa-highlighter"></i> Continuar con la firma</button>
+                <button type="button" class="btn btn-danger col-md-2" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancelar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="contenedor">
+    <div class="opacidad"></div>
+    <div class="menu-nav">
+        <ul>
+            <li id="item1" class="itemnav item1 " (click)="goToAnchor(0)">
+                <i id="iconCheck1" class="far fa-times-circle foco-rojo"></i>
+                <!-- <i id="iconCheck1" class="far fa-times-circle foco-rojo"></i> -->
+                <div class="iconsvg icon1"></div><span>Datos generales </span>
+            </li>
+            <li id="item2" class="itemnav item2" (click)="goToAnchor(1)">
+                <i class="far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon2"></div><span>Domicilio declarante</span>
+            </li>
+            <li id="item3" class="itemnav item3" (click)="goToAnchor(2)">
+                <i class="far fa-times-circle foco-rojo"></i>
+                <div class="iconsvg icon3"></div><span>Aviso cambio dependencia</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main onepage-wrapper">
+        <section id="datosGenerales" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <app-datos-generales (aceptar)="procesaAceptar($event,'generales')"></app-datos-generales>
+        </section>
+        <section id="domicilio" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <app-domicilio (aceptar)="procesaAceptar($event,'domicilio')"></app-domicilio>
+        </section>
+        <section id="avisoCambio" (swipeup)="swipeEvent(1)" (swipedown)="swipeEvent(0)"
+            class="page custom-padding onepage-wrapper">
+            <app-aviso-cambio-dependencia (aceptar)="procesaAceptar($event,'avisoCambio')">
+            </app-aviso-cambio-dependencia>
+        </section>
+    </div>
+</div>
+
+<button type="button" #modalGuardarButton id="modalGuardarButton" class="btn btn-primary" data-toggle="modal"
+    data-target="#modalGuardar" style="display: none;">
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="modalGuardar" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" alt="logo"/>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div *ngIf="!this.guardarDeclaracionError; else errorDeclara">
+                    <span class="alerticonModal"><img src="assets/image/sucess.png" alt="checkmark" />
+                        <h2>Aviso guardado exitosamente</h2>
+                        <span *ngIf="mensajeCambioFormate">{{mensajeCambioFormate}}</span>
+                    </span>
+                </div>
+                <ng-template #errorDeclara>
+                    <span class="alerticonModal"><img src="assets/image/error.png" alt="checkmark" />
+                        <p class="text-black">{{this.guardarDeclaracionError}}</p>
+                        <div *ngIf="this.guardarDeclaracionErrorArr">
+                            <p *ngFor="let error of guardarDeclaracionErrorArr">{{error.error}}</p>
+                        </div>
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" #modalErrorCarga id="modalErrorCargaButton" class="btn btn-primary" data-toggle="modal"
+    data-target="#modalErrorCarga" style="display: none;">
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="modalErrorCarga" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" alt="logo" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="alerticonModal"><img src="assets/image/error.png" alt="checkmark" />
+                    <p class="text-black">Error en la carga inicial, salga a la declaración e intente de nuevo</p>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" #modalErrorDG id="modalErrorDGButton" class="btn btn-primary" data-toggle="modal"
+    data-target="#modalErrorDG" style="display: none;">
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="modalErrorDG" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" alt="logo" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="alerticonModal"><img src="assets/image/info.png" alt="checkmark" width="50px;" />
+                    <h5>
+                        <p class="text-black mt-2">Para realizar el guardado de la información, es necesario que primero
+                            registres los Datos Generales.
+                        </p>
+                    </h5>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" #modalAvisoPrivacidad id="modalAvisoPrivacidadButton" class="btn btn-primary" data-toggle="modal"
+    data-target="#modalAvisoPrivacidad" style="display: none;">
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="modalAvisoPrivacidad" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../../../assets/image/declara-net.svg" alt="logo" width="180px;" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="alerticonModal"><img src="assets/image/privacidad.png" alt="checkmark" width="50px;" />
+                    <h5>
+                        <p class="text-black mt-2">Aviso de privacidad que algo dirá
+                        </p>
+                    </h5>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

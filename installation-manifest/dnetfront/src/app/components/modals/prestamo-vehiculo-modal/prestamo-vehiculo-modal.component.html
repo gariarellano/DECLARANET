@@ -1,0 +1,278 @@
+
+    <div class="modal-content" style="height:500px;">
+        <div class="modal-header">
+            <div class="d-flex w-100">
+                <div class="d-flex w-75">
+                    <h4 class="modal-title">Préstamo bien Vehículo</h4>
+                </div>
+                <div class="d-flex w-25 align-items-center">
+                    <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                    <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <form #prestaVehiTipoOper="ngForm">
+            <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="adeudoRadio" type="radio" required id="radio{{data.id}}" [(ngModel)]="vehiculo.tipoOperacion" [value]="data.id" (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        <div class="modal-body" style="overflow-y: scroll">
+        <form #prestaVehiForm="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel" [(ngModel)]="vehiculo.tipoOperacion">
+                <div class="row p-3">
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Vehículo<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Vehículo <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <select [disabled]="getDisabled(tipoVehiculo, vehiculo.tipoOperacion)" name="tipoVehiculo" [compareWith]="cata.compareFn" id="preVehVeh"
+                            #tipoVehiculo="ngModel" required appSelectValidator
+                            [(ngModel)]="vehiculo.vehiculo.tipoVehiculo">
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let vehiculo of this.cata.catalogos.CAT_TIPO_VEHICULO" [ngValue]="vehiculo">
+                                {{vehiculo.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip" *ngIf="tipoVehiculo.touched && tipoVehiculo.pristine">
+                            Campo requerido...
+                        </span>
+                    </div>
+                    <div class="flecha-otro">
+                        <i *ngIf="vehiculo.vehiculo.tipoVehiculo.id == '9999'" class="fas fa-arrow-right"></i>
+                    </div>
+                    <div *ngIf="vehiculo.vehiculo.tipoVehiculo.id == '9999'" class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input [disabled]="getDisabled(especificTipoVehiculo, vehiculo.tipoOperacion)" type="text" name="especificTipoVehiculo" id="preVehEspVeh"
+                            #especificTipoVehiculo="ngModel" oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="vehiculo.vehiculo.tipoVehiculoOtro">
+                        <div class="invalid-tooltip"
+                            *ngIf="especificTipoVehiculo.invalid && (especificTipoVehiculo.dirty || especificTipoVehiculo.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Marca<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Marca <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input [disabled]="getDisabled(marca, vehiculo.tipoOperacion)" type="text" name="marca" maxlength="100" id="preVehMar" #marca="ngModel"
+                            oninput="CustomUpperCase(this);" required [(ngModel)]="vehiculo.vehiculo.marca">
+                        <div class="invalid-tooltip" *ngIf="marca.invalid && (marca.dirty || marca.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Modelo<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Modelo <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input [disabled]="getDisabled(modelo, vehiculo.tipoOperacion)" type="text" name="modelo" maxlength="50" id="preVehMod" #modelo="ngModel"
+                            oninput="CustomUpperCase(this);" required [(ngModel)]="vehiculo.vehiculo.modelo">
+                        <div class="invalid-tooltip" *ngIf="modelo.invalid && (modelo.dirty || modelo.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row p-3">
+                    <div class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Año<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Año <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input [disabled]="getDisabled(anio, vehiculo.tipoOperacion)" type="text" name="anio" #anio="ngModel" id="preVehAni" required
+                             [(ngModel)]="vehiculo.vehiculo.anio" oninput="soloNumeroInput(this, 1, 2020);" onfocus="focusSoloNumero(this)">
+                        <div class="invalid-tooltip" *ngIf="anio.invalid && (anio.dirty || anio.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Número de serie o registro<i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número de serie o registro</label>
+                        <input [disabled]="getDisabled(numSerie, vehiculo.tipoOperacion)" type="text" name="numSerie" id="preVehNumSer" #numSerie="ngModel" maxlength="50"
+                            oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="vehiculo.vehiculo.numeroSerieRegistro">
+                        <div class="invalid-tooltip" *ngIf="numSerie.invalid && (numSerie.dirty || numSerie.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Donde se encuentra registrado<i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Donde se encuentra registrado</label>
+                        <select [disabled]="getDisabled(registrado, vehiculo.tipoOperacion)" name="registrado" #registrado="ngModel" id="preVehDonEncReg"
+                            [compareWith]="cata.compareFn" required appSelectValidator
+                            [(ngModel)]="vehiculo.vehiculo.lugarRegistro.ubicacion">
+                            <option [ngValue]=null disabled>SELECCIONE...</option>
+                            <option *ngFor="let ubi of this.cata.enums.ENUM_UBICACION" [value]="ubi.id">
+                                {{ubi.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip" *ngIf="registrado.touched && registrado.pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div *ngIf="vehiculo.vehiculo.lugarRegistro.ubicacion == 'MEXICO'" class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Entidad federativa<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Entidad federativa</label>
+                        <select [disabled]="getDisabled(entidadFederativa, vehiculo.tipoOperacion)" name="entidadFederativa" [compareWith]="cata.compareFn" id="preVehEntFed" required
+                            appSelectValidator #entidadFederativa="ngModel"
+                            [(ngModel)]="vehiculo.vehiculo.lugarRegistro.localizacionMexico.entidadFederativa">
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let ent of this.cata.catalogos.CAT_ENTIDAD_FEDERATIVA" [ngValue]="ent">
+                                {{ent.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip"
+                            *ngIf="entidadFederativa.invalid && (entidadFederativa.dirty || entidadFederativa.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div *ngIf="vehiculo.vehiculo.lugarRegistro.ubicacion == 'EXTRANJERO'"
+                        class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">País<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">País</label>
+                        <select [disabled]="getDisabled(pais, vehiculo.tipoOperacion)" name="pais" #pais="ngModel" [compareWith]="cata.compareFn" id="preVehPai" required
+                            appSelectValidator
+                            [(ngModel)]="vehiculo.vehiculo.lugarRegistro.localizacionExtranjero.pais">
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let pais of this.cata.catalogos.CAT_PAIS" [ngValue]="pais">
+                                {{pais.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip" *ngIf="pais.invalid && (pais.dirty || pais.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Dueño o titular<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Dueño o titular <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <select [disabled]="getDisabled(duenoTitular, vehiculo.tipoOperacion)" name="duenoTitular" #duenoTitular="ngModel" id="preVehDueTit" required
+                            [(ngModel)]="vehiculo.duenoTitular.tipoPersona">
+                            <option [ngValue]=null disabled>SELECCIONE...</option>
+                            <option *ngFor="let dueno of this.cata.enums.ENUM_TIPO_PERSONA" [value]="dueno.id">
+                                {{dueno.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip" *ngIf="duenoTitular.touched && duenoTitular.pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div *ngIf="vehiculo.duenoTitular.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Nombre del dueño o titular<i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nombre del dueño o titular <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input [disabled]="getDisabled(nombreMoral, vehiculo.tipoOperacion)" type="text" name="nombreMoral" #nombreMoral="ngModel" id="preVehMorNomDue"
+                            maxlength="100" oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="vehiculo.duenoTitular.personaMoral.nombre">
+                        <span class="invalid-tooltip" *ngIf="nombreMoral.touched && nombreMoral.pristine">
+                            Campo requerido...
+                        </span>
+                    </div>
+                    <div *ngIf="vehiculo.duenoTitular.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input [disabled]="getDisabled(rfcMoralVehi, vehiculo.tipoOperacion)" type="text" name="rfcMoralVehi" id="preVehMorRfc" #rfcMoralVehi="ngModel" maxlength="13"
+                            oninput="CustomUpperCase(this);" rfcMoralValid
+                            [(ngModel)]="vehiculo.duenoTitular.personaMoral.rfc">
+                        <div class="invalid-tooltip"
+                            *ngIf="rfcMoralVehi.invalid && (rfcMoralVehi.dirty || rfcMoralVehi.touched)">
+                            <div *ngIf="rfcMoralVehi.errors.rfcMoralValid">
+                                El RFC debe contener el formato correcto...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Relación con dueño o titular<i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Relación con dueño o titular</label>
+                        <input [disabled]="getDisabled(relacionDuenoVehi, vehiculo.tipoOperacion)" type="text" name="relacionDuenoVehi" id="preVehMorRelDue" #relacionDuenoVehi="ngModel"
+                            [(ngModel)]="vehiculo.relacionConTitular" required>
+                        <div class="invalid-tooltip"
+                            *ngIf="relacionDuenoVehi.invalid && (relacionDuenoVehi.dirty || relacionDuenoVehi.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div *ngIf="vehiculo.relacionConTitular.id == '9999'" class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input [disabled]="getDisabled(especificRelacionVehiculo, vehiculo.tipoOperacion)" type="text" name="especificRelacionVehiculo" id="preVehMorEspTip"
+                            #especificRelacionVehiculo="ngModel" oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="vehiculo.relacionConTitularOtro">
+                        <div class="invalid-tooltip"
+                            *ngIf="especificRelacionVehiculo.invalid && (especificRelacionVehiculo.dirty || especificRelacionVehiculo.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3" *ngIf="vehiculo.duenoTitular.tipoPersona == 'PERSONA_FISICA'">
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Nombre del dueño o titular<i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nombre del dueño o titular</label>
+                        <input [disabled]="getDisabled(nombreFisica, vehiculo.tipoOperacion)" type="text" name="nombreFisica" id="preVehFicNom" #nombreFisica="ngModel" maxlength="100"
+                            oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="vehiculo.duenoTitular.personaFisica.nombre">
+                        <span class="invalid-tooltip" *ngIf="nombreFisica.touched && nombreFisica.pristine">
+                            Campo requerido...
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Primer Apellido<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Primer Apellido</label>
+                        <input [disabled]="getDisabled('pApellidoFisica', vehiculo.tipoOperacion)" type="text" name="pApellidoFisica" id="preVehFisPriApe" maxlength="100"
+                            #pApellidoFisica="ngModel" oninput="CustomUpperCase(this);" required
+                            [(ngModel)]="vehiculo.duenoTitular.personaFisica.primerApellido">
+                        <span class="invalid-tooltip" *ngIf="pApellidoFisica.touched && pApellidoFisica.pristine">
+                            Campo requerido...
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">Segundo Apellido<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Segundo Apellido</label>
+                        <input [disabled]="getDisabled('sApellidoFisica', vehiculo.tipoOperacion)" type="text" name="sApellidoFisica" id="preVehFisSegApe" maxlength="100"
+                            #sApellidoFisica="ngModel" oninput="CustomUpperCase(this);"
+                            [(ngModel)]="vehiculo.duenoTitular.personaFisica.segundoApellido">
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">RFC</label>
+                        <input [disabled]="getDisabled('rfcFisicaVehi', vehiculo.tipoOperacion)" type="text" name="rfcFisicaVehi" id="preVehFisRfc" #rfcFisicaVehi="ngModel"
+                            maxlength="13" oninput="CustomUpperCase(this);" rfcValid
+                            [(ngModel)]="vehiculo.duenoTitular.personaFisica.rfc">
+                        <div class="invalid-tooltip"
+                            *ngIf="rfcFisicaVehi.invalid && (rfcFisicaVehi.dirty || rfcFisicaVehi.touched)">
+                            <div *ngIf="rfcFisicaVehi.errors.rfcValid">
+                                El RFC debe contener el formato correcto...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
+        </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" [disabled]="!prestaVehiForm.form.valid || !prestaVehiTipoOper.form.valid"
+                (click)="guardaLocal()">Aceptar</button>
+            <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+        </div>
+    </div>

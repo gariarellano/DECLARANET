@@ -1,0 +1,99 @@
+<header>
+    <div class="container-fluid" *ngIf="globals.usuario">
+        <div class="row bg-light">
+            <div class="col-sm-4 bg-light">
+                <nav class="navbar navbar-expand-md bg-light navbar-light">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                        <ul class="navbar-nav">
+                            <!--    <li class="nav-item" *ngIf="pages?.includes(1) && collName === 100;">
+                                <a class="nav-link" [routerLink]="['/editUsuario']" routerLinkActive="router-link-active" style="font-size: 15px; color: #ED3237;">Editar</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <img class="ml-3 nav-link" [src]="this.enteImagen" alt="" width="150px"> </li>
+                            <li class="nav-item" *ngIf="pages">
+                                <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active" style="font-size: 15px; color: #ED3237; cursor: pointer;">Inicio</a>
+                            </li>
+                            <li class="nav-item" *ngIf="pages?.includes(2);">
+                                <a class="nav-link" [routerLink]="['/consultaDeclaracion']" routerLinkActive="router-link-active" style="font-size: 15px; color: #ED3237; cursor: pointer;">Declaraciones</a>
+                            </li>
+                            <li class="nav-item dropdown" *ngIf="pages?.includes(1) || pages?.includes(3);">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 15px; color: #ED3237; cursor: pointer;">
+                                  Usuarios
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" *ngIf="pages?.includes(1) || pages?.includes(3);">
+                                    <a class="nav-link" [routerLink]="['/usuariosIdentidad']" routerLinkActive="router-link-active" *ngIf="pages?.includes(1);" style="font-size: 15px; color: #ED3237;">Identidad</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="nav-link" [routerLink]="['/usuariosOper']" routerLinkActive="router-link-active" *ngIf="pages?.includes(3);" style="font-size: 15px; color: #ED3237;">OPER</a>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <!-- <img class="ml-3 " [src]="this.enteImagen" alt="" width="30%"> -->
+                    </div>
+                </nav>
+            </div>
+            <div class="col-sm-4 bg-light d-flex w-100 align-items-center justify-content-center">
+                <img src="../assets/img/OPER.png" (click)="navInicio()" width="120px;" alt="Logo Dnet" style="cursor: pointer;" />
+            </div>
+            <!-- <div class="d-flex col-sm-4 w-100 justify-content-right align-items-center  cuenta" style="cursor: pointer;">
+                <i class="fas fa-user-circle mr-1"></i>
+                <span class="">{{globals.usuario.nombre}}</span>
+            </div>
+            <div class="menu-cuenta menu-cuenta1 fix-menu-princ mt-2">
+                <ul>
+                    <li (click)="logout()" style="cursor: pointer; height: 35px;">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </li>
+                </ul>
+            </div> -->
+            <div class="col-sm-4 bg-light">
+
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle bg-light" type="link" id="dropDownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 15px; padding-top:1rem;">
+                    <i class="fas fa-user-circle mr-1"></i>
+                    <span class="">{{globals.usuario.nombre}}</span>
+                </button>
+                    <div class="dropdown-menu menuCuenta" aria-labelledby="dropDownUser" style="background-color: #000000;  padding-top: 0; padding-bottom: 0;">
+
+                        <a class="dropdown-item" style="cursor: pointer; padding-top: .5rem; padding-bottom: .5rem;" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+
+<router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+<div bsModal #childModal="bs-modal" id="sessionModal" class="modal fade" tabindex="-1" aria-labelledby="dialog-child-name" data-backdrop="static" data-keyboard="false" [config]="{ignoreBackdropClick: true, keyboard: false}" style="z-index: 2050;">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header" style="display: inline;">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+                <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../assets/img/OPER.png" width="180px;" />
+                <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+            </div>
+            <div class="modal-body">
+                {{idleState}}
+                <div class="row mrgbtm">
+                    <div class="col-md-6 text-center">
+                        <button type="button" (click)="logout()" class="btn btn-danger"><i
+                                class="fas fa-sign-out-alt"></i> Salir</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" (click)="renovarTokens();" class="btn btn-info"><i
+                                class="fas fa-file-alt"></i> Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

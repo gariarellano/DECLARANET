@@ -1,0 +1,41 @@
+table {
+    width: 100%;
+  }
+  
+  // th.mat-sort-header-sorted {
+  //   color: black;
+  // }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 20%;
+  }
+
+  td.mat-cell{
+    a:hover{
+      color: #e35e5e;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  
+  .spinner {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(114, 114, 114, 0.596);
+    z-index: 500;
+  }
+  
+  td.mat-footer-cell:nth-child(1) {
+    font-weight: bold;
+    text-align: start;
+  }
+  td.mat-footer-cell{
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  
+  

@@ -1,0 +1,90 @@
+# Extiende pipeline de Auto DevOps (https://docs.gitlab.com/ee/topics/autodevops/)
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
+  - project: desarrollo/ci-cd
+    file: /templates/sonarqube.yml
+
+variables:
+  # Depslegar a ambiente de staging en vez de directo a producción
+  STAGING_ENABLED: 'true'
+  # No se requiere aprovisionar una base de datos
+  POSTGRES_ENABLED: 'false'
+
+test:
+  # Tests en Angular requieren una imagen con navegador headless
+  image: avatsaev/angular-chrome-headless
+  script:
+    - npm install
+    - npm test --watch=false --browsers=ChromeHeadless --code-coverage
+  artifacts:
+    paths:
+      - coverage
+
+pages:
+  image: python
+  before_script:
+    - pip install mkdocs
+  script:
+    - mkdocs build -d public
+  artifacts:
+    paths:
+      - public/
+
+      
+
+
+# production:
+#   stage: production
+#   variables:
+#     NODE_ENV: "production"
+#   script:
+#     - npm install
+#     - npm run build -- --prod --c=production --output-path dist/app;
+
+
+# staging:
+#   image: node:10
+#   stage: staging
+#   variables:
+#     NODE_ENV: "staging"
+#   before_script:
+#   - npm install
+#   script:
+#     - echo "$NODE_ENV"
+#     - npm run build -- --prod --c=staging --output-path dist/app;
+
+
+# Staging deploys are disabled by default since
+# continuous deployment to production is enabled by default
+# If you prefer to automatically deploy to staging and
+# only manually promote to production, enable this job by setting
+# STAGING_ENABLED.
+
+# staging:
+#   stage: staging
+#   variables:
+#     NODE_ENV: "staging"
+#   before_script:
+#      - npm install
+#      - npm run build -- --prod --c=staging --output-path dist/app;
+#      - COPY --from=build /app/dist/app /www
+#   script:
+#     - check_kube_domain
+#     - install_dependencies
+#     - download_chart
+#     - ensure_namespace
+#     - initialize_tiller
+#     - create_secret
+#     - deploy
+#   environment:
+#     name: staging
+#     url: http://$CI_PROJECT_PATH_SLUG-staging.$KUBE_INGRESS_BASE_DOMAIN
+#   only:
+#     refs:
+#       - master
+#     kubernetes: active
+#     variables:
+#       - $STAGING_ENABLED
+
+
+

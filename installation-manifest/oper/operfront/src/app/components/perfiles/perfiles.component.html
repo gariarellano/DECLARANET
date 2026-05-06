@@ -1,0 +1,20 @@
+<div class="container center mt-5">
+    <div id="card-login" class="card mt-2">
+        <div class="card-body text-center">
+            <div class="col-lg-12">
+                <i _ngcontent-blr-c106="" class="fa fa-group" aria-hidden="true"></i>
+                <label class="text-center ml-3">Selecciona tu perfil</label>
+                <select class="center" [(ngModel)]="selectedProfile">
+                    <option value="null" disabled selected>Seleccione...</option>
+                    <option *ngFor="let profile of profiles" [ngValue]="profile">{{profile.perfil}}</option>
+            </select>
+            </div>
+            <div class="col-lg-12">
+
+                <button class="btn btn-primary center mt-1" title="Ingresar" [disabled]="!selectedProfile" (click)="setProfile()">
+                Ingresar
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

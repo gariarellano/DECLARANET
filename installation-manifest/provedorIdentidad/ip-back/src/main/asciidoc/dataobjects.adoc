@@ -1,0 +1,142 @@
+= Cheatsheets
+
+[[AplicacionEO]]
+== AplicacionEO
+
+++++
+ Entidad de aplicación
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[dominio]]`@dominio`|`String`|+++
+
++++
+|[[idAplicacion]]`@idAplicacion`|`Number (Integer)`|+++
+
++++
+|[[nombre]]`@nombre`|`String`|+++
+
++++
+|[[secretKey]]`@secretKey`|`String`|+++
+
++++
+|[[url]]`@url`|`String`|+++
+
++++
+|===
+
+[[TransaccionEO]]
+== TransaccionEO
+
+++++
+ Entidad de transacción
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[codigoBase64]]`@codigoBase64`|`String`|+++
+
++++
+|[[codigoSha]]`@codigoSha`|`String`|+++
+
++++
+|[[codigoToken]]`@codigoToken`|`String`|+++
+
++++
+|[[curp]]`@curp`|`String`|+++
+
++++
+|[[fecha]]`@fecha`|`String`|+++
+
++++
+|[[idAplicacion]]`@idAplicacion`|`Number (Integer)`|+++
+
++++
+|[[idTransaccion]]`@idTransaccion`|`Number (Integer)`|+++
+
++++
+|===
+
+[[UsuarioAplicacionEO]]
+== UsuarioAplicacionEO
+
+++++
+ Entidad de vinculación de un usuario con una aplicación
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[idAplicacion]]`@idAplicacion`|`Number (Integer)`|+++
+
++++
+|[[idusuario]]`@idusuario`|`Number (Integer)`|+++
+
++++
+|===
+
+[[UsuarioEO]]
+== UsuarioEO
+
+++++
+ Entidad de la información de los usuarios
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[curp]]`@curp`|`String`|+++
+
++++
+|[[email]]`@email`|`String`|+++
+
++++
+|[[emailAlt]]`@emailAlt`|`String`|+++
+
++++
+|[[homoclave]]`@homoclave`|`String`|+++
+
++++
+|[[idAplicacion]]`@idAplicacion`|`Number (Integer)`|+++
+
++++
+|[[idUsuario]]`@idUsuario`|`Number (Integer)`|+++
+
++++
+|[[login]]`@login`|`String`|+++
+
++++
+|[[nombre]]`@nombre`|`String`|+++
+
++++
+|[[numCelular]]`@numCelular`|`String`|+++
+
++++
+|[[primerApellido]]`@primerApellido`|`String`|+++
+
++++
+|[[pwdEnc]]`@pwdEnc`|`String`|+++
+
++++
+|[[rfc]]`@rfc`|`String`|+++
+
++++
+|[[segundoApellido]]`@segundoApellido`|`String`|+++
+
++++
+|[[validadoRenapo]]`@validadoRenapo`|`String`|+++
+
++++
+|===
+

@@ -1,0 +1,200 @@
+            /* You can add global styles to this file, and also import other style files */
+            
+            $principal:#ffffff;
+            html,
+            body {
+                height: 100%;
+            }
+            
+            body {
+                margin: 0;
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+            }
+            
+            * {
+                margin: 0px;
+                padding: 0px;
+            }
+            
+            .fix-menu-princ {
+                top: 100px;
+                right: 3%;
+            }
+            
+            .menu-cuenta {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                // top: 67px;
+                z-index: 200;
+                width: 200px;
+                height: 0px;
+                transition: height 0.5s;
+                background: rgb(32, 32, 34);
+                right: 16%;
+                ul {
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0px;
+                    li {
+                        display: none;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        list-style: none;
+                        text-align: center;
+                        padding: 5px 0px;
+                        margin-bottom: 3px;
+                        color: $principal;
+                        // background: yellow;
+                        // border-bottom: 1px solid black;
+                        &:hover {
+                            // background: $secundario-hover;
+                            background: #e2103a;
+                            cursor: pointer;
+                        }
+                        i {
+                            color: $principal;
+                            margin-right: 3px;
+                        }
+                    }
+                }
+            }
+            
+            .textoBusqueda {
+                color: #14050afd;
+                font-size: 18px;
+            }
+            
+            .previewWindow .modal-dialog {
+                max-width: 2000px;
+                width: 80%;
+            }
+            
+            .previewWindow .modal-content {
+                height: 600px;
+                max-height: 1000px;
+            }
+            
+            .far {
+                font-weight: 900;
+            }
+            
+            .centerImage {
+                /* position: relative;
+        width: 20%;
+        min-width: 200px;
+        max-width: 300px;
+        left: 40%;
+        top: 3px; */
+                /* position: absolute; */
+                min-width: 200px;
+                max-width: 300px;
+                left: 50%;
+                transform: translate(-50%, 0%);
+                width: 30%;
+                height: auto;
+            }
+            
+            .ordenador {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+            
+            .canvasWrapper:before,
+            .canvasWrapper:after {
+                box-sizing: content-box !important;
+            }
+            
+            .pdfViewer .canvasWrapper,
+            .textLayer,
+            .page {
+                box-sizing: content-box !important;
+            }
+            /* .textLayer {
+                box-sizing: content-box !important;
+            }
+            
+            .page {
+                box-sizing: content-box !important;
+            } */
+            
+            .outline-danger:disabled {
+                color: #ED3237;
+                background-color: transparent;
+            }
+            
+            .btn-outline-danger.disabled,
+            .btn-outline-danger:disabled {
+                color: #ED3237;
+                background-color: transparent;
+            }
+            
+            .btn-outline-danger {
+                color: #ED3237;
+                border-color: #ED3237;
+            }
+            
+            .btn-outline-danger:not(:disabled):not(.disabled):active {}
+            
+            .btn-outline-danger:not(:disabled):not(.disabled).active,
+            .btn-outline-danger:not(:disabled):not(.disabled):active,
+            .show>.btn-outline-danger.dropdown-toggle {
+                color: #fff;
+                background-color: #ED3237;
+                border-color: #ED3237;
+            }
+            
+            .btn-outline-danger:hover {
+                color: #fff;
+                background-color: #ED3237;
+                border-color: #ED3237;
+            }
+            
+            #toast-container>div {
+                width: 400px;
+                height: 70px;
+            }
+            
+            @media (max-width: 992px) {
+                .container {
+                    width: 90% !important;
+                }
+                .tablaResp thead {
+                    display: none !important;
+                }
+                .tablaPorNombre td,
+                .tablaPorNombre th,
+                .tablaPorNombre tr {
+                    display: block !important;
+                    height: auto !important;
+                    border: none !important;
+                }
+                .tablaPorNombre td {
+                    width: 100% !important;
+                    padding: 5px !important;
+                }
+                .tablaPorNombre tr {
+                    border-bottom: 1px solid #d2d2d2 !important;
+                }
+                .modal-dialog-centered {
+                    align-items: flex-start;
+                }
+                #toast-container>div {
+                    width: 100%;
+                    height: 70px;
+                }
+            }
+            
+            @media (max-width: 780px) {
+                .previewWindow .modal-dialog {
+                    max-width: 2000px;
+                    width: 95%;
+                }
+            }
+            
+            .fix-menu-princ {
+                top: 50px;
+                right: 21%;
+            }

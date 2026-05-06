@@ -1,0 +1,329 @@
+<div class="modal-content" style="height: 100%">
+    <div class="modal-header">
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Experiencia Laboral</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="formOperaEx">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="tipoOperacion" type="radio" required
+                            id="radio{{data.id}}" formControlName="tipoOperacion" [value]="data.id"
+                            (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form #formExperiencia="ngForm" [formGroup]="form2">
+
+        <div formGroupName="experienciaLaboral" class="modal-body" style="overflow-y: auto">
+
+            <div formGroupName="actividadLaboral" class="row p-3">
+                <div formGroupName="ambitoSector" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Ámbito <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Ámbito <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select
+                        [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.ambitoSector.id', form2.get('experienciaLaboral.tipoOperacion').value)"
+                        formControlName="id" name="" id="expLabAmb">
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let ent of this.cata.catalogos.CAT_AMBITO_SECTOR" [value]="ent.id">
+                            {{ent.valor}}
+                        </option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').touched && form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').pristine  && !form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').valid">
+                        Campo Requerido
+                    </span>
+
+
+                </div>
+                <div formGroupName="sectorPublico">
+                    <div *ngIf="form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '1'"
+                        class="col d-flex flex-column justify-content-between ">
+                        <label [hidden]="!help" for="">Nivel de gobierno <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nivel de gobierno <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <select
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPublico.nivelOrdenGobierno', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            name="" id="expLabNivGob" required formControlName="nivelOrdenGobierno">
+                            <option value="null" disabled>SELECCIONE...</option>
+                            <option *ngFor="let apubli of this.cata.enums.ENUM_NIVEL_ORDEN_GOBIERNO"
+                                [value]="apubli.id">
+                                {{apubli.valor}}
+                            </option>
+
+                        </select>
+                        <span class="invalid-tooltip"
+                            *ngIf="form2.get('experienciaLaboral.actividadLaboral.sectorPublico.nivelOrdenGobierno').touched && form2.get('experienciaLaboral.actividadLaboral.sectorPublico.nivelOrdenGobierno').pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                </div>
+
+                <div formGroupName="sectorPublico">
+                    <div *ngIf="form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '1'"
+                        class="col d-flex flex-column justify-content-between ">
+                        <label [hidden]="!help" for="">Ámbito Público <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Ámbito Público <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <select
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPublico.ambitoPublico', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            name="" required id="expLabAmbPub" formControlName="ambitoPublico">
+                            <option value="null" disabled>SELECCIONE...</option>
+                            <option *ngFor="let ap of this.cata.enums.ENUM_AMBITO_PODER" [value]="ap.id">
+                                {{ap.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip"
+                            *ngIf="form2.get('experienciaLaboral.actividadLaboral.sectorPublico.ambitoPublico').touched && form2.get('experienciaLaboral.actividadLaboral.sectorPublico.ambitoPublico').pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flecha-otro">
+                    <i *ngIf="form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '9999'"
+                        class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '9999'"
+                    class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for="">Especifique el Ámbito <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique el Ámbito <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input
+                        [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.ambitoSectorOtro', form2.get('experienciaLaboral.tipoOperacion').value)"
+                        type="text" formControlName="ambitoSectorOtro" id="expLabEspAmb" required
+                        oninput="CustomUpperCase(this);">
+                </div>
+            </div>
+            <div formGroupName="actividadLaboral">
+                <div *ngIf="form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '1'"
+                    formGroupName="sectorPublico" class="row p-3">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Nombre ente público<i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nombre ente público <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPublico.nombreEntePublico', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="text" name="" id="expLabNomPub" required maxlength="100"
+                            oninput="CustomUpperCase(this);" formControlName="nombreEntePublico">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.sectorPublico.nombreEntePublico').valid && (form2.get('experienciaLaboral.actividadLaboral.sectorPublico.nombreEntePublico').dirty || form2.get('experienciaLaboral.actividadLaboral.sectorPublico.nombreEntePublico').touched)">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Área adscripción <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Área adscripción <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPublico.areaAdscripcion', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="text" name="" required id="expLabAreAds" maxlength="100"
+                            formControlName="areaAdscripcion" oninput="CustomUpperCase(this);">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.sectorPublico.areaAdscripcion').valid && (form2.get('experienciaLaboral.actividadLaboral.sectorPublico.areaAdscripcion').dirty || form2.get('experienciaLaboral.actividadLaboral.sectorPublico.areaAdscripcion').touched)">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Empleo,Cargo o Comisión <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Empleo,Cargo o Comisión <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPublico.empleoCargoComision', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="text" name="" id="expLabEmpCarCom" maxlength="100"
+                            formControlName="empleoCargoComision" oninput="CustomUpperCase(this);">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.sectorPublico.empleoCargoComision').valid && (form2.get('experienciaLaboral.actividadLaboral.sectorPublico.empleoCargoComision').dirty || form2.get('experienciaLaboral.actividadLaboral.sectorPublico.empleoCargoComision').touched)">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Función principal <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Función principal <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPublico.funcionPrincipal', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="text" name="" id="expLabFunPri" required maxlength="100"
+                            formControlName="funcionPrincipal" oninput="CustomUpperCase(this);">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.sectorPublico.funcionPrincipal').valid && (form2.get('experienciaLaboral.actividadLaboral.sectorPublico.funcionPrincipal').dirty || form2.get('experienciaLaboral.actividadLaboral.sectorPublico.funcionPrincipal').touched)">
+                            Campo Requerido
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '2' || form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '9999'"
+                    formGroupName="sectorPrivadoOtro" class="row p-3">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Nombre,empresa, sociedad o asociación <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Nombre,empresa, sociedad o asociación <i
+                                class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                                title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="text" name="" id="expLabNomEmp" required maxlength="100"
+                            formControlName="nombreEmpresaSociedadAsociacion" oninput="CustomUpperCase(this);">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion').valid && (form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion').dirty || form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.nombreEmpresaSociedadAsociacion').touched)">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">RFC <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.rfc', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="text" name="" id="expLabRfc" maxlength="12" formControlName="rfc"
+                            oninput="CustomUpperCase(this);">
+                        <span class="invalid-tooltip"
+                            *ngIf="form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.rfc').errors?.validateRfcCompletoControl && form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.rfc').touched">
+                            RFC Invalido
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Área <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Área <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.area', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="text" name="area" id="expLabAre" required maxlength="100" formControlName="area"
+                            oninput="CustomUpperCase(this);">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.area').valid && (form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.area').dirty || form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.area').touched)">
+                            Campo Requerido
+                        </span>
+                    </div>
+
+                </div>
+                <div *ngIf="form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '2' || form2.get('experienciaLaboral.actividadLaboral.ambitoSector.id').value == '9999'"
+                    formGroupName="sectorPrivadoOtro" class="row p-3">
+                    <div class="col d-flex flex-column justify-content-between justify-content-between">
+                        <label [hidden]="!help" for="">Empleo/Cargo <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Empleo/Cargo <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.empleoCargo', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="text" name="" id="expLabEmpCar" maxlength="100" formControlName="empleoCargo"
+                            oninput="CustomUpperCase(this);">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.empleoCargo').valid && (form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.empleoCargo').dirty || form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.empleoCargo').touched)">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div formGroupName="sector" class="col d-flex flex-column justify-content-between ">
+                        <label [hidden]="!help" for="">Sector al que pertenece <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Sector al que pertenece <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <select
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.sector.id', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            formControlName="id" id="expLabSecQuePer" name="" required>
+                            <option value="null" disabled>SELECCIONE...</option>
+                            <option *ngFor="let sp of this.cata.catalogos.CAT_SECTOR_PRIVADO" [value]="sp.id">
+                                {{sp.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip"
+                            *ngIf="form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.sector.id').touched && form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.sector.id').pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="flecha-otro">
+                        <i *ngIf="form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.sector.id').value == '9999'"
+                            class="fas fa-arrow-right"></i>
+                    </div>
+                    <div *ngIf="form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.sector.id').value == '9999'"
+                        class="col d-flex flex-column justify-content-between ">
+                        <div class="col d-flex flex-column justify-content-between">
+                            <label [hidden]="!help" for="">Especifique Sector<i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Especifique Sector<i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="expLabEspSec" formControlName="sectorOtro" required
+                                oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.sector.valor').valid && (form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.sector.valor').dirty || form2.get('experienciaLaboral.actividadLaboral.sectorPrivadoOtro.sector.valor').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Fecha Ingreso <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Fecha Ingreso <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.fechaIngreso', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="date" name="" id="expLabFecIng" required maxlength="20"
+                            formControlName="fechaIngreso">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.fechaIngreso').valid && (form2.get('experienciaLaboral.actividadLaboral.fechaIngreso').dirty || form2.get('experienciaLaboral.actividadLaboral.fechaIngreso').touched)">
+                            Campo Requerido
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Fecha Egreso <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Fecha Egreso <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.fechaEgreso', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            type="date" name="" id="expLabFecEgr" required maxlength="20" formControlName="fechaEgreso">
+                        <span class="invalid-tooltip"
+                            *ngIf="!form2.get('experienciaLaboral.actividadLaboral.fechaEgreso').pristine && form2.get('experienciaLaboral.actividadLaboral.fechaEgreso').value == ''">
+                            Campo Requerido
+                        </span>
+                        <span class="invalid-tooltip"
+                            *ngIf="form2.get('experienciaLaboral.actividadLaboral.fechaEgreso').errors?.validaFechaLimit && form2.get('experienciaLaboral.actividadLaboral.fechaEgreso').value != ''">
+                            Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                                [attr.data-td]="tipoDeclaracion" onclick="abrirModalInfo('modalMsgFechas',this)"></i>
+                        </span>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Lugar donde se ubica <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Lugar donde se ubica <i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <select
+                            [attr.data-info]="getDisabled('experienciaLaboral.actividadLaboral.ubicacion', form2.get('experienciaLaboral.tipoOperacion').value)"
+                            name="" id="expLabLugUbi" required formControlName="ubicacion">
+                            <option value="null" disabled>SELECCIONE...</option>
+                            <option *ngFor="let apubli of this.cata.enums.ENUM_UBICACION" [value]="apubli.id">
+                                {{apubli.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip"
+                            *ngIf="form2.get('experienciaLaboral.actividadLaboral.ubicacion').touched && form2.get('experienciaLaboral.actividadLaboral.ubicacion').pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button> -->
+            <button type="button" class="btn btn-success" [disabled]="!form2.valid || !formOperaEx.valid"
+                (click)="guardaLocal(form)">Aceptar</button>
+            <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,40 @@
+mat-form-field {
+    width: 100%;
+}
+
+// form{
+//   margin-top: 70px;
+//   padding: 80px;
+//   display: flex;
+//   align-items: center;
+//   flex-direction: column;
+//   // background: rgba(202, 202, 202, 0.705);
+//   overflow-x: hidden;
+//   -webkit-box-shadow: -2px 11px 11px -8px rgba(143,141,143,0.81);
+//   -moz-box-shadow: -2px 11px 11px -8px rgba(143,141,143,0.81);
+//   box-shadow: -2px 11px 11px -8px rgba(143,141,143,0.81);
+//   p{
+//     display: flex;
+//     width: 100%;
+//     justify-content: flex-end;
+//     padding-right: 55px;
+//   }
+// }
+.selected {
+    background: #d1c3c3;
+    //background: rgb(129, 129, 129);
+    cursor: pointer;
+}
+
+.rowHover:hover {
+    background: #d1c3c3;
+    //background: rgb(129, 129, 129);
+    cursor: pointer;
+}
+
+.errorInput {
+    background: rgb(219, 2, 2);
+    padding: 4px;
+    color: white;
+    border-radius: 3px;
+}

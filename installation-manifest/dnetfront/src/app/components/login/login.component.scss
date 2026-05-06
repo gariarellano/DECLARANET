@@ -1,0 +1,89 @@
+.container {
+    background-color: #ffffff;
+}
+
+.contenedor {
+    background-color: #fcfbfd;
+}
+
+.btn.btn-login {
+    color: #ffffff;
+    // background-color: #b85c6b;
+    // background-image: linear-gradient(to bottom, #bd3346, #c22129);
+    // border-color: #8f3f4f #3E8F3E #3E8F3E;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 0 rgba(157, 36, 73, 0.3);
+    background-color: #e2103a;
+}
+
+.btn.btn-login:hover {
+    color: #ffffff;
+    background-color: #c22129;
+    background-image: linear-gradient(to bottom, #c22129, #c22129);
+    border-color: #8f3f4f #3E8F3E #3E8F3E;
+}
+
+.title {
+    color: #8f3f4f;
+    font-weight: 900;
+}
+
+.DeclaraNet {
+    width: 294px;
+    height: 58px;
+    font-family: Montserrat;
+    font-size: 48px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -1.8px;
+    color: #333333;
+}
+
+.DnetRojo {
+    font-weight: 300;
+    color: #e2103a;
+}
+
+.divRight {
+    background-image: url('../../../assets/image/loginRight.png');
+    background-repeat: no-repeat;
+    text-align: center;
+    background-size: 100% 100%;
+}
+
+.mw400 {
+    max-width: 400px;
+}
+
+.text-left {
+    background-color: #ffffff;
+}
+
+.divTransparent {
+    background: rgba(235, 229, 230, 0.3);
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+}
+
+#DnetToolButton {
+    height: 40px;
+}
+
+.centrar {
+    max-width: 45%;
+    min-width: 400px;
+    position: absolute;
+    left: 22.5%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+}
+
+@media (min-width: 992px) {
+    .modal-lg,
+    .modal-xl {
+        max-width: 80%;
+    }
+}

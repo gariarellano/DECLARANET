@@ -1,0 +1,27 @@
+.selected {
+    background: #d1c3c3;
+    //background: rgb(129, 129, 129);
+    cursor: pointer;
+}
+
+.rowHover:hover {
+    background: #d1c3c3;
+    //background: rgb(129, 129, 129);
+    cursor: pointer;
+}
+
+.margen {
+    margin-right: 20px;
+}
+
+.bg-light1 {
+    background-color: #e9ecef !important;
+}
+
+tr.mat-header-row {
+    height: 36px;
+}
+
+.card-body {
+    padding: .50rem;
+}

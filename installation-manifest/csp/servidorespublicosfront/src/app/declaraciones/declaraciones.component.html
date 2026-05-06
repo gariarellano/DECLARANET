@@ -1,0 +1,85 @@
+<ngx-ui-loader [text]="this.spinnerText" [fgsType]="this.spinner.fgsType" [fgsColor]="this.spinner.fgsColor">
+</ngx-ui-loader>
+<!-- <div class="container text-center mt-4">
+
+
+    <div class="centerImage mt-3">
+        <img *ngIf="this.enteImage" class="rounded" [src]="this.enteImage" width="100%" alt="EnteLogo" />
+
+    </div>
+</div>
+<div class="container mt-4">
+
+    <hr> 
+    
+</div>-->
+
+<div class="container">
+    <div class="row">
+
+        <div class="centerImage col-lg-12">
+
+            <img *ngIf="this.enteImage" class="rounded" [src]="this.enteImage" width="100%" alt="LogoEnte" />
+
+        </div>
+    </div>
+    <hr class="">
+</div>
+
+
+<div class="container text-center mt-2">
+    <div class="row mt-4">
+        <div class="col-md-2 text-center"></div>
+        <div class="col-md-8 text-center mt-2">
+            <span style="font-size: 40px; color: #4A4C4E; line-height : 30px;"> <strong> {{funcionario?.nombre}}  </strong></span>
+        </div>
+        <!-- <div class="col-md-2 offset-md-3 input-group"> -->
+        <div class="col-md-2  text-center mt-2">
+
+            <button type="button" (click)="regresar();" class="btn btn-outline-danger" value="Buscar"><i class="fas fa-search"></i> Nueva Búsqueda</button>
+
+            <!-- <button class="btn btn-outline-secondary btn-block" (click)="regresar()" style="cursor: pointer;">Regresar</button> -->
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+
+    <hr class="mt-5" />
+
+    <div class="table-responsive h-75">
+        <table id="tableDeclaracion" class="table table-striped tablaResp" summary="tablaDeclaraciones">
+            <thead>
+
+                <tr>
+                    <th class="ordenador" onclick="sortTable(0, 'tableDeclaracion')" scope="col">Dependencia</th>
+                    <th class="ordenador" onclick="sortTable(1, 'tableDeclaracion')" scope="col">Tipo de Declaración</th>
+                    <th class="ordenador" onclick="sortTable(2, 'tableDeclaracion')" scope="col">Número de<br />comprobante</th>
+                    <th class="ordenador" onclick="sortTable(3, 'tableDeclaracion')" scope="col">Fecha de presentación</th>
+                    <th scope="col">Declaración</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let datos of historial">
+                    <td>{{datos.institucionReceptora}}</td>
+                    <td>{{datos.tipoDeclaracion.replace('MODIFICACION', 'MODIFICACIÓN').replace('CONCLUSION', 'CONCLUSIÓN')}}
+                        <ng-container *ngIf="datos.tipoDeclaracion === 'MODIFICACION'">
+                            {{datos.anio}}
+                        </ng-container>
+
+                    </td>
+                    <td>{{datos.noComprobante}}</td>
+                    <td>{{datos.fechaRecepcion}}</td>
+
+                    <td>
+                        <a class="text-info" (click)="previsualizar('declaracion', 'Declaración', datos.numeroDeclaracion, datos.idUsuario, datos.collName, datos.tipoDeclaracion, datos.noComprobante, datos.anio)" title="Visualizar Declaración" style="cursor: pointer;"><i
+                          class="far fa-file-alt"></i></a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

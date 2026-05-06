@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-12-21T16:40:03 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fideicomisos" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fddcd468-9607-4497-bcd8-2970e3f4e380">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="participante" class="java.lang.String"/>
+	<field name="tipoFideicomiso" class="java.lang.String"/>
+	<field name="tipoParticipacion" class="java.lang.String"/>
+	<field name="rfcFideicomiso" class="java.lang.String"/>
+	<field name="fiduciario.nombre" class="java.lang.String"/>
+	<field name="fiduciario.rfc" class="java.lang.String"/>
+	<field name="fideicomisario.tipoPersona" class="java.lang.String"/>
+	<field name="fideicomisario.personaFisica.nombre" class="java.lang.String"/>
+	<field name="fideicomisario.personaFisica.segundoApellido" class="java.lang.String"/>
+	<field name="fideicomisario.personaFisica.primerApellido" class="java.lang.String"/>
+	<field name="fideicomisario.personaFisica.rfc" class="java.lang.String"/>
+	<field name="fideicomisario.personaMoral.nombre" class="java.lang.String"/>
+	<field name="fideicomisario.personaMoral.rfc" class="java.lang.String"/>
+	<field name="sector.valor" class="java.lang.String"/>
+	<field name="localizacion" class="java.lang.String"/>
+	<field name="sectorOtro" class="java.lang.String"/>
+	<field name="fideicomitente.personaMoral.nombre" class="java.lang.String"/>
+	<field name="fideicomitente.personaMoral.rfc" class="java.lang.String"/>
+	<field name="fideicomitente.tipoPersona" class="java.lang.String"/>
+	<field name="fideicomitente.personaMoral" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch">
+			<printWhenExpression><![CDATA["DECLARANTE".equals(mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{participante}).getDescripcion())]]></printWhenExpression>
+		</band>
+	</background>
+	<detail>
+		<band height="110" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<printWhenExpression><![CDATA["DECLARANTE".equals(mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{participante}).getDescripcion())]]></printWhenExpression>
+			<staticText>
+				<reportElement x="0" y="0" width="139" height="10" uuid="c1635915-302e-424d-9cc5-7496ab689a18">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARTICIPACIÓN EN FIDEICOMISOS:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="0" width="139" height="10" uuid="30e71ba2-e082-4767-8b35-ee926c903cc4">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{participante}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="0" width="139" height="10" uuid="edd50ce2-e916-4368-8411-f89a939c101e">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO DE FIDEICOMISO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="417" y="0" width="138" height="10" uuid="6eeef7e6-434a-4d8c-b5f8-5a6cd55b5fd9">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{tipoFideicomiso}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="139" height="10" uuid="e48b01d0-d91c-45fc-81d2-a02efa3f657a">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO DE PARTICIPACIÓN:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="10" width="139" height="10" uuid="09ed3fb0-6068-4ecd-b307-400e6630d7c7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{tipoParticipacion}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="10" width="139" height="10" uuid="e4665ea7-4417-46a0-9bb0-2e051ffd0334"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RFC DEL FIDEICOMISO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="417" y="10" width="138" height="10" uuid="e7ae98cc-7968-4b0c-b98b-f8989a36c8ee"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rfcFideicomiso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="44" width="200" height="10" uuid="2fe3d76a-997c-4eba-9958-1ad4fe498951">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE O RAZÓN SOCIAL DEL FIDUCIARIO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="44" width="150" height="10" uuid="390b124d-c971-4b84-9405-56e7490ba7eb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fiduciario.nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="44" width="67" height="10" uuid="20bb10d7-f1d5-428d-90ab-61c09fa8ec63"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RFC:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="417" y="44" width="138" height="10" uuid="991b61a9-52d7-4fa6-8920-5088899a20e3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fiduciario.rfc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="54" width="139" height="10" uuid="0a618670-80e6-4e98-9f6e-891a88f95e94">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIDEICOMISARIO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="54" width="139" height="10" uuid="28771b0a-5409-4352-a2bc-873988d6d4a8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{fideicomisario.tipoPersona}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="64" width="200" height="10" uuid="b0423d26-27f1-457a-883b-dd7a5f7acaba">
+					<printWhenExpression><![CDATA[$F{fideicomisario.personaMoral.nombre}!= null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE O RAZÓN SOCIAL DEL FIDEICOMISARIO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="64" width="150" height="10" isRemoveLineWhenBlank="true" uuid="8d0d8143-d52b-4aa9-bf50-0de4d8dac97f"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fideicomisario.personaMoral.nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="64" width="67" height="10" uuid="65508860-88c1-4968-9b84-b3b3cf4c83e5">
+					<printWhenExpression><![CDATA[$F{fideicomisario.personaMoral.rfc} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RFC:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="417" y="64" width="138" height="10" isRemoveLineWhenBlank="true" uuid="2a724a2a-bfe4-4bbc-95bb-d9c24af072ab"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fideicomisario.personaMoral.rfc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="74" width="200" height="10" uuid="608c608d-807f-4f2e-866d-d165c3ab2d15"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECTOR PRODUCTIVO AL QUE PERTENECE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="74" width="150" height="10" uuid="81ae581c-5423-49e1-83f4-f7d22b928f02"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sector.valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="84" width="200" height="10" uuid="1e87b4ef-f15e-47b2-aa69-67d130c64ae1">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[¿DÓNDE SE LOCALIZA EL FIDEICOMISO?]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="84" width="150" height="10" uuid="7a82bacc-3220-4c80-b001-4a4d20474f73"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{localizacion}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="84" width="150" height="10" isRemoveLineWhenBlank="true" uuid="b3975b97-edb5-4b14-a287-ba96530db223">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{sectorOtro}!=null && !$F{sectorOtro}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sectorOtro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="139" height="10" uuid="a35a481c-13a7-4924-978c-df40d2b92cdd">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIDEICOMITENTE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="417" y="20" width="138" height="10" uuid="a8a5d0ea-3864-4b2f-a2d1-da1af32f8066">
+					<printWhenExpression><![CDATA[$F{fideicomitente.personaMoral} != null &&
+$F{fideicomitente.personaMoral.rfc} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fideicomitente.personaMoral.rfc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="20" width="139" height="10" uuid="6dd49bdb-9535-4619-8475-a88586e7e15c">
+					<printWhenExpression><![CDATA[$F{fideicomitente.personaMoral} != null &&
+$F{fideicomitente.personaMoral.rfc} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RFC DEL FIDEICOMITENTE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="20" width="139" height="10" uuid="4e087f71-5334-43a3-8478-ae382a0806ec"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{fideicomitente.tipoPersona}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="210" height="10" isPrintInFirstWholeBand="true" uuid="c00716ca-e27e-48fc-8b8d-b7d30f8dac94">
+					<printWhenExpression><![CDATA[$F{fideicomitente.personaMoral} != null &&
+$F{fideicomitente.personaMoral.nombre} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE O RAZÓN SOCIAL DEL FIDEICOMITENTE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="30" width="345" height="10" uuid="67d187ba-05e1-4512-975e-373b1deab282">
+					<printWhenExpression><![CDATA[$F{fideicomitente.personaMoral} != null &&
+$F{fideicomitente.personaMoral.nombre} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fideicomitente.personaMoral.nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

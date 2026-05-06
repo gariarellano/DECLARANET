@@ -1,0 +1,352 @@
+<ngx-ui-loader [text]="this.spinnerText" [fgsType]="this.spinner.fgsType" [fgsColor]="this.spinner.fgsColor">
+</ngx-ui-loader>
+<div class="row">
+    <div class="col-lg-12">
+        <hr class="">
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="container text-center">
+            <!-- <form #formBusca="ngForm"  class="form mt-4"  autocomplete="off" (ngSubmit)="busqueda(formBusca)"> -->
+            <form class="form mt-4" #buscaServidor="ngForm" (ngSubmit)="busqueda(buscaServidor)">
+                <label class="ml-3" for="nombre" style="color: #ED3237; font-size: 25px;">Búsqueda de Servidores
+                    Públicos </label> <br>
+                <label class="ml-3 mt-5 textoBusqueda" for="nombre"> Ingresa el nombre, curp o rfc del servidor
+                    público:</label> <br>
+
+                <div class="form-row ml-2 mt-2">
+                    <!-- <div class="col-md-6 offset-md-3 input-group">
+                <input class="form-control col-md" type="text" oninput="CustomUpperCase(this)" name="nombre" pattern="^((\b[a-zA-ZÑñÁÉÍÓÚáéíóú]{2,})\s*){2,7}$" required ngModel placeholder="Nombre(s) y Apellido(s)">
+                <span class="input-group-btn ml-2">
+                    <button type="submit" class="btn btn-outline-danger" value="Buscar" [disabled]="!busq.form.valid"><i class="fas fa-search"></i> Buscar</button>
+                  </span>
+            </div> -->
+                    <div class="col-md-6 offset-md-3">
+
+
+                        <div class="row">
+                            <div class="col-md-9 mt-2 p-0">
+
+                                <input class="form-control col-md" type="text" oninput="CustomUpperCase(this)" name="nombre" curpNombreRfcValid required ngModel placeholder="Nombre(s) y Apellido(s)/CURP/RFC">
+                            </div>
+                            <div class="col-md-3 mt-2">
+                                <button type="submit" class="btn btn-outline-danger" [disabled]="!buscaServidor.valid" value="Buscar">
+                                    <i class="fas fa-search"></i> Buscar</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <hr class="">
+    </div>
+</div>
+
+<!-- Div de consulta por nombre -->
+
+<div class="container mt-4" *ngIf="tipoTabla == 'porNombre'">
+    <div class="table-responsive h-75">
+        <table class="table table-striped" id="tablaPorNombre" summary="Tabla Nombre">
+            <thead>
+                <tr>
+                    <th scope="col" class="ordenador" onclick="sortTable(0, 'tablaPorNombre')"> Nombre</th>
+                    <th scope="col" class="ordenador" onclick="sortTable(1, 'tablaPorNombre')">Dependencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let datos of funcionarios">
+                    <td (click)="deNombreAHistorial(datos.idUsrDecnet)" style="cursor: pointer; color: black; text-decoration: underline;">{{datos.nombre}}</td>
+                    <td>{{datos.dependencia}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Div consulta por curp rfc y nombre seleccionado -->
+
+<!-- <div class="row mt-4" *ngIf="tipoTabla == 'porCurpRfc'">
+    <div class="col-md-2 text-center"></div>
+    <div class="col-md-8 text-center mt-2">
+        <span style="font-size: 40px; color: #4A4C4E; line-height : 30px;"> <strong> {{funcionario?.nombre}}  </strong></span>
+    </div>
+    <div class="col-md-2  text-center mt-2">
+
+        <button type="button" (click)="regresar();" class="btn btn-outline-danger" value="Buscar"><i class="fas fa-search"></i> Nueva Búsqueda</button>
+
+    </div>
+</div> -->
+
+<div class="container mt-4" *ngIf="tipoTabla == 'porCurpRfc'">
+    <div class="table-responsive h-75">
+
+        <h1 style="text-align: center; font-size: 300%;">{{nombreyreservado.nombre}}</h1>
+        <h1 *ngIf="nombreyreservado.reservado == true" style="text-align: center; 
+                                        font-size: 200%; color: darkgrey;">Reservado</h1>
+
+        <div class="row">
+            <div class="col-sm-12 mb-3" style="height: 34px;">
+
+                <div class="toggle checkcross" *ngIf="permiso.acciones.includes('CONSULTA DECLARACIONES')">
+                    <input id="checkcross" type="checkbox" style="display:none" [(ngModel)]="exportaMasivaCheck">
+                    <label class="toggle-item" for="checkcross">
+                        <div class="check"></div>
+                    </label>
+                </div>
+                <div class="ml-5" style="height: 34px;">
+
+                    <span class="expAbajo" *ngIf="permiso.acciones.includes('CONSULTA DECLARACIONES')">Exportación masiva(zip)
+                        <a *ngIf="exportaMasivaCheck" title="Descargar archivo" style="cursor: pointer;"
+                            data-toggle="modal" data-target="#justificarModalMasivo">
+                            <i class="far fa-file-archive text-center  ml-5" style="font-size: 30px; "></i>
+                        </a>
+                        <!-- <a title="Descargar archivo" style="cursor: pointer;"
+                            data-toggle="modal" data-target="#justificarModalMasivo">
+                            <i class="fas fa-map-marked-alt text-center  ml-5" style="font-size: 30px; "></i>
+                            Descarga últimos domicilios
+                        </a> -->
+                       
+                    </span>
+
+                    <button type="button" class="btn btn-outline-dark btnDom" data-toggle="modal" data-target="#justificarModalDomicilio" *ngIf="permiso.acciones.includes('EXPORTA_DOMICILIOS')"><i class="fas fa-map-marked-alt text-center"
+                        style="font-size: 30px; " ></i>
+                    Consultar últimos domicilios</button>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" *ngIf="exportaMasivaCheck"><input type="checkbox" (change)="cambiaAllChecksExportar($event)">
+                    </th>
+                    <th scope="col">Dependencia</th>
+                    <th scope="col">Tipo de Declaración</th>
+                    <th scope="col">Número de <br />comprobante</th>
+                    <th scope="col">Fecha de presentación</th>
+                    <th scope="col" *ngIf="permiso.acciones.includes('CONSULTA DECLARACIONES')">Declaración</th>
+                    <th scope="col" *ngIf="permiso.acciones.includes('CONSULTA DECLARACIONES')">Acuse</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let datos of histPersona; let i=index; let odd=odd">
+                    <td style="text-align: center;" *ngIf="exportaMasivaCheck"><input type="checkbox" value="{{datos.noComprobante}}" [(ngModel)]="histPersona[i].checked" (change)="cambiaChecksExportar(i)"></td>
+                    <td>{{datos.institucionReceptora}}</td>
+                    <td>{{datos.tipoDeclaracion}}</td>
+                    <td>{{datos.noComprobante}}</td>
+                    <td>{{datos.fechaRecepcion}}</td>
+
+                    <td style="text-align: center;" *ngIf="permiso.acciones.includes('CONSULTA DECLARACIONES')">
+                        <ng-container *ngIf="!exportaMasivaCheck; else elseexportaMasivaCheckDecla">
+                            <a style="cursor: pointer;" data-toggle="modal" data-target="#justificarModal" (click)="asignaDeclaracion(datos)">
+                                <!-- <i class="far fa-file-alt text-center text-info" style="font-size: 30px; "></i> -->
+                                <span class="fa-stack">
+                                    <i class="far fa-file-alt fa-stack-2x text-info " title="Visualizar declaración"
+                                        style="font-size: 30px; "></i>
+                                    <i *ngIf="datos.notas" class="far fa-file-alt fa-stack-1x cornered-lr"
+                                        title="Contiene notas aclaratorias" style="color: black; "></i>
+                                </span>
+                            </a>
+                        </ng-container>
+                        <ng-template #elseexportaMasivaCheckDecla>
+                            <input type="checkbox" value="{{datos.noComprobante}}" [(ngModel)]="histPersona[i].checkedDecla">
+                            <!-- <i class="far fa-file-alt text-center text-info" style="font-size: 30px; "></i> -->
+                        </ng-template>
+
+
+
+                    </td>
+                    <td style="text-align: center;" *ngIf="permiso.acciones.includes('CONSULTA DECLARACIONES')">
+                        <ng-container *ngIf="!exportaMasivaCheck; else elseexportaMasivaCheckAcuse">
+                            <a class="text-info " title="Visualizar Declaración" style="cursor: pointer;" data-toggle="modal" data-target="#justificarModalAcuse" (click)="datos.notas? descargaAcuseZip(Justificacion, datos):previsualizar(Justificacion, 'acuse', 'Declaración', datos.numeroDeclaracion, datos.idUsuario, datos.collName, datos.tipoDeclaracion, datos.noComprobante, datos.anio)">
+                                <!-- (click)="previsualizar(Justificacion, 'acuse', 'Declaración', datos.numeroDeclaracion, datos.idUsuario, datos.collName, datos.tipoDeclaracion, datos.noComprobante, datos.anio)"> -->
+                                <!-- <i class="far fa-file-alt text-center" style="font-size: 30px; color: darkorange; "></i></a> -->
+                                <span class="fa-stack">
+                                    <i class="far fa-file-alt fa-stack-2x" title="Visualizar declaración"
+                                        style="font-size: 30px; color: darkorange; "></i>
+                                    <i *ngIf="datos.notas" class="far fa-file-alt fa-stack-1x cornered-lr"
+                                        title="Contiene notas aclaratorias" style="color: black; "></i>
+                                </span>
+                            </a>
+                        </ng-container>
+                        <ng-template #elseexportaMasivaCheckAcuse>
+                            <input type="checkbox" value="{{datos.noComprobante}}" [(ngModel)]="histPersona[i].checkedAcuse">
+                            <!-- <i class="far fa-file-alt text-center" style="font-size: 30px; color: darkorange;"></i> -->
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="justificarModal" tabindex="-1" role="dialog" aria-labelledby="justificarModalLabel" aria-hidden="true">
+    <form #Justificacion="ngForm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h3 class="modal-title ml-5" id="justificarModalLabel"> <strong>Justificación (Declaración)</strong>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Favor de justificar el por qué desea consultar esta declaración</h3>
+                    <span class="text-info" *ngIf="datoDecla?.notas">Esta declaración contiene nota(s) aclaratoria(s),
+                        por lo que en lugar de visualizarla en el navegador, se descargará en un archivo
+                        comprimido(ZIP), para incluir declaración y nota(s)</span>
+                </div>
+                <div class="container">
+                    <textarea class="form-control" name="justificacion" minlength="10" oninput="CustomUpperCase(this)" required id="justifica" cols="58" rows="10" ngModel></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="datoDecla.notas? descargaDecla(Justificacion, datoDecla):previsualizar(Justificacion, 'declaracion', 'Declaración', datoDecla.numeroDeclaracion, datoDecla.idUsuario, datoDecla.collName, datoDecla.tipoDeclaracion, datoDecla.noComprobante, datoDecla.anio)"
+                        title="Visualizar Declaración" [disabled]="!Justificacion.form.valid">Consultar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal Acuse -->
+<!-- <div class="modal fade" id="justificarModalAcuse" tabindex="-1" role="dialog" aria-labelledby="justificarModalLabel" aria-hidden="true">
+    <form #Justificacion="ngForm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h3 class="modal-title ml-5" id="justificarModalLabel"> <strong>Justificación (Acuse)</strong></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Favor de justificar el por qué desea consultar este acuse</h3>
+                </div>
+                <div class="container">
+                    <textarea class="form-control" name="justificacion" id="" cols="58" rows="10" ngModel></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="previsualizar(Justificacion, 'acuse', 'Declaración', datoDecla.numeroDeclaracion, datoDecla.idUsuario, datoDecla.collName, datoDecla.tipoDeclaracion, datoDecla.noComprobante, datoDecla.anio)"
+                        title="Visualizar Declaración">Consultar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div> -->
+
+<div class="modal fade" id="justificarModalMasivo" tabindex="-1" role="dialog" aria-labelledby="justificarModalMasivoLabel" aria-hidden="true">
+    <form #JustificacionMasiva="ngForm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h3 class="modal-title ml-5" id="justificarModalMasivoLabel"> <strong>Justificación (Descarga
+                            Masiva)</strong>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Favor de justificar el por qué desea descargar las declaraciones seleccionadas</h3>
+                </div>
+                <div class="container">
+                    <textarea class="form-control" name="justificacionMasivo" minlength="10" oninput="CustomUpperCase(this)" required id="justificaMasivo" cols="58" rows="10" ngModel></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="descargaArchivosMasivo(JustificacionMasiva)" title="Visualizar Declaración" [disabled]="!JustificacionMasiva.form.valid">Consultar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="justificarModalDomicilio" tabindex="-1" role="dialog" aria-labelledby="justificarModalDomicilioLabel" aria-hidden="true">
+    <form #JustificacionDomicilio="ngForm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h3 class="modal-title ml-5" id="justificarModalDomicilioLabel"> <strong>Consulta de último domicilio del declarante</strong>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Justifica el motivo de tu solicitud de domicilio</h3>
+                </div>
+                <div class="container">
+                    <textarea class="form-control" name="justificaDomicilio" minlength="10" oninput="CustomUpperCase(this)" required id="justificaDomicilio" cols="58" rows="10" ngModel></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" (click)="descargaDomilioDeclarante(JustificacionDomicilio)" title="Visualizar Declaración" [disabled]="!JustificacionDomicilio.form.valid">Consultar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="modalDomicilio" tabindex="-1" role="dialog" aria-labelledby="modalDomicilioLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <form #JustificacionDomicilio="ngForm">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h3 class="modal-title ml-5" id="modalDomicilioLabel"> <strong>Consulta de último domicilio del declarante</strong>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal-body-lg">
+                    <div class="containerModal">
+                        <div class="row">
+                            <div class="col-md-6" *ngFor="let domicilio of domicilios">
+                                <div class="card mb-2">
+                                    <div class="card-body">
+                                        <h4 class="card-title">SECCIÓN: {{domicilio.seccion}}</h4>
+                                        <h5 *ngIf=" domicilio.propietario && domicilio.propietario.toString() !== ''">PROPIETARIO: {{domicilio.propietario}}</h5>
+                                        <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                                        <p class="card-text">
+                                            <span> CALLE: {{domicilio.calle}}, </span>
+                                            <span> NO. EXT.: {{domicilio.numeroExterior}},</span>
+                                            <span *ngIf=" domicilio.numeroInteror && domicilio.numeroInteror.toString() !== ''">NO. INT.: {{domicilio.numeroInteror}},</span>
+                                            <br>
+                                            <span> CIUDAD/LOCALIDAD: {{domicilio.ciudadLocalidad}},</span>
+                                            <span> C.P.: {{domicilio.codigoPostal}},</span>
+                                            <span> MUNICIPIO/ALCALDIA: {{domicilio.municipioAlcaldia}},</span>
+                                            <br>
+                                            <span> ENTIDAD/PROVINCIA: {{domicilio.entidadProvincia}},</span>
+                                            <span> PAIS: {{domicilio.pais}}.</span>
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" (click)="descargaDomiciliosCSV();" title="Visualizar Declaración" [disabled]="!JustificacionDomicilio.form.valid">
+                        <i class="fas fa-cloud-download-alt mr-2"></i>Descargar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

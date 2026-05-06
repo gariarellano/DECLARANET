@@ -1,0 +1,51 @@
+<form class="form-inline">
+    <div class="modal-content" style="height: 350px;">
+        <div class="modal-header">
+            <h4 class="modal-title">Bienvenido al Proceso de Firma </h4>
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+
+        <div class="modal-body" style="overflow-y: scroll">
+            
+        <div class=" d-flex justify-content-start  w-100">
+            <div class=" w-100 justify-content-start d-inline-flex">
+                <div class="d-flex  w-75 p-3">
+                    <label [hidden]="!help" for="">¿Deseas firmar con tu Firma Electrónica Avanzada (FIEL)? <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">¿Deseas firmar con tu Firma Electrónica Avanzada (FIEL)? <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>                                   
+                </div>
+                <div class="d-flex  w-25 p-3">
+                        <button type="button" class="btn btn-success col-sm-10" (click)="click()">Firmar</button>
+                </div>                   
+            </div>
+        </div>
+                
+                       
+
+            <div class=" d-flex justify-content-start  w-100">
+                <div class=" w-100 justify-content-start d-inline-flex">
+                    <div class="d-flex  w-75 p-3">
+                        <label [hidden]="!help" >¿Deseas hacerlo con tu RFC y contraseña? <i
+                                class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help">¿Deseas hacerlo con tu RFC y contraseña? <i
+                                class="fas fa-globe-americas mr-5" data-toggle="tooltip" data-placement="left"
+                                title="Campo público"></i></label>                        
+                    </div>
+                    <div class="d-flex  w-25 p-3">
+                            <button type="button" class="btn btn-success col-sm-10" >Firmar</button>
+                    </div>                   
+                </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="close()">Close</button>
+        </div>
+    </div>
+</form>

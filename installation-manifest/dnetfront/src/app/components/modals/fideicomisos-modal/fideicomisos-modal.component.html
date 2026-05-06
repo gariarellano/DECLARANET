@@ -1,0 +1,360 @@
+<div class="modal-content" style="height: 600px;">
+    <div class="modal-header">
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Fideicomisos</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+            </div>
+        </div>
+    </div>
+
+    <form #fideiTipoOp="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="fideicomisosRadio" type="radio" required id="radio{{data.id}}" [(ngModel)]="fideicomisos.tipoOperacion" [value]="data.id" (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="modal-body">
+        <form #fidei="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel" [(ngModel)]="fideicomisos.tipoOperacion">
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Participante en fideicomisos<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Participante en fideicomisos <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( participante , fideicomisos.tipoOperacion)" name="participante" id="fidParFid" [(ngModel)]="fideicomisos.participante" required #participante="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let dep of this.cat.enums.ENUM_PARTICIPANTE" [value]="dep.id">
+                            {{dep.valor}}</option>
+
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="participante.invalid && (participante.dirty || participante.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de fideicomiso<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de fideicomiso <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoFidei , fideicomisos.tipoOperacion)" name="tipoFidei" id="fidTipFid" [(ngModel)]="fideicomisos.tipoFideicomiso" required #tipoFidei="ngModel">
+                        <option [ngValue]=null disabled>SELECCIONE...</option>
+                        <option *ngFor="let tipo of this.cat.enums.ENUM_TIPO_FIDEICOMISO" [value]="tipo.id">
+                            {{tipo.valor}}</option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="tipoFidei.invalid && (tipoFidei.dirty || tipoFidei.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de participación<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de participación <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( participacion , fideicomisos.tipoOperacion)" name="participacion" id="fidTipPar" [(ngModel)]="fideicomisos.tipoParticipacion" required #participacion="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let tipoParticipacion of this.cat.enums.ENUM_TIPO_PARTICIPACION_F"
+                            [value]="tipoParticipacion.id">
+                            {{tipoParticipacion.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="participacion.invalid && (participacion.dirty || participacion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC del fideicomiso<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC del fideicomiso <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcFideicomiso , fideicomisos.tipoOperacion)" type="text" name="rfcFideicomiso" id="fidRfcFid" maxlength="13" [(ngModel)]="fideicomisos.rfcFideicomiso" rfcAmbosValid #rfcFideicomiso="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="rfcFideicomiso.invalid && rfcFideicomiso.touched">
+                        <div *ngIf="rfcFideicomiso.errors.rfcAmbosValid && rfcFideicomiso.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Fideicomitente<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fideicomitente <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( fideicomitente , fideicomisos.tipoOperacion)" name="fideicomitente" id="fidFidEnt" [(ngModel)]="fideicomisos.fideicomitente.tipoPersona" required #fideicomitente="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let persona of this.cat.enums.ENUM_TIPO_PERSONA" [value]="persona.id">
+                            {{persona.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="fideicomitente.invalid && (fideicomitente.dirty || fideicomitente.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+            </div>
+            <div class="row p-3" *ngIf="fideicomisos.fideicomitente.tipoPersona == 'PERSONA_MORAL'">
+                <div *ngIf="fideicomisos.fideicomitente.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre o razón social del fideicomitente<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre o razón social del fideicomitente <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombrefideicomitente , fideicomisos.tipoOperacion)" type="text" name="nombrefideicomitente" id="fidMorNom" [(ngModel)]="fideicomisos.fideicomitente.personaMoral.nombre" required maxlength="100" #nombrefideicomitente="ngModel"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nombrefideicomitente.invalid && (nombrefideicomitente.dirty || nombrefideicomitente.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div *ngIf="fideicomisos.fideicomitente.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcFideicomitenteMoral , fideicomisos.tipoOperacion)" type="text" name="rfcFideicomitenteMoral" id="fidMorRfc" maxlength="12" [(ngModel)]="fideicomisos.fideicomitente.personaMoral.rfc" oninput="CustomUpperCase(this);" rfcMoralValid #rfcFideicomitenteMoral="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfcFideicomitenteMoral.invalid && rfcFideicomitenteMoral.touched">
+                        <div *ngIf="rfcFideicomitenteMoral.errors.rfcMoralValid && rfcFideicomitenteMoral.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row p-3" *ngIf="fideicomisos.fideicomitente.tipoPersona == 'PERSONA_FISICA'">
+                <div *ngIf="fideicomisos.fideicomitente.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombrefideicomitenteF , fideicomisos.tipoOperacion)" type="text" name="nombrefideicomitenteF" id="fidFisNom" [(ngModel)]="fideicomisos.fideicomitente.personaFisica.nombre" required maxlength="100" #nombrefideicomitenteF="ngModel"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nombrefideicomitenteF.invalid && (nombrefideicomitenteF.dirty || nombrefideicomitenteF.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="fideicomisos.fideicomitente.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Primer Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Primer Apellido <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( apePatfideicomitente , fideicomisos.tipoOperacion)" type="text" name="apePatfideicomitente" id="fidFisPriApe" [(ngModel)]="fideicomisos.fideicomitente.personaFisica.primerApellido" required maxlength="100" #apePatfideicomitente="ngModel"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="apePatfideicomitente.invalid && (apePatfideicomitente.dirty || apePatfideicomitente.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="fideicomisos.fideicomitente.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Segundo Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Segundo Apellido <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( apeMatfideicomitente , fideicomisos.tipoOperacion)" type="text" name="apeMatfideicomitente" id="fidFisSegApe" [(ngModel)]="fideicomisos.fideicomitente.personaFisica.segundoApellido" maxlength="100" #apeMatfideicomitente="ngModel"
+                        oninput="CustomUpperCase(this);">
+                </div>
+
+                <div *ngIf="fideicomisos.fideicomitente.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcFideicomitenteFisica , fideicomisos.tipoOperacion)" type="text" name="rfcFideicomitenteFisica" id="fidFisRfc" maxlength="13" [(ngModel)]="fideicomisos.fideicomitente.personaFisica.rfc" oninput="CustomUpperCase(this);" rfcValid #rfcFideicomitenteFisica="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfcFideicomitenteFisica.invalid && rfcFideicomitenteFisica.touched">
+                        <div *ngIf="rfcFideicomitenteFisica.errors.rfcValid && rfcFideicomitenteFisica.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre o razón social del fiduciario<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre o razón social del fiduciario <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombreFiduciario , fideicomisos.tipoOperacion)" type="text" name="nombreFiduciario" id="fidNomFid" [(ngModel)]="fideicomisos.fiduciario.nombre" required maxlength="100" #nombreFiduciario="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nombreFiduciario.invalid && (nombreFiduciario.dirty || nombreFiduciario.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcfidu , fideicomisos.tipoOperacion)" type="text" name="rfcfidu" id="fidRfc" maxlength="12" oninput="CustomUpperCase(this);" [(ngModel)]="fideicomisos.fiduciario.rfc" rfcMoralValid #rfcfidu="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfcfidu.invalid && rfcfidu.touched">
+                        <div *ngIf="rfcfidu.errors.rfcMoralValid && rfcfidu.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Fideicomisario<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fideicomisario <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( fideicomisario , fideicomisos.tipoOperacion)" name="fideicomisario" id="fidFidRio" [(ngModel)]="fideicomisos.fideicomisario.tipoPersona" required #fideicomisario="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let persFM of this.cat.enums.ENUM_TIPO_PERSONA" [ngValue]="persFM.id">
+                            {{persFM.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="fideicomisario.invalid && (fideicomisario.dirty || fideicomisario.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3" *ngIf="fideicomisos.fideicomisario.tipoPersona == 'PERSONA_MORAL'">
+                <div *ngIf="fideicomisos.fideicomisario.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre o razón social del fideicomisario<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre o razón social del fideicomisario <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombreFideicomisario , fideicomisos.tipoOperacion)" type="text" name="nombreFideicomisario" id="fidMorNomRazFid" [(ngModel)]="fideicomisos.fideicomisario.personaMoral.nombre" required maxlength="100" #nombreFideicomisario="ngModel"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nombreFideicomisario.invalid && (nombreFideicomisario.dirty || nombreFideicomisario.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div *ngIf="fideicomisos.fideicomisario.tipoPersona == 'PERSONA_MORAL'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcFideicomisarioMoral , fideicomisos.tipoOperacion)" type="text" name="rfcFideicomisarioMoral" id="fidMorRfc" maxlength="12" oninput="CustomUpperCase(this);" [(ngModel)]="fideicomisos.fideicomisario.personaMoral.rfc" rfcMoralValid #rfcFideicomisarioMoral="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfcFideicomisarioMoral.invalid && rfcFideicomisarioMoral.touched">
+                        <div *ngIf="rfcFideicomisarioMoral.errors.rfcMoralValid && rfcFideicomisarioMoral.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row p-3" *ngIf="fideicomisos.fideicomisario.tipoPersona == 'PERSONA_FISICA'">
+                <div *ngIf="fideicomisos.fideicomisario.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombreFideicomisarioF , fideicomisos.tipoOperacion)" type="text" name="nombreFideicomisarioF" id="fidFisNom" [(ngModel)]="fideicomisos.fideicomisario.personaFisica.nombre" required maxlength="100" #nombreFideicomisarioF="ngModel"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nombreFideicomisarioF.invalid && (nombreFideicomisarioF.dirty || nombreFideicomisarioF.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="fideicomisos.fideicomisario.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Primer Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Primer Apellido <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( apePatFideicomisario , fideicomisos.tipoOperacion)" type="text" name="apePatFideicomisario" id="fidFisPriAPe" [(ngModel)]="fideicomisos.fideicomisario.personaFisica.primerApellido" required maxlength="100" #apePatFideicomisario="ngModel"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="apePatFideicomisario.invalid && (apePatFideicomisario.dirty || apePatFideicomisario.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div *ngIf="fideicomisos.fideicomisario.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Segundo Apellido <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Segundo Apellido <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( apeMatFideicomisario , fideicomisos.tipoOperacion)" type="text" name="apeMatFideicomisario" id="fidFisSegApe" [(ngModel)]="fideicomisos.fideicomisario.personaFisica.segundoApellido" maxlength="100" #apeMatFideicomisario="ngModel"
+                        oninput="CustomUpperCase(this);">
+
+                </div>
+
+
+                <div *ngIf="fideicomisos.fideicomisario.tipoPersona == 'PERSONA_FISICA'" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">RFC<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">RFC <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( rfcFideicomisarioFisica , fideicomisos.tipoOperacion)" type="text" name="rfcFideicomisarioFisica" id="fidFisRfc" maxlength="13" [(ngModel)]="fideicomisos.fideicomisario.personaFisica.rfc" oninput="CustomUpperCase(this);" rfcValid #rfcFideicomisarioFisica="ngModel">
+                    <div class="invalid-tooltip" *ngIf="rfcFideicomisarioFisica.invalid && rfcFideicomisarioFisica.touched">
+                        <div *ngIf="rfcFideicomisarioFisica.errors.rfcValid && rfcFideicomisarioFisica.touched">
+                            El RFC debe contener el formato correcto...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="row p-3">
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Sector productivo al que pertenece <i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Sector productivo al que pertenece <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( sector , fideicomisos.tipoOperacion)" name="sector" id="fidSecProQuePer" [compareWith]="cat.compareFn" [(ngModel)]="fideicomisos.sector" appSelectValidator required #sector="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let sec of this.cat.catalogos.CAT_SECTOR_PRIVADO" [ngValue]="sec">
+                            {{sec.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="sector.invalid && (sector.dirty || sector.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="fideicomisos.sector.id == 9999" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="fideicomisos.sector.id == 9999" class="col d-flex flex-column ">
+                    <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( otroEspecifique , fideicomisos.tipoOperacion)" type="text" name="otroEspecifique" id="fidEspSec" [(ngModel)]="fideicomisos.sectorOtro" required maxlength="100" #otroEspecifique="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="otroEspecifique.invalid && (otroEspecifique.dirty || otroEspecifique.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">¿Donde se localiza el fideicomiso?<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">¿Donde se localiza el fideicomiso? <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( lugarFideicomiso , fideicomisos.tipoOperacion)" name="lugarFideicomiso" id="fidDonLocFid" [(ngModel)]="fideicomisos.localizacion" required #lugarFideicomiso="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let dato of this.cat.enums.ENUM_UBICACION" [value]="dato.id">
+                            {{dato.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="lugarFideicomiso.invalid && (lugarFideicomiso.dirty || lugarFideicomiso.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" [disabled]="!fidei.form.valid || !fideiTipoOp.form.valid" (click)="guardaLocal()">Aceptar</button>
+        <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+    </div>
+</div>

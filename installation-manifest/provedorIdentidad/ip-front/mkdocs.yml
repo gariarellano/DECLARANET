@@ -1,0 +1,16 @@
+site_name: Servicio de Identidad Digital
+theme:
+  name: readthedocs
+extra_css:
+ - css/extra.css
+
+nav:
+    - 'Introducción': 'index.md'
+    - 'Registro': 'registro.md'
+    - 'Frontend':
+      - 'Implementación del Servicio en formularios HTML': 'fronthtml.md'
+      - 'Implementación del Servicio en Angular': 'frontangular.md'
+    - 'Backend': 'backend.md'
+    - 'Obtener Datos': 'obtenerDatos.md'
+# Copyright
+copyright: 'Copyright &copy; 2019 Secretaría de la Función Pública'

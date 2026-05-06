@@ -1,0 +1,139 @@
+<ngx-ui-loader [text]="this.spinnerText" [fgsType]="this.spinner.fgsType" [fgsColor]="this.spinner.fgsColor">
+</ngx-ui-loader>
+<div class="container">
+    <!-- <h3 class="mt-3" style="color: #902444; font-size: 20px;">Busqueda de Servidores Públicos</h3>
+</div>
+<br>
+<hr> -->
+    <br>
+
+    <!-- <div class="container-fluid d-flex flex-column"> -->
+    <div class="row">
+        <div class="centerImage col-lg-12">
+
+            <img *ngIf="this.enteImage" class="rounded" [src]="this.enteImage" width="100%" alt="LogoEnte" />
+
+        </div>
+        <!-- </div> -->
+        <!-- <form class="form mt-4">    
+        <label class="ml-3" for="rfc" style="color: #902444; font-size: 20px;">Proporcione el RFC del 
+            servidor público a consultar:</label>&nbsp;&nbsp;
+    <div class="form-row ml-2 mt-3">
+        <div class="col-md-4">
+            <input class="form-control col-md" type="text" name="rfc" placeholder="RFC">
+        </div>
+        <label class="ml-3 mr-3" style="font-size: 20px;">-</label>
+        <div class="col-md-2">
+            <input class="form-control col-md" type="text" name="rfch" placeholder="Homoclave">
+        </div>
+    </div>
+</form> -->
+    </div>
+    <!-- </div> -->
+    <div class="row">
+        <div class="col-lg-12">
+            <hr class="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="container text-center">
+                <form #busq="ngForm" class="form mt-4" (ngSubmit)="busqueda(busq)" autocomplete="off">
+                    <!-- <label class="ml-3" for="nombre" style="color: #902444; font-size: 20px;">Si no conoce su RFC, proporcione
+        los siguientes datos para efectuar la búsqueda:</label> -->
+                    <label class="ml-3" for="nombre" style="color: #902444; font-size: 25px;">Búsqueda de Servidores Públicos </label> <br>
+                    <label class="ml-3 mt-5 textoBusqueda" for="nombre">  Ingresa el nombre del servidor público:</label> <br>
+                    <!-- <label class="ml-3" for="nombre" style="color: #707B7C; font-size: 12px;">*Mínimo 2 palabras, y al menos una palabra debe ser completa refiriendose a la persona buscada </label> -->
+                    <!-- <label class="ml-3" for="nombre" style="color: #707B7C; font-size: 12px;">*Mínimo 2 palabras de al menos 2 carácteres </label> -->
+                    <div class="form-row ml-2 mt-2">
+                        <!-- <div class="col-md-6 offset-md-3 input-group">
+                    <input class="form-control col-md" type="text" oninput="CustomUpperCase(this)" name="nombre" pattern="^((\b[a-zA-ZÑñÁÉÍÓÚáéíóú]{2,})\s*){2,7}$" required ngModel placeholder="Nombre(s) y Apellido(s)">
+                    <span class="input-group-btn ml-2">
+                        <button type="submit" class="btn btn-outline-danger" value="Buscar" [disabled]="!busq.form.valid"><i class="fas fa-search"></i> Buscar</button>
+                      </span>
+                </div> -->
+                        <div class="col-md-6 offset-md-3">
+                            <div class="row">
+                                <div class="col-md-9 mt-2 p-0">
+
+                                    <input class="form-control col-md" type="text" oninput="CustomUpperCase(this)" name="nombre" pattern="^((\b[a-zA-ZÑñÁÉÍÓÚáéíóú]{2,})\s*){2,7}$" required ngModel placeholder="Nombre(s) y Apellido(s)">
+                                </div>
+                                <div class="col-md-3 mt-2">
+                                    <button type="submit" class="btn btn-outline-danger" value="Buscar" [disabled]="!busq.form.valid"><i class="fas fa-search"></i> Buscar</button>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="funcionarios">
+
+        <hr class="mt-5">
+
+
+        <div class="container">
+            <div class="table-responsive h-75">
+                <table id="tableBusqueda" class="table table-striped" summary="tabla busqueda">
+                    <thead>
+
+                        <tr>
+                            <th class="ordenador" onclick="sortTable(0, 'tableBusqueda')" scope="col">Nombre</th>
+                            <th class="ordenador" onclick="sortTable(1, 'tableBusqueda')" scope="col">Dependencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let dato of funcionarios">
+                            <td> <a [routerLink]="['/declaraciones', dato]"> {{dato.nombre}} </a></td>
+                            <td>{{dato.dependencia}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 *ngIf="funcionarios.length === 0" style="color: rgb(145, 139, 139); text-align: center;">No se encontraron servidores públicos que coincidan con tu búsqueda</h2>
+            </div>
+        </div>
+    </ng-container>
+
+
+
+    <button type="button" #modalError class="btn btn-primary" data-toggle="modal" data-target="#modalInfo" style="display: none;">
+        Launch demo modal
+    </button>
+
+    <div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <span class="DeclaraNet" translate="no">Declara</span>
+                <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                    <img class="rounded" src="../../../assets/image/declara-net.svg" width="180px;" />
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body textoBusqueda text-justify">
+                    <p> <b>IMPORTANTE</b>: El nuevo formato de declaraciones patrimoniales y de intereses, aprobado por el Comité Coordinador del Sistema Nacional Anticorrupción y publicado el 23 de septiembre de 2019 en el Diario Oficial de la Federación,
+                        estableció que ciertos datos personales de terceros, debían ser protegidos para no afectar su derecho humano a la privacidad, de conformidad con los artículos 6, base A; 16, segundo párrafo, y 108, último párrafo de la Constitución
+                        Política de los Estados Unidos Mexicanos, así como el artículo 29 de la Ley General de Responsabilidades Administrativas.
+                    </p>
+                    <p>En este sentido, las declaraciones patrimoniales y de intereses que obran en el sitio <b>https://servidorespublicos.gob.mx/</b> únicamente serán visibles los datos relativos al servidor público, como el puesto, ingresos, así como la
+                        información patrimonial y de conflicto de intereses del cual es el titular de manera directa.
+                    </p>
+                    <p>La información de terceros, como la del cónyuge y los dependientes económicos, no será pública y únicamente será visible para las autoridades competentes, quienes exclusivamente podrán acceder a dicha información de carácter confidencial.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="mr-auto">{{msjCloseModal}}
+                        <a *ngIf="this.msjCloseModal" (click)="cancelCloseModal();" class="alert-link" style="cursor: pointer;"><i>Continuar leyendo</i></a>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">De acuerdo</button>
+                </div>
+
+            </div>
+        </div>
+    </div>

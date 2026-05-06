@@ -1,0 +1,531 @@
+<form #ingActAnt="ngForm" class="container-fluid  ml-2 pt-3 h-75" autocomplete="off">
+    <div class="title d-flex justify-content-between mb-3">
+        <h3>Actividad anual anterior</h3> <i class="fas fa-question-circle mr-3 help"></i>
+        <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+    </div>
+    <h6 style="color: rgb(116, 116, 116); ">Ingresos netos, recibidos durante el tiempo en el que se desempeñó como servidor público en el año inmediato anterior
+    </h6>
+    <div class="row d-flex w-100 align-items-center">
+        <label [hidden]="!help"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">¿Te desempeñaste como servidor
+                público en el año inmediato anterior?<i class="fas fa-info-circle"></i></span>
+        </label>
+        <label [hidden]="help" for="actAnAnt"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">¿Te desempeñaste
+                como servidor público en el año inmediato anterior?</span></label>
+
+        <select name="servidorPublicoAnioAnterior" #servidorPublicoAnioAnterior="ngModel" id="servidorPublicoAnioAnterior" (change)="trabajoGob()" [(ngModel)]="actividadAnual.servidorPublicoAnioAnterior" required>
+            <option value="null" disabled>Seleccione...</option>
+            <option [ngValue]="true">SI</option>
+            <option [ngValue]="false">NO</option>
+        </select>
+
+
+    </div>
+
+    <div id="scrollAcAn" class="altoScroll" (mousewheel)="_wheel($event);">
+
+        <div *ngIf="actividadAnual.servidorPublicoAnioAnterior === true">
+            <div class="row container">
+                <div class="form-check form-check-inline ml-3">
+                    <div class="form-check form-check-inline ml-3">
+                        <label [hidden]="help" class="p-2">Fecha de Inicio<i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="date" name="actAnAnt" class="p-2" [(ngModel)]="actividadAnual.actividadAnual.fechaInicio" required #fecha="ngModel" [max]=fechaMaxAnioAnt [min]="fechaMinAnioAnt">
+                    </div>
+
+                    <div class="form-check form-check-inline ml-3">
+                        <label [hidden]="help" class="p-2">Fecha de Conclusión<i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="date" name="fechaInicio" class="p-2" [(ngModel)]="actividadAnual.actividadAnual.fechaConclusion" required #fecha="ngModel" [max]=fechaMaxAnioAnt [min]="fechaMinAnioAnt">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row container">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">I. Remuneración Anual neta del declarante por su cargo público
+                    (por concepto de sueldos, honorarios, compensaciones, bonos, aguinaldos y otras prestaciones)
+                    (Cantidades netas después de Impuestos)<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">I. Remuneración Anual neta del declarante por su cargo público
+                    (por concepto de sueldos, honorarios, compensaciones, bonos, aguinaldos y otras prestaciones)
+                    (Cantidades netas después de Impuestos)<i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <input type="text" name="Remuneracion" (keyup)="cambiarVal($event)" [(ngModel)]="actividadAnual.actividadAnual.remuneracionNetaCargoPublico.monto" required maxlength="10" #remuneracion="ngModel" oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+                </div>
+            </div>
+
+            <div class="row container">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">II. Otros ingresos del declarante (Suma del II.1 al II.5)<i
+                        class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">II. Otros ingresos del declarante (Suma del II.1 al II.5)<i
+                        class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                        title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <label name="otrosIngresos">{{suma5}}</label>
+                </div>
+            </div>
+
+
+            <div class="row container">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">II.1 Por actividad industrial, comercial y/o empresarial
+                    (después de impuestos)<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">II.1 Por actividad industrial, comercial y/o empresarial
+                    (después de impuestos)<i class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                        title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <input type="text" name="porActividad" [(ngModel)]="totalII.totalobjActividadIndustrial" required maxlength="10" #porActividad="ngModel" (keypress)="abrirModalIngreso('ingActIndAnt')" (click)="abrirModalIngreso('ingActIndAnt')">
+
+                </div>
+            </div>
+
+
+            <div class="row container">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">II.2 Por actividad financiera (rendimientos o ganancias)
+                    (después de impuestos)<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">II.2 Por actividad financiera (rendimientos o ganancias)
+                    (después de impuestos)<i class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                        title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <input type="text" name="actFinanciera" [(ngModel)]="totalII.totalobjActividadFinanciera" required maxlength="10" #actFinanciera="ngModel" (click)="abrirModalIngreso('ingActFinAnt')" (keypress)="abrirModalIngreso('ingActFinAnt')">
+                    <div class="invalid-tooltip" *ngIf="actFinanciera.invalid && (actFinanciera.dirty || actFinanciera.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+
+            <div class="row container">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">II.3 Por servicios profesionales, consejos,
+                    consultorías y / o asesorías (después de impuestos)<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">II.3 Por servicios profesionales, consejos,
+                    consultorías y / o asesorías (después de impuestos)<i class="fas fa-globe-americas"
+                        data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <input type="text" name="servProfesionales" (click)="abrirModalIngreso('ingServProfAnt')" (keypress)="abrirModalIngreso('ingServProfAnt')" [(ngModel)]="totalII.totalobjServiciosProfesionales" required #servProfesionales="ngModel">
+                    <div class="invalid-tooltip" *ngIf="servProfesionales.invalid && (servProfesionales.dirty || servProfesionales.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row container">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">II.4 Por enajenación de bienes (después de impuestos)<i
+                        class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">II.4 Por enajenación de bienes (después de impuestos)<i
+                        class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                        title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <input type="text" name="enajenacionBien" (click)="abrirModalIngreso('ingEnajenacionAnt')" (keypress)="abrirModalIngreso('ingEnajenacionAnt')" [(ngModel)]="totalII.totalobjEnajenacionBienes">
+                </div>
+            </div>
+
+
+            <div class="row container">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">II.5 Otros ingresos no considerados
+                    anteriormente (después de impuestos)<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">II.5 Otros ingresos no considerados
+                    anteriormente (después de impuestos)<i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <input type="text" name="otrosIngresos" (click)="abrirModalIngreso('ingOtrosAnt')" (keypress)="abrirModalIngreso('ingOtrosAnt')" [(ngModel)]="totalII.totalobjOtrosIngresos" required #otrosIngresos="ngModel">
+                    <div class="invalid-tooltip" *ngIf="otrosIngresos.invalid && (otrosIngresos.dirty || otrosIngresos.touched)">
+                        Campo requerido...
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row container">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">A. Ingreso anual neto del declarante
+                    (suma del numeral I y II)<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">A. Ingreso anual neto del declarante
+                    (suma del numeral I y II)<i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <label name="otrosIngresos">{{suma2}}</label>
+                </div>
+            </div>
+
+            <div class="row container" *ngIf="this.tFormato !== 'SIMPLIFICADO'">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">B. Ingreso anual neto de la pareja
+                    y/o dependientes económicos (después de impuestos)<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">B. Ingreso anual neto de la pareja
+                    y/o dependientes económicos (después de impuestos)</label>
+                </div>
+                <div class="col col-sm-3">
+                    <input type="text" name="ingresoPareja" (keyup)="cambiarVal2($event)" [(ngModel)]="actividadAnual.actividadAnual.ingresoNetoParejaDependiente.remuneracion.monto" required #ingresoPareja="ngModel" oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+                </div>
+            </div>
+
+
+            <div class="row container" *ngIf="this.tFormato !== 'SIMPLIFICADO'">
+                <div class="col col-sm-9">
+                    <label [hidden]="!help" for="">C.- Total de ingresos anuales netos percibidos por el declarante, pareja
+                    y / o dependientes económicos (suma de los apartados A y B)<i
+                        class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">C.- Total de ingresos anuales netos percibidos por el declarante, pareja y
+                    / o dependientes económicos (suma de los apartados A y B)<i class="fas fa-globe-americas"
+                        data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                </div>
+                <div class="col col-sm-3">
+                    <label name="otrosIngresos">{{sumaC}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <button (click)="abrirObservaciones()" type="button" class="observaciones"><i class="far fa-envelope"></i>
+            Aclaraciones / Observaciones </button>
+
+            <button (click)="guardaLocal()" class="btn btn-success ml-3" [disabled]="!ingActAnt.valid">Aceptar</button>
+
+        </div>
+
+    </div>
+
+
+</form>
+
+
+<div id="obs-ingresosAnt" class="content-observaciones">
+    <div>
+        <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+        <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+        <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)" id="aclaracionesObservaciones" cols="80" rows="15" maxlength="2000" [(ngModel)]="this.aclara" #aclaracion="ngModel"></textarea>
+        <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+    </div>
+</div>
+
+<!-- Aqui inician los modales -->
+
+
+<div id="modal-lugar-ingActIndAnt" class="modal-lugar">
+    <form #ingActInd="ngForm">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h4 class="modal-title">Por actividad industrial, comercial y/o empresarial (después de impuestos)</h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarSolo('ingActIndAnt')">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="arreActividadIndustrial.length > 0" class="mt-3 border-dark" style="background:rgb(243, 235, 235)">
+                    <div class="popover-body">
+                        <table style="width:100%" aria-describedby="tabla actividad anual" summary="tabla actividad anual">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Tipo negocio</th>
+                                    <th scope="col">Monto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let t of arreActividadIndustrial; let i = index" style="color: rgb(0, 0, 0)">
+                                    <td> {{t.nombreRazonSocial}} </td>
+                                    <td> {{t.tipoNegocio}} </td>
+                                    <td> {{t.remuneracion.monto}} </td>
+                                    <td><i class="fas fa-trash-alt" (click)="deleteItem(i,'industrial')" style="cursor: pointer; color: rgb(99, 18, 18)"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Nombre o razón social </label>
+                        <label [hidden]="help" for="">Nombre o razón social<i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="objActividadIndustrial.nombreRazonSocial" oninput="CustomUpperCase(this);" required>
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Tipo de negocio </label>
+                        <label [hidden]="help" for="">Tipo de negocio<i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="tn" #tipoNegocio="ngModel" [(ngModel)]="objActividadIndustrial.tipoNegocio" oninput="CustomUpperCase(this);" required>
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Monto </label>
+                        <label [hidden]="help" for="">Monto<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="monto" #monto="ngModel" [(ngModel)]="objActividadIndustrial.remuneracion.monto" required oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+                    <button (click)="aceptarItem('industrial')" type="button" class="btn btn-primario" [disabled]="!ingActInd.form.valid"><i class="fas fa-check"></i>
+                        Agregar
+                    </button>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="cerrarModalIngreso('ingActIndAnt')">Aceptar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="modal-lugar-ingActFinAnt" class="modal-lugar">
+    <form #ingActFin="ngForm">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h4 class="modal-title">Por actividad financiera (rendimientos o ganancias) (después de impuestos)</h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarSolo('ingActFinAnt')">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Capital </label>
+                        <label [hidden]="help" for="">Capital<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="capital" #capital="ngModel" [(ngModel)]="this.arreActividadFinanciera[0]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Fondos de inversión </label>
+                        <label [hidden]="help" for="">Fondos de inversión<i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="fondoInversion" #fondoInversion="ngModel" [(ngModel)]="this.arreActividadFinanciera[1]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Organizaciones privadas </label>
+                        <label [hidden]="help" for="">Organizaciones privadas<i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="orgPriv" #orgPriv="ngModel" [(ngModel)]="this.arreActividadFinanciera[2]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Seguro de separación individualizado </label>
+                        <label [hidden]="help" for="">Seguro de separación individualizado<i
+                                class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                                title="Campo público"></i></label>
+                        <input type="text" name="ssi" #ssi="ngModel" [(ngModel)]="this.arreActividadFinanciera[3]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Valores bursátiles </label>
+                        <label [hidden]="help" for="">Valores bursátiles<i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="valBursatil" #valBursatil="ngModel" [(ngModel)]="this.arreActividadFinanciera[4]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Bonos </label>
+                        <label [hidden]="help" for="">Bonos<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="bonos" #bonos="ngModel" [(ngModel)]="this.arreActividadFinanciera[5]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Otros </label>
+                        <label [hidden]="help" for="">Otros<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="otros" #otros="ngModel" [(ngModel)]="this.arreActividadFinanciera[6]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="cerrarModalIngreso('ingActFinAnt')" [disabled]="!ingActFin.form.valid">Aceptar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="modal-lugar-ingServProfAnt" class="modal-lugar">
+    <form #ingServProf="ngForm">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h4 class="modal-title">Por servicios profesionales, consejos, consultorías y/o asesorías (después de impuestos)
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarSolo('ingServProfAnt')">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="arreServiciosProfesionales.length > 0" class="mt-3 border-dark" style="background:rgb(243, 235, 235)">
+                    <div class="popover-body">
+                        <table style="width:100%" aria-describedby="tabla actividad anual" summary="tabla actividad anual">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tipo servicio</th>
+                                    <th scope="col">Monto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let t of arreServiciosProfesionales; let i = index" style="color: rgb(0, 0, 0)">
+                                    <td> {{t.tipoServicio}} </td>
+                                    <td> {{t.remuneracion.monto}} </td>
+                                    <td><i class="fas fa-trash-alt" (click)="deleteItem(i, 'pro')" style="cursor: pointer; color: rgb(99, 18, 18)"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Tipo de servicio prestado </label>
+                        <label [hidden]="help" for="">Tipo de servicio prestado<i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="tipoServProf" #tipoServProf="ngModel" [(ngModel)]="objServiciosProfesionales.tipoServicio" oninput="CustomUpperCase(this);" required>
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Monto </label>
+                        <label [hidden]="help" for="">Monto<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="nombre" #monto="ngModel" [(ngModel)]="objServiciosProfesionales.remuneracion.monto" required oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+
+                    <button (click)="aceptarItem('pro')" type="button" class="btn btn-primario" [disabled]="!ingServProf.form.valid"><i class="fas fa-check"></i>
+                        Agregar
+                    </button>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="cerrarModalIngreso('ingServProfAnt')">Aceptar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+<div id="modal-lugar-ingEnajenacionAnt" class="modal-lugar">
+    <form #ingEnajenacion="ngForm">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h4 class="modal-title">Por enajenación de bienes (después de impuestos)</h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarSolo('ingEnajenacionAnt')">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Muebles </label>
+                        <label [hidden]="help" for="">Muebles<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="mueble" #mueble="ngModel" [(ngModel)]="arreEnajenacionBienes[0]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+                        <div class="invalid-tooltip" *ngIf="mueble.invalid && (mueble.dirty || mueble.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Inmuebles </label>
+                        <label [hidden]="help" for="">Inmuebles<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="inmueble" #inmueble="ngModel" [(ngModel)]="arreEnajenacionBienes[1]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+                        <div class="invalid-tooltip" *ngIf="inmueble.invalid && (inmueble.dirty || inmueble.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Vehículos </label>
+                        <label [hidden]="help" for="">Vehículos<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="vehiculo" #vehiculo="ngModel" [(ngModel)]="arreEnajenacionBienes[2]?.remuneracion.monto" required oninput="soloNumeroInput(this, 0, 9999999999999);" onfocus="focusSoloNumero(this)">
+                        <div class="invalid-tooltip" *ngIf="vehiculo.invalid && (vehiculo.dirty || vehiculo.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="cerrarModalIngreso('ingEnajenacionAnt')" [disabled]="!ingEnajenacion.form.valid">Aceptar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="modal-lugar-ingOtrosAnt" class="modal-lugar">
+    <form #ingOtros="ngForm">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h4 class="modal-title">Otros ingresos no considerados a los anteriores (después de impuestos)</h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarSolo('ingOtrosAnt')">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="arreOtrosIngresos.length > 0" class="mt-3 border-dark" style="background:rgb(243, 235, 235)">
+                    <div class="popover-body">
+                        <table style="width:100%" aria-describedby="tabla actividad anual" summary="tabla actividad anual">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tipo ingreso</th>
+                                    <th scope="col">Monto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let t of arreOtrosIngresos; let i = index" style="color: rgb(0, 0, 0)">
+                                    <td> {{t.tipoIngreso}} </td>
+                                    <td> {{t.remuneracion.monto}} </td>
+                                    <td><i class="fas fa-trash-alt" (click)="deleteItem(i, 'ingresos')" style="cursor: pointer; color: rgb(99, 18, 18)"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Especificar tipo de ingreso (arrendamiento, regalía, sorteos,
+                            concursos, donaciones, seguros de vida, etc.)</label>
+                        <label [hidden]="help" for="">Especificar tipo de ingreso (arrendamiento, regalía, sorteos,
+                            concursos, donaciones, seguros de vida, etc.)<i class="fas fa-globe-americas"
+                                data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="especifiqueOtroIng" #especifiqueOtroIng="ngModel" [(ngModel)]="objOtrosIngresos.tipoIngreso" oninput="CustomUpperCase(this);" required>
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Monto </label>
+                        <label [hidden]="help" for="">Monto<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <input type="text" name="nombre" #monto="ngModel" [(ngModel)]="objOtrosIngresos.remuneracion.monto" required oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+
+                    </div>
+
+                    <button (click)="aceptarItem('ingresos')" type="button" class="btn btn-primario" [disabled]="!ingOtros.form.valid"><i class="fas fa-check"></i>
+                        Agregar
+                    </button>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="cerrarModalIngreso('ingOtrosAnt')">Aceptar</button>
+            </div>
+        </div>
+    </form>
+</div>

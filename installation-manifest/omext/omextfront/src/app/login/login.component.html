@@ -1,0 +1,28 @@
+<header>
+    <div class="container-fluid">
+        <div class="row bg-light">
+            <div class="centerImage">
+                <img *ngIf="this.enteImage" class="rounded" [src]="this.enteImage" width="100%" alt="enteImg" />
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="wrapper fadeInDown">
+    <div class="login bg-light">
+        <div class="content-login">
+            <div class="content-img">
+                <img src="../../assets/img/logoOmext.png" alt="logoOmext" />
+            </div>
+            <div class="content-button">
+                <div id="DnetTool" [attr.data-info]="this.cl + ',' + this.sk" class="ingreso mt-2 col-md-8 offset-2">
+                    <!-- Remind Passowrd -->
+                    <button type="button" id="DnetToolButton" class="botonlogoOmext btn btn-danger btn-block" value="Ingresar" [disabled]="!flagEnte">
+            <span class="spinner-grow spinner-grow-sm" *ngIf="!flagEnte" role="status" aria-hidden="true"></span>
+            {{flagEnte?'Ingresar':'Cargando...'}}
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

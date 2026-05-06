@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-04-17T09:38:50 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acuse" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c5f5a0d3-8afe-477f-b66f-ddc89f164976">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="background.image.path" value="/home/programador09@sfp.gob.mx/Proyectos/ServicioImpresion/src/main/resources/reportes/escudo.png"/>
+	<property name="background.image.widht" value="701"/>
+	<property name="background.image.height" value="329"/>
+	<property name="background.image.x" value="80"/>
+	<property name="background.image.y" value="70"/>
+	<property name="background.image.alpha" value="1.0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="parrafo" class="java.lang.String"/>
+	<parameter name="noComprobante" class="java.lang.String"/>
+	<parameter name="rfc" class="java.lang.String"/>
+	<parameter name="transaccion" class="java.lang.String"/>
+	<parameter name="fechaRecepcion" class="java.lang.String"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="tipoDeclaracion" class="java.lang.String"/>
+	<parameter name="puestoFirmante" class="java.lang.String"/>
+	<parameter name="firmaAcuse" class="java.lang.String"/>
+	<parameter name="tituloFirmante" class="java.lang.String"/>
+	<parameter name="nombreFirmante" class="java.lang.String"/>
+	<parameter name="numeroDeclaracion" class="java.lang.String"/>
+	<parameter name="imagenInstitucionalB64" class="java.lang.String"/>
+	<parameter name="imagenOficialB64" class="java.lang.String"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="curp" class="java.lang.String"/>
+	<parameter name="numeroCertificado" class="java.lang.String"/>
+	<parameter name="anio" class="java.lang.Integer"/>
+	<parameter name="flag" class="java.lang.Boolean"/>
+	<parameter name="fechaEncargo" class="java.lang.String"/>
+	<parameter name="mesEncargo" class="java.lang.String"/>
+	<parameter name="prefijo" class="java.lang.String"/>
+	<parameter name="nombreEnte" class="java.lang.String"/>
+	<parameter name="esAviso" class="java.lang.Boolean"/>
+	<parameter name="digestionAcuse" class="java.lang.String"/>
+	<parameter name="texto" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Field_1" class="java.lang.String"/>
+	<field name="Field_2" class="java.lang.String"/>
+	<field name="Field_3" class="java.lang.String"/>
+	<field name="Field_4" class="java.lang.String"/>
+	<field name="Field_5" class="java.lang.String"/>
+	<field name="Field_6" class="java.lang.String"/>
+	<background>
+		<band height="450" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="148" y="0" width="549" height="448" uuid="3b348098-261e-46e7-adb9-05b90a94007b">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[org.apache.commons.codec.binary.Base64.decodeBase64($P{imagenOficialB64}.getBytes())]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="139" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="429" y="12" width="140" height="12" uuid="44f7cec0-e93d-4a41-ad4f-127c2e9edf70">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO. DE COMPROBACIÓN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="429" y="36" width="35" height="12" uuid="8cbfd57e-142e-44da-8277-e7f389bd06bf">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.F.C:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="429" y="48" width="130" height="12" uuid="6a79d587-cb31-47ad-afb1-f6ff1eabe468">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$P{flag}]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO. DE TRANSACCIÓN:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="20" y="0" width="260" height="130" uuid="92d2b595-fbb4-4e4e-91e0-4bf88305fa9d"/>
+				<imageExpression><![CDATA[org.apache.commons.codec.binary.Base64.decodeBase64($P{imagenInstitucionalB64}.getBytes())]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement positionType="Float" x="569" y="12" width="182" height="12" uuid="d9469123-af83-4c0c-8006-28d584e45492">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{noComprobante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="464" y="36" width="287" height="12" uuid="7a4ee256-ed8d-4fca-8720-7327ed0710d0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{rfc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="559" y="48" width="192" height="12" uuid="b3dedbe0-047e-4344-89f8-cb3b564ba141">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{flag}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{transaccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="429" y="24" width="35" height="12" uuid="6daa25ca-633c-447f-b8a7-873248613df6">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURP:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="464" y="24" width="287" height="12" uuid="eb1a6e11-eec4-4aff-ace1-7cfa3371d414">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{curp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="429" y="48" width="130" height="12" isRemoveLineWhenBlank="true" uuid="b8a6dc7a-8924-4403-9145-f3e68d4bd92e">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[!$P{flag}]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO. DE CERTIFICADO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="559" y="48" width="192" height="12" isRemoveLineWhenBlank="true" uuid="b48b9fdd-d03c-401d-a288-0a87772b3651">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[!$P{flag}]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numeroCertificado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="123" width="474" height="14" uuid="b5ded7be-2260-491a-9a24-3f9f43f2f993">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{esAviso}.equals( false )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NOTA ACLARATORIA"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="429" y="0" width="321" height="12" isPrintWhenDetailOverflows="true" uuid="b9c3fe60-eae9-43b1-8e93-474795c895f8"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PARA USO EXCLUSIVO EN "+$P{prefijo}.toUpperCase()+" "+$P{nombreEnte}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="137" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="29" width="140" height="12" uuid="4d09ae79-040e-4c38-a874-ec3a1f43275b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRESENTE.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="4" width="500" height="12" uuid="8554be95-7307-4604-ba40-d1bd90640c59">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CIUDAD DE MÉXICO, A ".concat($P{fechaRecepcion}.substring( 8, 10 )).concat( " DE " ).concat($P{mes}).concat(" DE ").concat($P{fechaRecepcion}.substring( 0, 4 ))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="17" width="802" height="12" uuid="e6bf89af-ffb9-4989-bb2b-6d6c3f154925">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["C. "+ $P{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="270" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="-74" width="750" height="96" uuid="4b1ae303-c99d-4af4-b660-1b05c6927630">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parrafo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="92" width="750" height="14" uuid="a7d138c6-fc9b-4285-a03e-c8cb8d100fd7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A T E N T A M E N T E]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="106" width="750" height="14" uuid="880b896d-b348-4c6d-83a2-46cf81ad253e">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{puestoFirmante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="120" width="753" height="14" uuid="4096126c-27f9-441e-a100-a35c53ee31c1">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{firmaAcuse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="134" width="753" height="14" uuid="fecabcf7-9e72-4e96-8a22-28d74ebd343f">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{tituloFirmante}+ " " + $P{nombreFirmante}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="699" y="202" width="50" height="50" uuid="5c204884-1ee2-4b43-b064-6d8373cc95fd"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $P{numeroDeclaracion},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="1" y="34" width="750" height="15" uuid="7004b4ed-dabc-4405-a003-a5a2c380fba0">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["CARACTERES DE AUTENTICIDAD DEL ACUSE:  " +$P{digestionAcuse}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="221" width="697" height="12" isPrintWhenDetailOverflows="true" uuid="4aa41dd2-1073-4b16-a01d-975fdcf2b188">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ESTE ACUSE DE RECIBO ELECTRÓNICO DE NOTA ACLARATORIA NO ES VÁLIDO PARA ACREDITAR LA PRESENTACIÓN DE LA DECLARACIÓN"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="152" width="570" height="68" uuid="4f2fb310-67da-49c8-9b50-d404cc298e87"/>
+				<textElement>
+					<font size="8.5" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{texto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

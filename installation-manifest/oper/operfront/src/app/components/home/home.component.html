@@ -1,0 +1,25 @@
+<div class="container">
+    <h2 class="bg-light mt-4">¿Qué deseas hacer?</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Opción</th>
+                <th scope="col">Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="pages.includes(1) && collName === 100;">
+                <td><a [routerLink]="['/usuariosIdentidad']">Editar usuario Identidad</a> </td>
+                <td>Podrás editar el correo o el curp de un usuario específico</td>
+            </tr>
+            <tr *ngIf="pages.includes(3);">
+                <td><a [routerLink]="['/usuariosOper']">Editar usuario OPER</a> </td>
+                <td>Podrás agregar o modificar roles de los usuarios de OPER</td>
+            </tr>
+            <tr *ngIf="pages.includes(2);">
+                <td><a [routerLink]="['/consultaDeclaracion']">Consultar declaración</a></td>
+                <td>Podrás consultar la declaración de un usuario específico, tendrás que justificar el motivo de la consulta.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

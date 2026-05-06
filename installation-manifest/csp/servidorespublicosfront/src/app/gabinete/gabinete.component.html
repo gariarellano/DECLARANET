@@ -1,0 +1,67 @@
+<ngx-ui-loader [text]="this.spinnerText" [fgsType]="this.spinner.fgsType" [fgsColor]="this.spinner.fgsColor">
+</ngx-ui-loader>
+<div class="container">
+    <div class="row">
+        <div class="input-group mt-4 mb-2 center-block">
+
+            <div class="input-group-prepend center-block">
+
+                <button name="seleccione" type="button" class="btn btn-outline-danger dropdown-toggle status" data-toggle="dropdown">
+          Gabinete
+          </button>
+                <div class="dropdown-menu dropdown-inverse">
+                    <li><a class="dropdown-item" (click)="cargaGabinete(1);">Gabinete</a></li>
+                    <li> <a class="dropdown-item" (click)="cargaGabinete(2);">Subsecretarios</a></li>
+                    <li> <a class="dropdown-item" (click)="cargaGabinete(3);">Titulares APF</a></li>
+                    <li> <a class="dropdown-item" (click)="cargaGabinete(4);">Delegados Estatales</a></li>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table id="tableGabinete" class="table table-striped tablaResp" summary="tabla gabinete">
+                <thead>
+                    <tr>
+                        <th class="ordenador" onclick="sortTable(0, 'tableGabinete')" scope="col">Nombre</th>
+                        <th class="ordenador" onclick="sortTable(1, 'tableGabinete')" scope="col">Dependencia</th>
+                        <th class="ordenador" onclick="sortTable(2, 'tableGabinete')" scope="col">Tipo de Declaración</th>
+                        <th class="ordenador" onclick="sortTable(3, 'tableGabinete')" scope="col">Número de<br />comprobante</th>
+                        <th class="ordenador" onclick="sortTable(4, 'tableGabinete')" scope="col">Fecha de presentación</th>
+                        <th scope="col">Declaración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of funcionario">
+                        <!-- <td> <img src="{{data.avatar}}" alt="foto"> </td> -->
+                        <td>{{data.nombre}}</td>
+                        <td>{{data.institucionReceptora}}</td>
+                        <td>{{data.tipoDeclaracion.replace('MODIFICACION', 'MODIFICACIÓN').replace('CONCLUSION', 'CONCLUSIÓN')}}
+                            <ng-container *ngIf="data.tipoDeclaracion === 'MODIFICACION'">
+                                {{data.anio}}
+                            </ng-container>
+                        </td>
+                        <td>{{data.noComprobante}}</td>
+                        <td>{{data.fechaRecepcion}}</td>
+                        <td>
+                            <a class="text-info" (click)="previsualizar('declaracion', 'Declaración', data.numeroDeclaracion, data.idUsuario, data.collName, data.tipoDeclaracion, data.noComprobante, data.anio)" title="Visualizar Declaración" style="cursor: pointer;"><i
+                            class="far fa-file-alt"></i></a>
+                        </td>
+                    </tr>
+                    <!--    <tr>
+                <td> <img src="{{funcionario.avatar}}"> </td>
+                <td>{{funcionario.first_name}}</td>
+                <td>{{funcionario.last_name}}</td>
+                <td>{{funcionario.email}}</td>
+                <td>{{funcionario.id}}</td>
+                <td></td>
+              </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

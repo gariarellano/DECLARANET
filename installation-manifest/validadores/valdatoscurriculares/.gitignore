@@ -1,0 +1,10 @@
+/.vertx/
+/.settings/
+/file-uploads/
+/target/
+/.classpath
+/.project
+/src/main/generated/*
+
+
+/bin/

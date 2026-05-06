@@ -1,0 +1,12 @@
+﻿/target/*
+.classpath
+.project
+.nb-configuration.xml
+.settings
+/target/
+dependency-reduced-pom.xml
+/.scannerwork/*
+sonar-project.properties
+.sonar/
+
+

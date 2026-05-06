@@ -1,0 +1,432 @@
+<header>
+    <div class="col-sm-4">
+        <!--i class="fas fa-bars abrirMenu"></!i>
+            <span class="abrirMenu">Abrir</span-->
+    </div>
+    <div class="col-sm-4 text-center mt-1 pr-0 d-block py-1">
+        <!-- <span class="DeclaraNet" translate="no">Declara</span>
+            <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+        <img class="rounded" alt="logo declaranet" src="../../../assets/image/declara-net.svg" width="180px;" />
+    </div>
+    <!--div class="cuenta-content"><i class="fas fa-user-circle cuenta"></i><span class="cuenta">{{usuario.nombre}}</span>
+        </div-->
+
+</header>
+<div class="info-bar">
+    <div class="row">
+        <div class="col-sm-4 text-small">
+            <!-- <span class="font-weight-bold">Nota claratoria para la declaración:</span> {{tipoDeclara}} <span class="font-weight-bold">con fecha encargo</span>  {{fechaEncargo}} -->
+        </div>
+        <div class="col-sm-4 text-center">
+            <span class="DeclaraNet" [ngClass]="{DnetRojo: institucionReceptora.collName === 100}">{{institucionReceptora.ente.nombre}}</span>
+        </div>
+        <div class="col-sm-4 text-center" style="cursor: pointer;">
+            <i class="fas fa-user-circle cuenta"></i>
+            <span class="cuenta"> {{usuario.nombre}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="menu-cuenta menu-cuenta2 fix-menu-princ">
+    <ul>
+        <li (click)="home();"><i class="fas fa-home"></i> Salir de nota</li>
+        <li (click)="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</li>
+    </ul>
+</div>
+
+<div id="content-btnSave">
+    <button *ngIf="this.notaValid" id="guardaDatos" class="btn btn-success mr-2 shadow-lg rounded" data-target="#modalFirmar" data-toggle="modal">Enviar aclaración <br /> <i
+            class="far fa-paper-plane "></i></button>
+</div>
+<div class="modal fade" id="modalFirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proceso de firmado y envío de la nota aclaratoria</h5>
+                <button type="button" id="cerrarModalFirmar" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> Antes de su envío, se recomienda ampliamente revise su nota aclaratoria mediante la opción de
+                    <strong>
+                        VISTA PRELIMINAR</strong>, ya que una vez enviada,<strong> NO podrá hacer correcciones o
+                        enviarla de nueva cuenta.</strong></p>
+                <p> Para EL FIRMADO Y ENVÍO de su nota aclaratoria, debe contar con su e.firma, la cual se tramita previamente ante el Servicio de Administración Tributaria (SAT), o mediante su Clave Única de Registro de Población (CURP) y contraseña con
+                    que ingresa al sistema DeclaraNet.</p>
+            </div>
+            <div class="modal-footer text-center container-fluid">
+
+                <button type="button" (click)="firmarNota()" data-dismiss="modal" [disabled]="flagGuardando" class="btn btn-primary col-md-4">
+                    <i class="fas fa-highlighter"></i>  {{flagGuardando? 'Cargando...' : 'Continuar con la firma'}} </button>
+                <button type="button" class="btn btn-danger col-md-2" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancelar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="contenedor">
+    <div class="menu">
+        <ul>
+            <li><span id="section1">I Declaración Patrimonial</span>
+
+                <ul>
+                    <li class="itemnav item1"><i class="fas fa-circle"></i>1.1 Datos Generales</li>
+                    <li class="itemnav item2"><i class="fas fa-circle"></i>1.2 Domicilio </li>
+                    <li class="itemnav item3"><i class="fas fa-circle"></i>1.3 Datos curriculares</li>
+                    <li class="itemnav item4"><i class="fas fa-circle"></i>1.4 Datos del empleo</li>
+                    <li class="itemnav item5"><i class="fas fa-circle"></i>1.5 Experiencia laboral</li>
+                    <li class="itemnav item6"><i class="fas fa-circle"></i>1.6 Datos de la pareja
+                    </li>
+                    <!-- <li class="itemnav item7"><i class="fas fa-circle"></i>1.7 Actividad laboral de la pareja
+                            </li> -->
+                    <li class="itemnav item7"><i class="fas fa-circle"></i>1.7 Datos del dependiente</li>
+                    <li class="itemnav item8"><i class="fas fa-circle"></i>1.8 Ingresos netos</li>
+                    <li class="itemnav item9"><i class="fas fa-circle"></i>1.9 Actividad anual año inmediato anterior
+                    </li>
+
+                    <ng-container>
+                        <li class="itemnav item10"><i class="fas fa-circle"></i>1.10 Bienes inmuebles</li>
+                        <li class="itemnav item11"><i class="fas fa-circle"></i>1.11 Vehiculos
+                        </li>
+                        <li class="itemnav item12"><i class="fas fa-circle"></i>1.12 Bienes muebles</li>
+                        <li class="itemnav item13"><i class="fas fa-circle"></i>1.13 Inversiones y otro tipo de valores
+                        </li>
+                        <li class="itemnav item14"><i class="fas fa-circle"></i>1.14 Adeudos/pasivos</li>
+                        <li class="itemnav item15"><i class="fas fa-circle"></i>1.15 Préstamo bien inmueble
+
+                    </ng-container>
+
+                </ul>
+
+                </li>
+                <ng-container>
+                    <li><span id="section2">II Declaración Intereses</span>
+
+                        <ul>
+                            <li class="itemnav item16"><i class="fas fa-circle"></i>2.1 Participación en empresas
+                            </li>
+                            <li class="itemnav item17"><i class="fas fa-circle"></i>2.2 Participa en la toma de desiciones de alguna de estas instituciónes</li>
+                            <li class="itemnav item18"><i class="fas fa-circle"></i>2.3 Apoyos o beneficios públicos
+                            </li>
+                            <li class="itemnav item19"><i class="fas fa-circle"></i>2.4 Representación</li>
+                            <li class="itemnav item20"><i class="fas fa-circle"></i>2.5 Clientes principales</li>
+                            <li class="itemnav item21"><i class="fas fa-circle"></i>2.6 Beneficios privados</li>
+                            <li class="itemnav item22"><i class="fas fa-circle"></i>2.7 Fideicomisos</li>
+                        </ul>
+                    </li>
+                </ng-container>
+        </ul>
+    </div>
+    <div class="opacidad"></div>
+    <div class="menu-nav">
+        <ul>
+            <li id="item1" class="itemnav item1 " (click)="goToAnchor(0)">
+                <i *ngIf="secciones?.datosGenerales.aceptar" id="iconCheck1" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon1"></div><span>Datos generales </span>
+            </li>
+            <li id="item2" class="itemnav item2" (click)="goToAnchor(1)">
+                <i *ngIf="secciones?.domicilioDeclarante.aceptar" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon2"></div><span>Domicilio declarante</span>
+            </li>
+            <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item3" class="itemnav item3" (click)="goToAnchor(2)">
+                <i *ngIf="secciones?.datosCurricularesDeclarante.aceptar" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon3"></div><span>Datos curriculares del declarante</span>
+            </li>
+            <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item4" class="itemnav item4" (click)="goToAnchor(3)">
+                <i *ngIf="secciones?.datosEmpleoCargoComision.aceptar" id="iconCheck4" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon4"></div><span>Datos del empleo</span>
+            </li>
+            <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item5" class="itemnav item5" (click)="goToAnchor(4)">
+                <i *ngIf="secciones?.experienciasLaborales.aceptar" id="iconCheck5" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon5 "></div><span>Experiencia laboral</span>
+            </li>
+            <li id="item6" class="itemnav item6" *ngIf="tDeclaracionOrigen != 'AVISO' && tipoFormato != 'SIMPLIFICADO'" (click)="goToAnchor(5)">
+                <i *ngIf="secciones?.datosParejas.aceptar" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon6"></div><span>Datos de la pareja</span>
+            </li>
+            <li id="item7" *ngIf="tDeclaracionOrigen != 'AVISO' && tipoFormato != 'SIMPLIFICADO'" class="itemnav item7" (click)="goToAnchor(6)">
+                <i *ngIf="secciones?.datosDependientesEconomicos.aceptar" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon7"></div><span>Datos dependiente económico</span>
+            </li>
+
+            <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item8" class="itemnav item8" (click)="goToAnchor(7)">
+                <i *ngIf="secciones?.ingresos.aceptar" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon8"></div><span>Ingresos netos</span>
+            </li>
+            <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item9" class="itemnav item9" (click)="goToAnchor(8)" [hidden]="this.declaracionLoaded.encabezado?.tipoDeclaracion === 'MODIFICACION'">
+                <i *ngIf="secciones?.actividadAnualAnterior.aceptar" class="far fa-check-circle foco-verde"></i>
+                <div class="iconsvg icon9"></div><span>Actividad anual anterior</span>
+            </li>
+            <ng-container *ngIf="this.declaracionLoaded.encabezado?.tipoFormato === 'COMPLETO'">
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item10" class="itemnav item10" (click)="goToAnchor(9)">
+                    <i *ngIf="secciones?.bienesInmuebles.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon10"></div><span>Bienes inmuebles</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item11" class="itemnav item11" (click)="goToAnchor(10)">
+                    <i *ngIf="secciones?.vehiculos.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon11"></div><span>Vehículos</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item12" class="itemnav item12" (click)="goToAnchor(11)">
+                    <i *ngIf="secciones?.bienesMuebles.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon12"></div><span>Bienes muebles</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item13" class="itemnav item13" (click)="goToAnchor(12)">
+                    <i *ngIf="secciones?.inversionesCuentasValores.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon13"></div><span>Inversiones</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item14" class="itemnav item14" (click)="goToAnchor(13)">
+                    <i *ngIf="secciones?.adeudosPasivos.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon14"></div><span>Adeudos/pasivos</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item15" class="itemnav item15" (click)="goToAnchor(14)">
+                    <i *ngIf="secciones?.prestamoComodato.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon15"></div><span>Préstamos o comodato por terceros</span>
+                </li>
+                <!-- <li class="itemnav item16" data-toggle="tooltip" data-placement="left" title="Presamo o comodatos / vehículos"><i class="itemnav item16 fas fa-user-shield"></i></li> -->
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item16" class="itemnav item16" (click)="goToAnchor(15)">
+                    <i *ngIf="secciones?.participaEmpresasSociedadesAsociaciones.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon16"></div><span>Participación de empresas</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item17" class="itemnav item17" (click)="goToAnchor(16)">
+                    <i *ngIf="secciones?.participacionTomaDecisiones.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon17"></div><span>¿Participa en toma de decisiones?</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item18" class="itemnav item18" (click)="goToAnchor(17)">
+                    <i *ngIf="secciones?.apoyos.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon18"></div><span>Apoyos o beneficios</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item19" class="itemnav item19" (click)="goToAnchor(18)">
+                    <i *ngIf="secciones?.representaciones.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon19"></div><span>Representación</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item20" class="itemnav item20" (click)="goToAnchor(19)">
+                    <i *ngIf="secciones?.clientesPrincipales.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon20"></div><span>Clientes principales</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item21" class="itemnav item21" (click)="goToAnchor(20)">
+                    <i *ngIf="secciones?.beneficiosPrivados.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon21"></div><span>Beneficios privados</span>
+                </li>
+                <li *ngIf="tDeclaracionOrigen != 'AVISO'" id="item22" class="itemnav item22" (click)="goToAnchor(21)">
+                    <i *ngIf="secciones?.fideicomisos.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon22"></div><span>Fideicomisos</span>
+
+                </li>
+                <!-- <li *ngIf="tDeclaracionOrigen == 'AVISO'" id="item3" class="itemnav item3" (click)="goToAnchor(2)">
+                    <i *ngIf="secciones?.fideicomisos.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon22"></div><span>Avisos</span>
+
+                </li> -->
+                <li *ngIf="tDeclaracionOrigen == 'AVISO'" id="item3" class="itemnav item3" (click)="goToAnchor(2)">
+                    <i *ngIf="secciones?.detalleAvisoCambioDependencia.aceptar" class="far fa-check-circle foco-verde"></i>
+                    <div class="iconsvg icon3"></div><span>Avisos</span>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+    <div class="body-notaAclara">
+        <div class="column">
+            <div class="row">
+                <div class="col col-lg-2 col-md-2  col-sm-12 col-xs-12 hidden-sm hidden-lg"></div>
+                <div class="col col-lg-4 col-md-4  col-sm-12 col-xs-12"><span class="font-weight-bold">Nota claratoria
+                        para la declaración:</span> {{tipoDeclara}}</div>
+                <div *ngIf="tDeclaracion != 'MODIFICACION'" class="col col-lg-4 col-md-4 col-sm-12 col-xs-12"><span class="font-weight-bold">Fecha inicio encargo:</span> {{fechaEncargo}}</div>
+                <div *ngIf="tDeclaracion === 'MODIFICACION'" class="col col-lg-4 col-md-4  col-sm-12 col-xs-12"><span class="font-weight-bold">Año:</span> {{anio}}</div>
+
+                <div class="col col-lg-2 col-md-2  col-sm-12 col-xs-12 hidden-sm hidden-lg"></div>
+            </div>
+        </div>
+
+        <div class="content-section" id="sectionNota0">
+            <h4 style="color: rgb(145, 139, 139); text-align: center; margin-top:30%;">Dé clic en la sección de la declaración en la que requiera realizar una aclaración.
+            </h4>
+        </div>
+        <div class="content-section" id="sectionNota1">
+
+            <div class="back-icon"><i class="far fa-edit"></i></div><span>Datos generales</span>
+            <textarea [(ngModel)]="secciones.datosGenerales.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.datosGenerales?.aclaracionesObservaciones.length > 10" (click)="estadoNota('datosGenerales','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.datosGenerales?.aclaracionesObservaciones !=''" (click)="estadoNota('datosGenerales','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div class="content-section" id="sectionNota2">
+            <div class="back-icon"><i class="far fa-edit"></i></div><span>Domicilio Declarante</span>
+            <textarea [(ngModel)]="secciones.domicilioDeclarante.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.domicilioDeclarante.aclaracionesObservaciones.length > 10" (click)="estadoNota('domicilioDeclarante','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.domicilioDeclarante.aclaracionesObservaciones !=''" (click)="estadoNota('domicilioDeclarante','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota3">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Datos curriculares</span>
+            <textarea [(ngModel)]="secciones.datosCurricularesDeclarante.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.datosCurricularesDeclarante.aclaracionesObservaciones.length > 10" (click)="estadoNota('datosCurricularesDeclarante','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.datosCurricularesDeclarante.aclaracionesObservaciones !=''" (click)="estadoNota('datosCurricularesDeclarante','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota4">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Datos empleo</span>
+            <textarea [(ngModel)]="secciones.datosEmpleoCargoComision.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.datosEmpleoCargoComision.aclaracionesObservaciones.length > 10" (click)="estadoNota('datosEmpleoCargoComision','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.datosEmpleoCargoComision.aclaracionesObservaciones !=''" (click)="estadoNota('datosEmpleoCargoComision','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button>
+            </p>
+
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota5">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Experiencia laboral</span>
+            <textarea [(ngModel)]="secciones.experienciasLaborales.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.experienciasLaborales.aclaracionesObservaciones.length > 10" (click)="estadoNota('experienciasLaborales','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.experienciasLaborales.aclaracionesObservaciones !=''" (click)="estadoNota('experienciasLaborales','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota6">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Datos de la pareja</span>
+            <textarea [(ngModel)]="secciones.datosParejas.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.datosParejas.aclaracionesObservaciones.length > 10" (click)="estadoNota('datosParejas','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.datosParejas.aclaracionesObservaciones !=''" (click)="estadoNota('datosParejas','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button>
+            </p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota7">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Datos depependiente económico</span>
+            <textarea [(ngModel)]="secciones.datosDependientesEconomicos.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.datosDependientesEconomicos.aclaracionesObservaciones.length > 10" (click)="estadoNota('datosDependientesEconomicos','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.datosDependientesEconomicos.aclaracionesObservaciones !=''" (click)="estadoNota('datosDependientesEconomicos','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota8">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Ingresos netos</span>
+            <textarea [(ngModel)]="secciones.ingresos.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.ingresos.aclaracionesObservaciones.length > 10" (click)="estadoNota('ingresos','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.ingresos.aclaracionesObservaciones !=''" (click)="estadoNota('ingresos','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota9">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Actividad anual anterior</span>
+            <textarea [(ngModel)]="secciones.actividadAnualAnterior.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.actividadAnualAnterior.aclaracionesObservaciones.length > 10" (click)="estadoNota('actividadAnualAnterior','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.actividadAnualAnterior.aclaracionesObservaciones !=''" (click)="estadoNota('actividadAnualAnterior','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota10">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Bienes inmuebles</span>
+            <textarea [(ngModel)]="secciones.bienesInmuebles.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.bienesInmuebles.aclaracionesObservaciones.length > 10" (click)="estadoNota('bienesInmuebles','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.bienesInmuebles.aclaracionesObservaciones !=''" (click)="estadoNota('bienesInmuebles','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota11">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Vehículos</span>
+            <textarea [(ngModel)]="secciones.vehiculos.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.vehiculos.aclaracionesObservaciones.length > 10" (click)="estadoNota('vehiculos','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.vehiculos.aclaracionesObservaciones !=''" (click)="estadoNota('vehiculos','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota12">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Bienes muebles</span>
+            <textarea [(ngModel)]="secciones.bienesMuebles.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.bienesMuebles.aclaracionesObservaciones.length > 10" (click)="estadoNota('bienesMuebles','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.bienesMuebles.aclaracionesObservaciones !=''" (click)="estadoNota('bienesMuebles','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button>
+            </p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota13">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Inversiones</span>
+            <textarea [(ngModel)]="secciones.inversionesCuentasValores.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.inversionesCuentasValores.aclaracionesObservaciones.length > 10" (click)="estadoNota('inversionesCuentasValores','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.inversionesCuentasValores.aclaracionesObservaciones !=''" (click)="estadoNota('inversionesCuentasValores','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button>
+            </p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota14">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Adeudos/pasivos</span>
+            <textarea [(ngModel)]="secciones.adeudosPasivos.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.adeudosPasivos.aclaracionesObservaciones.length > 10" (click)="estadoNota('adeudosPasivos','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.adeudosPasivos.aclaracionesObservaciones !=''" (click)="estadoNota('adeudosPasivos','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota15">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Préstamos o comodatos</span>
+            <textarea [(ngModel)]="secciones.prestamoComodato.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.prestamoComodato.aclaracionesObservaciones.length > 10" (click)="estadoNota('prestamoComodato','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.prestamoComodato.aclaracionesObservaciones !=''" (click)="estadoNota('prestamoComodato','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota16">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Participación de empresas </span>
+            <textarea [(ngModel)]="secciones.participaEmpresasSociedadesAsociaciones.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.participaEmpresasSociedadesAsociaciones.aclaracionesObservaciones.length > 10" (click)="estadoNota('participaEmpresasSociedadesAsociaciones','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.participaEmpresasSociedadesAsociaciones.aclaracionesObservaciones !=''" (click)="estadoNota('participaEmpresasSociedadesAsociaciones','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota17">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Participa en tomas de desiciónes</span>
+            <textarea [(ngModel)]="secciones.participacionTomaDecisiones.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.participacionTomaDecisiones.aclaracionesObservaciones.length > 10" (click)="estadoNota('participacionTomaDecisiones','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.participacionTomaDecisiones.aclaracionesObservaciones !=''" (click)="estadoNota('participacionTomaDecisiones','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota18">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Apoyos o beneficios</span>
+            <textarea [(ngModel)]="secciones.apoyos.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.apoyos.aclaracionesObservaciones.length > 10" (click)="estadoNota('apoyos','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.apoyos.aclaracionesObservaciones !=''" (click)="estadoNota('apoyos','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota19">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Representación</span>
+            <textarea [(ngModel)]="secciones.representaciones.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.representaciones.aclaracionesObservaciones.length > 10" (click)="estadoNota('representaciones','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.representaciones.aclaracionesObservaciones !=''" (click)="estadoNota('representaciones','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button></p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota20">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Clientes principales</span>
+            <textarea [(ngModel)]="secciones.clientesPrincipales.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.clientesPrincipales.aclaracionesObservaciones.length > 10" (click)="estadoNota('clientesPrincipales','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.clientesPrincipales.aclaracionesObservaciones !=''" (click)="estadoNota('clientesPrincipales','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button>
+            </p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota21">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Beneficios privados</span>
+            <textarea [(ngModel)]="secciones.beneficiosPrivados.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.beneficiosPrivados.aclaracionesObservaciones.length > 10" (click)="estadoNota('beneficiosPrivados','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.beneficiosPrivados.aclaracionesObservaciones !=''" (click)="estadoNota('beneficiosPrivados','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button>
+            </p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen != 'AVISO'" class="content-section" id="sectionNota22">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span>Fideicomisos</span>
+            <textarea [(ngModel)]="secciones.fideicomisos.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.fideicomisos.aclaracionesObservaciones.length > 10" (click)="estadoNota('fideicomisos','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.fideicomisos.aclaracionesObservaciones !=''" (click)="estadoNota('fideicomisos','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button>
+            </p>
+        </div>
+        <div *ngIf="tDeclaracionOrigen == 'AVISO'" class="content-section" id="sectionNota3">
+            <div class="back-icon"><i class="far fa-edit"></i></div> <span> Aviso por cambio de dependencia</span>
+            <textarea [(ngModel)]="secciones.detalleAvisoCambioDependencia.aclaracionesObservaciones" name="" cols="30" rows="10" placeholder="Escriba la aclaración" oninput="CustomUpperCase(this)"></textarea>
+            <p><button *ngIf="secciones.detalleAvisoCambioDependencia.aclaracionesObservaciones.length > 10" (click)="estadoNota('detalleAvisoCambioDependencia','aceptar');" class="btn btn-primary mt-2">Aceptar</button>
+                <button *ngIf="secciones.detalleAvisoCambioDependencia.aclaracionesObservaciones !=''" (click)="estadoNota('detalleAvisoCambioDependencia','cancelar');" class="btn btn-danger mt-2 ml-2">Cancelar</button>
+            </p>
+        </div>
+    </div>
+
+    <button type="button" #modalGuardarButton id="modalGuardarButton" class="btn btn-primary" data-toggle="modal" data-target="#modalGuardar" style="display: none;">
+        Launch demo modal
+    </button>
+
+    <div class="modal fade" id="modalGuardar" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <span class="DeclaraNet" translate="no">Declara</span>
+                  <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                    <img class="rounded"  alt="logo declaranet" src="../../../assets/image/declara-net.svg" width="180px;" />
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalGuardarClose">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div *ngIf="!this.guardarDeclaracionError; else errorDeclara">
+                        <span class="alerticonModal"><img   alt="success" src="assets/image/sucess.png" alt="checkmark" />
+                            <h2>Declaración guardada exitosamente</h2>
+                            <span *ngIf="mensajeCambioFormate">{{mensajeCambioFormate}}</span>
+                        </span>
+                    </div>
+                    <ng-template #errorDeclara>
+                        <span class="alerticonModal"><img  alt="error" src="assets/image/error.png" alt="checkmark" />
+                            <p class="text-black">{{this.guardarDeclaracionError}}</p>
+                            <div *ngIf="this.guardarDeclaracionErrorArr">
+                                <p *ngFor="let error of guardarDeclaracionErrorArr">{{error.error}}</p>
+                            </div>
+                        </span>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,27 @@
+<app-menu-nav></app-menu-nav>
+<router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+<div bsModal #childModal="bs-modal" id="sessionModal" class="modal fade" tabindex="-1" aria-labelledby="dialog-child-name" data-backdrop="static" data-keyboard="false" [config]="{ignoreBackdropClick: true, keyboard: false}" style="z-index: 2050;">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header" style="display: inline;">
+                <!-- <span class="DeclaraNet" translate="no">Declara</span>
+                <span class="DeclaraNet DnetRojo" translate="no">Net</span> -->
+                <img class="rounded" src="../assets/img/logoOmext.png" width="180px;" />
+                <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+            </div>
+            <div class="modal-body">
+                {{idleState}}
+                <div class="row mrgbtm">
+                    <div class="col-md-6 text-center">
+                        <button type="button" (click)="logout()" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Salir</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" (click)="renovarTokens();" class="btn btn-info"><i class="fas fa-file-alt"></i> Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

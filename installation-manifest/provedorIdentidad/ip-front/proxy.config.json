@@ -1,0 +1,28 @@
+{
+    "/apiip": {
+        "target": {
+            "host": "172.29.100.24",
+            "protocol": "http:",
+            "port": 8888
+        },
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": {
+            "^/apiip": ""
+        }
+    },
+    "/apiregister": {
+        "target": {
+            "host": "172.29.100.24",
+            "protocol": "http:",
+            "port": 8181
+        },
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": {
+            "^/apiregister": ""
+        }
+    }
+}

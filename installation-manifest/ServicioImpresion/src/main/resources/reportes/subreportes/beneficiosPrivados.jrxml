@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2020-06-04T19:14:54 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="beneficiosPrivados" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4470c669-0c83-4167-97d0-2e2b06b500b8">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="tipoBeneficio.valor" class="java.lang.String"/>
+	<field name="beneficiario.valor" class="java.lang.String"/>
+	<field name="otorgante.tipoPersona" class="java.lang.String"/>
+	<field name="otorgante.personaFisica.nombre" class="java.lang.String"/>
+	<field name="otorgante.personaFisica.segundoApellido" class="java.lang.String"/>
+	<field name="otorgante.personaFisica.primerApellido" class="java.lang.String"/>
+	<field name="otorgante.personaFisica.rfc" class="java.lang.String"/>
+	<field name="otorgante.personaMoral.nombre" class="java.lang.String"/>
+	<field name="otorgante.personaMoral.rfc" class="java.lang.String"/>
+	<field name="formaRecepcion" class="java.lang.String"/>
+	<field name="especifiqueBeneficio" class="java.lang.String"/>
+	<field name="montoMensualAproximado.monto" class="java.lang.String"/>
+	<field name="montoMensualAproximado.moneda.valor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sector.valor" class="java.lang.String"/>
+	<field name="tipoBeneficioOtro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sectorOtro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="267" height="10" uuid="d8e14f33-3b62-49a2-b7bb-297330ad31c8">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO DE BENEFICIO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="10" width="133" height="10" uuid="17e18054-089d-457e-9875-a3e34d5fd967">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoBeneficio.valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="534" y="0" width="268" height="10" uuid="47d1d0c8-2012-44b8-b808-2fbe8d25fd3e">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BENEFICIARIO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="534" y="10" width="268" height="10" uuid="b930be19-3ca4-4a2d-876f-e7c5a8eb5726">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{beneficiario.valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="267" y="0" width="267" height="10" uuid="b5de3538-9aef-4271-9f74-c3a235efefc2">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTORGANTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="267" y="10" width="267" height="10" uuid="374a7fed-2c9b-4720-99a0-27d79599ddd2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{otorgante.tipoPersona}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="267" height="10" uuid="290faef2-a92d-4118-a71a-f87c3abd8fd2">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE O RAZÓN SOCIAL DEL OTORGANTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="30" width="267" height="10" uuid="2e01dff4-38f5-4e5b-8fd2-55514888b94d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{otorgante.personaFisica.nombre} != null ? ($F{otorgante.personaFisica.nombre}+" "+$F{otorgante.personaFisica.primerApellido}+" "+($F{otorgante.personaFisica.segundoApellido} != null ? $F{otorgante.personaFisica.segundoApellido} :"")) : $F{otorgante.personaMoral.nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="267" y="20" width="267" height="10" uuid="3f77da8c-98e4-4072-8099-5816ce0f3a25"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RFC:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="267" y="30" width="267" height="10" uuid="120c8799-6983-464a-84d4-7c7ab16c7235">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{otorgante.personaFisica.rfc} != null ? $F{otorgante.personaFisica.rfc} : $F{otorgante.personaMoral.rfc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="534" y="20" width="268" height="10" uuid="ef742956-38ea-4a41-a7fa-3b7d929f2b40">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMA DE RECEPCIÓN DEL BENEFICIO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="534" y="30" width="268" height="10" uuid="fba3a32c-4ddc-45d9-9150-0776a94d8d28"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[mx.gob.sfp.dgti.enums.EnumReporte.valueOf($F{formaRecepcion}).getDescripcion()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="267" height="10" uuid="3115c3eb-5952-4920-8957-8810e13081c4">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESPECIFIQUE EL BENEFICIO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="50" width="267" height="10" uuid="2b4cef5f-e103-4e68-83f2-96f8f97b6134">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{especifiqueBeneficio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="267" y="40" width="267" height="10" uuid="eea8e0c8-4060-4437-930f-aba69bfdf5f9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO MENSUAL APROXIMADO DEL BENEFICIO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="267" y="50" width="267" height="10" uuid="f98fddc4-88a5-4539-9000-1bec2cf215a7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montoMensualAproximado.monto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="534" y="40" width="268" height="10" uuid="b8de4fea-ea03-42d0-9c2e-f4784cb10bfa"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO DE MONEDA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="534" y="50" width="268" height="10" uuid="f387bd60-f615-4e1b-a1d5-e4902ce0d9b0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montoMensualAproximado.moneda.valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="267" height="10" uuid="88aa2a8e-61da-4690-aec4-c5909c222b9d">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECTOR PRODUCTIVO AL QUE PERTENECE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="267" y="60" width="267" height="10" uuid="428f84de-8b8a-43d9-adb2-60720625cded">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sector.valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="10" width="134" height="10" isRemoveLineWhenBlank="true" uuid="8ee0b5cb-3598-4711-ba66-502d3eb2aca4">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{tipoBeneficioOtro}  != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoBeneficioOtro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="534" y="60" width="268" height="10" isRemoveLineWhenBlank="true" uuid="97485f00-3f82-47b4-92ce-8cdff0d186d5">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{sectorOtro} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sectorOtro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

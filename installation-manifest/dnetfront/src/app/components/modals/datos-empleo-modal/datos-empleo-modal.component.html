@@ -1,0 +1,512 @@
+<form #datosEmpleoForm="ngForm" [formGroup]="form">
+    <div class="modal-content" style="height:500px;">
+        <div class="modal-header">
+            <div class="d-flex w-100">
+                <div class="d-flex w-75">
+                    <h4 class="modal-title">Datos Empleo</h4>
+                </div>
+                <div class="d-flex w-25 align-items-center">
+                    <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                    <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" formGroupName="empleoCargoComision">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" type="radio" required id="radio{{data.id}}"
+                            formControlName="tipoOperacion" [value]="data.id" (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div formGroupName="empleoCargoComision" class="modal-body" style="overflow-y: scroll">
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre del ente público <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Nombre del ente público <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select required type="text" id="datEmpNomEnt" formControlName="enteTemp">
+                        <option value=null disabled>SELECCIONE...</option>
+                        <option *ngFor="let e of cata.catalogoEntes" [value]="e.id">{{e.nombre}}</option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('empleoCargoComision.enteTemp').valid && (form.get('empleoCargoComision.enteTemp').dirty || form.get('empleoCargoComision.enteTemp').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+
+
+            </div>
+            <div class="row p-3">
+                <div formGroupName="nivelJerarquico" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nivel Jerarquico<i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Nivel Jerarquico<i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select
+                        [disabled]="getDisabled('nivelJerarquico', form.get('empleoCargoComision.tipoOperacion').value)"
+                        name="" id="datEmpNivJer" formControlName="id" required>
+                        <option value=null disabled>SELECCIONE...</option>
+                        <option *ngFor="let apubli of this.cata.catalogos.CAT_NIVEL_JERARQUICO" [value]="apubli.id">
+                            {{apubli.valor}}
+                        </option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="form.get('empleoCargoComision.nivelJerarquico.id').touched && form.get('empleoCargoComision.nivelJerarquico.id').pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+
+            </div>
+            <div class="row p-3">
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Área de adscripción <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Área de adscripción <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input
+                        [disabled]="getDisabled('areaAdscripcion', form.get('empleoCargoComision.tipoOperacion').value)"
+                        type="text" id="datEmpAreAds" formControlName="areaAdscripcion" required maxlength="100"
+                        oninput="CustomUpperCase(this);">
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('empleoCargoComision.areaAdscripcion').valid && (form.get('empleoCargoComision.areaAdscripcion').dirty || form.get('empleoCargoComision.areaAdscripcion').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+            </div>
+            <div class="row p-3">
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Empleo, cargo o comisión <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Empleo, cargo o comisión <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input
+                        [disabled]="getDisabled('empleoCargoComision', form.get('empleoCargoComision.tipoOperacion').value)"
+                        type="text" id="datEmpEmpCar" formControlName="empleoCargoComision" required maxlength="100"
+                        oninput="CustomUpperCase(this);">
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('empleoCargoComision.empleoCargoComision').valid && (form.get('empleoCargoComision.empleoCargoComision').dirty || form.get('empleoCargoComision.empleoCargoComision').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">¿Está contratado por honorarios? <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">¿Está contratado por honorarios? <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled('contratado', form.get('empleoCargoComision.tipoOperacion').value)"
+                        name="" id="datEmpEstConPorHon" formControlName="contratadoPorHonorarios" required>
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option value=true>SI</option>
+                        <option value=false>NO</option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="form.get('empleoCargoComision.contratadoPorHonorarios').touched && form.get('empleoCargoComision.contratadoPorHonorarios').pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nivel de empleo cargo o comisión<i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Nivel de empleo cargo o comisión <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input
+                        [disabled]="getDisabled('nivelEmpleoCargoComision', form.get('empleoCargoComision.tipoOperacion').value)"
+                        type="text" id="datEmpNivEmp" required formControlName="nivelEmpleoCargoComision" maxlength="50"
+                        oninput="CustomUpperCase(this);">
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('empleoCargoComision.nivelEmpleoCargoComision').valid && (form.get('empleoCargoComision.nivelEmpleoCargoComision').dirty || form.get('empleoCargoComision.nivelEmpleoCargoComision').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Especifique función principal <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Especifique función principal <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input type="text" id="datEmpEspFunPri" required formControlName="funcionPrincipal" maxlength="100"
+                        oninput="CustomUpperCase(this);">
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('empleoCargoComision.funcionPrincipal').valid && (form.get('empleoCargoComision.funcionPrincipal').dirty || form.get('empleoCargoComision.funcionPrincipal').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">{{textSubTitleEmpleo}} <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">{{textSubTitleEmpleo}} <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+
+                    <input [disabled]="getDisabled('fechaEncargo', form.get('empleoCargoComision.tipoOperacion').value)"
+                        type="date" required id="datEmpSubEmp" formControlName="fechaEncargo"
+                        [readOnly]="this.ini !== 'MODIFICACION'">
+
+                    <span class="invalid-tooltip"
+                        *ngIf="form.get('empleoCargoComision.fechaEncargo').errors?.validaFechaLimit && form.get('empleoCargoComision.fechaEncargo').value != ''">
+                        Fecha inválida <i class="fas fa-info-circle" role="button" type="button"
+                            [attr.data-td]="tipoDeclaracion" onclick="abrirModalInfo('modalMsgFechas',this)"></i>
+                    </span>
+                </div>
+                <div formGroupName="telefonoOficina" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Teléfono de oficina <i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Teléfono de oficina <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input
+                        [disabled]="getDisabled('telefonoOficina', form.get('empleoCargoComision.tipoOperacion').value)"
+                        type="number" maxlength="22" id="datEmpTelOfi" required formControlName="numero"
+                        onkeydown="return solonumero(event);">
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('empleoCargoComision.telefonoOficina.numero').valid && (form.get('empleoCargoComision.telefonoOficina.numero').dirty || form.get('empleoCargoComision.telefonoOficina.numero').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div formGroupName="telefonoOficina" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Extensión<i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Extensión<i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled('extension', form.get('empleoCargoComision.tipoOperacion').value)"
+                        type="number" maxlength="22" id="datEmpExt" required formControlName="extension"
+                        onkeydown="return solonumero(event);">
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('empleoCargoComision.telefonoOficina.extension').valid && (form.get('empleoCargoComision.telefonoOficina.extension').dirty || form.get('empleoCargoComision.telefonoOficina.extension').touched)">
+                        Campo Requerido
+                    </span>
+                </div>
+                <div formGroupName="domicilio" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Domicilio del empleo, cargo o comisión<i
+                            class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Domicilio del empleo, cargo o comisión <i
+                            class="fas fa-globe-americas" data-toggle="tooltip" data-placement="left"
+                            title="Campo público"></i></label>
+                    <select [disabled]="getDisabled('ubicacion', form.get('empleoCargoComision.tipoOperacion').value)"
+                        maxlength="10" id="datEmpDomEmpCarCom" required formControlName="ubicacion">
+                        <option value="null" disabled>SELECCIONE...</option>
+                        <option *ngFor="let tv of this.globals.enums.ENUM_UBICACION" [ngValue]="tv.id">
+                            {{tv.valor}}
+                        </option>
+                    </select>
+                    <span class="invalid-tooltip"
+                        *ngIf="form.get('empleoCargoComision.domicilio.ubicacion').touched && form.get('empleoCargoComision.domicilio.ubicacion').pristine">
+                        Campo Requerido
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="row p-3">
+                <div formGroupName="remuneracionNeta" class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Remuneración {{labelRemu}}<i class="fas fa-info-circle"></i>
+                    </label>
+                    <label [hidden]="help" for="">Remuneración {{labelRemu}}<i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input
+                        [disabled]="getDisabled('remuneracionNeta', form.get('empleoCargoComision.tipoOperacion').value)"
+                        type="text" required id="datEmpRem" formControlName="monto"
+                        oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+                    <span class="invalid-tooltip"
+                        *ngIf="!form.get('empleoCargoComision.remuneracionNeta.monto').valid && (form.get('empleoCargoComision.remuneracionNeta.monto').dirty || form.get('empleoCargoComision.remuneracionNeta.monto').touched)">
+                        Campo Requerido
+                    </span>
+
+                </div>
+                <div formGroupName="remuneracionNeta">
+                    <div formGroupName="moneda" class="col d-flex flex-column justify-content-between">
+                        <label [hidden]="!help" for="">Moneda<i class="fas fa-info-circle"></i>
+                        </label>
+                        <label [hidden]="help" for="">Moneda<i class="fas fa-globe-americas" data-toggle="tooltip"
+                                data-placement="left" title="Campo público"></i></label>
+                        <select [disabled]="getDisabled('moneda', form.get('empleoCargoComision.tipoOperacion').value)"
+                            type="text" required id="datEmpMon" formControlName="id">
+                            <option value="null" disabled>SELECCIONE...</option>
+                            <option *ngFor="let pais of this.cata.catalogos.CAT_MONEDA" [value]="pais.id">
+                                {{pais.valor}}
+                            </option>
+                        </select>
+                        <span class="invalid-tooltip"
+                            *ngIf="form.get('empleoCargoComision.remuneracionNeta.moneda.id').touched && form.get('empleoCargoComision.remuneracionNeta.moneda.id').pristine">
+                            Campo Requerido
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="form.get('empleoCargoComision.domicilio.ubicacion').value != 0"
+                    class="col d-flex flex-column justify-content-between">
+                    <button style="width: 280px!important"
+                        *ngIf="form.get('empleoCargoComision.domicilio.ubicacion').value == 'MEXICO'" type="button"
+                        data-toggle="modal" (click)="abreMexico();" data-target="#modal-domicilio-mexico"
+                        class="btn btn-light"><i class="fas fa-map-marked-alt"></i>
+                        Domicilio en
+                        México
+                    </button>
+                    <button style="width: 280px!important"
+                        *ngIf="form.get('empleoCargoComision.domicilio.ubicacion').value == 'EXTRANJERO'" type="button"
+                        data-toggle="modal" (click)="abreExtranjero();" data-target="#modal-domicilio-extranjero"
+                        class="btn btn-light"><i class="fas fa-map-marked-alt"></i> Domicilio en extranjero
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" [disabled]="!form.valid"
+                (click)="guardaLocal(form)">Aceptar</button>
+            <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+        </div>
+    </div>
+
+
+    <!-- Domicilio en México -->
+    <div formGroupName="empleoCargoComision" style="background: rgba(59, 59, 59, 0.603)"
+        class="modal fade bd-example-modal-lg" id="modal-domicilio-mexico" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div style="top: 70px;" class="modal-dialog modal-lg " role="document">
+            <div formGroupName="domicilioTemp" class="modal-content" style="height: 600px!important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Domicilio en México</h5>
+                    <button type="button" class="close" (click)="closeUbicacion();" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div formGroupName="domicilioMexico" class="modal-body">
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column ">
+                            <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Calle <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                    data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" maxlength="300" formControlName="calle" required
+                                oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip" id="datEmpCal"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioMexico.calle').valid && (form.get('empleoCargoComision.domicilio.domicilioMexico.calle').dirty || form.get('empleoCargoComision.domicilio.domicilioMexico.calle').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número exterior <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpNumEx" maxlength="50" formControlName="numeroExterior"
+                                required oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioMexico.numeroExterior').valid && (form.get('empleoCargoComision.domicilio.domicilioMexico.numeroExterior').dirty || form.get('empleoCargoComision.domicilio.domicilioMexico.numeroExterior').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número interior <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpNumInt" maxlength="50" formControlName="numeroInterior"
+                                oninput="CustomUpperCase(this);">
+                        </div>
+
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Colonia/Localidad <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Colonia/Localidad <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpColLoc" maxlength="100"
+                                formControlName="coloniaLocalidad" required oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioMexico.coloniaLocalidad').valid && (form.get('empleoCargoComision.domicilio.domicilioMexico.coloniaLocalidad').dirty || form.get('empleoCargoComision.domicilio.domicilioMexico.coloniaLocalidad').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+
+                        <div formGroupName="entidadFederativa" class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Entidad federativa <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Entidad federativa <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <select name="entidadMex" formControlName="id" id="datEmpEntFed" required
+                                (change)="filterMunicipios($event.target.value)">
+                                <option value="null" disabled>SELECCIONE...</option>
+                                <option *ngFor="let ent of this.cata.catalogos.CAT_ENTIDAD_FEDERATIVA" [value]="ent.id">
+                                    {{ent.valor}}
+                                </option>
+                            </select>
+                            <span class="invalid-tooltip"
+                                *ngIf="form.get('empleoCargoComision.domicilio.domicilioMexico.entidadFederativa.id').touched && form.get('empleoCargoComision.domicilio.domicilioMexico.entidadFederativa.id').pristine">
+                                Campo Requerido
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div formGroupName="municipioAlcaldia" class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Municipio / Alcaldía <i
+                                    class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Municipio / Alcaldía <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <select name="" maxlength="10" formControlName="id" id="datEmpMunAlc" required>
+                                <option value="null" disabled>SELECCIONE...</option>
+                                <option *ngFor="let
+                                data of this?.filterMuns" [value]="data.id">
+                                    {{data.valor}}
+                                </option>
+                            </select>
+                            <span class="invalid-tooltip"
+                                *ngIf="form.get('empleoCargoComision.domicilio.domicilioMexico.municipioAlcaldia.id').touched && form.get('empleoCargoComision.domicilio.domicilioMexico.municipioAlcaldia.id').pristine">
+                                Campo Requerido
+                            </span>
+                        </div>
+
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Código postal <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpCp" maxlength="5" minlength="5"
+                                formControlName="codigoPostal" required onkeydown="return solonumero(event);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioMexico.codigoPostal').valid && (form.get('empleoCargoComision.domicilio.domicilioMexico.codigoPostal').dirty || form.get('empleoCargoComision.domicilio.domicilioMexico.codigoPostal').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                        (click)="selectUbicacion('mexico')"
+                        [disabled]="form.get('empleoCargoComision.domicilioTemp.domicilioMexico').invalid">Aceptar</button>
+                    <button type="button" class="btn btn-dark" (click)="closeUbicacion();"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Domicilio en Extranjero -->
+    <div formGroupName="empleoCargoComision" style="background: rgba(59, 59, 59, 0.603)"
+        class="modal fade bd-example-modal-lg" id="modal-domicilio-extranjero" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div style="top: 70px;" class="modal-dialog modal-lg " role="document">
+            <div formGroupName="domicilioTemp" class="modal-content" style="height: 600px!important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Domicilio en Extranjero</h5>
+                    <button type="button" class="close" data-dismiss="modal" (click)="closeUbicacion()"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" formGroupName="domicilioExtranjero">
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Calle <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                    data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpExtCal" maxlength="300" formControlName="calle"
+                                required oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioExtranjero.calle').valid && (form.get('empleoCargoComision.domicilio.domicilioExtranjero.calle').dirty || form.get('empleoCargoComision.domicilio.domicilioExtranjero.calle').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número exterior <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpExtNumExt" maxlength="50"
+                                formControlName="numeroExterior" required oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioExtranjero.numeroExterior').valid && (form.get('empleoCargoComision.domicilio.domicilioExtranjero.numeroExterior').dirty || form.get('empleoCargoComision.domicilio.domicilioExtranjero.numeroExterior').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Número interior <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpExtNumInt" maxlength="50"
+                                formControlName="numeroInterior" oninput="CustomUpperCase(this);">
+                        </div>
+
+
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Ciudad/localidad <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Ciudad/localidad <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpExtColLoc" maxlength="100"
+                                formControlName="ciudadLocalidad" required oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioExtranjero.ciudadLocalidad').valid && (form.get('empleoCargoComision.domicilio.domicilioExtranjero.ciudadLocalidad').dirty || form.get('empleoCargoComision.domicilio.domicilioExtranjero.ciudadLocalidad').touched)">
+                                Campo Requerido
+                            </span>
+
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Estado/provincia <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Estado/provincia <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpExtEstPro" maxlength="100"
+                                formControlName="estadoProvincia" required oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioExtranjero.estadoProvincia').valid && (form.get('empleoCargoComision.domicilio.domicilioExtranjero.estadoProvincia').dirty || form.get('empleoCargoComision.domicilio.domicilioExtranjero.estadoProvincia').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+
+                        <div formGroupName="pais" class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">País <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">País <i class="fas fa-globe-americas" data-toggle="tooltip"
+                                    data-placement="left" title="Campo público"></i></label>
+                            <select name="" maxlength="10" id="datEmpExtPai" formControlName="id"
+                                oninput="CustomUpperCase(this);" required>
+                                <option value="null" disabled>SELECCIONE...</option>
+                                <option *ngFor="let pais of this.cata.catalogos.CAT_PAIS" [value]="pais.id">
+                                    {{pais.valor}}
+                                </option>
+                            </select>
+                            <span class="invalid-tooltip"
+                                *ngIf="form.get('empleoCargoComision.domicilio.domicilioExtranjero.pais.id').touched && form.get('empleoCargoComision.domicilio.domicilioExtranjero.pais.id').pristine">
+                                Campo Requerido
+                            </span>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+                            <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                            <label [hidden]="help" for="">Código postal <i class="fas fa-globe-americas"
+                                    data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                            <input type="text" name="" id="datEmpExtCp" maxlength="10" minlength="1"
+                                formControlName="codigoPostal" required oninput="CustomUpperCase(this);">
+                            <span class="invalid-tooltip"
+                                *ngIf="!form.get('empleoCargoComision.domicilio.domicilioExtranjero.codigoPostal').valid && (form.get('empleoCargoComision.domicilio.domicilioExtranjero.codigoPostal').dirty || form.get('empleoCargoComision.domicilio.domicilioExtranjero.codigoPostal').touched)">
+                                Campo Requerido
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                        (click)="selectUbicacion('extranjero')"
+                        [disabled]="form.get('empleoCargoComision.domicilioTemp.domicilioExtranjero').invalid">Aceptar</button>
+
+                    <button type="button" class="btn btn-dark" (click)="closeUbicacion()"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,356 @@
+<div id="scroll1" class="altoScroll" (mousewheel)="_wheel($event);">
+    <form #avisoForm="ngForm" class="container-fluid  ml-2 pt-3 h-75" autocomplete="off">
+        <div class="title d-flex justify-content-between mb-3">
+            <h3>{{this.textTitulo}}</h3> <i class="fas fa-question-circle mr-3 help"></i>
+            <span> <img src="assets/image/star.png" class="imgRequired"  alt=""> Dato obligatorio</span>
+        </div>
+
+        <hr style="background-color: rgb(175, 148, 57); height: 1px;">
+        <h5><strong> Datos del empleo que concluye </strong></h5>
+        <div class="row p-3">
+
+            <div class="col d-flex flex-column col-md-6 justify-content-between">
+                <label [hidden]="!help" for="">Dependencia o entidad donde concluye<i
+                        class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Dependencia o entidad donde concluye <i class="fas fa-globe-americas"
+                        data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                <select name="avisoDTermi" id="" [compareWith]="globals.compareFn" required appSelectValidator [(ngModel)]="avisos.empleoCargoComisionConcluye.ente">
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let e of cata.catalogoEntes" [ngValue]="e">{{e.nombre}}</option>
+                        </select>
+            </div>
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Nivel jerarquico que concluye<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Nivel jerarquico que concluye <i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                <select name="nivelJerarquicoC" id="" [compareWith]="globals.compareFn" required appSelectValidator [(ngModel)]="avisos.empleoCargoComisionConcluye.nivelJerarquico">
+                    <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                    <option *ngFor="let data of cata.catalogos?.CAT_NIVEL_JERARQUICO" [ngValue]="data">
+                        {{data.valor}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Fecha de conclusión del encargo <i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Fecha de conclusión del encargo <i class="fas fa-globe-americas"
+                        data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                <input readonly type="date" name="fechaConclusionEncargo" required maxlength="20" [(ngModel)]="avisos.empleoCargoComisionConcluye.fechaConclusionEncargo">
+
+                <!-- <span class="invalid-tooltip"
+                    *ngIf="!form2.get('experienciaLaboral.actividadLaboral.fechaIngreso').valid && (form2.get('experienciaLaboral.actividadLaboral.fechaIngreso').dirty || form2.get('experienciaLaboral.actividadLaboral.fechaIngreso').touched)">
+                    Campo Requerido
+                </span> -->
+            </div>
+
+
+        </div>
+
+        <hr style="background-color: rgb(175, 148, 57); height: 1px;">
+        <h5><strong> Datos del empleo que inicia </strong></h5>
+        <div class="row p-3">
+
+            <div class="col d-flex flex-column col-md-4 justify-content-between">
+                <label [hidden]="!help" for="">Dependencia o entidad<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Dependencia o entidad<i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                <select name="avisoDInicia" id="" [compareWith]="globals.compareFn" required appSelectValidator [(ngModel)]="avisos.empleoCargoComisionInicia.ente" #avisoDInicia="ngModel">
+                    <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                    <option *ngFor="let data of cata.catalogoEntes" [ngValue]="data">
+                        {{data.nombre}}
+                    </option>
+                </select>
+                <div class="invalid-tooltip" *ngIf="avisoDInicia.invalid && (avisoDInicia.dirty || avisoDInicia.touched)">
+                    Campo requerido...
+                </div>
+                <div class="invalid-tooltip" *ngIf="(avisos.empleoCargoComisionInicia.ente.id == avisos.empleoCargoComisionConcluye.ente.id) && avisoDInicia.touched ">
+                    La dependencia o entidad que inicia, no puede ser la misma que donde se concluye...
+                </div>
+            </div>
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Nombre del empleo, cargo o comisión<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Nombre del empleo, cargo o comisión <i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                <input type="text" name="avisoNombreInicia" [(ngModel)]="avisos.empleoCargoComisionInicia.empleoCargoComision" maxlength="100" oninput="CustomUpperCase(this);" required>
+            </div>
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Nivel jerarquico<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Nivel jerarquico <i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                <select name="nivelJerarquico" id="" [compareWith]="globals.compareFn" required appSelectValidator [(ngModel)]="avisos.empleoCargoComisionInicia.nivelJerarquico">
+                    <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                    <option *ngFor="let data of cata.catalogos?.CAT_NIVEL_JERARQUICO" [ngValue]="data">
+                        {{data.valor}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Fecha de toma de posesión del encargo<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Fecha de toma de posesión del encargo <i class="fas fa-globe-americas"
+                        data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                <input type="date" name="fechaInicioEncargo" required maxlength="20" [max]="today" [(ngModel)]="avisos.empleoCargoComisionInicia.fechaInicioEncargo" #fechaInicioEncargo="ngModel">
+                <!-- <div class="invalid-tooltip" *ngIf="fechaInicioEncargo.invalid && (fechaInicioEncargo.dirty || fechaInicioEncargo.touched)">
+                            Campo requerido...
+                        </div> -->
+                <div class="invalid-tooltip" *ngIf="(this.avisos.empleoCargoComisionConcluye.fechaConclusionEncargo >= this.avisos.empleoCargoComisionInicia.fechaInicioEncargo) && fechaInicioEncargo.touched">
+                    La fecha de conclusion no puede ser mayor o igual a la fecha de inicio del encargo...
+                </div>
+            </div>
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">¿Está contratado(a) por honorarios?<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">¿Está contratado(a) por honorarios? <i class="fas fa-globe-americas"
+                        data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                <select name="tipoContrato" [(ngModel)]="avisos.empleoCargoComisionInicia.contratadoPorHonorarios" required>
+                    <option [ngValue]=null disabled>SELECCIONE ...</option>
+                    <option [ngValue]=true>SI</option>
+                    <option [ngValue]=false>NO</option>
+                </select>
+            </div>
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Nivel de empleo cargo o comisión<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Nivel de empleo cargo o comisión <i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                <input type="text" name="avisoNivelInicia" [(ngModel)]="avisos.empleoCargoComisionInicia.nivelEmpleoCargoComision" maxlength="100" oninput="CustomUpperCase(this);" required>
+            </div>
+        </div>
+
+        <div class="row p-3">
+
+            <div class="col d-flex flex-column justify-content-between">
+                <label [hidden]="!help" for="">Área de adscripción<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Área de adscripción <i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                <input type="text" name="areaCargoInicia" maxlength="100" oninput="CustomUpperCase(this);" required [(ngModel)]="avisos.empleoCargoComisionInicia.areaAdscripcion">
+            </div>
+
+            <div class="col d-flex col-md-4 flex-column justify-content-between">
+                <label [hidden]="!help" for="">Domicilio del encargo<i class="fas fa-info-circle"></i></label>
+                <label [hidden]="help" for="">Domicilio del encargo <i class="fas fa-globe-americas" data-toggle="tooltip"
+                        data-placement="left" title="Campo público"></i></label>
+                <select name="avisoDomicilio" id="" [compareWith]="globals.compareFn" required appSelectValidator [(ngModel)]="avisos.empleoCargoComisionInicia.domicilio.ubicacion">
+                            <option [ngValue]=null disabled>SELECCIONE...</option>
+                            <option *ngFor="let tv of this.cata.enums?.ENUM_UBICACION" [value]="tv.id">
+                                {{tv.valor}}
+                            </option>
+                        </select>
+            </div>
+
+            <button style="width: 280px!important" *ngIf="avisos.empleoCargoComisionInicia.domicilio.ubicacion == 'MEXICO'" type="button" class="btn btn-light mt-3" (click)="abrirModalLugar('mexico')"><i
+                class="fas fa-map-marked-alt"></i> Agregar domicilio en México
+        </button>
+            <button *ngIf="avisos.empleoCargoComisionInicia.domicilio.ubicacion == 'EXTRANJERO'" style="width: 280px!important" type="button" class="btn btn-light mt-3" (click)="abrirModalLugar('extranjero')"><i
+                class="fas fa-map-marked-alt"></i> Agregar domicilio en extranjero
+        </button>
+        </div>
+
+        <div class="row mt-4 ml-1">
+            <button (click)="abrirObservaciones()" type="button" class="observaciones"><i
+            class="far fa-envelope"></i> Aclaraciones / Observaciones </button>
+            <button (click)="guardaLocal()" class="btn btn-success ml-3" [disabled]="!avisoForm.valid || !avisoMexico.valid || !avisoExtranjero.valid ||
+            (this.avisos.empleoCargoComisionConcluye.fechaConclusionEncargo >= this.avisos.empleoCargoComisionInicia.fechaInicioEncargo)
+            || avisos.empleoCargoComisionInicia.ente.id == avisos.empleoCargoComisionConcluye.ente.id">Aceptar</button>
+        </div>
+
+        <div id="obs-aviso" class="content-observaciones">
+            <div>
+                <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+                <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)" id="aclaracionesObservaciones" [(ngModel)]="this.aclara" cols="80" rows="15" maxlength="2000"></textarea>
+                <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+
+
+
+<div id="modal-lugar-mexico" class="modal-lugar">
+    <form #avisoMexico="ngForm">
+        <div class="modal-content modal-custom">
+
+            <div class="modal-header">
+                <h4 class="modal-title"><span style="color:rgb(74, 88, 126)">Domicilio en México</span>
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarModalLugar('mexico')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body content" *ngIf="avisos.empleoCargoComisionInicia.domicilio.ubicacion == 'MEXICO'">
+                <div class="row mt-5">
+                    <div class="col d-flex flex-column ">
+                        <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Calle</label>
+                        <input type="text" name="calleMexico" maxlength="300" required [(ngModel)]="avisoTmp.domicilio.domicilioMexico.calle" #calleMexico="ngModel" oninput="CustomUpperCase(this);">
+                        <div class="invalid-tooltip" *ngIf="calleMexico.invalid && (calleMexico.dirty || calleMexico.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número exterior</label>
+                        <input type="text" name="numExtMex" maxlength="50" required [(ngModel)]="avisoTmp.domicilio.domicilioMexico.numeroExterior" #numExtMex="ngModel" oninput="CustomUpperCase(this);">
+                        <div class="invalid-tooltip" *ngIf="numExtMex.invalid && (numExtMex.dirty || numExtMex.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número interior</label>
+                        <input type="text" name="numIntMex" maxlength="50" oninput="CustomUpperCase(this);" [(ngModel)]="avisoTmp.domicilio.domicilioMexico.numeroInterior" #numIntMex="ngModel">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Colonia/Localidad <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Colonia/Localidad</label>
+                        <input type="text" name="colMex" maxlength="100" oninput="CustomUpperCase(this);" required [(ngModel)]="avisoTmp.domicilio.domicilioMexico.coloniaLocalidad" #colMex="ngModel">
+                        <div class="invalid-tooltip" *ngIf="colMex.invalid && (colMex.dirty || colMex.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-5">
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Entidad federativa <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Entidad federativa</label>
+                        <select type="text" name="entiFedMex" [compareWith]="cata.compareFn" required appSelectValidator [(ngModel)]="avisoTmp.domicilio.domicilioMexico.entidadFederativa" #entiFedMex="ngModel" (change)="filterMunicipios(entiFedMex.value.id)">
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let data of cata.catalogos?.CAT_ENTIDAD_FEDERATIVA" [ngValue]="data">
+                                    {{data.valor}}
+                                </option>
+                            </select>
+                        <div class="invalid-tooltip" *ngIf="entiFedMex.invalid && (entiFedMex.dirty || entiFedMex.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Municipio/alcaldía <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Municipio/alcaldía</label>
+                        <select type="text" name="muns" required appSelectValidator [compareWith]="cata.compareFn" [(ngModel)]="avisoTmp.domicilio.domicilioMexico.municipioAlcaldia" #muns="ngModel" ng-required>
+                                <!-- <option [ngValue]="{id: null, valor: null, fk: null}" disabled>SELECCIONE...</option> -->
+                                <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                                <option *ngFor="let data of this?.filterMuns" [ngValue]="data">
+                                    {{data.valor}}
+                                </option>
+                            </select>
+                        <div class="invalid-tooltip" *ngIf="muns.invalid && (muns.dirty || muns.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Código postal</label>
+                        <input type="text" name="cpMex" maxlength="5" minlength="5" onkeydown="return solonumero(event);" required [(ngModel)]="avisoTmp.domicilio.domicilioMexico.codigoPostal" #cpMex="ngModel">
+                        <div class="invalid-tooltip" *ngIf="cpMex.invalid && (cpMex.dirty || cpMex.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button> -->
+                    <button type="button" class="btn btn-success" [disabled]="!avisoMexico.form.valid" (click)="guardarModalLugar('mexico')">Aceptar</button>
+                    <button type="button" class="btn btn-dark" (click)="cerrarModalLugar('mexico')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<!-- Domicilio en Extranjero -->
+<div id="modal-lugar-extranjero" class="modal-lugar">
+    <form #avisoExtranjero="ngForm">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h4 class="modal-title"><span style="color:rgb(74, 88, 126)">Domicilio en el extranjero</span></h4>
+                <button type="button" class="close" aria-label="Close" (click)="cerrarModalLugar('extranjero')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="avisos.empleoCargoComisionInicia.domicilio.ubicacion == 'EXTRANJERO'">
+                <div class="row mt-5">
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Calle</label>
+                        <input type="text" name="calleExtra" maxlength="300" oninput="CustomUpperCase(this);" required [(ngModel)]="avisoTmp.domicilio.domicilioExtranjero.calle" #calleExtra="ngModel">
+                        <div class="invalid-tooltip" *ngIf="calleExtra.invalid && (calleExtra.dirty || calleExtra.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número exterior</label>
+                        <input type="text" name="numExExtra" maxlength="50" oninput="CustomUpperCase(this);" required [(ngModel)]="avisoTmp.domicilio.domicilioExtranjero.numeroExterior" #numExExtra="ngModel">
+                        <div class="invalid-tooltip" *ngIf="numExExtra.invalid && (numExExtra.dirty || numExExtra.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Número interior</label>
+                        <input type="text" name="numInExtra" maxlength="50" oninput="CustomUpperCase(this);" [(ngModel)]="avisoTmp.domicilio.domicilioExtranjero.numeroInterior" #numInExtra="ngModel">
+
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Ciudad/localidad <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Ciudad/localidad</label>
+                        <input type="text" name="ciudadExtra" maxlength="100" oninput="CustomUpperCase(this);" required [(ngModel)]="avisoTmp.domicilio.domicilioExtranjero.ciudadLocalidad" #ciudadExtra="ngModel">
+                        <div class="invalid-tooltip" *ngIf="ciudadExtra.invalid && (ciudadExtra.dirty || ciudadExtra.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-5">
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Estado/provincia <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Estado/provincia</label>
+                        <input type="text" name="edoProv" maxlength="100" oninput="CustomUpperCase(this);" required [(ngModel)]="avisoTmp.domicilio.domicilioExtranjero.estadoProvincia" #edoProv="ngModel">
+                        <div class="invalid-tooltip" *ngIf="edoProv.invalid && (edoProv.dirty || edoProv.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">País <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">País</label>
+                        <select name="pais" required appSelectValidator [compareWith]="cata.compareFn" [(ngModel)]="avisoTmp.domicilio.domicilioExtranjero.pais" #pais="ngModel">
+                            <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                            <option *ngFor="let pais of this.cata.catalogos?.CAT_PAIS" [ngValue]="pais">
+                                {{pais.valor}}
+                            </option>
+                        </select>
+                        <div class="invalid-tooltip" *ngIf="pais.invalid && (pais.dirty || pais.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                        <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                        <label [hidden]="help" for="">Código postal</label>
+                        <input type="text" required name="cpExtranjero" maxlength="10" minlength="1" oninput="CustomUpperCase(this);" [(ngModel)]="avisoTmp.domicilio.domicilioExtranjero.codigoPostal" #cpExtranjero="ngModel">
+                        <div class="invalid-tooltip" *ngIf="cpExtranjero.invalid && (cpExtranjero.dirty || cpExtranjero.touched)">
+                            Campo requerido...
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button> -->
+                    <button type="button" class="btn btn-success" [disabled]="!avisoExtranjero.form.valid" (click)="guardarModalLugar('extranjero')">Aceptar</button>
+                    <button type="button" class="btn btn-dark" (click)="cerrarModalLugar('extranjero')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

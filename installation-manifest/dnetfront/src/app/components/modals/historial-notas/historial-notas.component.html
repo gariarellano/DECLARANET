@@ -1,0 +1,53 @@
+<form class="form-inline">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="column w-100">
+                <div>
+                    <h5 class="modal-title">Historial de nota aclaratoria</h5>
+                </div>
+                <div class="w-100 d-flex justify-content-around ">
+                    <span class="mr-3">Declaración: {{declaracion}} </span>
+                    <span *ngIf="declaracion == 'INICIO'"> Fecha inicio encargo: {{fechaEnc}}</span>
+                    <span *ngIf="declaracion == 'AVISO'"> Fecha egreso: {{fechaEnc}}</span>
+                    <span *ngIf="declaracion == 'MODIFICACION'"> Año declaración: {{anio}}</span>
+                    <span *ngIf="declaracion == 'CONCLUSION'"> Fecha conclision encargo: {{fechaEnc}}</span>
+                    <!-- <span *ngIf="declaracion == 'AVISO'"> Fecha encargo: {{fechaEnc}}</span> -->
+                    <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="w-100 mt-3">
+                    <button type="button" class="btn btn-success" (click)="presentarNota()"><i
+                            class="far fa-sticky-note"></i> Nueva nota</button>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="modal-body d-flex  justify-content-center align-items-center" style="overflow-y: scroll">
+
+            <h4 *ngIf="!historial" style="color: rgb(145, 139, 139); text-align: center;">No se han presentado notas aclaratorias para esta declaración</h4>
+            <table *ngIf="historial" class="table table-bordered mt-5" aria-describedby="datos curriculares" summary="datos curriculares">
+                <thead>
+                    <th scope="col" class="text-center">Fecha recepción</th>
+                    <th scope="col" class="text-center">Visualizar acuse </th>
+                    <th scope="col" class="text-center">Visualizar nota aclaratoria </th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let nota of notas">
+                        <td class="text-center">{{nota.fechaRecepcion}}</td>
+                        <td class="text-center"><a (click)="previsualizar('acuse', 'Acuse',nota)" class="text-danger impresionLink" title="Visualizar acuse"><i
+                                    class="far fa-file-alt h4"></i></a></td>
+                        <td class="text-center"><a (click)="previsualizar('declaracion', 'Nota aclaratoria',nota)" class="text-info  impresionLink" title="Visualizar declaración"><i
+                                    class="far fa-file-alt h4"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+</form>

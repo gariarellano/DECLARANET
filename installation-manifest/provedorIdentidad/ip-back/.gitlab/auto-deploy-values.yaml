@@ -1,0 +1,6 @@
+livenessProbe:
+    path: /healt-checker
+
+readinessProbe:
+    path: /healt-checker
+

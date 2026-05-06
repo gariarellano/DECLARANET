@@ -1,0 +1,68 @@
+<div id="scrollVehiculos" class="altoScroll" (mousewheel)="_wheel($event);">
+
+    <div *ngIf="vehiculos.length <= 0" class="row d-flex w-100 ml-2 align-items-center">
+        <label [hidden]="!help" (click)="abriInfo('pareja')"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">No
+                Ninguno<i class="fas fa-info-circle"></i></span> </label>
+        <label [hidden]="help" for="vehiculo"> <span
+                class="d-flex align-items-center ml-3 mr-2 mt-2">Ninguno</span></label>
+        <input class="fa-3x" id="vehiculo" [(ngModel)]="this.v.ninguno" (change)="pareja()" name="vehiculo" type="checkbox">
+    </div>
+    <div class="container-fluid  ml-2 pt-3 h-75">
+
+        <div class="table-responsive h-75">
+            <table class="table table-striped" aria-describedby="tabla vehiculos" summary="tabla vehiculos">
+                <thead>
+                    <tr>
+                        <th scope="col">Tipo operación</th>
+                        <th scope="col">Tipo vehículo</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col" width="200px"></th>
+                        <th scope="col" width="200px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dato of vehiculos">
+                        <td>{{dato.tipoOperacion}}</td>
+                        <td>{{dato.tipoVehiculo | getPipeVeh}}</td>
+                        <td>{{dato.marca | getPipeVehD}}</td>
+                        <td>{{dato.modelo | getPipeVehD}}</td>
+                        <td class="text-center"><button [attr.id]="'modificar' + dato.idPosicionVista" class="modificar" (click)="modificarDatos(dato);">
+                                <div class='icon'>
+                                    <i class='fa fa-edit'></i>
+                                </div>
+                                <div class='text'>
+                                    <span [attr.id]="'spanModificar' + dato.idPosicionVista">Modificar</span>
+                                </div>
+                            </button></td>
+                        <td class="text-center"><button *ngIf="!dato.registroHistorico" [attr.id]="'eliminarVehiculos' + dato.idPosicionVista" class="eliminar" (click)="eliminarDatos($event, dato);" (mouseout)="eliminarMouseout($event, dato)">
+                                <div class='icon'>
+                                    <i class='fa fa-trash-alt'></i>
+                                    <i class='fa fa-question'></i>
+                                    <i class='fa fa-check'></i>
+                                </div>
+                                <div class='text'>
+                                    <span [attr.id]="'spanEliminarVehiculos' + dato.idPosicionVista">Eliminar</span>
+                                </div>
+                            </button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="row mt-5">
+            <button (click)="abrirObservaciones()" type="button" class="observaciones"><i
+            class="far fa-envelope"></i> Aclaraciones / Observaciones </button>
+        </div>
+
+        <div id="obs-vehiculos" class="content-observaciones">
+            <div>
+                <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+                <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)" id="aclaracionesObservaciones" cols="80" rows="15" maxlength="2000" [(ngModel)]="this.aclaObs" #aclaracion="ngModel"></textarea>
+                <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+
+    </div>
+</div>

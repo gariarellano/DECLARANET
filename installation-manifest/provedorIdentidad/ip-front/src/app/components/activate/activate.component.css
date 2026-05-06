@@ -1,0 +1,34 @@
+.img-declaranet {
+    /* background-image: url('../../../assets/img/sprites.png'); */
+    background: url('../../../assets/img/FUNCION_HOTIZONTAL_FB.png') center;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-size: 100%;
+    min-height: 70px;
+    width: inherit;
+    min-width: 250px;
+}
+
+.card-header-declaranet {
+    min-width: 270px;
+}
+
+.alert-link {
+    cursor: pointer;
+}
+
+#success i {
+    font-size: 100px;
+    color: rgb(98, 199, 112);
+}
+
+#error i {
+    font-size: 100px;
+    color: rgb(214, 106, 98);
+}
+
+p {
+    color: rgb(109, 106, 106);
+    font-size: 30px;
+    margin: 50px 0px;
+}

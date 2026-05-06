@@ -1,0 +1,177 @@
+<div class="modal-content" style="height: 500px;">
+    <div class="modal-header">
+        <div class="d-flex w-100">
+            <div class="d-flex w-75">
+                <h4 class="modal-title">Apoyos o beneficios públicos</h4>
+            </div>
+            <div class="d-flex w-25 align-items-center">
+                <span> <img src="assets/image/star.png" class="imgRequired" alt=""> Dato obligatorio</span>
+
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                      <span aria-hidden="true">×</span>
+                  </button>
+            </div>
+        </div>
+    </div>
+
+    <form #apoyosTForm="ngForm">
+        <div class="row">
+            <div class="col-md-12 mb-3 d-flex justify-content-end bg-light">
+                TIPO DE OPERACIÓN
+                <div class="form-check form-check-inline ml-3">
+                    <div *ngFor="let data of TIPO_OPERACION">
+                        <input class="form-check-input mr-2" name="adeudoRadio" type="radio" required id="radio{{data.id}}" [(ngModel)]="apoyoBeneficio.tipoOperacion" [value]="data.id" (click)="tipoOperacionChange(data.id)">
+                        <label class="form-check-label mr-2" for="radio{{data.id}}">{{data.valor}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-body" style="overflow-y: scroll">
+        <form #apoyosForm="ngForm">
+            <input type="hidden" name="tipOpeInput" id="tipOpeInput" #tipOpeInput="ngModel" [(ngModel)]="apoyoBeneficio.tipoOperacion">
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Beneficiario de algún programa público<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Beneficiario de algún programa público <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( beneficiario , apoyoBeneficio.tipoOperacion)" name="beneficiario" id="apoBenBenProPub" appSelectValidator [compareWith]="cata.compareFn" maxlength="50" [(ngModel)]="apoyoBeneficio.beneficiarioPrograma" required #beneficiario="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let beneficiario of this.cata.catalogos.CAT_BENEFICIARIO_PROGRAMA"
+                            [ngValue]="beneficiario">
+                            {{beneficiario.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="beneficiario.invalid && (beneficiario.dirty || beneficiario.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nombre del programa<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre del programa <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( nombrePrograma , apoyoBeneficio.tipoOperacion)" type="text" name="nombrePrograma" id="apoBenNomPro" [(ngModel)]="apoyoBeneficio.nombrePrograma" required maxlength="100" #nombrePrograma="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="nombrePrograma.invalid && (nombrePrograma.dirty || nombrePrograma.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Institución que otorga el apoyo<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Institución que otorga el apoyo <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( institucionOtorgante , apoyoBeneficio.tipoOperacion)" type="text" name="institucionOtorgante" id="apoBenInsQueOtoApo" [(ngModel)]="apoyoBeneficio.institucionOtorgante" required maxlength="250" #institucionOtorgante="ngModel"
+                        oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="institucionOtorgante.invalid && (institucionOtorgante.dirty || institucionOtorgante.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+            </div>
+            <div class="row p-3">
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Nivel u orden de gobierno<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nivel u orden de gobierno <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( nivelGobierno , apoyoBeneficio.tipoOperacion)" name="nivelGobierno" maxlength="10" id="apoBenNivOrdGob" [(ngModel)]="apoyoBeneficio.nivelOrdenGobierno" required #nivelGobierno="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let OG of this.cata.enums.ENUM_NIVEL_ORDEN_GOBIERNO" [value]="OG.id">
+                            {{OG.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="nivelGobierno.invalid && (nivelGobierno.dirty || nivelGobierno.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de apoyo<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de apoyo <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoApoyoM , apoyoBeneficio.tipoOperacion)" name="tipoApoyoM" appSelectValidator id="apoBenTipApo" [compareWith]="cata.compareFn" [(ngModel)]="apoyoBeneficio.tipoApoyo" required #tipoApoyoM="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let apo of this.cata.catalogos.CAT_TIPO_APOYO" [ngValue]="apo">
+                            {{apo.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="tipoApoyoM.invalid && (tipoApoyoM.dirty || tipoApoyoM.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+                <div class="flecha-otro">
+                    <i *ngIf="apoyoBeneficio.tipoApoyo.id == 9999" class="fas fa-arrow-right"></i>
+                </div>
+                <div *ngIf="apoyoBeneficio.tipoApoyo.id == 9999" class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for="">Especifique<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( apoyoValor , apoyoBeneficio.tipoOperacion)" type="text" name="apoyoValor" id="apoBenEscApo" [(ngModel)]="apoyoBeneficio.tipoApoyoOtro" required maxlength="100" #apoyoValor="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="apoyoValor.invalid && (apoyoValor.dirty || apoyoValor.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Forma de recepción del apoyo<i
+                            class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Forma de recepción del apoyo <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( formaRecepcion , apoyoBeneficio.tipoOperacion)" name="formaRecepcion" maxlength="10" id="apoBenForRecApo" [(ngModel)]="apoyoBeneficio.formaRecepcion" required #formaRecepcion="ngModel">
+                        <option [ngValue]=null>SELECCIONE...</option>
+                        <option *ngFor="let rec of this.cata.enums.ENUM_FORMA_RECEPCION" [ngValue]="rec.id">
+                            {{rec.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="formaRecepcion.invalid && (formaRecepcion.dirty || formaRecepcion.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+                <div *ngIf="apoyoBeneficio.formaRecepcion == 'ESPECIE'" class="col d-flex flex-column justify-content-between ">
+                    <label [hidden]="!help" for="">Especifique tipo apoyo<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Especifique tipo apoyo<i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( espFormaRec , apoyoBeneficio.tipoOperacion)" type="text" name="espFormaRec" id="apoBenEspTipApo" [(ngModel)]="apoyoBeneficio.especifiqueApoyo" required maxlength="100" #espFormaRec="ngModel" oninput="CustomUpperCase(this);">
+                    <div class="invalid-tooltip" *ngIf="espFormaRec.invalid && (espFormaRec.dirty || espFormaRec.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Monto aproximado del apoyo mensual<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Monto aproximado del apoyo mensual <i class="fas fa-globe-americas"
+                            data-toggle="tooltip" data-placement="left" title="Campo público"></i></label>
+                    <input [disabled]="getDisabled( montoMone , apoyoBeneficio.tipoOperacion)" type="text" name="montoMone" id="apoBenMonAprDelApoMen" [(ngModel)]="apoyoBeneficio.montoApoyoMensual.monto" required #montoMone="ngModel" oninput="soloNumeroInput(this, 1, 9999999999999);" onfocus="focusSoloNumero(this)">
+                    <div class="invalid-tooltip" *ngIf="montoMone.invalid && (montoMone.dirty || montoMone.touched)">
+                        Campo requerido...
+                    </div>
+                </div>
+
+                <div class="col d-flex flex-column justify-content-between">
+                    <label [hidden]="!help" for="">Tipo de moneda<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Tipo de moneda <i class="fas fa-globe-americas" data-toggle="tooltip"
+                            data-placement="left" title="Campo público"></i></label>
+                    <select [disabled]="getDisabled( tipoMoneda , apoyoBeneficio.tipoOperacion)" maxlength="10" name="tipoMoneda" id="apoBenTipMon" appSelectValidator [compareWith]="cata.compareFn" [(ngModel)]="apoyoBeneficio.montoApoyoMensual.moneda" required maxlength="10"
+                        #tipoMoneda="ngModel">
+                        <option [ngValue]="{id: null}" disabled>SELECCIONE...</option>
+                        <option *ngFor="let m of this.cata.catalogos.CAT_MONEDA" [ngValue]="m">
+                            {{m.valor}}
+                        </option>
+                    </select>
+                    <div class="invalid-tooltip" *ngIf="tipoMoneda.invalid && (tipoMoneda.dirty || tipoMoneda.touched)">
+                        Por favor seleccione una opción...
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" [disabled]="!apoyosForm.form.valid || !apoyosTForm.form.valid" (click)="guardaLocal()">Aceptar</button>
+        <button type="button" class="btn btn-dark" (click)="close()">Cerrar</button>
+    </div>
+</div>

@@ -1,0 +1,2 @@
+annotations:
+  nginx.ingress.kubernetes.io/whitelist-source-range: 172.0.0.0/8,10.0.0.0/8

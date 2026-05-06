@@ -1,0 +1,241 @@
+<div id="scrollDaDe" class="altoScroll" (mousewheel)="_wheel($event);">
+    <div *ngIf="datosDependiente.length <= 0" class="row d-flex w-100 ml-2 align-items-center">
+        <label [hidden]="!help" (click)="abriInfo('pareja')"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">No
+            hay dependiente económico <i class="fas fa-info-circle"></i></span> </label>
+        <label [hidden]="help" for="dependiente"> <span class="d-flex align-items-center ml-3 mr-2 mt-2">Ninguno</span></label>
+        <input class="fa-3x" id="depend" [(ngModel)]="this.d.ninguno" (change)="pareja()" name="dependiente" type="checkbox">
+    </div>
+    <div class="container-fluid  ml-2 pt-3 h-75">
+        <div class="table-responsive h-50">
+            <table class="table table-striped" aria-describedby="datos dependiente" summary="datos dependiente">
+                <thead>
+                    <tr>
+                        <th scope="col">Tipo operación</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Primer Apellido</th>
+                        <th scope="col">Segundo Apellido</th>
+                        <th scope="col" width="200px"></th>
+                        <th scope="col" width="200px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dato of datosDependiente">
+                        <td>{{dato.tipoOperacion}}</td>
+                        <td>{{dato.datosPersonales.nombre | getPipeNonmbreDependientePipe}}</td>
+                        <td>{{dato.datosPersonales.primerApellido | getPipeNonmbreDependientePipe}}</td>
+                        <td>{{dato.datosPersonales.segundoApellido | getPipeNonmbreDependientePipe}}</td>
+                        <td class="text-center"><button [attr.id]="'modificar' + dato.idPosicionVista" class="modificar" (click)="modificarDatos(dato);">
+                            <div class='icon'>
+                                <i class='fa fa-edit'></i>
+                            </div>
+                            <div class='text'>
+                                <span [attr.id]="'spanModificar' + dato.idPosicionVista">Modificar</span>
+                            </div>
+                        </button></td>
+                        <td class="text-center"><button [attr.id]="'eliminarDaDe' + dato.idPosicionVista" class="eliminar" (click)="eliminarDatos($event, dato);" (mouseout)="eliminarMouseout($event, dato)" *ngIf="!dato.registroHistorico">
+                            <div class='icon'>
+                                <i class='fa fa-trash-alt'></i>
+                                <i class='fa fa-question'></i>
+                                <i class='fa fa-check'></i>
+                            </div>
+                            <div class='text'>
+                                <span [attr.id]="'spanEliminarDaDe' + dato.idPosicionVista">Eliminar</span>
+                            </div>
+                        </button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="row mt-5">
+            <button (click)="abrirObservaciones()" type="button" class="observaciones"><i
+        class="far fa-envelope"></i> Aclaraciones / Observaciones </button>
+        </div>
+        <div id="obs-dependiente" class="content-observaciones">
+            <div>
+                <p><i (click)="cerrarObservaciones()" class="close-modal-obs fas fa-times-circle "></i></p>
+                <label for="aclaracionesObservaciones">Aclaraciones / Observaciones</label>
+                <textarea name="aclaracionesObservaciones" oninput="CustomUpperCase(this)" id="aclaracionesObservaciones" cols="80" rows="15" maxlength="2000" [(ngModel)]="this.aclaObs" #aclaracion="ngModel"></textarea>
+                <button (click)="guardarObservaciones()" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal México -->
+    <div id="modal-lugar-mexico2" class="modal-lugar">
+        <div class="content-modal-lugar">
+            <div class="row mt-2 d-flex justify-content-between">
+                <h5 class="ml-3">Domicilio del dependiente económico/ <span style="color:rgb(74, 88, 126)">En
+                    México</span></h5>
+                <i class="close-modal-obs fas fa-times-circle "></i>
+            </div>
+            <div class="row mt-5">
+                <div class="col d-flex flex-column ">
+                    <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Calle</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Número exterior</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Número interior</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Colonia/Localidad <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Colonia/Localidad</label>
+                    <input type="text" name="" id="">
+                </div>
+
+            </div>
+            <div class="row mt-5">
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Municipio/alcaldía <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Municipio/alcaldía</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Entidad federativa <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Entidad federativa</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Código postal</label>
+                    <input type="text" name="" id="">
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Actividad laboral <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Actividad laboral </label>
+                    <select name="" id="">
+                    <option value="" disabled>Seleccione...</option>
+                    <option value="">Público</option>
+                    <option value="">Privado</option>
+                    <option value="">Otro</option>
+                    <option value="">Ninguno</option>
+                </select>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Nivel/Orden gobierno <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nivel/Orden gobierno </label>
+                    <select name="" id="">
+                    <option value="" disabled>Seleccione...</option>
+                    <option value="">Federal</option>
+                    <option value="">Estatal</option>
+                    <option value="">Municipal/Alcaldía</option>
+                </select>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Nombre ente público <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Nombre ente público</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Empleo/Cargo <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Empleo/Cargo</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Salario mensual neto <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Salario mensual neto</label>
+                    <input type="text" name="" id="">
+                </div>
+            </div>
+            <div class="row mt-5 d-flex justify-content-center">
+                <button class="btn-primario">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal extranjero -->
+    <div id="modal-lugar-extranjero2" class="modal-lugar">
+        <div class="content-modal-lugar">
+            <div class="row mt-2 d-flex justify-content-between">
+                <h5 class="ml-3">Domicilio del dependiente económico / <span style="color:rgb(74, 88, 126)">En el
+                    extranjero</span>
+                </h5>
+                <i class="close-modal-obs fas fa-times-circle "></i>
+            </div>
+            <div class="row mt-5">
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Calle <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Calle</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Número exterior <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Número exterior</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Número interior <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Número interior</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Ciudad/localidad <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Ciudad/localidad</label>
+                    <input type="text" name="" id="">
+                </div>
+
+            </div>
+            <div class="row mt-5">
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Estado/provincia <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Estado/provincia</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">País <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">País</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Código postal <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Código postal</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Ámbito público<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Ámbito público</label>
+                    <select name="" id="">
+                    <option value="" disabled>Seleccione...</option>
+                    <option value="">Ejecutivo</option>
+                    <option value="">Legislativo</option>
+                    <option value="">Judicial</option>
+                    <option value="">Órgano Autónomo</option>
+                </select>
+                </div>
+
+            </div>
+            <div class="row mt-5">
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Ámbito de adscripción<i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Ámbito de adscripción</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Función pricipal <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Función pricipal</label>
+                    <input type="text" name="" id="">
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <label [hidden]="!help" for="">Fecha ingreso empleo <i class="fas fa-info-circle"></i></label>
+                    <label [hidden]="help" for="">Fecha ingreso empleo</label>
+                    <input type="date" name="" id="">
+                </div>
+            </div>
+            <div class="row mt-5 d-flex justify-content-center">
+                <button class="btn-primario">Aceptar</button>
+            </div>
+
+        </div>
+    </div>
+</div>

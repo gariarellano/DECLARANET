@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2021-01-21T14:12:15 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vista-omisos" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f04b1e2-6fb6-4ff4-92d0-61879719078e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="numeroOficio" class="java.lang.String"/>
+	<parameter name="fechaGeneracionVista" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="dependenciaEntidad" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="bodyTextOficio" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="puestoFirmante" class="java.lang.String"/>
+	<parameter name="firmaOficioCaracteresAutenticidad" class="java.lang.String"/>
+	<parameter name="firmanteNombre" class="java.lang.String"/>
+	<parameter name="tipoDeclaracion" class="java.lang.String"/>
+	<parameter name="anio" class="java.lang.String"/>
+	<parameter name="logoImagen" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="fechaVenciemiento" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<title>
+		<band height="352" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="1" y="0" width="179" height="110" uuid="7277375d-5d5b-4516-9f8c-65c8d42abeac"/>
+				<imageExpression><![CDATA[org.apache.commons.codec.binary.Base64.decodeBase64($P{logoImagen}.getBytes())]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="159" y="110" width="421" height="13" uuid="ab9eb719-092c-432c-8a3d-15f648da7334">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBSECRETARÍA DE RESPONSABILIDADES Y COMBATE A LA IMPUNIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="136" width="421" height="13" uuid="caf85999-c07d-441e-8e7c-3948c9e54495">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COORDINACIÓN DE REGISTRO PATRIMONIAL, DE INTERESES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="123" width="421" height="13" uuid="d5900492-e120-4ef4-8c74-7a43971b8ce7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD DE ÉTICA PÚBLICA Y PREVENCIÓN DE CONFLICTOS DE INTERESES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="149" width="421" height="13" uuid="4988382e-993e-46a0-a815-a461e520e047">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Y DE SERVIDORES PÚBLICOS SANCIONADOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="159" y="180" width="420" height="13" uuid="7103620a-7655-4dcb-92de-aeda307af8dc">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{logoImagen} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" markup="styled">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Oficio: <style isBold='true'>" + $P{numeroOficio} + "</style>"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="159" y="210" width="420" height="13" uuid="443110d6-93e4-4da1-98b6-e2627056c14e">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{fechaGeneracionVista}.substring(8,10)+ " DE " +
+mx.gob.sfp.dgti.enums.EnumMes.valueOf("MES"+$P{fechaGeneracionVista}.substring(5, 7)).getDescripcion()+ " DE " +
+$P{fechaGeneracionVista}.substring(0,4)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="230" width="390" height="13" uuid="19b55bd0-0b5a-48b9-8533-847fbf8322fb">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TITULAR DEL ÓRGANO INTERNO DE CONTROL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="243" width="390" height="13" uuid="bff16d64-c3e2-4fb7-a09b-3eded388c5a9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[O UNIDAD DE RESPONSABILIDADES EN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="256" width="579" height="13" uuid="46b98f00-0d90-4260-bb24-bc5cc91ff450"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dependenciaEntidad}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="292" width="579" height="50" isPrintWhenDetailOverflows="true" uuid="a2c8e31d-3f7d-4cd7-94cd-8952b0a49387"/>
+				<textElement textAlignment="Justified" markup="styled"/>
+				<textFieldExpression><![CDATA[$P{bodyTextOficio}.replaceAll("#TIPO_DECLA#", $P{tipoDeclaracion}).replaceAll("#FECHA_VENCIMIENTO#", 
+	($P{fechaVenciemiento}.substring(8,10)+ " de " +
+mx.gob.sfp.dgti.enums.EnumMes.valueOf("MES"+$P{fechaVenciemiento}.substring(5, 7)).getDescripcion().toLowerCase()+ " de " +
+$P{fechaVenciemiento}.substring(0,4)
+	))]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="1">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15">
+			<staticText>
+				<reportElement x="0" y="0" width="579" height="12" uuid="5a69b7cd-6d0d-40bb-a6e8-ea2a96380439"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Este documento contiene datos personales que deben ser tratados en términos de la legislación aplicable.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="51" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="578" height="50" isPrintWhenDetailOverflows="true" uuid="db098e86-e495-4c85-8dff-a629d31f25fc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["ATENTAMENTE \n\n"+$P{puestoFirmante}+"\n\n"+$P{firmaOficioCaracteresAutenticidad}+"\n\n"+$P{firmanteNombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
