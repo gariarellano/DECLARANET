@@ -488,23 +488,28 @@ export class StartComponent implements OnInit {
 
   }
   getCatalogos() {
-    this.catalogoService.getCatalogosAll()
-      .pipe(first())
-      .subscribe(
-        data => {
-          if (data.status === 200) {
-            this.globals.catalogos = data.body.catalogos;
-            this.globals.enums = data.body.enums;
-            this.globals.verificaNivelJerarquico();
-            this.flagGetCatalogos = true;
-            this.terminaProceso();
-          }
-        },
-        error => {
-          this.ngxService.stop();
+    if (!this.globals.catalogos || !this.globals.enums) {
+      this.catalogoService.getCatalogosAll()
+        .pipe(first())
+        .subscribe(
+          data => {
+            if (data.status === 200) {
+              this.globals.catalogos = data.body.catalogos;
+              this.globals.enums = data.body.enums;
+              this.globals.verificaNivelJerarquico();
+              this.flagGetCatalogos = true;
+              this.terminaProceso();
+            }
+          },
+          error => {
+            this.ngxService.stop();
 
-        }
-      );
+          }
+        );
+    } else {
+      this.flagGetCatalogos = true;
+      this.terminaProceso();
+    }
 
   }
   getMuns() {

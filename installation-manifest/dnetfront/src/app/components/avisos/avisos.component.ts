@@ -408,6 +408,8 @@ export class AvisoComponent implements OnInit, AfterViewInit {
 
 
       // Llenar menu items con Declaración completa
+      // Se reinicia siempre a DECLARA_SIMPLE para evitar duplicados cuando ngOnInit se llama múltiples veces
+      this.menuItems = DECLARA_SIMPLE;
       if (this.encabezado.tipoFormato === 'COMPLETO') 
         {this.menuItems = this.menuItems.concat(DECLARA_COMPLETA)}
       if (this.refresh === true) {
