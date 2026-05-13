@@ -164,12 +164,8 @@ app.post('/api/descargar-declaracion', async (req, res) => {
     const digitoVerificador = sha3_512(JSON.stringify(declaracion));
     
     const payload = {
-      usuario: { idUsuario: 1, nombre: 'Admin' },
-      justificacion: 'Descarga desde panel admin',
-      jsonAConsultar: {
-        declaracion,
-        digitoVerificador
-      }
+      declaracion,
+      digitoVerificador
     };
 
     const response = await axios.post(`${SERVICIO_IMPRESION_URL}/consulta-declaracion`, payload);
@@ -186,12 +182,8 @@ app.post('/api/descargar-acuse', async (req, res) => {
     const digitoVerificador = sha3_512(JSON.stringify(declaracion));
     
     const payload = {
-      usuario: { idUsuario: 1, nombre: 'Admin' },
-      justificacion: 'Descarga desde panel admin',
-      jsonAConsultar: {
-        declaracion,
-        digitoVerificador
-      }
+      declaracion,
+      digitoVerificador
     };
 
     const response = await axios.post(`${SERVICIO_IMPRESION_URL}/consulta-acuse/`, payload);
