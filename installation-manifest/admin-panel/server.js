@@ -143,7 +143,7 @@ app.get('/api/declararon', async (req, res) => {
           ...u,
           tipoDeclaracion: declaData ? declaData.tipoDeclaracion : 'DESCONOCIDO',
           numeroDeclaracion: declaData ? declaData.numeroDeclaracion : '',
-          idUsuarioDeclarante: declaData ? declaData.idUsuario : 0,
+          idUsuarioDeclarante: u.idUsuario,
           collName: declaData ? declaData.collName : 0
         };
       });
@@ -168,7 +168,7 @@ app.post('/api/descargar-declaracion', async (req, res) => {
       digitoVerificador
     };
 
-    const response = await axios.post(`${SERVICIO_IMPRESION_URL}/consulta-declaracion`, payload);
+    const response = await axios.post(`${SERVICIO_IMPRESION_URL}/consulta-declaracion`, payload, { timeout: 15000 });
     res.json(response.data);
   } catch (error) {
     console.error('Error descargando declaración:', error.message);
@@ -186,7 +186,7 @@ app.post('/api/descargar-acuse', async (req, res) => {
       digitoVerificador
     };
 
-    const response = await axios.post(`${SERVICIO_IMPRESION_URL}/consulta-acuse/`, payload);
+    const response = await axios.post(`${SERVICIO_IMPRESION_URL}/consulta-acuse/`, payload, { timeout: 15000 });
     res.json(response.data);
   } catch (error) {
     console.error('Error descargando acuse:', error.message);
