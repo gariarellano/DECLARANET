@@ -2,7 +2,6 @@ const express  = require('express');
 const { MongoClient } = require('mongodb');
 const { Pool }   = require('pg');
 const path       = require('path');
-const crypto     = require('crypto');
 
 const app = express();
 app.use(express.json());
@@ -27,23 +26,6 @@ const pgPool = new Pool({
   database: PG_DB, user: PG_USER, password: PG_PASS,
   max: 3, idleTimeoutMillis: 30000
 });
-
-// ─── Hash de contraseña (mismo algoritmo que el sistema: SHA1 con salt=login invertido) ──
-function hashPassword(login, password) {
-  const salt     = login.split('').reverse().join('');
-  const toDigest = salt + '&&' + password;
-  return crypto.createHash('sha1').update(toDigest).digest('hex');
-}
-
-// ─── Generar contraseña temporal aleatoria ────────────────────────────────────
-function generarPasswordTemporal() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789@#$';
-  let pwd = '';
-  for (let i = 0; i < 10; i++) {
-    pwd += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return pwd;
-}
 
 // ─── Auth simple ──────────────────────────────────────────────────────────────
 app.post('/api/login', (req, res) => {
@@ -152,39 +134,6 @@ app.get('/api/declararon', async (req, res) => {
   }
 });
 
-// ─── API: restablecer contraseña ──────────────────────────────────────────────
-app.post('/api/reset-password', async (req, res) => {
-  const { curp } = req.body;
-  if (!curp) return res.status(400).json({ error: 'CURP requerida' });
-
-  try {
-    // Obtener login del usuario
-    const result = await pgPool.query(
-      `SELECT id_usuario AS "idUsuario", login FROM ip_usuario WHERE curp = $1 AND activo = 1`,
-      [curp.toUpperCase().trim()]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
-    }
-
-    const { idUsuario, login } = result.rows[0];
-    const nuevaPassword = generarPasswordTemporal();
-    const pwdEnc        = hashPassword(login, nuevaPassword);
-
-    // Actualizar contraseña en PostgreSQL
-    await pgPool.query(
-      `UPDATE ip_usuario SET pwd_enc = $1 WHERE id_usuario = $2`,
-      [pwdEnc, idUsuario]
-    );
-
-    console.log(`Contraseña restablecida para CURP: ${curp}, Login: ${login}`);
-    res.json({ ok: true, nuevaPassword, login });
-  } catch (err) {
-    console.error('Error en /api/reset-password:', err);
-    res.status(500).json({ error: err.message });
-  }
-});
 
 // ─── Health check ─────────────────────────────────────────────────────────────
 app.get('/health', (_, res) => res.json({ status: 'ok' }));
