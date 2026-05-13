@@ -2,6 +2,8 @@ const express  = require('express');
 const { MongoClient } = require('mongodb');
 const { Pool }   = require('pg');
 const path       = require('path');
+const axios      = require('axios');
+const { sha3_512 } = require('js-sha3');
 
 const app = express();
 app.use(express.json());
@@ -58,16 +60,28 @@ async function getDeclaracionesPorAnio(anio) {
           const docs = await db.collection(colName)
             .find(
               { 'declaracion.anio': filtroAnio },
-              { projection: { 'declarante.curp': 1, 'declaracion.tipoDeclaracion': 1, _id: 0 } }
+              { projection: { 'declarante.curp': 1, 'declaracion.tipoDeclaracion': 1, 'declaracion.numeroDeclaracion': 1, 'declaracion.idUsuario': 1, _id: 0 } }
             )
             .toArray();
+
+          const suffix = colName.replace('recepcionWeb', '');
+          const collNameVal = suffix ? parseInt(suffix) : 0;
 
           docs.forEach(d => {
             if (d.declarante && d.declarante.curp) {
               const curp = d.declarante.curp.toUpperCase().trim();
               const tipo = (d.declaracion && d.declaracion.tipoDeclaracion) || 'DESCONOCIDO';
+              const numeroDeclaracion = (d.declaracion && d.declaracion.numeroDeclaracion) || '';
+              const idUsuario = (d.declaracion && d.declaracion.idUsuario) || 0;
               // Si ya existe, no sobreescribir (quedarse con la primera encontrada)
-              if (!declaMap.has(curp)) declaMap.set(curp, tipo);
+              if (!declaMap.has(curp)) {
+                declaMap.set(curp, {
+                  tipoDeclaracion: tipo,
+                  numeroDeclaracion,
+                  idUsuario,
+                  collName: collNameVal
+                });
+              }
             }
           });
         }
@@ -123,10 +137,16 @@ app.get('/api/declararon', async (req, res) => {
     const [todos, declaMap] = await Promise.all([getUsuariosActivos(), getDeclaracionesPorAnio(anio)]);
     const declararon = todos
       .filter(u => declaMap.has((u.curp || '').toUpperCase().trim()))
-      .map(u => ({
-        ...u,
-        tipoDeclaracion: declaMap.get((u.curp || '').toUpperCase().trim()) || 'DESCONOCIDO'
-      }));
+      .map(u => {
+        const declaData = declaMap.get((u.curp || '').toUpperCase().trim());
+        return {
+          ...u,
+          tipoDeclaracion: declaData ? declaData.tipoDeclaracion : 'DESCONOCIDO',
+          numeroDeclaracion: declaData ? declaData.numeroDeclaracion : '',
+          idUsuarioDeclarante: declaData ? declaData.idUsuario : 0,
+          collName: declaData ? declaData.collName : 0
+        };
+      });
     res.json({ anio, totalUsuarios: todos.length, conDeclaracion: declararon.length, lista: declararon });
   } catch (err) {
     console.error('Error en /api/declararon:', err);
@@ -134,6 +154,53 @@ app.get('/api/declararon', async (req, res) => {
   }
 });
 
+
+// ─── API: Descargar Declaración y Acuse ───────────────────────────────────────
+const SERVICIO_IMPRESION_URL = process.env.SERVICIO_IMPRESION_URL || 'http://servicioimpresion:5000/api';
+
+app.post('/api/descargar-declaracion', async (req, res) => {
+  try {
+    const { declaracion } = req.body;
+    const digitoVerificador = sha3_512(JSON.stringify(declaracion));
+    
+    const payload = {
+      usuario: { idUsuario: 1, nombre: 'Admin' },
+      justificacion: 'Descarga desde panel admin',
+      jsonAConsultar: {
+        declaracion,
+        digitoVerificador
+      }
+    };
+
+    const response = await axios.post(`${SERVICIO_IMPRESION_URL}/consulta-declaracion`, payload);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error descargando declaración:', error.message);
+    res.status(500).json({ error: 'Error al generar el PDF de la declaración.' });
+  }
+});
+
+app.post('/api/descargar-acuse', async (req, res) => {
+  try {
+    const { declaracion } = req.body;
+    const digitoVerificador = sha3_512(JSON.stringify(declaracion));
+    
+    const payload = {
+      usuario: { idUsuario: 1, nombre: 'Admin' },
+      justificacion: 'Descarga desde panel admin',
+      jsonAConsultar: {
+        declaracion,
+        digitoVerificador
+      }
+    };
+
+    const response = await axios.post(`${SERVICIO_IMPRESION_URL}/consulta-acuse/`, payload);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error descargando acuse:', error.message);
+    res.status(500).json({ error: 'Error al generar el PDF del acuse.' });
+  }
+});
 
 // ─── Health check ─────────────────────────────────────────────────────────────
 app.get('/health', (_, res) => res.json({ status: 'ok' }));

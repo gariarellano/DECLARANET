@@ -526,6 +526,25 @@
     .tipo-modificacion{ background: rgba(234,179,8,.15);  color: #fbbf24; border: 1px solid rgba(234,179,8,.3); }
     .tipo-conclusion  { background: rgba(239,68,68,.15);  color: #f87171; border: 1px solid rgba(239,68,68,.3); }
     .tipo-otro        { background: rgba(139,148,158,.15); color: #8b949e; border: 1px solid rgba(139,148,158,.3); }
+
+    /* ── BOTONES DE ACCIÓN ──────────────────────── */
+    .btn-action {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 4px;
+      transition: all .2s;
+    }
+    .btn-action:hover {
+      border-color: var(--accent2);
+      color: var(--accent2);
+      background: rgba(37,99,235,.1);
+    }
   </style>
 </head>
 <body>
@@ -637,6 +656,7 @@
             <th id="th-tipo" style="display:none">Tipo</th>
             <th>Correo institucional</th>
             <th>Correo alternativo</th>
+            <th id="th-acciones" style="display:none; text-align:center;">Descargar</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
@@ -802,14 +822,19 @@
       return;
     }
 
-    // Mostrar/ocultar columna Tipo
+    // Mostrar/ocultar columna Tipo y Acciones
     document.getElementById('th-tipo').style.display = esDeclararon ? '' : 'none';
+    document.getElementById('th-acciones').style.display = esDeclararon ? '' : 'none';
 
     tbody.innerHTML = rows.map((u, i) => {
       const nombre = [u.nombre, u.primerApellido, u.segundoApellido]
         .filter(Boolean).join(' ');
       const tipoBadge = esDeclararon ? tipoBadgeHtml(u.tipoDeclaracion) : '';
       const tipoCell  = esDeclararon ? `<td style="display:''">${tipoBadge}</td>` : '<td style="display:none"></td>';
+      const btnDeclaracion = `<button class="btn-action" onclick="descargarDocumento('declaracion', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">PDF</button>`;
+      const btnAcuse = `<button class="btn-action" onclick="descargarDocumento('acuse', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">Acuse</button>`;
+      const accionesCell = esDeclararon ? `<td style="display:''; text-align:center; white-space:nowrap;">${btnDeclaracion}${btnAcuse}</td>` : '<td style="display:none"></td>';
+
       return `
         <tr>
           <td class="num-cell">${i + 1}</td>
@@ -818,6 +843,7 @@
           ${tipoCell}
           <td class="email-cell">${escHtml(u.email || '—')}</td>
           <td class="email-cell">${escHtml(u.emailAlt || '—')}</td>
+          ${accionesCell}
         </tr>`;
     }).join('');
 
@@ -833,6 +859,61 @@
     if (t.includes('MODIF'))        return `<span class="tipo-badge tipo-modificacion">Modificación</span>`;
     if (t.includes('CONCL'))        return `<span class="tipo-badge tipo-conclusion">Conclusión</span>`;
     return `<span class="tipo-badge tipo-otro">${escHtml(tipo)}</span>`;
+  }
+
+  // ── Descargar Documento (Declaración o Acuse) ────────────────
+  async function descargarDocumento(tipoDoc, numeroDeclaracion, idUsuario, collName, tipoDeclaracion, nombreDeclarante) {
+    if (!numeroDeclaracion) {
+      alert('Número de declaración no disponible.');
+      return;
+    }
+    
+    // Asegurar que collName sea entero
+    if (typeof collName === 'string') {
+        collName = parseInt(collName, 10) || 0;
+    }
+
+    try {
+      const url = tipoDoc === 'acuse' ? '/api/descargar-acuse' : '/api/descargar-declaracion';
+      const bodyParams = {
+        declaracion: {
+          numeroDeclaracion,
+          idUsuario,
+          collName,
+          tipoDeclaracion
+        }
+      };
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bodyParams)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Error al generar o descargar el documento PDF.');
+      }
+      
+      const base64Data = await response.json();
+      
+      // Decodificar Base64 y crear Blob
+      const binaryString = window.atob(base64Data);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${tipoDoc}_${nombreDeclarante.replace(/ /g, '_')}_${numeroDeclaracion}.pdf`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+      
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
 
