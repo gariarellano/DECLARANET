@@ -466,10 +466,88 @@
       to { transform: rotate(360deg); }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 860px) {
       .stats-grid { grid-template-columns: 1fr; }
       .topbar { padding: 0 16px; }
       .main-content { padding: 16px; }
+
+      /* DISEÑO DE TARJETAS RESPONSIVAS PARA LA TABLA */
+      .table-responsive {
+        border: none;
+        overflow: visible;
+      }
+      #main-table, #main-table tbody {
+        display: block;
+        width: 100%;
+      }
+      #main-table thead {
+        display: none;
+      }
+      #main-table tr {
+        display: flex;
+        flex-direction: column;
+        background: var(--surface2);
+        margin-bottom: 16px;
+        border-radius: 12px;
+        padding: 16px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      #main-table tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(37,99,235,0.15);
+        background: var(--surface2);
+      }
+      #main-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        text-align: right;
+      }
+      #main-table td:last-child {
+        border-bottom: none;
+      }
+      #main-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        text-align: left;
+        flex-shrink: 0;
+        margin-right: 16px;
+      }
+      
+      .btn-action {
+        padding: 10px 16px;
+        font-size: 13px;
+        flex: 1;
+        margin: 0 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      td[data-label="Acciones"] {
+        justify-content: center;
+        padding-top: 16px;
+        margin-top: 8px;
+        border-top: 1px dashed rgba(255,255,255,0.1);
+        border-bottom: none;
+      }
+      td[data-label="Acciones"]::before {
+        display: none;
+      }
+      
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
     }
 
     /* ── TABS ───────────────────────────────────── */
@@ -840,19 +918,19 @@
       const nombre = [u.nombre, u.primerApellido, u.segundoApellido]
         .filter(Boolean).join(' ');
       const tipoBadge = esDeclararon ? tipoBadgeHtml(u.tipoDeclaracion) : '';
-      const tipoCell  = esDeclararon ? `<td style="display:''">${tipoBadge}</td>` : '<td style="display:none"></td>';
-      const btnDeclaracion = `<button class="btn-action" onclick="descargarDocumento('declaracion', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">PDF</button>`;
-      const btnAcuse = `<button class="btn-action" onclick="descargarDocumento('acuse', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">Acuse</button>`;
-      const accionesCell = esDeclararon ? `<td style="display:''; text-align:center; white-space:nowrap;">${btnDeclaracion}${btnAcuse}</td>` : '<td style="display:none"></td>';
+      const tipoCell  = esDeclararon ? `<td data-label="Tipo" style="display:''">${tipoBadge}</td>` : '<td data-label="Tipo" style="display:none"></td>';
+      const btnDeclaracion = `<button class="btn-action" onclick="descargarDocumento('declaracion', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">📄 PDF</button>`;
+      const btnAcuse = `<button class="btn-action" onclick="descargarDocumento('acuse', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">✅ Acuse</button>`;
+      const accionesCell = esDeclararon ? `<td data-label="Acciones" style="display:''; text-align:center; white-space:nowrap;">${btnDeclaracion}${btnAcuse}</td>` : '<td data-label="Acciones" style="display:none"></td>';
 
       return `
         <tr>
-          <td class="num-cell">${i + 1}</td>
-          <td><strong>${escHtml(nombre)}</strong></td>
-          <td><span class="curp-cell">${escHtml(u.curp || '—')}</span></td>
+          <td data-label="#" class="num-cell">${i + 1}</td>
+          <td data-label="Nombre"><strong>${escHtml(nombre)}</strong></td>
+          <td data-label="CURP"><span class="curp-cell">${escHtml(u.curp || '—')}</span></td>
           ${tipoCell}
-          <td class="email-cell">${escHtml(u.email || '—')}</td>
-          <td class="email-cell">${escHtml(u.emailAlt || '—')}</td>
+          <td data-label="Correo Inst." class="email-cell">${escHtml(u.email || '—')}</td>
+          <td data-label="Correo Alt." class="email-cell">${escHtml(u.emailAlt || '—')}</td>
           ${accionesCell}
         </tr>`;
     }).join('');
