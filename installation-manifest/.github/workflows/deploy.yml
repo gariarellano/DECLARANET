@@ -1,0 +1,31 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Conectar al VPS y actualizar
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            cd /var/www/html/declaranet/installation-manifest
+            
+            # Actualizar código desde GitHub
+            git pull origin main
+            
+            # Iniciar contenedores independientes por si acaso
+            docker start mondecla amaccesos omext dependencias identidad catalogos 2>/dev/null || true
+            
+            # Reconstruir y reiniciar servicios modificados
+            docker compose -p declaranet up -d --build
+            
+            echo "✅ Deploy completado: $(date)"
