@@ -194,7 +194,8 @@
     .btn-logout:hover { color: var(--red); border-color: var(--red); }
 
     .main-content {
-      max-width: 1200px;
+      max-width: 1450px;
+      width: 100%;
       margin: 0 auto;
       padding: 32px 24px;
     }
@@ -236,6 +237,87 @@
     }
 
     .year-selector select option { background: var(--surface2); }
+
+    .type-selector {
+      display: none; /* Se activa dinámicamente */
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 14px;
+    }
+
+    .type-selector label {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .type-selector select {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .type-selector select option { background: var(--surface2); }
+
+    .progress-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      animation: fadeUp .4s ease;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .progress-info .progress-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .progress-info .progress-percentage {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green);
+      background: rgba(34, 197, 94, 0.1);
+      padding: 4px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      transition: all .3s ease;
+    }
+
+    .progress-bar-track {
+      background: var(--surface2);
+      border-radius: 8px;
+      height: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--accent2) 0%, var(--green) 100%);
+      height: 100%;
+      width: 0%;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+    }
 
     .search-box {
       flex: 1;
@@ -388,7 +470,7 @@
 
     thead th {
       background: var(--surface2);
-      padding: 12px 20px;
+      padding: 12px 14px;
       text-align: left;
       font-size: 12px;
       font-weight: 600;
@@ -407,8 +489,8 @@
     tbody tr:hover { background: rgba(37,99,235,.06); }
 
     tbody td {
-      padding: 14px 20px;
-      font-size: 14px;
+      padding: 12px 14px;
+      font-size: 13.5px;
       vertical-align: middle;
     }
 
@@ -425,6 +507,8 @@
     .email-cell {
       font-size: 13px;
       color: var(--muted);
+      word-break: break-all;
+      max-width: 220px;
     }
 
     .num-cell {
@@ -589,6 +673,7 @@
 
     .tab-badge.red  { background: rgba(239,68,68,.2);  color: var(--red); }
     .tab-badge.green{ background: rgba(34,197,94,.2);  color: var(--green); }
+    .tab-badge.gray { background: rgba(139,148,158,.2); color: var(--muted); }
 
     .table-header {
       padding: 16px 24px;
@@ -630,6 +715,25 @@
       border-color: var(--accent2);
       color: var(--accent2);
       background: rgba(37,99,235,.1);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 4px;
+      transition: all .2s;
+    }
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--red);
+      color: #ff8585;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
     }
   </style>
 </head>
@@ -676,6 +780,16 @@
         <select id="year-select" onchange="loadData()"></select>
       </div>
 
+      <div class="type-selector" id="type-selector-container">
+        <label>Tipo:</label>
+        <select id="type-select" onchange="filterTable()">
+          <option value="todos">Todos los tipos</option>
+          <option value="inicio">Inicio</option>
+          <option value="modificacion">Modificación</option>
+          <option value="conclusion">Conclusión</option>
+        </select>
+      </div>
+
       <div class="search-box">
         <span class="icon-search">🔍</span>
         <input type="text" id="search-input" placeholder="Buscar por nombre o CURP…" oninput="filterTable()" />
@@ -711,6 +825,17 @@
       </div>
     </div>
 
+    <!-- Progreso de Cumplimiento -->
+    <div class="progress-container">
+      <div class="progress-info">
+        <span class="progress-label">Progreso de Cumplimiento General</span>
+        <span class="progress-percentage" id="progress-percent">0.0%</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+    </div>
+
     <!-- Tabla -->
     <div class="table-container">
       <div class="table-header">
@@ -721,6 +846,9 @@
           </button>
           <button class="tab" id="tab-declararon" onclick="switchTab('declararon')">
             ✅ Declararon <span class="tab-badge green" id="badge-declararon">0</span>
+          </button>
+          <button class="tab" id="tab-inactivos" onclick="switchTab('inactivos')">
+            🚫 Inactivos <span class="tab-badge gray" id="badge-inactivos">0</span>
           </button>
         </div>
         <span class="count-badge" id="table-count" style="background:rgba(239,68,68,.15);color:var(--red);border-color:rgba(239,68,68,.25)">0</span>
@@ -743,7 +871,7 @@
               <th id="th-tipo" style="display:none">Tipo</th>
               <th>Correo institucional</th>
               <th>Correo alternativo</th>
-              <th id="th-acciones" style="display:none; text-align:center;">Descargar</th>
+              <th id="th-acciones" style="text-align:center;">Acciones</th>
             </tr>
           </thead>
           <tbody id="table-body"></tbody>
@@ -762,6 +890,7 @@
 <script>
   let allRows = [];
   let declararonRows = [];
+  let inactivosRows = [];
   let currentTab = 'pendientes';
 
   // ── Login ──────────────────────────────────────────────────
@@ -818,6 +947,17 @@
     currentTab = tab;
     document.getElementById('tab-pendientes').classList.toggle('active', tab === 'pendientes');
     document.getElementById('tab-declararon').classList.toggle('active', tab === 'declararon');
+    document.getElementById('tab-inactivos').classList.toggle('active', tab === 'inactivos');
+
+    // Resetear filtro de tipo al cambiar de pestaña
+    const typeSel = document.getElementById('type-select');
+    if (typeSel) {
+      typeSel.value = 'todos';
+    }
+    const typeSelector = document.getElementById('type-selector-container');
+    if (typeSelector) {
+      typeSelector.style.display = tab === 'declararon' ? 'flex' : 'none';
+    }
 
     const countBadge = document.getElementById('table-count');
     if (tab === 'pendientes') {
@@ -826,12 +966,18 @@
       countBadge.style.borderColor = 'rgba(239,68,68,.25)';
       renderTable(filterRows(allRows));
       countBadge.textContent = filterRows(allRows).length;
-    } else {
+    } else if (tab === 'declararon') {
       countBadge.style.background = 'rgba(34,197,94,.15)';
       countBadge.style.color = 'var(--green)';
       countBadge.style.borderColor = 'rgba(34,197,94,.25)';
       renderTable(filterRows(declararonRows), true);
       countBadge.textContent = filterRows(declararonRows).length;
+    } else {
+      countBadge.style.background = 'rgba(139,148,158,.15)';
+      countBadge.style.color = 'var(--muted)';
+      countBadge.style.borderColor = 'rgba(139,148,158,.25)';
+      renderTable(filterRows(inactivosRows), false, true);
+      countBadge.textContent = filterRows(inactivosRows).length;
     }
   }
 
@@ -852,17 +998,29 @@
       document.getElementById(id).textContent = '—';
     });
 
+    const pctEl = document.getElementById('progress-percent');
+    const fillEl = document.getElementById('progress-fill');
+    if (pctEl && fillEl) {
+      pctEl.textContent = '0.0%';
+      pctEl.style.color = 'var(--muted)';
+      pctEl.style.background = 'rgba(255, 255, 255, 0.05)';
+      pctEl.style.borderColor = 'var(--border)';
+      fillEl.style.width = '0%';
+    }
+
     try {
-      // Cargar ambas listas en paralelo
-      const [resPend, resDecla] = await Promise.all([
+      // Cargar todas las listas en paralelo
+      const [resPend, resDecla, resInac] = await Promise.all([
         fetch(`/api/pendientes?anio=${anio}`),
-        fetch(`/api/declararon?anio=${anio}`)
+        fetch(`/api/declararon?anio=${anio}`),
+        fetch(`/api/inactivos`)
       ]);
 
-      if (!resPend.ok || !resDecla.ok) throw new Error(`Error del servidor`);
+      if (!resPend.ok || !resDecla.ok || !resInac.ok) throw new Error(`Error del servidor`);
 
       const dataPend  = await resPend.json();
       const dataDecla = await resDecla.json();
+      const dataInac  = await resInac.json();
 
       document.getElementById('stat-total').textContent      = dataPend.totalUsuarios;
       document.getElementById('stat-declararon').textContent = dataDecla.conDeclaracion;
@@ -870,17 +1028,45 @@
 
       document.getElementById('badge-pendientes').textContent = dataPend.pendientes;
       document.getElementById('badge-declararon').textContent = dataDecla.conDeclaracion;
-      document.getElementById('table-count').textContent     = currentTab === 'pendientes'
-        ? dataPend.pendientes : dataDecla.conDeclaracion;
+      document.getElementById('badge-inactivos').textContent  = dataInac.totalInactivos;
 
       allRows       = dataPend.lista;
       declararonRows = dataDecla.lista;
+      inactivosRows  = dataInac.lista;
 
-      // Mostrar la pestaña activa
+      // Calcular y actualizar progreso de cumplimiento
+      const total = parseInt(dataPend.totalUsuarios) || 0;
+      const decla = parseInt(dataDecla.conDeclaracion) || 0;
+      const pct = total > 0 ? parseFloat(((decla / total) * 100).toFixed(1)) : 0;
+
+      if (pctEl && fillEl) {
+        pctEl.textContent = `${pct.toFixed(1)}%`;
+        fillEl.style.width = `${pct}%`;
+        if (pct < 50) {
+          pctEl.style.color = 'var(--red)';
+          pctEl.style.background = 'rgba(239, 68, 68, 0.1)';
+          pctEl.style.borderColor = 'rgba(239, 68, 68, 0.2)';
+        } else if (pct < 80) {
+          pctEl.style.color = 'var(--yellow)';
+          pctEl.style.background = 'rgba(245, 158, 11, 0.1)';
+          pctEl.style.borderColor = 'rgba(245, 158, 11, 0.2)';
+        } else {
+          pctEl.style.color = 'var(--green)';
+          pctEl.style.background = 'rgba(34, 197, 94, 0.1)';
+          pctEl.style.borderColor = 'rgba(34, 197, 94, 0.2)';
+        }
+      }
+
+      // Mostrar la pestaña activa y aplicar filtros si los hay
       if (currentTab === 'pendientes') {
-        renderTable(allRows);
+        renderTable(filterRows(allRows));
+        document.getElementById('table-count').textContent = filterRows(allRows).length;
+      } else if (currentTab === 'declararon') {
+        renderTable(filterRows(declararonRows), true);
+        document.getElementById('table-count').textContent = filterRows(declararonRows).length;
       } else {
-        renderTable(declararonRows, true);
+        renderTable(filterRows(inactivosRows), false, true);
+        document.getElementById('table-count').textContent = filterRows(inactivosRows).length;
       }
 
     } catch (err) {
@@ -896,32 +1082,52 @@
   }
 
   // ── Render tabla ───────────────────────────────────────────
-  function renderTable(rows, esDeclararon = false) {
+  function renderTable(rows, esDeclararon = false, esInactivos = false) {
     const tbody = document.getElementById('table-body');
     const stateEl = document.getElementById('table-state');
     const table = document.getElementById('main-table');
 
     if (rows.length === 0) {
-      const msg = esDeclararon
-        ? '⚠️ Ningún usuario ha declarado aún en este período.'
-        : '🎉 ¡Todos los usuarios han realizado su declaración!';
-      stateEl.innerHTML = `<div class="state-box"><span class="icon">${esDeclararon ? '📭' : '🎉'}</span><p>${msg}</p></div>`;
+      let msg = '';
+      if (esDeclararon) {
+        msg = '⚠️ Ningún usuario ha declarado aún en este período.';
+      } else if (esInactivos) {
+        msg = '🎉 No hay usuarios inactivos o dados de baja.';
+      } else {
+        msg = '🎉 ¡Todos los usuarios han realizado su declaración!';
+      }
+      stateEl.innerHTML = `<div class="state-box"><span class="icon">${esDeclararon ? '📭' : (esInactivos ? '👥' : '🎉')}</span><p>${msg}</p></div>`;
       table.style.display = 'none';
       return;
     }
 
-    // Mostrar/ocultar columna Tipo y Acciones
+    // Mostrar/ocultar columna Tipo
     document.getElementById('th-tipo').style.display = esDeclararon ? '' : 'none';
-    document.getElementById('th-acciones').style.display = esDeclararon ? '' : 'none';
+    // La columna de acciones siempre está visible
+    document.getElementById('th-acciones').style.display = '';
 
     tbody.innerHTML = rows.map((u, i) => {
       const nombre = [u.nombre, u.primerApellido, u.segundoApellido]
         .filter(Boolean).join(' ');
       const tipoBadge = esDeclararon ? tipoBadgeHtml(u.tipoDeclaracion) : '';
       const tipoCell  = esDeclararon ? `<td data-label="Tipo" style="display:''">${tipoBadge}</td>` : '<td data-label="Tipo" style="display:none"></td>';
-      const btnDeclaracion = `<button class="btn-action" onclick="descargarDocumento('declaracion', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">📄 PDF</button>`;
-      const btnAcuse = `<button class="btn-action" onclick="descargarDocumento('acuse', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">✅ Acuse</button>`;
-      const accionesCell = esDeclararon ? `<td data-label="Acciones" style="display:''; text-align:center; white-space:nowrap;">${btnDeclaracion}${btnAcuse}</td>` : '<td data-label="Acciones" style="display:none"></td>';
+      
+      const idUsuarioValue = u.idUsuario || u.idUsuarioDeclarante;
+      
+      let accionesContent = '';
+      if (esInactivos) {
+        accionesContent = `<button class="btn-action" style="border-color:var(--green); color:var(--green); background:rgba(34,197,94,.05);" onclick="reactivarUsuario(${idUsuarioValue}, '${escHtml(nombre)}')">✅ Activar</button>`;
+      } else if (esDeclararon) {
+        const btnDeclaracion = `<button class="btn-action" onclick="descargarDocumento('declaracion', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">📄 PDF</button>`;
+        const btnAcuse = `<button class="btn-action" onclick="descargarDocumento('acuse', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">✅ Acuse</button>`;
+        const btnBaja = `<button class="btn-danger" onclick="darDeBaja(${idUsuarioValue}, '${escHtml(nombre)}')">❌ Baja</button>`;
+        accionesContent = `${btnDeclaracion}${btnAcuse}${btnBaja}`;
+      } else {
+        const btnBaja = `<button class="btn-danger" onclick="darDeBaja(${idUsuarioValue}, '${escHtml(nombre)}')">❌ Baja</button>`;
+        accionesContent = btnBaja;
+      }
+      
+      const accionesCell = `<td data-label="Acciones" style="text-align:center; white-space:nowrap;">${accionesContent}</td>`;
 
       return `
         <tr>
@@ -1005,23 +1211,100 @@
   }
 
 
-  // ── Filtrar por búsqueda ────────────────────────────────────
+  // ── Filtrar por búsqueda y tipo ─────────────────────────────
   function filterRows(rows) {
     const q = document.getElementById('search-input').value.toLowerCase().trim();
-    if (!q) return rows;
-    return rows.filter(u => {
-      const nombre = [u.nombre, u.primerApellido, u.segundoApellido]
-        .filter(Boolean).join(' ').toLowerCase();
-      return nombre.includes(q) || (u.curp || '').toLowerCase().includes(q);
-    });
+    let filtered = rows;
+
+    // Filtrar por búsqueda
+    if (q) {
+      filtered = filtered.filter(u => {
+        const nombre = [u.nombre, u.primerApellido, u.segundoApellido]
+          .filter(Boolean).join(' ').toLowerCase();
+        return nombre.includes(q) || (u.curp || '').toLowerCase().includes(q);
+      });
+    }
+
+    // Filtrar por tipo (solo en la pestaña declararon)
+    if (currentTab === 'declararon') {
+      const typeSel = document.getElementById('type-select');
+      if (typeSel) {
+        const selectedType = typeSel.value;
+        if (selectedType !== 'todos') {
+          filtered = filtered.filter(u => {
+            const t = (u.tipoDeclaracion || '').toUpperCase();
+            if (selectedType === 'inicio') return t.includes('INICIO');
+            if (selectedType === 'modificacion') return t.includes('MODIF');
+            if (selectedType === 'conclusion') return t.includes('CONCL');
+            return false;
+          });
+        }
+      }
+    }
+
+    return filtered;
   }
 
   // ── Buscar ─────────────────────────────────────────────────
   function filterTable() {
-    const rows = currentTab === 'pendientes' ? allRows : declararonRows;
+    const rows = currentTab === 'pendientes' ? allRows : (currentTab === 'declararon' ? declararonRows : inactivosRows);
     const filtered = filterRows(rows);
-    renderTable(filtered, currentTab === 'declararon');
+    renderTable(filtered, currentTab === 'declararon', currentTab === 'inactivos');
     document.getElementById('table-count').textContent = filtered.length;
+  }
+
+  // ── Reactivar usuario ──────────────────────────────────────
+  async function reactivarUsuario(idUsuario, nombre) {
+    if (!idUsuario) {
+      alert('ID de usuario no disponible.');
+      return;
+    }
+    const confirmacion = confirm(`¿Está seguro de que desea reactivar al usuario "${nombre}"?\n\nAl hacerlo, volverá a estar activo y podrá ingresar al sistema.`);
+    if (!confirmacion) return;
+
+    try {
+      const res = await fetch('/api/activar-usuario', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idUsuario })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        alert('Usuario reactivado exitosamente.');
+        loadData(); // Recargar datos
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (err) {
+      alert('Error de conexión al reactivar al usuario.');
+    }
+  }
+
+  // ── Dar de baja (Desactivar) usuario ───────────────────────
+  async function darDeBaja(idUsuario, nombre) {
+    if (!idUsuario) {
+      alert('ID de usuario no disponible.');
+      return;
+    }
+    const confirmacion = confirm(`¿Está seguro de que desea dar de baja a "${nombre}"?\n\nAl hacerlo, el usuario será desactivado del sistema y no podrá volver a iniciar sesión.`);
+    if (!confirmacion) return;
+
+    try {
+      const res = await fetch('/api/desactivar-usuario', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idUsuario })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        alert('Usuario dado de baja exitosamente.');
+        loadData(); // Recargar datos para reflejar los cambios
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (err) {
+      alert('Error de conexión al dar de baja al usuario.');
+    }
   }
 
   // ── Utils ──────────────────────────────────────────────────

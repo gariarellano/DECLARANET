@@ -154,6 +154,70 @@ app.get('/api/declararon', async (req, res) => {
   }
 });
 
+// ─── API: Dar de baja (Desactivar) usuario ───────────────────────────────────
+app.post('/api/desactivar-usuario', async (req, res) => {
+  const { idUsuario } = req.body;
+  if (!idUsuario) {
+    return res.status(400).json({ error: 'idUsuario es requerido' });
+  }
+  try {
+    const query = 'UPDATE ip_usuario SET activo = 0 WHERE id_usuario = $1';
+    await pgPool.query(query, [idUsuario]);
+    res.json({ ok: true, message: 'Usuario dado de baja (desactivado) correctamente.' });
+  } catch (err) {
+    console.error('Error al dar de baja al usuario:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─── Consulta usuarios inactivos de PostgreSQL ──────────────────────────────────
+async function getUsuariosInactivos() {
+  const result = await pgPool.query(`
+    SELECT
+      id_usuario  AS "idUsuario",
+      login,
+      nombre,
+      primer_apellido  AS "primerApellido",
+      segundo_apellido AS "segundoApellido",
+      curp,
+      email,
+      email_alt        AS "emailAlt"
+    FROM ip_usuario
+    WHERE activo = 0
+    ORDER BY primer_apellido, segundo_apellido, nombre
+  `);
+  return result.rows;
+}
+
+// ─── API: Listar usuarios inactivos ──────────────────────────────────────────
+app.get('/api/inactivos', async (req, res) => {
+  try {
+    const lista = await getUsuariosInactivos();
+    res.json({ totalInactivos: lista.length, lista });
+  } catch (err) {
+    console.error('Error en /api/inactivos:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─── API: Reactivar (Activar) usuario ────────────────────────────────────────
+app.post('/api/activar-usuario', async (req, res) => {
+  const { idUsuario } = req.body;
+  if (!idUsuario) {
+    return res.status(400).json({ error: 'idUsuario es requerido' });
+  }
+  try {
+    const query = 'UPDATE ip_usuario SET activo = 1 WHERE id_usuario = $1';
+    await pgPool.query(query, [idUsuario]);
+    res.json({ ok: true, message: 'Usuario reactivado correctamente.' });
+  } catch (err) {
+    console.error('Error al activar al usuario:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 
 // ─── API: Descargar Declaración y Acuse ───────────────────────────────────────
 const SERVICIO_IMPRESION_URL = process.env.SERVICIO_IMPRESION_URL || 'http://servicioimpresion:5000/api';
