@@ -61,7 +61,7 @@ async function getDeclaracionesPorAnio(anio) {
           const docs = await db.collection(colName)
             .find(
               { 'declaracion.anio': filtroAnio },
-              { projection: { 'declarante.curp': 1, 'declaracion.tipoDeclaracion': 1, 'declaracion.numeroDeclaracion': 1, 'declaracion.idUsuario': 1, _id: 0 } }
+              { projection: { 'declarante.curp': 1, 'declaracion.tipoDeclaracion': 1, 'declaracion.numeroDeclaracion': 1, 'declaracion.idUsuario': 1, 'declaracion.fechaRecepcion': 1, _id: 0 } }
             )
             .toArray();
 
@@ -80,7 +80,8 @@ async function getDeclaracionesPorAnio(anio) {
                   tipoDeclaracion: tipo,
                   numeroDeclaracion,
                   idUsuario,
-                  collName: collNameVal
+                  collName: collNameVal,
+                  fechaRecepcion: d.declaracion && d.declaracion.fechaRecepcion ? d.declaracion.fechaRecepcion : ''
                 });
               }
             }
@@ -147,7 +148,8 @@ app.get('/api/declararon', async (req, res) => {
           tipoDeclaracion: declaData ? declaData.tipoDeclaracion : 'DESCONOCIDO',
           numeroDeclaracion: declaData ? declaData.numeroDeclaracion : '',
           idUsuarioDeclarante: u.idUsuario,
-          collName: declaData ? declaData.collName : 0
+          collName: declaData ? declaData.collName : 0,
+          fechaRecepcion: declaData ? declaData.fechaRecepcion : ''
         };
       });
     res.json({ anio, totalUsuarios: todos.length, conDeclaracion: declararon.length, lista: declararon });

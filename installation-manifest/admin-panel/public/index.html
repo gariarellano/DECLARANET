@@ -874,6 +874,7 @@
               <th>Nombre completo</th>
               <th>CURP</th>
               <th id="th-tipo" style="display:none">Tipo</th>
+              <th id="th-fecha-decla" style="display:none">Fecha</th>
               <th>Correo institucional</th>
               <th>Correo alternativo</th>
               <th id="th-acciones" style="text-align:center;">Acciones</th>
@@ -1023,7 +1024,6 @@
     document.getElementById('tab-declararon').classList.toggle('active', tab === 'declararon');
     document.getElementById('tab-inactivos').classList.toggle('active', tab === 'inactivos');
 
-    // Resetear filtro de tipo al cambiar de pestaña
     const typeSel = document.getElementById('type-select');
     if (typeSel) {
       typeSel.value = 'todos';
@@ -1032,6 +1032,8 @@
     if (typeSelector) {
       typeSelector.style.display = tab === 'declararon' ? 'flex' : 'none';
     }
+    const thFecha = document.getElementById('th-fecha-decla');
+    if (thFecha) thFecha.style.display = tab === 'declararon' ? 'table-cell' : 'none';
 
     const countBadge = document.getElementById('table-count');
     if (tab === 'pendientes') {
@@ -1105,8 +1107,13 @@
       document.getElementById('badge-inactivos').textContent  = dataInac.totalInactivos;
 
       allRows       = dataPend.lista;
-      declararonRows = dataDecla.lista;
-      inactivosRows  = dataInac.lista;
+      declararonRows = dataDecla.lista || [];
+      declararonRows.sort((a, b) => {
+        if (!a.fechaRecepcion) return 1;
+        if (!b.fechaRecepcion) return -1;
+        return new Date(b.fechaRecepcion) - new Date(a.fechaRecepcion);
+      });
+      inactivosRows  = dataInac.lista  || [];
 
       // Calcular y actualizar progreso de cumplimiento
       const total = parseInt(dataPend.totalUsuarios) || 0;
@@ -1186,6 +1193,16 @@
       const tipoBadge = esDeclararon ? tipoBadgeHtml(u.tipoDeclaracion) : '';
       const tipoCell  = esDeclararon ? `<td data-label="Tipo" style="display:''">${tipoBadge}</td>` : '<td data-label="Tipo" style="display:none"></td>';
       
+      let fechaCell = '<td data-label="Fecha" style="display:none"></td>';
+      if (esDeclararon) {
+        let fechaText = '--';
+        if (u.fechaRecepcion) {
+          const dObj = new Date(u.fechaRecepcion);
+          fechaText = !isNaN(dObj) ? dObj.toLocaleDateString() + ' ' + dObj.toLocaleTimeString() : u.fechaRecepcion;
+        }
+        fechaCell = `<td data-label="Fecha"><span style="font-size:12px; color:var(--muted);">${fechaText}</span></td>`;
+      }
+      
       const idUsuarioValue = u.idUsuario || u.idUsuarioDeclarante;
       
       let accionesContent = '';
@@ -1214,6 +1231,7 @@
           <td data-label="Nombre"><strong>${escHtml(nombre)}</strong></td>
           <td data-label="CURP"><span class="curp-cell">${escHtml(u.curp || '—')}</span></td>
           ${tipoCell}
+          ${fechaCell}
           <td data-label="Correo Inst." class="email-cell">${escHtml(u.email || '—')}</td>
           <td data-label="Correo Alt." class="email-cell">${escHtml(u.emailAlt || '—')}</td>
           ${accionesCell}
@@ -1451,6 +1469,7 @@
         'Nombre Completo': [u.nombre, u.primerApellido, u.segundoApellido].filter(Boolean).join(' '),
         'CURP': u.curp || '',
         'Tipo Declaración': u.tipoDeclaracion || 'DESCONOCIDO',
+        'Fecha Recepción': u.fechaRecepcion || '',
         'Correo Institucional': u.email || '',
         'Correo Alternativo': u.emailAlt || ''
       }));
