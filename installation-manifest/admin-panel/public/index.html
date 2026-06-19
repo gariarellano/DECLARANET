@@ -881,9 +881,21 @@
   </div>
 </div>
 
-
+<!-- Modal Restablecer Contraseña -->
+<div id="modal-restablecer" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:999; align-items:center; justify-content:center;">
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; width:400px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+    <h3 style="margin-bottom:12px; font-size:18px;">Restablecer Contraseña</h3>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:16px;">
+      Usuario: <strong id="reset-nombre-display" style="color:var(--text);"></strong>
+    </p>
+    <div class="form-group">
+      <label>Nueva Contraseña</label>
+      <input type="text" id="reset-pwd" placeholder="Ingresa la nueva contraseña" />
     </div>
-
+    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+      <button class="btn-action" onclick="cerrarModalRestablecer()">Cancelar</button>
+      <button class="btn-action" style="background:linear-gradient(135deg, #8b5cf6, #7c3aed); color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:600;" onclick="ejecutarRestablecer()">Guardar nueva contraseña</button>
+    </div>
   </div>
 </div>
 
@@ -1115,16 +1127,18 @@
       const idUsuarioValue = u.idUsuario || u.idUsuarioDeclarante;
       
       let accionesContent = '';
+      const btnRestablecer = `<button class="btn-action" style="border-color:#8b5cf6; color:#8b5cf6; background:rgba(139,92,246,.05);" onclick="abrirModalRestablecer(${idUsuarioValue}, '${escHtml(u.login)}', '${escHtml(u.curp)}', '${escHtml(nombre)}')">🔑 Restablecer</button>`;
+      
       if (esInactivos) {
-        accionesContent = `<button class="btn-action" style="border-color:var(--green); color:var(--green); background:rgba(34,197,94,.05);" onclick="reactivarUsuario(${idUsuarioValue}, '${escHtml(nombre)}')">✅ Activar</button>`;
+        accionesContent = `<button class="btn-action" style="border-color:var(--green); color:var(--green); background:rgba(34,197,94,.05);" onclick="reactivarUsuario(${idUsuarioValue}, '${escHtml(nombre)}')">✅ Activar</button>${btnRestablecer}`;
       } else if (esDeclararon) {
         const btnDeclaracion = `<button class="btn-action" onclick="descargarDocumento('declaracion', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">📄 PDF</button>`;
         const btnAcuse = `<button class="btn-action" onclick="descargarDocumento('acuse', '${u.numeroDeclaracion}', ${u.idUsuarioDeclarante}, ${u.collName}, '${u.tipoDeclaracion}', '${escHtml(nombre)}')">✅ Acuse</button>`;
         const btnBaja = `<button class="btn-danger" onclick="darDeBaja(${idUsuarioValue}, '${escHtml(nombre)}')">❌ Baja</button>`;
-        accionesContent = `${btnDeclaracion}${btnAcuse}${btnBaja}`;
+        accionesContent = `${btnDeclaracion}${btnAcuse}${btnRestablecer}${btnBaja}`;
       } else {
         const btnBaja = `<button class="btn-danger" onclick="darDeBaja(${idUsuarioValue}, '${escHtml(nombre)}')">❌ Baja</button>`;
-        accionesContent = btnBaja;
+        accionesContent = `${btnRestablecer}${btnBaja}`;
       }
       
       const accionesCell = `<td data-label="Acciones" style="text-align:center; white-space:nowrap;">${accionesContent}</td>`;
@@ -1304,6 +1318,54 @@
       }
     } catch (err) {
       alert('Error de conexión al dar de baja al usuario.');
+    }
+  }
+
+  // ── Restablecer Contraseña ────────────────────────────────
+  let currentResetUser = null;
+
+  function abrirModalRestablecer(idUsuario, login, curp, nombre) {
+    currentResetUser = { idUsuario, login, curp, nombre };
+    document.getElementById('reset-nombre-display').textContent = nombre;
+    document.getElementById('reset-pwd').value = '';
+    document.getElementById('modal-restablecer').style.display = 'flex';
+  }
+
+  function cerrarModalRestablecer() {
+    document.getElementById('modal-restablecer').style.display = 'none';
+    currentResetUser = null;
+  }
+
+  async function ejecutarRestablecer() {
+    if (!currentResetUser) return;
+    const newPassword = document.getElementById('reset-pwd').value.trim();
+    if (newPassword.length < 6) {
+      alert('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
+    const payload = {
+      idUsuario: currentResetUser.idUsuario,
+      login: currentResetUser.login,
+      curp: currentResetUser.curp,
+      newPassword: newPassword
+    };
+
+    try {
+      const res = await fetch('/api/restablecer-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.ok) {
+        alert('La contraseña ha sido restablecida exitosamente.');
+        cerrarModalRestablecer();
+      } else {
+        alert('Error al restablecer la contraseña: ' + (data.error || 'Desconocido'));
+      }
+    } catch (err) {
+      alert('Error de conexión al restablecer la contraseña.');
     }
   }
 

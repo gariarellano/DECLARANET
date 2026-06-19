@@ -4,6 +4,7 @@ const { Pool }   = require('pg');
 const path       = require('path');
 const axios      = require('axios');
 const { sha3_512 } = require('js-sha3');
+const crypto     = require('crypto');
 
 const app = express();
 app.use(express.json());
@@ -212,6 +213,37 @@ app.post('/api/activar-usuario', async (req, res) => {
     res.json({ ok: true, message: 'Usuario reactivado correctamente.' });
   } catch (err) {
     console.error('Error al activar al usuario:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─── API: Restablecer Contraseña ─────────────────────────────────────────────
+app.post('/api/restablecer-password', async (req, res) => {
+  const { idUsuario, login, curp, newPassword } = req.body;
+  if (!idUsuario || !login || !curp || !newPassword) {
+    return res.status(400).json({ error: 'Parámetros incompletos.' });
+  }
+  try {
+    const sSalt = login.split('').reverse().join('');
+    const sToDigest = sSalt + "&&" + newPassword.toUpperCase();
+    
+    // Hash en hexadecimal (en Java d1 y d2 usa Integer.toHexString que es en minúsculas)
+    const hash = crypto.createHash('sha1').update(sToDigest).digest('hex').toLowerCase();
+
+    await pgPool.query('BEGIN');
+    const updateQuery = 'UPDATE ip_usuario SET pwd_enc = $1 WHERE id_usuario = $2';
+    await pgPool.query(updateQuery, [hash, idUsuario]);
+
+    // Insertar log de la acción (7 = REESTABLECER PASSWORD)
+    const fecha = new Date().toISOString().replace('T', ' ').substring(0, 19);
+    const insertLog = 'INSERT INTO ip_bitacora (id_aplicacion, fecha, curp, accion) VALUES ($1, $2, $3, $4)';
+    await pgPool.query(insertLog, [0, fecha, curp, 7]);
+
+    await pgPool.query('COMMIT');
+    res.json({ ok: true, message: 'Contraseña restablecida correctamente.' });
+  } catch (err) {
+    await pgPool.query('ROLLBACK');
+    console.error('Error restableciendo contraseña:', err);
     res.status(500).json({ error: err.message });
   }
 });
