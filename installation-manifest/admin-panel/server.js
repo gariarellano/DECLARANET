@@ -109,6 +109,8 @@ async function getUsuariosActivos() {
       primer_apellido  AS "primerApellido",
       segundo_apellido AS "segundoApellido",
       curp,
+      rfc,
+      homocve,
       email,
       email_alt        AS "emailAlt"
     FROM ip_usuario
@@ -181,6 +183,8 @@ async function getUsuariosInactivos() {
       primer_apellido  AS "primerApellido",
       segundo_apellido AS "segundoApellido",
       curp,
+      rfc,
+      homocve,
       email,
       email_alt        AS "emailAlt"
     FROM ip_usuario
@@ -244,6 +248,65 @@ app.post('/api/restablecer-password', async (req, res) => {
   } catch (err) {
     await pgPool.query('ROLLBACK');
     console.error('Error restableciendo contraseña:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─── API: Editar Datos de Usuario ───────────────────────────────────────────
+app.put('/api/editar-usuario', async (req, res) => {
+  const { idUsuario, nombre, primerApellido, segundoApellido, email, emailAlt, rfc, homocve, curp } = req.body;
+  if (!idUsuario || !curp) {
+    return res.status(400).json({ error: 'idUsuario y curp son obligatorios.' });
+  }
+  try {
+    // Verificar si la curp cambió
+    const resUsr = await pgPool.query('SELECT curp FROM ip_usuario WHERE id_usuario = $1', [idUsuario]);
+    if (resUsr.rowCount === 0) return res.status(404).json({ error: 'Usuario no encontrado.' });
+    
+    const curpAntigua = resUsr.rows[0].curp || '';
+    if (curpAntigua.toUpperCase() !== curp.toUpperCase()) {
+      // Validar si la CURP antigua ya tiene declaraciones en MongoDB
+      const anioActual = new Date().getFullYear();
+      let tieneDeclaracion = false;
+      for (const y of [anioActual, anioActual - 1, anioActual - 2]) {
+        const declaMap = await getDeclaracionesPorAnio(y);
+        if (declaMap.has(curpAntigua.toUpperCase())) {
+          tieneDeclaracion = true;
+          break;
+        }
+      }
+      if (tieneDeclaracion) {
+        return res.status(400).json({ error: 'No se puede modificar la CURP porque el usuario ya tiene declaraciones vinculadas a la CURP anterior.' });
+      }
+      
+      // Validar que la NUEVA CURP no exista ya en la BD de identidad
+      const resCurpDuplicada = await pgPool.query('SELECT id_usuario FROM ip_usuario WHERE curp = $1 AND id_usuario != $2', [curp, idUsuario]);
+      if (resCurpDuplicada.rowCount > 0) {
+        return res.status(400).json({ error: 'La nueva CURP ya está registrada en el sistema por otro usuario.' });
+      }
+    }
+
+    const updateQuery = `
+      UPDATE ip_usuario 
+      SET nombre = $1, primer_apellido = $2, segundo_apellido = $3, 
+          email = $4, email_alt = $5, rfc = $6, homocve = $7, curp = $8
+      WHERE id_usuario = $9
+    `;
+    await pgPool.query(updateQuery, [
+      nombre || null, 
+      primerApellido || null, 
+      segundoApellido || null, 
+      email || null, 
+      emailAlt || null, 
+      rfc || null, 
+      homocve || null, 
+      curp, 
+      idUsuario
+    ]);
+
+    res.json({ ok: true, message: 'Usuario actualizado correctamente.' });
+  } catch (err) {
+    console.error('Error editando usuario:', err);
     res.status(500).json({ error: err.message });
   }
 });
