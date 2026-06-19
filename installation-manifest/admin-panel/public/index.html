@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Administrador — Declaranet</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -795,6 +796,10 @@
         <input type="text" id="search-input" placeholder="Buscar por nombre o CURP…" oninput="filterTable()" />
       </div>
 
+      <button class="btn-refresh" id="btn-export" onclick="exportToExcel()" style="border-color:var(--green); color:var(--green);">
+        <span>📊</span> Exportar a Excel
+      </button>
+
       <button class="btn-refresh" id="btn-refresh" onclick="loadData()">
         <span>↻</span> Actualizar
       </button>
@@ -1367,6 +1372,45 @@
     } catch (err) {
       alert('Error de conexión al restablecer la contraseña.');
     }
+  }
+
+  // ── Exportar a Excel ───────────────────────────────────────
+  function exportToExcel() {
+    let rows = currentTab === 'pendientes' ? allRows : (currentTab === 'declararon' ? declararonRows : inactivosRows);
+    const filtered = filterRows(rows);
+
+    if (filtered.length === 0) {
+      alert("No hay datos para exportar.");
+      return;
+    }
+
+    let dataToExport;
+    if (currentTab === 'declararon') {
+      dataToExport = filtered.map((u, i) => ({
+        'No.': i + 1,
+        'Nombre Completo': [u.nombre, u.primerApellido, u.segundoApellido].filter(Boolean).join(' '),
+        'CURP': u.curp || '',
+        'Tipo Declaración': u.tipoDeclaracion || 'DESCONOCIDO',
+        'Correo Institucional': u.email || '',
+        'Correo Alternativo': u.emailAlt || ''
+      }));
+    } else {
+      dataToExport = filtered.map((u, i) => ({
+        'No.': i + 1,
+        'Nombre Completo': [u.nombre, u.primerApellido, u.segundoApellido].filter(Boolean).join(' '),
+        'CURP': u.curp || '',
+        'Correo Institucional': u.email || '',
+        'Correo Alternativo': u.emailAlt || ''
+      }));
+    }
+
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    const wb = XLSX.utils.book_new();
+    const sheetName = currentTab.charAt(0).toUpperCase() + currentTab.slice(1);
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    
+    const fileName = `Reporte_Declaranet_${sheetName}_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, fileName);
   }
 
   // ── Utils ──────────────────────────────────────────────────
