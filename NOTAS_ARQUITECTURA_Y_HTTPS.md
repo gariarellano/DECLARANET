@@ -65,5 +65,10 @@ Para habilitar HTTPS sin romper la frágil red de microservicios internos, se de
 5. **DnetTool.js:**
    - Requiere un pequeño parche para reconocer el nombre de dominio además de la IP al momento de interceptar la autenticación.
 
+6. **Error "Ha ocurrido un error..." en IDP (ip-front):**
+   - El contenedor `ip-front` contenía rutas hardcodeadas en su propio `nginx.conf` interno que apuntaban a dominios muertos (`https://dgti-ejz-ip-back.200.34.175.120.nip.io/`).
+   - Al intentar autenticarse, `ip-front` colapsaba con un error de Gateway (502) porque este dominio externo ya no existe.
+   - **Solución Obligatoria:** Independientemente de si se usa IP o HTTPS, el archivo `nginx.conf` dentro del código fuente de `ip-front` debe ser modificado para que el `proxy_pass` apunte a los contenedores locales (ej. `http://ip-back:5000/`) y no a dominios externos obsoletos.
+
 ## Conclusión
-El sistema fue diseñado con un alto acoplamiento hacia las direcciones IP y los headers HTTP de origen. La migración a dominio HTTPS es posible, pero requiere enmascarar el tráfico en la capa de Nginx para que los microservicios subyacentes sigan operando bajo la ilusión de que el sistema corre exclusivamente sobre IPs. Actualmente, el sistema ha sido revertido a su estado funcional basado en IP para garantizar su operatividad.
+El sistema fue diseñado con un alto acoplamiento hacia las direcciones IP y los headers HTTP de origen. La migración a dominio HTTPS es posible, pero requiere enmascarar el tráfico en la capa de Nginx para que los microservicios subyacentes sigan operando bajo la ilusión de que el sistema corre exclusivamente sobre IPs. Actualmente, el sistema ha sido revertido a su estado funcional basado en IP para garantizar su operatividad (manteniendo únicamente las correcciones críticas de contenedores muertos).
