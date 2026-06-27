@@ -64,6 +64,9 @@ services:
       - URL_REESTABLECER_PWD_FRONT=http://${DOMINIO_IDENTIDAD}/recovery
   ip-front:
     image: ip-front
+    depends_on:
+      - ip-back
+      - ip-registro-back
     build:
       context: ./provedorIdentidad/ip-front/
       args:
